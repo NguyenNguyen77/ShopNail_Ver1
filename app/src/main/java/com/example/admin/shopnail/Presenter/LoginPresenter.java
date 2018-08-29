@@ -44,8 +44,7 @@ public class LoginPresenter implements ILoginPresenter {
             public void run() {
                 //Do something after 100ms
                 loginView.onLoginResult(mResult);
-                handler.postDelayed(this, 2000);
             }
-        }, 1500);
+        }, 3000);
     }
 }
