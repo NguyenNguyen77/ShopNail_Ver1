@@ -6,13 +6,55 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="20dp"
+            android:src="@drawable/nail_shop" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom">
+
+            <Button
+                android:id="@+id/btn_login_for_staff"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:textColor="@drawable/button_text"
+                android:text="@string/login_for_staff"
+                android:background="@drawable/button_nail" />
+
+            <Button
+                android:id="@+id/btn_make_appointment_online"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:textColor="@drawable/button_text"
+                android:layout_marginTop="30dp"
+                android:text="@string/make_appointment_online"
+                android:background="@drawable/button_nail" />
+
+            <Button
+                android:id="@+id/btn_exit"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="50dp"
+                android:textColor="@drawable/button_text"
+                android:text="@string/exit"
+                android:background="@drawable/button_nail" />
+        </LinearLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
