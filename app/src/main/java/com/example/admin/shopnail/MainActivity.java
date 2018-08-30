@@ -4,6 +4,7 @@ package com.example.admin.shopnail;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.admin.shopnail.Presenter.LoginPresenter;
 import com.example.admin.shopnail.View.ILoginView;
+import com.example.admin.shopnail.View.MenuForStaffActivity;
+import com.example.admin.shopnail.View.ViewManager;
 
 
 public class MainActivity extends Activity implements View.OnClickListener, ILoginView {
@@ -22,6 +25,8 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
     private String mUserName = "";
     private String mPassword = "";
     private ProgressDialog mProgressDialog;
+    private ViewManager mViewManager;
+    private ViewManager.VIEW_KEY mViewKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,8 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         btnLogin = (Button) findViewById(R.id.btn_login_for_staff);
         btnLogin.setOnClickListener(this);
         btnExit.setOnClickListener(this);
+        mViewManager = new ViewManager();
+        mViewManager.setActivity(this);
     }
 
     @Override
@@ -90,8 +97,9 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
     public void onLoginResult(boolean result) {
         if (result) {
             mProgressDialog.cancel();
-            Toast.makeText(MainActivity.this, R.string.login_sucessfull, Toast.LENGTH_LONG).show();
-            // Change to next screen
+            Toast.makeText(MainActivity.this, R.string.login_sucessfull, Toast.LENGTH_SHORT).show();
+            mViewManager.setView(ViewManager.VIEW_KEY.MENU_FOR_STAFF);  // Change to next screen
+
         } else {
             Toast.makeText(MainActivity.this, R.string.login_failed, Toast.LENGTH_LONG).show();
         }
