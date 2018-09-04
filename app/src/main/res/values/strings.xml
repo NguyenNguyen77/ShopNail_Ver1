@@ -22,4 +22,7 @@
     <string name="staff_info">Staff Information</string>
     <string name="logout">Logout</string>
     <string name="go_back">Go Back</string>
+    <string name="title_my_customer">My Customer</string>
+    <string name="title_main">Nails &amp; Spa</string>
+
 </resources>
