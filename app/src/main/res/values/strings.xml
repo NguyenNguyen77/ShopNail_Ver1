@@ -21,4 +21,6 @@
     <string name="customer_service_history">Customer service history</string>
     <string name="staff_info">Staff Information</string>
     <string name="logout">Logout</string>
+    <string name="title_my_customer">My Customer</string>
+    <string name="title_main">Nails &amp; Spa</string>
 </resources>

@@ -1,19 +1,18 @@
 package com.example.admin.shopnail;
 
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.admin.shopnail.Presenter.LoginPresenter;
 import com.example.admin.shopnail.View.ILoginView;
-import com.example.admin.shopnail.View.MenuForStaffActivity;
+import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.View.ViewManager;
 
 
@@ -26,12 +25,14 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
     private String mPassword = "";
     private ProgressDialog mProgressDialog;
     private ViewManager mViewManager;
-    private ViewManager.VIEW_KEY mViewKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        new NailActionBarGenerator().generate(this,
+                NailActionBarGenerator.BarType.LOGIN);
 
         btnExit = (Button) findViewById(R.id.btn_exit);
         btnLogin = (Button) findViewById(R.id.btn_login_for_staff);

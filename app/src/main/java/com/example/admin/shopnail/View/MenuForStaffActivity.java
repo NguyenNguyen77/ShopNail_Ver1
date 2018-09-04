@@ -20,6 +20,8 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_for_staff);
 
+        new NailActionBarGenerator().generate(this,
+                NailActionBarGenerator.BarType.MENU_FOR_STAFF);
 
         btnSelectService = (Button) findViewById(R.id.btn_select_service);
         btnMyCustomer = (Button) findViewById(R.id.btn_my_customer);
