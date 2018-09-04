@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.admin.shopnail.R;
+import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
 
 public class MenuForStaffActivity extends Activity implements View.OnClickListener {
 
@@ -14,6 +16,8 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
     private Button btnCustomerServiceHistory;
     private Button btnStaffInfo;
     private Button btnLogout;
+
+    private ViewManager mViewManager = new ViewManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +36,16 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
         btnCustomerServiceHistory.setOnClickListener(this);
         btnStaffInfo.setOnClickListener(this);
         btnLogout.setOnClickListener(this);
+
+        mViewManager.setActivity(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_select_service:
-
+                Toast.makeText(this,"click select service",Toast.LENGTH_SHORT).show();
+                tranferToSelectService();
                 break;
             case R.id.btn_my_customer:
 
@@ -55,5 +62,10 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
             default:
                 break;
         }
+    }
+
+    private void tranferToSelectService() {
+        mViewManager.setView(ViewManager.VIEW_KEY.SELECT_SERVICE);
+
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.example.admin.shopnail.MainActivity;
+import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
 
 import static android.content.ContentValues.TAG;
 
@@ -16,6 +17,7 @@ public class ViewManager {
         LOGIN_SCREEN,
         MENU_FOR_STAFF,
         BOOK_APPOINTMENT,
+        SELECT_SERVICE
 
     }
 
@@ -25,6 +27,9 @@ public class ViewManager {
                 break;
             case MENU_FOR_STAFF:
                 viewMenuForStaffActivity();
+                break;
+            case SELECT_SERVICE:
+                viewSelectServiceActivity();
                 break;
             default:
                 break;
@@ -52,6 +57,9 @@ public class ViewManager {
             case MENU_FOR_STAFF:
                 return MenuForStaffActivity.class;
 
+            case SELECT_SERVICE:
+                return SelectServiceActivity.class;
+
             default:
                 break;
         }
@@ -64,6 +72,15 @@ public class ViewManager {
             return;
         }
         Intent intent = new Intent(activity.getApplicationContext(), MenuForStaffActivity.class);
+        activity.startActivity(intent);
+    }
+
+    private void viewSelectServiceActivity() {
+        Activity activity = currentActivity;
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity.getApplicationContext(), SelectServiceActivity.class);
         activity.startActivity(intent);
     }
 }
