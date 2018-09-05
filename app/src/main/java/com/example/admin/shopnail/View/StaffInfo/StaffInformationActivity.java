@@ -1,4 +1,4 @@
-package com.example.admin.shopnail.View;
+package com.example.admin.shopnail.View.StaffInfo;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -23,8 +23,8 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_staff_information);
 
-        new NailActionBarGenerator().generate(this,
-                NailActionBarGenerator.BarType.STAFF_INFO);
+        new com.example.admin.shopnail.View.NailActionBarGenerator().generate(this,
+                com.example.admin.shopnail.View.NailActionBarGenerator.BarType.STAFF_INFO);
 
         btnChangeAvatar = (Button) findViewById(R.id.btn_change_avatar);
         btnChangePassword = (Button) findViewById(R.id.btn_change_password);

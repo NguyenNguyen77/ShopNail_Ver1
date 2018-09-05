@@ -1,4 +1,4 @@
-package com.example.admin.shopnail.View;
+package com.example.admin.shopnail.View.BookAppointment;
 
 import android.app.Activity;
 import android.view.View;

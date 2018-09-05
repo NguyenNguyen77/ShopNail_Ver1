@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.example.admin.shopnail.MainActivity;
+import com.example.admin.shopnail.View.MenuFoStaff.MenuForStaffActivity;
 import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
+import com.example.admin.shopnail.View.StaffInfo.StaffInformationActivity;
 
 import static android.content.ContentValues.TAG;
 
