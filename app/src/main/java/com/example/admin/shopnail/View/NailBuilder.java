@@ -46,6 +46,9 @@ public class NailBuilder implements NailActionBarBuildable {
             case STAFF_INFO:
                 builder.setTitle(R.string.staff_info);
                 break;
+            case SELECT_CUSTOMER_SERVICE:
+                builder.setTitle(R.string.select_service);
+                break;
             default:
                 throw new IllegalArgumentException("Unsupported BarType. [" + mBarType + "]");
         }

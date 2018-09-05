@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.example.admin.shopnail.R;
+import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.View.ViewManager;
 
 public class SelectServiceActivity extends Activity{
@@ -14,6 +15,9 @@ public class SelectServiceActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_for_select_service);
+
+        new NailActionBarGenerator().generate(this,
+                NailActionBarGenerator.BarType.SELECT_CUSTOMER_SERVICE);
 
         mViewManager.setActivity(this);
     }

@@ -56,7 +56,7 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
 
                 break;
             case R.id.btn_staff_info:
-                mViewManager.setView(ViewManager.VIEW_KEY.STAFF_INFO);
+                transferToStaffInformation();
                 break;
             case R.id.btn_logout:
 
@@ -68,6 +68,9 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
 
     private void tranferToSelectService() {
         mViewManager.setView(ViewManager.VIEW_KEY.SELECT_SERVICE);
+    }
 
+    private void transferToStaffInformation() {
+        mViewManager.setView(ViewManager.VIEW_KEY.STAFF_INFO);
     }
 }

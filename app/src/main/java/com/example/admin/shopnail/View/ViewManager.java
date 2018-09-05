@@ -18,8 +18,7 @@ public class ViewManager {
         MENU_FOR_STAFF,
         BOOK_APPOINTMENT,
         STAFF_INFO,
-        SELECT_SERVICE
-
+        SELECT_SERVICE,
     }
 
     public void setView(VIEW_KEY key) {
@@ -31,6 +30,7 @@ public class ViewManager {
                 break;
             case STAFF_INFO:
                 viewStaffInformationActivity();
+                break;
             case SELECT_SERVICE:
                 viewSelectServiceActivity();
                 break;
