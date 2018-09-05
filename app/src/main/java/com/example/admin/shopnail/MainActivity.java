@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v7.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -36,6 +37,9 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
 
         btnExit = (Button) findViewById(R.id.btn_exit);
         btnLogin = (Button) findViewById(R.id.btn_login_for_staff);
+        btnMakeAppointment = (Button) findViewById(R.id.btn_make_appointment_online);
+
+        btnMakeAppointment.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         btnExit.setOnClickListener(this);
         mViewManager = new ViewManager();
@@ -59,9 +63,10 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
     }
 
     private void showLoginDialog() {
-        final Dialog login = new Dialog(this);
+        ContextThemeWrapper ctw = new ContextThemeWrapper( this, R.style.Theme_AlertDialog);
+        final Dialog login = new Dialog(ctw);
         login.setContentView(R.layout.login_dialog);
-        login.setTitle(R.string.login_for_staff);
+        login.setTitle(R.string.login);
 
         Button btnLogin = (Button) login.findViewById(R.id.btnLogin);
         Button btnCancel = (Button) login.findViewById(R.id.btnCancel);

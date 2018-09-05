@@ -16,6 +16,7 @@ public class ViewManager {
         LOGIN_SCREEN,
         MENU_FOR_STAFF,
         BOOK_APPOINTMENT,
+        STAFF_INFO,
 
     }
 
@@ -25,6 +26,9 @@ public class ViewManager {
                 break;
             case MENU_FOR_STAFF:
                 viewMenuForStaffActivity();
+                break;
+            case STAFF_INFO:
+                viewStaffInformationActivity();
                 break;
             default:
                 break;
@@ -64,6 +68,15 @@ public class ViewManager {
             return;
         }
         Intent intent = new Intent(activity.getApplicationContext(), MenuForStaffActivity.class);
+        activity.startActivity(intent);
+    }
+
+    private void viewStaffInformationActivity() {
+        Activity activity = currentActivity;
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity.getApplicationContext(), StaffInformationActivity.class);
         activity.startActivity(intent);
     }
 }

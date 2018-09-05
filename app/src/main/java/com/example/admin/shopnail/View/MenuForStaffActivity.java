@@ -15,6 +15,8 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
     private Button btnStaffInfo;
     private Button btnLogout;
 
+    private ViewManager mViewManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,9 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
         btnCustomerServiceHistory.setOnClickListener(this);
         btnStaffInfo.setOnClickListener(this);
         btnLogout.setOnClickListener(this);
+
+        mViewManager = new ViewManager();
+        mViewManager.setActivity(this);
     }
 
     @Override
@@ -49,7 +54,7 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
 
                 break;
             case R.id.btn_staff_info:
-
+                mViewManager.setView(ViewManager.VIEW_KEY.STAFF_INFO);
                 break;
             case R.id.btn_logout:
 

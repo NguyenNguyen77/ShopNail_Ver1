@@ -19,6 +19,7 @@ public class NailActionBarGenerator {
         switch (type) {
             case LOGIN:
             case MENU_FOR_STAFF:
+            case STAFF_INFO:
                 actionBarBuilder = new NailBuilder(activity, type);
                 break;
             default:
@@ -36,5 +37,6 @@ public class NailActionBarGenerator {
     public enum BarType {
         LOGIN,
         MENU_FOR_STAFF,
+        STAFF_INFO,
     }
 }

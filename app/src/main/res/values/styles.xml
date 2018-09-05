@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
+    <style name="Theme.AlertDialog" parent="@android:style/Theme.Holo.Light.Dialog">
+        <item name="android:textColor">@color/textTitle</item>
+        <item name="android:windowTitleStyle">@style/Theme.AlertDialog.Title</item>
+    </style>
+
 </resources>
