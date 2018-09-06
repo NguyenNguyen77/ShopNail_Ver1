@@ -24,9 +24,9 @@
     <string name="go_back">Go Back</string>
     <string name="title_my_customer">My Customer</string>
     <string name="title_main">Nails &amp; Spa</string>
-    <string name="staff_id">Staff ID:</string>
-    <string name="staff_name">Staff&apos;s name</string>
-    <string name="staff_phonenumber">Phone:</string>
+    <string name="staff_id">ID: </string>
+    <string name="staff_name">Name: </string>
+    <string name="staff_phonenumber">Phone: </string>
     <string name="change_avatar">Change Avatar</string>
     <string name="change_password">Change Password</string>
     <string name="back">Back</string>

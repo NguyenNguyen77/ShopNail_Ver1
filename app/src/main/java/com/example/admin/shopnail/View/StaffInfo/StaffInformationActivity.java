@@ -12,6 +12,7 @@ import android.support.annotation.ColorInt;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.DrawableUtils;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,7 +58,19 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_change_avatar:
 
+                break;
+            case R.id.btn_change_password:
+
+                break;
+            case R.id.btn_back:
+
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -77,4 +90,10 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, R.string.login_sucessfull, Toast.LENGTH_SHORT).show();
+    }
+
 }
