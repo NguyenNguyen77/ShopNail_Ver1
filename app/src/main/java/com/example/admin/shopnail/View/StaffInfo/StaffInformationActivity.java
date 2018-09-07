@@ -83,17 +83,17 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
     {
         switch (item.getItemId())
         {
-            case R.id.search:
-                Toast.makeText(this, R.string.login_sucessfull, Toast.LENGTH_SHORT).show();
-                return true;
+//            case R.id.search:
+//                Toast.makeText(this, R.string.login_sucessfull, Toast.LENGTH_SHORT).show();
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        Toast.makeText(this, R.string.login_sucessfull, Toast.LENGTH_SHORT).show();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        Toast.makeText(this, R.string.login_sucessfull, Toast.LENGTH_SHORT).show();
+//    }
 
 }
