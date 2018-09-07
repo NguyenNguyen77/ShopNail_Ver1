@@ -30,4 +30,6 @@
     <string name="change_avatar">Change Avatar</string>
     <string name="change_password">Change Password</string>
     <string name="back">Back</string>
+    <string name="new_customer">New Customer</string>
+    <string name="old_customer">Old Customer</string>
 </resources>
