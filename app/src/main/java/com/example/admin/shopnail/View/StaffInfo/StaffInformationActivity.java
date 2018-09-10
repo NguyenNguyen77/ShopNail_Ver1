@@ -3,13 +3,19 @@ package com.example.admin.shopnail.View.StaffInfo;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.ColorInt;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.view.ContextThemeWrapper;
@@ -30,6 +36,8 @@ import com.example.admin.shopnail.Presenter.StaffInformation.StaffInformationPre
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.ERROR_CODE;
 
+import java.io.File;
+
 public class StaffInformationActivity extends Activity implements View.OnClickListener, IStaffInformation {
     private ImageView imgAvatar;
     private Button btnChangeAvatar;
@@ -41,6 +49,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
     private String mConfirmNewPass;
     private ProgressDialog mProgressDialog;
     private Dialog mChangePassDialog;
+    private static int RESULT_LOAD_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,22 +68,13 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         btnChangeAvatar.setOnClickListener(this);
         btnChangePassword.setOnClickListener(this);
         btnBack.setOnClickListener(this);
-
-//        Display display = getWindowManager().getDefaultDisplay();
-//        Point size = new Point();
-//        display.getSize(size);
-//        Bitmap bmp = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
-//                getResources(),R.drawable.default_avatar),size.x,size.y,true);
-//        imgAvatar.setImageBitmap(bmp);
-
-
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_change_avatar:
-
+                changeAvatar();
                 break;
             case R.id.btn_change_password:
                 showChangePasswordDialog();
@@ -175,5 +175,32 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
             result = false;
         }
         return result;
+    }
+
+    private void changeAvatar() {
+        Intent i = new Intent(
+                Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_LOAD_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+            imgAvatar.setBackgroundColor(R.drawable.background_avatar);
+            imgAvatar.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+        }
     }
 }
