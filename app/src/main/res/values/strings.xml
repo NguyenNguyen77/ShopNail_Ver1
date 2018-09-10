@@ -32,4 +32,13 @@
     <string name="back">Back</string>
     <string name="new_customer">New Customer</string>
     <string name="old_customer">Old Customer</string>
+    <string name="old_pass">Old Password</string>
+    <string name="new_pass">New Password</string>
+    <string name="confirm_new_pas">Confirm New Password</string>
+    <string name="old_pass_empty">Old PassWord is empty. Please input Old PassWord</string>
+    <string name="new_pass_empty">New PassWord is empty. Please input New PassWord</string>
+    <string name="confirm_new_pass_empty">Old PassWord is empty. Please input confirm New PassWord</string>
+    <string name="new_pass_notmatch">New Password are not match</string>
+    <string name="change_pass_succeccful">Change Password Successful</string>
+    <string name="change_pass_fail">Change Password Failed</string>
 </resources>
