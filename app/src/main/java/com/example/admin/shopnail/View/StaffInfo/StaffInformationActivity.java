@@ -75,6 +75,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         btnChangeAvatar.setOnClickListener(this);
         btnChangePassword.setOnClickListener(this);
         btnBack.setOnClickListener(this);
+        imgAvatar.setOnClickListener(this);
         mStaffInformationPresenter = new StaffInformationPresenter(this);
         init();
     }
@@ -92,6 +93,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_change_avatar:
+            case R.id.img_avatar:
                 changeAvatar();
                 break;
             case R.id.btn_change_password:

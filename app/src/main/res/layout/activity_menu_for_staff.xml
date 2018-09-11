@@ -9,28 +9,34 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_gravity="center"
-            android:paddingTop="20dp"
-            android:layout_weight="0.2"
-            android:src="@drawable/ic_nail_shop" />
+            android:layout_weight="3"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_nail_shop" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="7"
             android:gravity="bottom"
-            android:layout_weight="0.8"
             android:orientation="vertical">
 
             <Button
                 android:id="@+id/btn_select_service"
                 android:layout_width="250dp"
-                android:layout_height="50dp"
+                android:layout_height="0dp"
                 android:layout_gravity="center"
-                android:layout_weight="0.2"
+                android:layout_weight="1"
                 android:background="@drawable/button_nail"
                 android:text="@string/select_service"
                 android:textColor="@drawable/button_text" />
@@ -38,10 +44,10 @@
             <Button
                 android:id="@+id/btn_my_customer"
                 android:layout_width="250dp"
-                android:layout_height="50dp"
+                android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:layout_weight="0.2"
+                android:layout_weight="1"
                 android:background="@drawable/button_nail"
                 android:text="@string/my_customer"
                 android:textColor="@drawable/button_text" />
@@ -49,10 +55,10 @@
             <Button
                 android:id="@+id/btn_customer_service_history"
                 android:layout_width="250dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.2"
+                android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:layout_weight="1"
                 android:background="@drawable/button_nail"
                 android:text="@string/customer_service_history"
                 android:textColor="@drawable/button_text" />
@@ -60,10 +66,10 @@
             <Button
                 android:id="@+id/btn_staff_info"
                 android:layout_width="250dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.2"
+                android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:layout_weight="1"
                 android:background="@drawable/button_nail"
                 android:text="@string/staff_info"
                 android:textColor="@drawable/button_text" />
@@ -71,11 +77,10 @@
             <Button
                 android:id="@+id/btn_logout"
                 android:layout_width="250dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.2"
+                android:layout_height="0dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="30dp"
                 android:layout_marginTop="20dp"
+                android:layout_weight="1"
                 android:background="@drawable/button_nail"
                 android:text="@string/logout"
                 android:textColor="@drawable/button_text" />
