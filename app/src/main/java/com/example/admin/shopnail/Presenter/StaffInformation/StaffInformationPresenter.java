@@ -30,4 +30,22 @@ public class StaffInformationPresenter implements IStaffInformationPresenter {
             }
         }, 2000);
     }
+
+    @Override
+    public String getStaffID() {
+        String staffID = "8076";
+        return staffID;
+    }
+
+    @Override
+    public String getStaffName() {
+        String staffName = "KhoaNguyen";
+        return staffName;
+    }
+
+    @Override
+    public String getStaffPhoneNumber() {
+        String staffPhoneNumber = "0973603509";
+        return staffPhoneNumber;
+    }
 }

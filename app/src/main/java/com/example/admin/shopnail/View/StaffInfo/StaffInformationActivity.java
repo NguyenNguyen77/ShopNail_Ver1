@@ -28,6 +28,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.shopnail.MainActivity;
@@ -43,6 +44,10 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
     private Button btnChangeAvatar;
     private Button btnChangePassword;
     private Button btnBack;
+    private TextView mID;
+    private TextView mName;
+    private TextView mPhone;
+
     private StaffInformationPresenter mStaffInformationPresenter;
     private String mOldPass;
     private String mNewPass;
@@ -63,11 +68,24 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         btnChangePassword = (Button) findViewById(R.id.btn_change_password);
         btnBack = (Button) findViewById(R.id.btn_back);
         imgAvatar = (ImageView) findViewById(R.id.img_avatar);
-
+        mID = (TextView) findViewById(R.id.tv_staff_id);
+        mName = (TextView) findViewById(R.id.tv_staff_name);
+        mPhone = (TextView) findViewById(R.id.tv_staff_phone_number);
 
         btnChangeAvatar.setOnClickListener(this);
         btnChangePassword.setOnClickListener(this);
         btnBack.setOnClickListener(this);
+        mStaffInformationPresenter = new StaffInformationPresenter(this);
+        init();
+    }
+
+    private void init() {
+        //Load ID, Name, Phone
+        mID.setText(mStaffInformationPresenter.getStaffID());
+        mName.setText(mStaffInformationPresenter.getStaffName());
+        mPhone.setText(mStaffInformationPresenter.getStaffPhoneNumber());
+        //Load Avatar
+
     }
 
     @Override
@@ -96,9 +114,18 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.search:
-//                Toast.makeText(this, R.string.login_sucessfull, Toast.LENGTH_SHORT).show();
-//                return true;
+            case R.id.action_select_service:
+                Toast.makeText(this, R.string.select_service, Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_my_customer:
+                Toast.makeText(this, R.string.my_customer, Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_staff_info:
+                Toast.makeText(this, R.string.staff_info, Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_customer_service_history:
+                Toast.makeText(this, R.string.customer_service_history, Toast.LENGTH_SHORT).show();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -121,7 +148,6 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         final EditText txtOldPass = (EditText) mChangePassDialog.findViewById(R.id.txtOldPassword);
         final EditText txtNewPass = (EditText) mChangePassDialog.findViewById(R.id.txtNewPassword);
         final EditText txtConfirmNewPass = (EditText) mChangePassDialog.findViewById(R.id.txtConfirmNewPassword);
-        mStaffInformationPresenter = new StaffInformationPresenter(this);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
