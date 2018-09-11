@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.admin.shopnail.MainActivity;
 import com.example.admin.shopnail.View.MenuFoStaff.MenuForStaffActivity;
+import com.example.admin.shopnail.View.SelectService.LoginForCustomerActivity;
 import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
 import com.example.admin.shopnail.View.StaffInfo.StaffInformationActivity;
 
@@ -21,6 +22,7 @@ public class ViewManager {
         BOOK_APPOINTMENT,
         STAFF_INFO,
         SELECT_SERVICE,
+        LOGIN_FOR_CUSTOMER
     }
 
     public void setView(VIEW_KEY key) {
@@ -35,6 +37,9 @@ public class ViewManager {
                 break;
             case SELECT_SERVICE:
                 viewSelectServiceActivity();
+                break;
+            case LOGIN_FOR_CUSTOMER:
+                viewLoginForCustomerActivity();
                 break;
             default:
                 break;
@@ -62,6 +67,8 @@ public class ViewManager {
             case MENU_FOR_STAFF:
                 return MenuForStaffActivity.class;
 
+            case LOGIN_FOR_CUSTOMER:
+                return LoginForCustomerActivity.class;
             case SELECT_SERVICE:
                 return SelectServiceActivity.class;
 
@@ -88,6 +95,16 @@ public class ViewManager {
         Intent intent = new Intent(activity.getApplicationContext(), StaffInformationActivity.class);
         activity.startActivity(intent);
     }
+
+    private void viewLoginForCustomerActivity() {
+        Activity activity = currentActivity;
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity.getApplicationContext(), LoginForCustomerActivity.class);
+        activity.startActivity(intent);
+    }
+
     private void viewSelectServiceActivity() {
         Activity activity = currentActivity;
         if (activity == null) {

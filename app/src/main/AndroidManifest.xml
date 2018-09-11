@@ -26,6 +26,10 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name=".View.SelectService.LoginForCustomerActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name=".View.StaffInfo.StaffInformationActivity"
             android:screenOrientation="portrait">
         </activity>

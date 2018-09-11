@@ -41,4 +41,6 @@
     <string name="new_pass_notmatch">New Password are not match</string>
     <string name="change_pass_succeccful">Change Password Successful</string>
     <string name="change_pass_fail">Change Password Failed</string>
+    <string name="name_customer">Name Customer</string>
+    <string name="customer_phonenumber">Phone Number Customer</string>
 </resources>

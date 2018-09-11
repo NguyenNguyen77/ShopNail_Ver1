@@ -49,7 +49,7 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.btn_select_service:
                 Toast.makeText(this,"click select service",Toast.LENGTH_SHORT).show();
-                tranferToSelectService();
+                tranferToLoginForCustomer();
                 break;
             case R.id.btn_my_customer:
 
@@ -68,8 +68,8 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
         }
     }
 
-    private void tranferToSelectService() {
-        mViewManager.setView(ViewManager.VIEW_KEY.SELECT_SERVICE);
+    private void tranferToLoginForCustomer() {
+        mViewManager.setView(ViewManager.VIEW_KEY.LOGIN_FOR_CUSTOMER);
     }
 
     private void transferToStaffInformation() {
