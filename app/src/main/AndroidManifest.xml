@@ -27,6 +27,7 @@
         </activity>
         <activity
             android:name=".View.StaffInfo.StaffInformationActivity"
+            android:theme="@style/nailBarTheme"
             android:screenOrientation="portrait">
         </activity>
     </application>

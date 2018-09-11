@@ -1,15 +1,25 @@
-<resources>
-
-    <!-- Base application theme. -->
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="windowActionBarOverlay">true</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
     </style>
+
     <style name="Theme.AlertDialog" parent="@android:style/Theme.Holo.Light.Dialog">
         <item name="android:textColor">@color/textTitle</item>
     </style>
 
+    <style name="nailBarTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/nailActionbarStyle</item>
+    </style>
+    <style name="nailActionbarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:titleTextStyle">@style/nailActionbarTitleTextStyle</item>
+        <item name="android:displayOptions">useLogo</item>
+        <item name="android:icon">@android:color/transparent</item>
+        <item name="android:background">@color/nail_title_background</item>
+    </style>
+    <style name="nailActionbarTitleTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textSize">15dp</item>
+    </style>
 </resources>
