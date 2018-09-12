@@ -17,9 +17,11 @@ import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.View.ViewManager;
 
+import static com.example.admin.shopnail.View.ViewManager.VIEW_KEY.LOGIN_FOR_CUSTOMER;
+
 public class LoginForCustomerActivity extends Activity implements View.OnClickListener, ILoginForCustomerView{
 
-    private ViewManager mViewManager = new ViewManager();
+    private ViewManager mViewManager = ViewManager.getInstance();
     private Button btnNewCustomer;
     private Button btnOldCustomer;
     private AccountCustomerPresenter mLoginPersenter;

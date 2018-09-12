@@ -36,6 +36,7 @@ import com.example.admin.shopnail.Presenter.LoginPresenter;
 import com.example.admin.shopnail.Presenter.StaffInformation.StaffInformationPresenter;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.ERROR_CODE;
+import com.example.admin.shopnail.View.ViewManager;
 
 import java.io.File;
 
@@ -48,6 +49,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
     private TextView mName;
     private TextView mPhone;
 
+    protected ViewManager mViewManager = ViewManager.getInstance();
     private StaffInformationPresenter mStaffInformationPresenter;
     private String mOldPass;
     private String mNewPass;
@@ -77,6 +79,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         btnBack.setOnClickListener(this);
         imgAvatar.setOnClickListener(this);
         mStaffInformationPresenter = new StaffInformationPresenter(this);
+        mViewManager.setActivity(this);
         init();
     }
 
@@ -100,10 +103,21 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
                 showChangePasswordDialog();
                 break;
             case R.id.btn_back:
-
+                mViewManager.handleBackScreen();
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                mViewManager.handleBackScreen();
+                return true;
+            default:
+                return false;
         }
     }
 
@@ -132,12 +146,6 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
                 return super.onOptionsItemSelected(item);
         }
     }
-
-//    @Override
-//    public void onBackPressed() {
-//        Toast.makeText(this, R.string.login_sucessfull, Toast.LENGTH_SHORT).show();
-//    }
-
 
     private void showChangePasswordDialog() {
         ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);

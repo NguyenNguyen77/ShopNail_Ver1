@@ -10,11 +10,16 @@ import com.example.admin.shopnail.View.SelectService.LoginForCustomerActivity;
 import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
 import com.example.admin.shopnail.View.StaffInfo.StaffInformationActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.content.ContentValues.TAG;
 
 public class ViewManager {
     private Activity currentActivity = null;
     private VIEW_KEY mViewKey = VIEW_KEY.LOGIN_SCREEN;
+    private List<Activity> mListActivity = new ArrayList<Activity>();
+    private static ViewManager instance;
 
     public enum VIEW_KEY {
         LOGIN_SCREEN,
@@ -28,6 +33,7 @@ public class ViewManager {
     public void setView(VIEW_KEY key) {
         switch (key) {
             case LOGIN_SCREEN:
+                viewLoginActivity();
                 break;
             case MENU_FOR_STAFF:
                 viewMenuForStaffActivity();
@@ -47,14 +53,30 @@ public class ViewManager {
 
     }
 
+
+    public static synchronized ViewManager getInstance() {
+        if (instance == null) {
+            instance = new ViewManager();
+        }
+        return instance;
+    }
+
     public void setActivity(Activity a) {
         currentActivity = a;
+        if( mListActivity.contains(a) == false ){
+            mListActivity.add(a);
+        }
     }
 
     public Class<?> getActivity() {
         Log.d(TAG, "getView()=" + String.valueOf(getView()));
         return convKEYtoClass(getView());
     }
+
+    public void setViewKey(VIEW_KEY viewKey) {
+        mViewKey = viewKey;
+    }
+
     public VIEW_KEY getView() {
         return mViewKey;
     }
@@ -64,11 +86,15 @@ public class ViewManager {
             case LOGIN_SCREEN:
                 return MainActivity.class;
 
+            case STAFF_INFO:
+                return StaffInformationActivity.class;
+
             case MENU_FOR_STAFF:
                 return MenuForStaffActivity.class;
 
             case LOGIN_FOR_CUSTOMER:
                 return LoginForCustomerActivity.class;
+
             case SELECT_SERVICE:
                 return SelectServiceActivity.class;
 
@@ -78,6 +104,16 @@ public class ViewManager {
         return null;
     }
 
+    private void viewLoginActivity() {
+        Activity activity = currentActivity;
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity.getApplicationContext(), MainActivity.class);
+        activity.startActivity(intent);
+        setViewKey(VIEW_KEY.LOGIN_SCREEN);
+    }
+
     private void viewMenuForStaffActivity() {
         Activity activity = currentActivity;
         if (activity == null) {
@@ -85,6 +121,7 @@ public class ViewManager {
         }
         Intent intent = new Intent(activity.getApplicationContext(), MenuForStaffActivity.class);
         activity.startActivity(intent);
+        setViewKey(VIEW_KEY.MENU_FOR_STAFF);
     }
 
     private void viewStaffInformationActivity() {
@@ -94,6 +131,7 @@ public class ViewManager {
         }
         Intent intent = new Intent(activity.getApplicationContext(), StaffInformationActivity.class);
         activity.startActivity(intent);
+        setViewKey(VIEW_KEY.STAFF_INFO);
     }
 
     private void viewLoginForCustomerActivity() {
@@ -103,6 +141,7 @@ public class ViewManager {
         }
         Intent intent = new Intent(activity.getApplicationContext(), LoginForCustomerActivity.class);
         activity.startActivity(intent);
+        setViewKey(VIEW_KEY.LOGIN_FOR_CUSTOMER);
     }
 
     private void viewSelectServiceActivity() {
@@ -112,5 +151,29 @@ public class ViewManager {
         }
         Intent intent = new Intent(activity.getApplicationContext(), SelectServiceActivity.class);
         activity.startActivity(intent);
+        setViewKey(VIEW_KEY.SELECT_SERVICE);
+    }
+
+    public void handleBackScreen() {
+        switch (mViewKey) {
+            case SELECT_SERVICE:
+            case STAFF_INFO:
+                setView(VIEW_KEY.MENU_FOR_STAFF);
+                break;
+            case MENU_FOR_STAFF:
+                setView(VIEW_KEY.LOGIN_SCREEN);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void finishListActivity() {
+        for (Activity stack : mListActivity) {
+            if( stack != null ){
+                stack.finish();
+            }
+        }
+        mListActivity.clear();
     }
 }

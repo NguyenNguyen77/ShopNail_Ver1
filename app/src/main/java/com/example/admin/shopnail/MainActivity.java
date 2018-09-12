@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.admin.shopnail.Presenter.LoginPresenter;
 import com.example.admin.shopnail.View.ILoginView;
+import com.example.admin.shopnail.View.MenuFoStaff.MenuForStaffActivity;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.View.ViewManager;
 
@@ -25,7 +27,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
     private String mUserName = "";
     private String mPassword = "";
     private ProgressDialog mProgressDialog;
-    private ViewManager mViewManager;
+    protected ViewManager mViewManager = ViewManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,6 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         btnMakeAppointment.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         btnExit.setOnClickListener(this);
-        mViewManager = new ViewManager();
         mViewManager.setActivity(this);
     }
 
@@ -55,7 +56,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
             case R.id.btn_make_appointment_online:
                 break;
             case R.id.btn_exit:
-                finish();
+                mViewManager.finishListActivity();
                 break;
             default:
                 break;
@@ -108,6 +109,17 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
 
         } else {
             Toast.makeText(MainActivity.this, R.string.login_failed, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                mViewManager.finishListActivity();
+                return false;
+            default:
+                return false;
         }
     }
 }

@@ -2,6 +2,7 @@ package com.example.admin.shopnail.View.MenuFoStaff;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -19,7 +20,7 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
     private Button btnStaffInfo;
     private Button btnLogout;
 
-    private ViewManager mViewManager = new ViewManager();
+    protected ViewManager mViewManager = ViewManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_select_service:
-                Toast.makeText(this,"click select service",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "click select service", Toast.LENGTH_SHORT).show();
                 tranferToLoginForCustomer();
                 break;
             case R.id.btn_my_customer:
@@ -61,10 +62,21 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
                 transferToStaffInformation();
                 break;
             case R.id.btn_logout:
-
+                mViewManager.handleBackScreen();
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                mViewManager.finishListActivity();
+                return true;
+            default:
+                return false;
         }
     }
 
