@@ -92,17 +92,21 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mNameCustomer = txtNameCustomer.getText().toString().trim();
-                mPhoneCustomer = Integer.parseInt(txtPhoneCustomer.getText().toString());
-                if (mLoginPersenter.checkLoginForCustomer(mPhoneCustomer)) { //Need to check more condition for Username&PWD
-                    login.dismiss();
-                    mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
-                    mProgressDialog.setMessage(getString(R.string.please_wait));
-                    mProgressDialog.show();
-                    mLoginPersenter.createAccountForCustomer(mNameCustomer, mPhoneCustomer);  // Send Username & PWD to persenter: save.
-                } else {
-                    Toast.makeText(getApplicationContext(), R.string.enter_username_pwd, Toast.LENGTH_LONG).show();
-                }
+//                if(txtNameCustomer.getText().toString() != null){
+                    mNameCustomer = txtNameCustomer.getText().toString().trim();
+                    mPhoneCustomer = Integer.parseInt(txtPhoneCustomer.getText().toString());
+                    if (mLoginPersenter.checkLoginForCustomer(mPhoneCustomer) && mNameCustomer!=null) { //Need to check more condition for Username&PWD
+                        login.dismiss();
+                        mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
+                        mProgressDialog.setMessage(getString(R.string.please_wait));
+                        mProgressDialog.show();
+                        mLoginPersenter.createAccountForCustomer(mNameCustomer, mPhoneCustomer);  // Send Username & PWD to persenter: save.
+                    } else {
+                        Toast.makeText(getApplicationContext(), R.string.enter_username_pwd, Toast.LENGTH_LONG).show();
+                    }
+//                }else {
+//                    return;
+//                }
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
