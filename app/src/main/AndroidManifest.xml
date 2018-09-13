@@ -34,6 +34,11 @@
             android:theme="@style/nailBarTheme"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".View.CustomerServiceHistory.CustomerServiceHistoryActivity"
+            android:theme="@style/nailBarTheme"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

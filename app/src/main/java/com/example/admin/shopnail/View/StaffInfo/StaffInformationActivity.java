@@ -131,7 +131,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_select_service:
-                Toast.makeText(this, R.string.select_service, Toast.LENGTH_SHORT).show();
+                mViewManager.setView(ViewManager.VIEW_KEY.SELECT_SERVICE);
                 return true;
             case R.id.action_my_customer:
                 Toast.makeText(this, R.string.my_customer, Toast.LENGTH_SHORT).show();
@@ -140,7 +140,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
                 Toast.makeText(this, R.string.staff_info, Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_customer_service_history:
-                Toast.makeText(this, R.string.customer_service_history, Toast.LENGTH_SHORT).show();
+                mViewManager.setView(ViewManager.VIEW_KEY.CUSTOMER_SERVICE_HISTORY);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -21,6 +21,7 @@ public class NailActionBarGenerator {
             case MENU_FOR_STAFF:
             case STAFF_INFO:
             case SELECT_CUSTOMER_SERVICE:
+            case CUSTOMER_SERVICE_HISTORY:
                 actionBarBuilder = new NailBuilder(activity, type);
                 break;
             default:
@@ -40,5 +41,6 @@ public class NailActionBarGenerator {
         MENU_FOR_STAFF,
         STAFF_INFO,
         SELECT_CUSTOMER_SERVICE,
+        CUSTOMER_SERVICE_HISTORY,
     }
 }

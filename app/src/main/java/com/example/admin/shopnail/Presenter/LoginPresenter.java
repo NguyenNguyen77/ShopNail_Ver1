@@ -45,6 +45,6 @@ public class LoginPresenter implements ILoginPresenter {
                 //Do something after 100ms
                 loginView.onLoginResult(mResult);
             }
-        }, 3000);
+        }, 1000);
     }
 }

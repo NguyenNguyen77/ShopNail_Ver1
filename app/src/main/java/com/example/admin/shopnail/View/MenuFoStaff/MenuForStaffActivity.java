@@ -56,7 +56,7 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
 
                 break;
             case R.id.btn_customer_service_history:
-
+                transferToCustomerServiceHistory();
                 break;
             case R.id.btn_staff_info:
                 transferToStaffInformation();
@@ -86,5 +86,9 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
 
     private void transferToStaffInformation() {
         mViewManager.setView(ViewManager.VIEW_KEY.STAFF_INFO);
+    }
+
+    private void transferToCustomerServiceHistory() {
+        mViewManager.setView(ViewManager.VIEW_KEY.CUSTOMER_SERVICE_HISTORY);
     }
 }
