@@ -157,6 +157,7 @@ public class ViewManager {
     public void handleBackScreen() {
         switch (mViewKey) {
             case SELECT_SERVICE:
+                setView(VIEW_KEY.LOGIN_FOR_CUSTOMER);
             case STAFF_INFO:
                 setView(VIEW_KEY.MENU_FOR_STAFF);
                 break;

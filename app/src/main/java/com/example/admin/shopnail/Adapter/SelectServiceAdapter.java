@@ -20,8 +20,9 @@ public class SelectServiceAdapter extends BaseAdapter {
     LayoutInflater layoutInflater;
 
     public SelectServiceAdapter(Context context, List<ServicesOfShop> listService) {
-        this.context = context;
+//        this.context = context;
         this.listService = listService;
+        layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -50,9 +51,14 @@ public class SelectServiceAdapter extends BaseAdapter {
             holder.priceService = (TextView) convertView.findViewById(R.id.txtServicePrice);
             convertView.setTag(holder);
         } else {
-            holder = (ViewHolder) convertView.getTag();
+                    holder = (ViewHolder) convertView.getTag();
         }
-        return null;
+
+        ServicesOfShop itemService = this.listService.get(i);
+        holder.nameService.setText(itemService.nameService);
+        holder.priceService.setText(itemService.priceService+" $");
+
+        return convertView;
     }
 
     class ViewHolder {
