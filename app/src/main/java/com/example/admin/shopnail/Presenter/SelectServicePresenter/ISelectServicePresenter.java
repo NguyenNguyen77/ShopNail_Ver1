@@ -5,6 +5,8 @@ import com.example.admin.shopnail.Model.ServicesOfShop;
 import java.util.List;
 
 public interface ISelectServicePresenter {
-    public List<ServicesOfShop> getListData();
+    List<ServicesOfShop> getListDataAcrylic();
+    List<ServicesOfShop> getListNaturalNails();
+    List<ServicesOfShop> getListWaxingFacial();
 
 }
