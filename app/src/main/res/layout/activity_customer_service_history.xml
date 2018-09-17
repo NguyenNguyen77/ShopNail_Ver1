@@ -72,19 +72,28 @@
             android:id="@+id/txt_not_found_history"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_gravity="center"
             android:gravity="center"
             android:layout_weight="8"
             android:textColor="#FFFFFF"
             android:text="@string/empty" />
 
-        <ListView
-            android:id="@+id/lv_service_history"
+        <LinearLayout
+            android:id="@+id/layout_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
             android:layout_weight="8"
-            android:visibility="gone"></ListView>
+            android:visibility="gone">
 
+            <ListView
+                android:id="@+id/lv_service_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top">
+
+            </ListView>
+
+        </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1dp"
