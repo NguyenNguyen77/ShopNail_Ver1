@@ -10,6 +10,7 @@ import com.example.admin.shopnail.View.MenuFoStaff.MenuForStaffActivity;
 import com.example.admin.shopnail.View.SelectService.LoginForCustomerActivity;
 import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
 import com.example.admin.shopnail.View.StaffInfo.StaffInformationActivity;
+import com.example.admin.shopnail.View.ViewCartActivity.ViewCartActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class ViewManager {
         SELECT_SERVICE,
         LOGIN_FOR_CUSTOMER,
         CUSTOMER_SERVICE_HISTORY,
+        VIEW_CART
     }
 
     public void setView(VIEW_KEY key) {
@@ -52,11 +54,16 @@ public class ViewManager {
             case CUSTOMER_SERVICE_HISTORY:
                 viewCustomerServiceHistoryActivity();
                 break;
+            case VIEW_CART:
+                viewViewCartActivity();
+                break;
             default:
                 break;
         }
 
     }
+
+
 
 
     public static synchronized ViewManager getInstance() {
@@ -105,7 +112,8 @@ public class ViewManager {
 
             case CUSTOMER_SERVICE_HISTORY:
                 return CustomerServiceHistoryActivity.class;
-
+            case VIEW_CART:
+                return ViewCartActivity.class;
             default:
                 break;
         }
@@ -171,6 +179,16 @@ public class ViewManager {
         Intent intent = new Intent(activity.getApplicationContext(), CustomerServiceHistoryActivity.class);
         activity.startActivity(intent);
         setViewKey(VIEW_KEY.CUSTOMER_SERVICE_HISTORY);
+    }
+
+    private void viewViewCartActivity() {
+        Activity activity = currentActivity;
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity.getApplicationContext(), ViewCartActivity.class);
+        activity.startActivity(intent);
+        setViewKey(VIEW_KEY.VIEW_CART);
     }
 
     public void handleBackScreen() {

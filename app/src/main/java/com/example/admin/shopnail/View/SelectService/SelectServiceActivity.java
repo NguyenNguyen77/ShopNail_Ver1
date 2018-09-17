@@ -72,6 +72,13 @@ public class SelectServiceActivity extends Activity implements View.OnClickListe
                 mViewManager.handleBackScreen();
             }
         });
+
+        btnViewcart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewManager.setView(ViewManager.VIEW_KEY.VIEW_CART);
+            }
+        });
     }
 
 

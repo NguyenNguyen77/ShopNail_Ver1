@@ -39,6 +39,11 @@
             android:theme="@style/nailBarTheme"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".View.ViewCartActivity.ViewCartActivity"
+            android:theme="@style/nailBarTheme"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
