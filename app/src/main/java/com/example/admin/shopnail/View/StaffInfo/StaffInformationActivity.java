@@ -128,16 +128,25 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.action_select_service).setVisible(true);
+        menu.findItem(R.id.action_my_customer).setVisible(true);
+        menu.findItem(R.id.action_customer_service_history).setVisible(true);
+        menu.findItem(R.id.action_menu_for_staff).setVisible(true);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_menu_for_staff:
+                mViewManager.setView(ViewManager.VIEW_KEY.MENU_FOR_STAFF);
+                return true;
             case R.id.action_select_service:
                 mViewManager.setView(ViewManager.VIEW_KEY.SELECT_SERVICE);
                 return true;
             case R.id.action_my_customer:
                 Toast.makeText(this, R.string.my_customer, Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.action_staff_info:
-                Toast.makeText(this, R.string.staff_info, Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_customer_service_history:
                 mViewManager.setView(ViewManager.VIEW_KEY.CUSTOMER_SERVICE_HISTORY);

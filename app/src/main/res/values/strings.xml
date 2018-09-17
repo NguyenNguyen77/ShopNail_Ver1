@@ -49,4 +49,5 @@
     <string name="select_date_to_view_history">Select Date to view History</string>
     <string name="filter_by_day">Filter by day: </string>
     <string name="view_cart">View cart</string>
+    <string name="customer_info">Customer Information</string>
 </resources>

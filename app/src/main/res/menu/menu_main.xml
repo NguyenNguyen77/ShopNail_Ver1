@@ -5,24 +5,30 @@
         android:showAsAction="always">
         <menu>
             <item
+                android:id="@+id/action_menu_for_staff"
+                android:showAsAction="never"
+                android:title="@string/menu_for_staff"
+                android:visible="false"/>
+            <item
                 android:id="@+id/action_select_service"
                 android:showAsAction="never"
-                android:title="@string/select_service" />
+                android:title="@string/select_service"
+                android:visible="false"/>
             <item
                 android:id="@+id/action_my_customer"
                 android:showAsAction="never"
                 android:title="@string/my_customer"
-                android:visible="true" />
+                android:visible="false" />
             <item
                 android:id="@+id/action_customer_service_history"
                 android:showAsAction="never"
                 android:title="@string/customer_service_history"
-                android:visible="true" />
+                android:visible="false" />
             <item
                 android:id="@+id/action_staff_info"
                 android:showAsAction="never"
                 android:title="@string/staff_info"
-                android:visible="true" />
+                android:visible="false" />
         </menu>
     </item>
 </menu>
