@@ -9,7 +9,6 @@
         android:layout_height="match_parent"
         android:background="@drawable/background_custom"
         android:orientation="vertical"
-        android:layout_marginRight="20dp"
         tools:ignore="MissingConstraints">
 
     <LinearLayout
@@ -41,6 +40,7 @@
 
 
         <ListView
+            android:id="@+id/listView"
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:layout_width="match_parent"
@@ -69,13 +69,13 @@
                 android:layout_marginLeft="20dp"/>
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/edt_Extra"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="number"
-                android:focusableInTouchMode="true"/>
+                android:cursorVisible="false"/>
 
             <Button
                 android:id="@+id/btc_add_extra"
@@ -90,14 +90,14 @@
             android:id="@+id/txt_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/total"
+            android:text="ToTal: xxxxxx $"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_gravity="center"/>
             <Button
                 android:id="@+id/btn_view_cart"
                 android:layout_width="250dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:background="@drawable/button_nail"
                 android:text="@string/confirm"
@@ -105,7 +105,7 @@
             <Button
                 android:id="@+id/btn_go_back"
                 android:layout_width="250dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="5dp"
