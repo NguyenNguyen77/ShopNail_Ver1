@@ -31,8 +31,11 @@
         android:id="@+id/btn_remove"
         android:layout_weight="2"
         android:layout_width="0dp"
+        android:layout_margin="5dp"
         android:layout_height="wrap_content"
         android:text="Remove"
+        android:background="@drawable/button_nail"
+        android:textColor="@drawable/button_text"
         android:layout_gravity="center"
         />
 </LinearLayout>

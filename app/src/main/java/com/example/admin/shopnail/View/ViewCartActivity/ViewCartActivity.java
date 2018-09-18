@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import com.example.admin.shopnail.Adapter.ViewProductAdapter;
 import com.example.admin.shopnail.Model.ServicesOfShop;
+import com.example.admin.shopnail.Presenter.ViewProductPresenter.ViewProductPresenter;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.View.ViewManager;
@@ -22,6 +23,7 @@ public class ViewCartActivity extends Activity {
     ListView listCart = null;
     List<ServicesOfShop> mList = null;
     ViewProductAdapter viewProductAdapter;
+    ViewProductPresenter mViewProductPresenter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +34,8 @@ public class ViewCartActivity extends Activity {
 
         edtExtra = findViewById(R.id.edt_Extra);
         listCart = findViewById(R.id.listView);
-        List<ServicesOfShop> listService = new ArrayList<ServicesOfShop>();
-        ServicesOfShop Manicure = new ServicesOfShop("aaaaaa", 17, "http//...");
-        ServicesOfShop Gel_Manicure = new ServicesOfShop("bbbbbbbbb", 30, "http//...");
-        ServicesOfShop Gel_Manicure_French_Tip = new ServicesOfShop("cccccccccc", 35, "http//...");
-        listService.add(Manicure);
-        listService.add(Gel_Manicure);
-        listService.add(Gel_Manicure_French_Tip);
-
+        mViewProductPresenter = new ViewProductPresenter();
+        List<ServicesOfShop> listService = mViewProductPresenter.getListProduct();
         viewProductAdapter = new ViewProductAdapter(this,listService);
         listCart.setAdapter(viewProductAdapter);
 

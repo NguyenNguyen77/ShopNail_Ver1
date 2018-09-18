@@ -1,12 +1,12 @@
 package com.example.admin.shopnail.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.shopnail.Model.ServicesOfShop;
@@ -40,7 +40,7 @@ public class ViewProductAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
 
         ViewProduct holder;
         if (view == null) {
@@ -57,6 +57,15 @@ public class ViewProductAdapter extends BaseAdapter {
         ServicesOfShop itemService = this.listService.get(i);
         holder.nameService.setText(itemService.nameService);
         holder.priceService.setText(itemService.priceService+" $");
+        holder.btnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listService.remove(i);
+                Log.d("NguyenNK2","remove item: "+i);
+                ViewProductAdapter.this.notifyDataSetChanged();
+            }
+        });
+
 
         return view;
 
