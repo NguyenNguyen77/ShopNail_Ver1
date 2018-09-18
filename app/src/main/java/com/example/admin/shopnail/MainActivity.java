@@ -7,14 +7,12 @@ import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.admin.shopnail.Presenter.LoginPresenter;
 import com.example.admin.shopnail.View.ILoginView;
-import com.example.admin.shopnail.View.MenuFoStaff.MenuForStaffActivity;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.View.ViewManager;
 
@@ -23,7 +21,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
     private Button btnExit;
     private Button btnLogin;
     private Button btnMakeAppointment;
-    private LoginPresenter mLoginPersenter;
+    private LoginPresenter  mLoginPersenter = new LoginPresenter(this);
     private String mUserName = "";
     private String mPassword = "";
     private ProgressDialog mProgressDialog;
@@ -68,13 +66,10 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         final Dialog login = new Dialog(ctw);
         login.setContentView(R.layout.login_dialog);
         login.setTitle(R.string.login);
-
         Button btnLogin = (Button) login.findViewById(R.id.btnLogin);
         Button btnCancel = (Button) login.findViewById(R.id.btnCancel);
         final EditText txtUsername = (EditText) login.findViewById(R.id.txtUsername);
         final EditText txtPassword = (EditText) login.findViewById(R.id.txtPassword);
-        mLoginPersenter = new LoginPresenter(this);
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
