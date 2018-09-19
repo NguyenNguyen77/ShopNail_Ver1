@@ -45,6 +45,11 @@
             android:theme="@style/nailBarTheme"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".View.BookAppointment.BookAppointmentActivity"
+            android:theme="@style/nailBarTheme"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

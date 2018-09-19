@@ -57,6 +57,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
                 showLoginDialog();
                 break;
             case R.id.btn_make_appointment_online:
+                mViewManager.setView(ViewManager.VIEW_KEY.BOOK_APPOINTMENT);
                 break;
             case R.id.btn_exit:
                 mViewManager.finishListActivity();
