@@ -1,23 +1,29 @@
 package com.example.admin.shopnail.Presenter;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.example.admin.shopnail.BaseMethod;
-import com.example.admin.shopnail.KeyManager;
-import com.example.admin.shopnail.Model.Employee;
+import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
+import com.example.admin.shopnail.AsynTaskManager.CaseManager;
+import com.example.admin.shopnail.AsynTaskManager.NailTask;
+import com.example.admin.shopnail.AsynTaskManager.ResuiltObject;
+import com.example.admin.shopnail.Manager.BaseMethod;
+import com.example.admin.shopnail.Manager.KeyManager;
+import com.example.admin.shopnail.Manager.UrlManager;
+import com.example.admin.shopnail.Model.Login.GsonLogin;
 import com.example.admin.shopnail.View.ILoginView;
+import com.google.gson.Gson;
 
-import static java.lang.Boolean.TRUE;
+public class LoginPresenter extends BaseMethod implements ILoginPresenter, AsyncTaskCompleteListener<ResuiltObject> {
 
-public class LoginPresenter extends BaseMethod implements ILoginPresenter {
-
+    Context context;
     private ILoginView loginView;
     private boolean mResult = false;
 
-    public LoginPresenter(ILoginView loginView) {
+    public LoginPresenter(Context context, ILoginView loginView) {
+        this.context = context;
         this.loginView = loginView;
     }
 
@@ -39,32 +45,8 @@ public class LoginPresenter extends BaseMethod implements ILoginPresenter {
 
     @Override
     public void sendRequestLogin(String userName, String passWord) {
-        setUserName(userName); setPassWord(passWord);
-//        SendData(); //Send request to Websocket!!!
-
-        new LoginTask().execute("http://142.93.29.45:8888/api/login");
+        new NailTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new CaseManager(context, KeyManager.LOGIN, UrlManager.LOGIN_URL));
     }
-
-
-    class LoginTask extends AsyncTask<String, Integer, String>{
-
-        @Override
-        protected String doInBackground(String... strings) {
-            return makePostRequestLogin(strings[0], getUserName(), getPassWord());
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            Log.d(KeyManager.VinhCNLog, s);
-            super.onPostExecute(s);
-        }
-    }
-
-
-
-
-
-
 
 
     public void SendData() {    //For test
@@ -73,8 +55,29 @@ public class LoginPresenter extends BaseMethod implements ILoginPresenter {
             @Override
             public void run() {
                 //Do something after 100ms
-                loginView.onLoginResult(mResult);
+
             }
         }, 1000);
+    }
+
+    @Override
+    public void onTaskCompleted(String s, String CaseRequest) {
+        switch (CaseRequest) {
+            case KeyManager.LOGIN:
+                try{
+                    GsonLogin mGsonLogin  = getGson().fromJson(s, GsonLogin.class);
+                    loginView.onLoginResult(mGsonLogin.isStatus());
+                }catch (Exception e){
+                    loginView.onLoginResult(false);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onTaskError(String s, String CaseRequest) {
+        loginView.onLoginResult(false);
     }
 }

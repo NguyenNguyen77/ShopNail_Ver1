@@ -13,8 +13,7 @@
         android:id="@+id/txtUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/phone_number"
-        android:inputType="numberDecimal">
+        android:hint="@string/phone_number">
         <requestFocus></requestFocus>
     </EditText>
 

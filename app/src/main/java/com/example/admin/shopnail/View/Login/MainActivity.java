@@ -1,4 +1,4 @@
-package com.example.admin.shopnail;
+package com.example.admin.shopnail.View.Login;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -11,17 +11,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Presenter.LoginPresenter;
+import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.ILoginView;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.View.ViewManager;
+
+import static com.example.admin.shopnail.Manager.KeyManager.PASS_WORD;
+import static com.example.admin.shopnail.Manager.KeyManager.USER_NAME;
 
 
 public class MainActivity extends Activity implements View.OnClickListener, ILoginView {
     private Button btnExit;
     private Button btnLogin;
     private Button btnMakeAppointment;
-    private LoginPresenter  mLoginPersenter = new LoginPresenter(this);
+    private LoginPresenter  mLoginPersenter = new LoginPresenter(this, this);
     private String mUserName = "";
     private String mPassword = "";
     private ProgressDialog mProgressDialog;
@@ -80,7 +85,10 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
                     mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
                     mProgressDialog.setMessage(getString(R.string.please_wait));
                     mProgressDialog.show();
+                    BaseMethod.setDefaults(USER_NAME, mUserName, MainActivity.this);
+                    BaseMethod.setDefaults(PASS_WORD, mPassword, MainActivity.this);
                     mLoginPersenter.sendRequestLogin(mUserName, mPassword);  // Send Username & PWD to persenter: save.
+
                 } else {
                     Toast.makeText(MainActivity.this, R.string.enter_username_pwd, Toast.LENGTH_LONG).show();
                 }
@@ -101,10 +109,15 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
             mProgressDialog.cancel();
             Toast.makeText(MainActivity.this, R.string.login_sucessfull, Toast.LENGTH_SHORT).show();
             mViewManager.setView(ViewManager.VIEW_KEY.MENU_FOR_STAFF);  // Change to next screen
-
         } else {
+            dismissProgress();
             Toast.makeText(MainActivity.this, R.string.login_failed, Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void dismissProgress() {
+        mProgressDialog.cancel();
     }
 
     @Override

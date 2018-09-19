@@ -10,14 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.admin.shopnail.MainActivity;
 import com.example.admin.shopnail.Presenter.AccountCustomerPresenter.AccountCustomerPresenter;
-import com.example.admin.shopnail.Presenter.AccountCustomerPresenter.IAccountCustomer;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.View.ViewManager;
-
-import static com.example.admin.shopnail.View.ViewManager.VIEW_KEY.LOGIN_FOR_CUSTOMER;
 
 public class LoginForCustomerActivity extends Activity implements View.OnClickListener, ILoginForCustomerView{
 

@@ -5,22 +5,11 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.Point;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.ColorInt;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.view.ContextThemeWrapper;
-import android.support.v7.widget.DrawableUtils;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,14 +20,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.admin.shopnail.MainActivity;
-import com.example.admin.shopnail.Presenter.LoginPresenter;
 import com.example.admin.shopnail.Presenter.StaffInformation.StaffInformationPresenter;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.ERROR_CODE;
 import com.example.admin.shopnail.View.ViewManager;
-
-import java.io.File;
 
 public class StaffInformationActivity extends Activity implements View.OnClickListener, IStaffInformation {
     private ImageView imgAvatar;

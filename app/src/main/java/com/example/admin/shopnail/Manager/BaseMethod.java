@@ -1,10 +1,12 @@
-package com.example.admin.shopnail;
+package com.example.admin.shopnail.Manager;
 
-import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
-import android.nfc.Tag;
-import android.util.Base64;
+import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,7 +15,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -27,11 +28,22 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.X509TrustManager;
 
-public class BaseMethod {
+import static com.example.admin.shopnail.Manager.KeyManager.PASS_WORD;
+import static com.example.admin.shopnail.Manager.KeyManager.USER_NAME;
 
+public class BaseMethod {
+    Gson gson = new Gson();
 
     String userName;
     String passWord;
+
+    public Gson getGson() {
+        return gson;
+    }
+
+    public void setGson(Gson gson) {
+        this.gson = gson;
+    }
 
     public String getUserName() {
         return userName;
@@ -78,7 +90,15 @@ public class BaseMethod {
         }
     }
 
-    public String makePostRequestLogin(String link, String username, String passWord) {
+    public void getInforAccountFromShareReferenced(Context context) {
+        String username = getDefaults(USER_NAME, context);
+        String password = getDefaults(PASS_WORD, context);
+        setUserName(username);
+        setPassWord(password);
+    }
+
+
+    public String makePostRequestLogin(String link, String userID, String passWord) {
         Log.d(KeyManager.VinhCNLog, link);
         trustEveryone();
         HttpURLConnection connect;
@@ -102,12 +122,12 @@ public class BaseMethod {
             // unable POST method to send
             connect.setRequestMethod("POST");
 //            it must have for add param
-            connect.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+//            connect.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             //set header for login user and pass, set password and account if request exists login.
             // if param != null let write param to the last character
             Uri.Builder builder = new Uri.Builder();
-            builder.appendQueryParameter("username", username);
-            builder.appendQueryParameter("password", passWord);
+            builder.appendQueryParameter(USER_NAME, userID);
+            builder.appendQueryParameter(PASS_WORD, passWord);
             String query = builder.build().getEncodedQuery();
             // open connect data
             OutputStream os = connect.getOutputStream();
@@ -138,7 +158,7 @@ public class BaseMethod {
                 }
                 return result.toString();
             } else {
-                return "Error!";
+                return String.valueOf(response_code);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -148,5 +168,24 @@ public class BaseMethod {
         }
     }
 
+
+    /*
+ write shareedPreferences and save it for all activity
+*/
+    public static void setDefaults(String key, String value, Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+     /*
+        read shareedPreferences and save it for all activity
+    */
+
+    public static String getDefaults(String key, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString(key, null);
+    }
 
 }
