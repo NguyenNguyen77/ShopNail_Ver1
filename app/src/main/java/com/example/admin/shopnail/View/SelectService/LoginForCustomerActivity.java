@@ -22,7 +22,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
     private Button btnOldCustomer;
     private AccountCustomerPresenter mLoginPersenter;
     private String mNameCustomer = "";
-    private int mPhoneCustomer = 0;
+    private String mPhoneCustomer = "";
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -90,7 +90,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
             public void onClick(View v) {
 //                if(txtNameCustomer.getText().toString() != null){
                     mNameCustomer = txtNameCustomer.getText().toString().trim();
-                    mPhoneCustomer = Integer.parseInt(txtPhoneCustomer.getText().toString());
+                    mPhoneCustomer = txtPhoneCustomer.getText().toString();
                     if (mLoginPersenter.checkLoginForCustomer(mPhoneCustomer) && mNameCustomer!=null) { //Need to check more condition for Username&PWD
                         login.dismiss();
                         mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
@@ -130,7 +130,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPhoneCustomer = Integer.parseInt(txtPhoneCustomer.getText().toString());
+                mPhoneCustomer = txtPhoneCustomer.getText().toString();
                 if (mLoginPersenter.checkLoginForCustomer(mPhoneCustomer)) { //Need to check more condition for Username&PWD
                     login.dismiss();
                     mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait

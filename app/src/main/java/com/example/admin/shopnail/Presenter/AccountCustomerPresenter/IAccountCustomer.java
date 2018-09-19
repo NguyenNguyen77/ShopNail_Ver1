@@ -1,9 +1,9 @@
 package com.example.admin.shopnail.Presenter.AccountCustomerPresenter;
 
 public interface IAccountCustomer {
-    void createAccountForCustomer(String nameCustomer,int phoneCustomer);
+    void createAccountForCustomer(String nameCustomer,String phoneCustomer);
 
-    boolean checkLoginForCustomer(int phoneCustomer);
+    boolean checkLoginForCustomer(String phoneCustomer);
 
-    void sendRequestLoginForCustomer(int phoneCustomer);
+    void sendRequestLoginForCustomer(String phoneCustomer);
 }

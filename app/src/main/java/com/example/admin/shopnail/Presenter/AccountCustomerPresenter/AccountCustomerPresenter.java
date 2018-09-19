@@ -20,14 +20,14 @@ public class AccountCustomerPresenter implements IAccountCustomer{
     }
 
     @Override
-    public void createAccountForCustomer(String nameCustomer, int phoneCustomer) {
+    public void createAccountForCustomer(String nameCustomer, String phoneCustomer) {
         createAccount();
     }
 
 
     @Override
-    public boolean checkLoginForCustomer(int phoneCustome) {
-        if (phoneCustome != 0 ) {
+    public boolean checkLoginForCustomer(String phoneCustome) {
+        if (phoneCustome != "" ) {
             mResult = true;
         } else {
             mResult = false;
@@ -36,7 +36,7 @@ public class AccountCustomerPresenter implements IAccountCustomer{
     }
 
     @Override
-    public void sendRequestLoginForCustomer(int phoneCustomer) {
+    public void sendRequestLoginForCustomer(String phoneCustomer) {
         SendData(); //Send request to Websocket!!!
     }
 
