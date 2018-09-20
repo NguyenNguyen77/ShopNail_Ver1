@@ -17,8 +17,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="2"
             android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:background="@drawable/ic_default_avatar" />
+            android:adjustViewBounds="true" />
 
         <LinearLayout
             android:layout_width="match_parent"

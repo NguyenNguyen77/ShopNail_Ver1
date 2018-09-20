@@ -19,6 +19,7 @@ import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.View.ViewManager;
 
 import static com.example.admin.shopnail.Manager.KeyManager.PASS_WORD;
+import static com.example.admin.shopnail.Manager.KeyManager.USER_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.USER_NAME;
 
 
@@ -88,6 +89,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
                     mProgressDialog.show();
                     BaseMethod.setDefaults(USER_NAME, mUserName, MainActivity.this);
                     BaseMethod.setDefaults(PASS_WORD, mPassword, MainActivity.this);
+                    BaseMethod.setDefaults(USER_ID, String.valueOf(-1), MainActivity.this);
                     mLoginPersenter.sendRequestLogin(mUserName, mPassword);  // Send Username & PWD to persenter: save.
 
                 } else {

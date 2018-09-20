@@ -1,6 +1,7 @@
 package com.example.admin.shopnail.Presenter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.widget.Toast;
@@ -15,6 +16,11 @@ import com.example.admin.shopnail.Manager.UrlManager;
 import com.example.admin.shopnail.Model.Login.GsonLogin;
 import com.example.admin.shopnail.View.ILoginView;
 import com.google.gson.Gson;
+
+import static com.example.admin.shopnail.Manager.KeyManager.PASS_WORD;
+import static com.example.admin.shopnail.Manager.KeyManager.TOKEN;
+import static com.example.admin.shopnail.Manager.KeyManager.USER_ID;
+import static com.example.admin.shopnail.Manager.KeyManager.USER_NAME;
 
 public class LoginPresenter extends BaseMethod implements ILoginPresenter, AsyncTaskCompleteListener<ResuiltObject> {
 
@@ -45,7 +51,14 @@ public class LoginPresenter extends BaseMethod implements ILoginPresenter, Async
 
     @Override
     public void sendRequestLogin(String userName, String passWord) {
-        new NailTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new CaseManager(context, KeyManager.LOGIN, UrlManager.LOGIN_URL));
+        new NailTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new CaseManager(context, KeyManager.LOGIN, UrlManager.LOGIN_URL, getParamBuilder()));
+    }
+
+    public Uri.Builder getParamBuilder(){
+        Uri.Builder builder = new Uri.Builder();
+        builder.appendQueryParameter(USER_NAME, getDefaults(USER_NAME, context));
+        builder.appendQueryParameter(PASS_WORD, getDefaults(PASS_WORD, context));
+        return builder;
     }
 
 
@@ -66,6 +79,8 @@ public class LoginPresenter extends BaseMethod implements ILoginPresenter, Async
             case KeyManager.LOGIN:
                 try{
                     GsonLogin mGsonLogin  = getGson().fromJson(s, GsonLogin.class);
+                    setDefaults(USER_ID, String.valueOf(mGsonLogin.getSuccess().getId()), context);
+                    setDefaults(TOKEN, mGsonLogin.getSuccess().getToken(), context);
                     loginView.onLoginResult(mGsonLogin.isStatus());
                 }catch (Exception e){
                     loginView.onLoginResult(false);
