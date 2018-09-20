@@ -1,19 +1,32 @@
 package com.example.admin.shopnail.Presenter.StaffInformation;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Handler;
+import android.util.Log;
 
+import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
+import com.example.admin.shopnail.AsynTaskManager.CaseManager;
+import com.example.admin.shopnail.AsynTaskManager.NailTask;
+import com.example.admin.shopnail.AsynTaskManager.ResuiltObject;
+import com.example.admin.shopnail.Manager.BaseMethod;
+import com.example.admin.shopnail.Manager.KeyManager;
+import com.example.admin.shopnail.Manager.UrlManager;
+import com.example.admin.shopnail.Model.StaffInfor.GsonStaffInfor;
 import com.example.admin.shopnail.View.ERROR_CODE;
 import com.example.admin.shopnail.View.ILoginView;
 import com.example.admin.shopnail.View.StaffInfo.IStaffInformation;
 
-public class StaffInformationPresenter implements IStaffInformationPresenter {
+public class StaffInformationPresenter extends BaseMethod implements IStaffInformationPresenter, AsyncTaskCompleteListener<ResuiltObject> {
 
 
     private IStaffInformation mIStaffInforView;
     private boolean mResult = false;
+    Context mContext;
 
-    public StaffInformationPresenter(IStaffInformation staffInformationView) {
+    public StaffInformationPresenter(IStaffInformation staffInformationView, Context context) {
         this.mIStaffInforView = staffInformationView;
+        mContext = context;
     }
 
 
@@ -47,5 +60,35 @@ public class StaffInformationPresenter implements IStaffInformationPresenter {
     public String getStaffPhoneNumber() {
         String staffPhoneNumber = "0973603509";
         return staffPhoneNumber;
+    }
+
+    @Override
+    public void requestInfor(String defaults) {
+        new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_USER_BY_ID, UrlManager.GET_USER_BY_ID_URL + defaults, getParamBuilder()));
+    }
+
+    private Uri.Builder getParamBuilder() {
+        return new Uri.Builder();
+    }
+
+
+    @Override
+    public void onTaskCompleted(String s, String CaseRequest) {
+        switch (CaseRequest) {
+            case KeyManager.GET_USER_BY_ID:
+                try {
+                    GsonStaffInfor mGsonStaffInfor = getGson().fromJson(s, GsonStaffInfor.class);
+                    mIStaffInforView.setStaffInfor(mGsonStaffInfor.getSuccess());
+                } catch (Exception e) {
+                    mIStaffInforView.showError();
+                }
+                break;
+        }
+
+    }
+
+    @Override
+    public void onTaskError(String s, String CaseRequest) {
+
     }
 }

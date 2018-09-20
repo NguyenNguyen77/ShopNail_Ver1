@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.admin.shopnail.View.BookAppointment.BookAppointmentActivity;
 import com.example.admin.shopnail.View.Login.MainActivity;
 import com.example.admin.shopnail.View.CustomerServiceHistory.CustomerServiceHistoryActivity;
 import com.example.admin.shopnail.View.Login.ResetPasswordActivity;
@@ -62,13 +63,13 @@ public class ViewManager {
             case RESET_PASSWORD:
                 viewResetPasswordActivity();
                 break;
+            case BOOK_APPOINTMENT:
+                viewBookAppointmentActivity();
             default:
                 break;
         }
 
     }
-
-
 
 
     public static synchronized ViewManager getInstance() {
@@ -80,7 +81,7 @@ public class ViewManager {
 
     public void setActivity(Activity a) {
         currentActivity = a;
-        if( mListActivity.contains(a) == false ){
+        if (mListActivity.contains(a) == false) {
             mListActivity.add(a);
         }
     }
@@ -198,6 +199,7 @@ public class ViewManager {
         setViewKey(VIEW_KEY.VIEW_CART);
     }
 
+
     private void viewResetPasswordActivity() {
         Activity activity = currentActivity;
         if (activity == null) {
@@ -206,6 +208,18 @@ public class ViewManager {
         Intent intent = new Intent(activity.getApplicationContext(), ResetPasswordActivity.class);
         activity.startActivity(intent);
         setViewKey(VIEW_KEY.RESET_PASSWORD);
+    }
+
+
+    private void viewBookAppointmentActivity() {
+        Activity activity = currentActivity;
+        if (activity == null) {
+            return;
+        }
+
+        Intent intent = new Intent(activity.getApplicationContext(), BookAppointmentActivity.class);
+        activity.startActivity(intent);
+        setViewKey(VIEW_KEY.BOOK_APPOINTMENT);
     }
 
     public void handleBackScreen() {
@@ -219,6 +233,9 @@ public class ViewManager {
             case MENU_FOR_STAFF:
                 setView(VIEW_KEY.LOGIN_SCREEN);
                 break;
+            case BOOK_APPOINTMENT:
+                setView(VIEW_KEY.LOGIN_SCREEN);
+                break;
             default:
                 break;
         }
@@ -226,7 +243,7 @@ public class ViewManager {
 
     public void finishListActivity() {
         for (Activity stack : mListActivity) {
-            if( stack != null ){
+            if (stack != null) {
                 stack.finish();
             }
         }

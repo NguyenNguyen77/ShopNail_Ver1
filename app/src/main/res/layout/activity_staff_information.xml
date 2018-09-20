@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_custom">
+    android:background="@color/background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,8 +17,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="2"
             android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:background="@drawable/ic_default_avatar" />
+            android:adjustViewBounds="true" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,12 +37,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/text_color"
                     android:text="@string/staff_id" />
 
                 <TextView
                     android:id="@+id/tv_staff_id"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/text_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -59,14 +58,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/text_color"
                     android:text="@string/staff_name" />
 
                 <TextView
                     android:id="@+id/tv_staff_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="@color/text_color"/>
 
             </LinearLayout>
 
@@ -80,14 +79,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/text_color"
                     android:text="@string/staff_phonenumber" />
 
                 <TextView
                     android:id="@+id/tv_staff_phone_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="@color/text_color"/>
 
             </LinearLayout>
         </LinearLayout>

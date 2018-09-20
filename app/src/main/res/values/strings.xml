@@ -54,7 +54,16 @@
     <string name="total">Total</string>
     <string name="confirm">Confirm</string>
     <string name="customer_info">Customer Information</string>
+
     <string name="forget_password">Forget Password ?</string>
     <string name="reset_password">Reset Password</string>
+
+    <string name="book_appointment">Book Appointment</string>
+    <string name="customer_name">Name: </string>
+    <string name="customer_phone">Phone: </string>
+    <string name="select_staff">Select Staff: </string>
+    <string name="customer_name_hint">Customer Name</string>
+    <string name="customer_phone_hint">Phone Number</string>
+
 
 </resources>

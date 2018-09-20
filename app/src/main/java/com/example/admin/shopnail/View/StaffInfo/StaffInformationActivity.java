@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,10 +21,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.admin.shopnail.Manager.BaseMethod;
+import com.example.admin.shopnail.Manager.KeyManager;
+import com.example.admin.shopnail.Model.StaffInfor.GsonStaffInfor;
 import com.example.admin.shopnail.Presenter.StaffInformation.StaffInformationPresenter;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.ERROR_CODE;
 import com.example.admin.shopnail.View.ViewManager;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import static com.example.admin.shopnail.Manager.KeyManager.USER_NAME;
 
 public class StaffInformationActivity extends Activity implements View.OnClickListener, IStaffInformation {
     private ImageView imgAvatar;
@@ -35,13 +46,14 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
     private TextView mPhone;
 
     protected ViewManager mViewManager = ViewManager.getInstance();
-    private StaffInformationPresenter mStaffInformationPresenter;
     private String mOldPass;
     private String mNewPass;
     private String mConfirmNewPass;
     private ProgressDialog mProgressDialog;
     private Dialog mChangePassDialog;
     private static int RESULT_LOAD_IMAGE = 1;
+
+    StaffInformationPresenter mStaffInformationPresenter = new StaffInformationPresenter(this, this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,24 +70,23 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         mID = (TextView) findViewById(R.id.tv_staff_id);
         mName = (TextView) findViewById(R.id.tv_staff_name);
         mPhone = (TextView) findViewById(R.id.tv_staff_phone_number);
-
         btnChangeAvatar.setOnClickListener(this);
         btnChangePassword.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         imgAvatar.setOnClickListener(this);
-        mStaffInformationPresenter = new StaffInformationPresenter(this);
+        mStaffInformationPresenter.requestInfor(BaseMethod.getDefaults(KeyManager.USER_ID, this));
         mViewManager.setActivity(this);
-        init();
+//        init();
     }
 
-    private void init() {
-        //Load ID, Name, Phone
-        mID.setText(mStaffInformationPresenter.getStaffID());
-        mName.setText(mStaffInformationPresenter.getStaffName());
-        mPhone.setText(mStaffInformationPresenter.getStaffPhoneNumber());
-        //Load Avatar
-
-    }
+//    private void init() {
+//        //Load ID, Name, Phone
+//        mID.setText(mStaffInformationPresenter.getStaffID());
+//        mName.setText(mStaffInformationPresenter.getStaffName());
+//        mPhone.setText(mStaffInformationPresenter.getStaffPhoneNumber());
+//        //Load Avatar
+//
+//    }
 
     @Override
     public void onClick(View view) {
@@ -187,6 +198,19 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         if (mProgressDialog != null) {
             mProgressDialog.cancel();
         }
+    }
+
+    @Override
+    public void showError() {
+        Toast.makeText(this, "Loading Staff Fail...", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setStaffInfor(GsonStaffInfor.SuccessBean success) {
+        mID.setText(String.valueOf(success.getId()));
+        mName.setText(success.getFullname());
+        mPhone.setText(BaseMethod.getDefaults(USER_NAME, this));
+        Picasso.get().load(success.getAvatar()).into(imgAvatar);
     }
 
     private boolean checkValidPassword(String mOldPass, String newPass, String mConfirmNewPass) {
