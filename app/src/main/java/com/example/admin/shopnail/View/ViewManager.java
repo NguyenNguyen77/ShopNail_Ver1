@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.admin.shopnail.View.Login.MainActivity;
 import com.example.admin.shopnail.View.CustomerServiceHistory.CustomerServiceHistoryActivity;
+import com.example.admin.shopnail.View.Login.ResetPasswordActivity;
 import com.example.admin.shopnail.View.MenuFoStaff.MenuForStaffActivity;
 import com.example.admin.shopnail.View.SelectService.LoginForCustomerActivity;
 import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
@@ -31,7 +32,8 @@ public class ViewManager {
         SELECT_SERVICE,
         LOGIN_FOR_CUSTOMER,
         CUSTOMER_SERVICE_HISTORY,
-        VIEW_CART
+        VIEW_CART,
+        RESET_PASSWORD
     }
 
     public void setView(VIEW_KEY key) {
@@ -56,6 +58,9 @@ public class ViewManager {
                 break;
             case VIEW_CART:
                 viewViewCartActivity();
+                break;
+            case RESET_PASSWORD:
+                viewResetPasswordActivity();
                 break;
             default:
                 break;
@@ -114,6 +119,8 @@ public class ViewManager {
                 return CustomerServiceHistoryActivity.class;
             case VIEW_CART:
                 return ViewCartActivity.class;
+            case RESET_PASSWORD:
+                return ResetPasswordActivity.class;
             default:
                 break;
         }
@@ -189,6 +196,16 @@ public class ViewManager {
         Intent intent = new Intent(activity.getApplicationContext(), ViewCartActivity.class);
         activity.startActivity(intent);
         setViewKey(VIEW_KEY.VIEW_CART);
+    }
+
+    private void viewResetPasswordActivity() {
+        Activity activity = currentActivity;
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity.getApplicationContext(), ResetPasswordActivity.class);
+        activity.startActivity(intent);
+        setViewKey(VIEW_KEY.RESET_PASSWORD);
     }
 
     public void handleBackScreen() {

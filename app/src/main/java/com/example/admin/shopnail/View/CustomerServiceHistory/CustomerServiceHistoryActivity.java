@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import com.example.admin.shopnail.Adapter.CustomerAdapter;
 import com.example.admin.shopnail.Adapter.ServiceHistoryAdapter;
-import com.example.admin.shopnail.MainActivity;
 import com.example.admin.shopnail.Model.CustomerInfo.Customer;
 import com.example.admin.shopnail.Model.ServiceHistory;
 import com.example.admin.shopnail.Model.ServicesOfShop;

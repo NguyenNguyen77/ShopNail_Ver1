@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.shopnail.Manager.BaseMethod;
@@ -75,6 +76,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         Button btnCancel = (Button) login.findViewById(R.id.btnCancel);
         final EditText txtUsername = (EditText) login.findViewById(R.id.txtUsername);
         final EditText txtPassword = (EditText) login.findViewById(R.id.txtPassword);
+        final TextView txtForgetPassword = login.findViewById(R.id.txt_forget_password);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,9 +102,18 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
                 login.dismiss();
             }
         });
+        txtForgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tranferToLResetPassword();
+                Toast.makeText(MainActivity.this, "show activity reset pasword", Toast.LENGTH_LONG).show();
+            }
+        });
         login.show();
     }
-
+    private void tranferToLResetPassword() {
+        mViewManager.setView(ViewManager.VIEW_KEY.RESET_PASSWORD);
+    }
     @Override
     public void onLoginResult(boolean result) {
         if (result) {
