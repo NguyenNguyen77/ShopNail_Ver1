@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -27,11 +29,14 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
     private Button btnExit;
     private Button btnLogin;
     private Button btnMakeAppointment;
-    private LoginPresenter  mLoginPersenter = new LoginPresenter(this, this);
+    private LoginPresenter mLoginPersenter = new LoginPresenter(this, this);
     private String mUserName = "";
     private String mPassword = "";
     private ProgressDialog mProgressDialog;
     protected ViewManager mViewManager = ViewManager.getInstance();
+
+    private int mTextSizeBefore = 0;
+    private int mTextSizeAfter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +74,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
     }
 
     private void showLoginDialog() {
-        ContextThemeWrapper ctw = new ContextThemeWrapper( this, R.style.Theme_AlertDialog);
+        ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);
         final Dialog login = new Dialog(ctw);
         login.setContentView(R.layout.login_dialog);
         login.setTitle(R.string.login);
@@ -77,6 +82,29 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         Button btnCancel = (Button) login.findViewById(R.id.btnCancel);
         final EditText txtUsername = (EditText) login.findViewById(R.id.txtUsername);
         final EditText txtPassword = (EditText) login.findViewById(R.id.txtPassword);
+
+        txtUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable text) {
+                mTextSizeAfter = text.length();
+                if (mTextSizeAfter > mTextSizeBefore) {
+                    if ((text.length() == 3) || (text.length() == 7)) {
+                        text.append('-');
+                    }
+                }
+                mTextSizeBefore = mTextSizeAfter;
+            }
+        });
+
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

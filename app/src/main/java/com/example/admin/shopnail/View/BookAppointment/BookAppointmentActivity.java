@@ -21,6 +21,8 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     private EditText mEtCustomerName;
     private EditText mEtCustomerPhone;
     private Spinner mSSelectStaff;
+    private int mTextSizeBefore = 0;
+    private int mTextSizeAfter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +55,13 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
 
             @Override
             public void afterTextChanged(Editable text) {
-                if ((text.length() == 3) || (text.length() == 7)) {
-                    text.append('-');
+                mTextSizeAfter = text.length();
+                if (mTextSizeAfter > mTextSizeBefore) {
+                    if ((text.length() == 3) || (text.length() == 7)) {
+                        text.append('-');
+                    }
                 }
+                mTextSizeBefore = mTextSizeAfter;
             }
         });
 
