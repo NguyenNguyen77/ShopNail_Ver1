@@ -1,7 +1,10 @@
 package com.example.admin.shopnail.View.BookAppointment;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,12 +32,50 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
 
         mBtnBack = (Button) findViewById(R.id.btn_back);
         mBtnSubmit = (Button) findViewById(R.id.btn_submit);
-
+        mEtCustomerName = (EditText) findViewById(R.id.et_customer_name);
+        mEtCustomerPhone = (EditText) findViewById(R.id.et_customer_phone);
 
         mBtnSubmit.setOnClickListener(this);
         mBtnBack.setOnClickListener(this);
+        mBtnSubmit.setEnabled(false);
+        mBtnSubmit.setClickable(false);
+
+
+        mEtCustomerPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                checkEnableSubmitButton();
+            }
+
+            @Override
+            public void afterTextChanged(Editable text) {
+                if ((text.length() == 3) || (text.length() == 7)) {
+                    text.append('-');
+                }
+            }
+        });
+
+        mEtCustomerName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                checkEnableSubmitButton();
+            }
+
+            @Override
+            public void afterTextChanged(Editable text) {
+            }
+        });
 
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -54,4 +95,22 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mViewManager.handleBackScreen();
     }
 
+    private void reqBookAppointment() {
+        String customerName = mEtCustomerName.getText().toString().trim();
+        String customerPhone = mEtCustomerPhone.getText().toString().trim();
+
+    }
+
+    private void checkEnableSubmitButton() {
+        int phoneSize = mEtCustomerPhone.getText().toString().trim().length();
+        int nameSize = mEtCustomerName.getText().toString().trim().length();
+
+        if (phoneSize == 12 & nameSize > 0) {
+            mBtnSubmit.setEnabled(true);
+            mBtnSubmit.setClickable(true);
+        } else {
+            mBtnSubmit.setEnabled(false);
+            mBtnSubmit.setClickable(false);
+        }
+    }
 }
