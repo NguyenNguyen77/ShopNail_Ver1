@@ -29,6 +29,7 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
 
         new NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.MENU_FOR_STAFF);
+        mViewManager.setActivity(this);
 
         btnSelectService = (Button) findViewById(R.id.btn_select_service);
         btnMyCustomer = (Button) findViewById(R.id.btn_my_customer);

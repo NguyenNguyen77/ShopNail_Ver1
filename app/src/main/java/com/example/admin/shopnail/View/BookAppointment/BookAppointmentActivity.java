@@ -6,15 +6,21 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.admin.shopnail.Model.Employee;
+import com.example.admin.shopnail.Presenter.BookAppointment.BookAppointmentPresenter;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
+import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
 import com.example.admin.shopnail.View.ViewManager;
 
-public class BookAppointmentActivity extends Activity implements View.OnClickListener {
+import java.util.ArrayList;
+
+public class BookAppointmentActivity extends Activity implements View.OnClickListener, IBookAppointmentView {
     protected ViewManager mViewManager = ViewManager.getInstance();
     private Button mBtnBack;
     private Button mBtnSubmit;
@@ -23,6 +29,8 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     private Spinner mSSelectStaff;
     private int mTextSizeBefore = 0;
     private int mTextSizeAfter = 0;
+    ArrayAdapter<String> adapterCategory = null;
+    private BookAppointmentPresenter mBookAppointmentPresenter = new BookAppointmentPresenter(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +39,20 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
 
         new NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.BOOK_APPOINTMENT);
+        mViewManager.setActivity(this);
 
         mBtnBack = (Button) findViewById(R.id.btn_back);
         mBtnSubmit = (Button) findViewById(R.id.btn_submit);
         mEtCustomerName = (EditText) findViewById(R.id.et_customer_name);
         mEtCustomerPhone = (EditText) findViewById(R.id.et_customer_phone);
+        mSSelectStaff = (Spinner) findViewById(R.id.spinnerStaff);
 
         mBtnSubmit.setOnClickListener(this);
         mBtnBack.setOnClickListener(this);
         mBtnSubmit.setEnabled(false);
         mBtnSubmit.setClickable(false);
 
+        reqStaffList(); //Get Staff list for select
 
         mEtCustomerPhone.addTextChangedListener(new TextWatcher() {
             @Override
@@ -86,7 +97,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_submit:
-
+                reqBookAppointment();
                 break;
             case R.id.btn_back:
                 mViewManager.handleBackScreen();
@@ -104,6 +115,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     private void reqBookAppointment() {
         String customerName = mEtCustomerName.getText().toString().trim();
         String customerPhone = mEtCustomerPhone.getText().toString().trim();
+        String staffSlected = mSSelectStaff.getSelectedItem().toString();
 
     }
 
@@ -118,5 +130,22 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             mBtnSubmit.setEnabled(false);
             mBtnSubmit.setClickable(false);
         }
+    }
+
+    private void reqStaffList() {
+        mBookAppointmentPresenter.reqGetStaffList();
+    }
+
+    @Override
+    public void updateStaffList(ArrayList<String> staffList) {
+        adapterCategory = new ArrayAdapter<String>(BookAppointmentActivity.this,
+                android.R.layout.simple_spinner_item, staffList);
+        adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSSelectStaff.setAdapter(adapterCategory);
+    }
+
+    @Override
+    public void onReqCallback(boolean result) {
+
     }
 }

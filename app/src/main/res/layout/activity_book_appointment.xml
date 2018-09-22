@@ -36,7 +36,7 @@
                     android:maxLines="1"
                     android:minLines="1"
                     android:singleLine="true"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="@color/text_color" />
 
             </LinearLayout>
 
@@ -61,7 +61,7 @@
                     android:minLines="1"
                     android:singleLine="true"
                     android:maxLength="12"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="@color/text_color" />
 
             </LinearLayout>
 
@@ -80,7 +80,7 @@
                     android:textColor="@color/text_color" />
 
                 <Spinner
-                    android:id="@+id/spinnerCategoty"
+                    android:id="@+id/spinnerStaff"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
