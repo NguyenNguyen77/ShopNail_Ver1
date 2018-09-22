@@ -12,6 +12,7 @@ import com.example.admin.shopnail.AsynTaskManager.ResuiltObject;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
+import com.example.admin.shopnail.Model.StaffInfor.GsonChangePass;
 import com.example.admin.shopnail.Model.StaffInfor.GsonStaffInfor;
 import com.example.admin.shopnail.View.ERROR_CODE;
 import com.example.admin.shopnail.View.ILoginView;
@@ -31,17 +32,29 @@ public class StaffInformationPresenter extends BaseMethod implements IStaffInfor
 
 
     @Override
-    public void requestChangePassword(String oldPass, String newPass, String confirmNewPass) {
-        ERROR_CODE.CHANGE_PASS_RESULT_CODE result = ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_NG;
-        //Send request to Server
-        result = ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_OK;
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mIStaffInforView.onChangePasswordResult(ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_OK);
-            }
-        }, 2000);
+    public void requestChangePassword(final String oldPass, final String newPass, final String confirmNewPass) {
+//        ERROR_CODE.CHANGE_PASS_RESULT_CODE result = ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_NG;
+//        //Send request to Server
+//        result = ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_OK;
+//        final Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//
+//            }
+//        }, 2000);
+        new NailTask(this).execute(new CaseManager(mContext, KeyManager.CHANGE_PASSWORD, UrlManager.CHANGE_PASSWORD_URL, getParamBuilder(oldPass, newPass, confirmNewPass)));
+    }
+
+    // mIStaffInforView.onChangePasswordResult(ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_OK);
+    Uri.Builder getParamBuilder(String oldPass, String newPass, String confirmNewPass) {
+        Uri.Builder mBuilder = new Uri.Builder();
+        mBuilder.appendQueryParameter(KeyManager.ID, getDefaults(KeyManager.USER_ID, mContext));
+        mBuilder.appendQueryParameter(KeyManager.PASS_WORD, oldPass);
+        mBuilder.appendQueryParameter(KeyManager.PASS_WORD_NEW, newPass);
+        mBuilder.appendQueryParameter(KeyManager.PASS_WORD_CONFIRMATION, confirmNewPass);
+        return mBuilder;
     }
 
     @Override
@@ -81,6 +94,15 @@ public class StaffInformationPresenter extends BaseMethod implements IStaffInfor
                     mIStaffInforView.setStaffInfor(mGsonStaffInfor.getSuccess());
                 } catch (Exception e) {
                     mIStaffInforView.showError();
+                }
+                break;
+            case KeyManager.CHANGE_PASSWORD:
+                Log.d(KeyManager.VinhCNLog, s);
+                try{
+                    GsonChangePass mGsonChangePass = getGson().fromJson(s, GsonChangePass.class);
+                    mIStaffInforView.onChangePasswordResult(mGsonChangePass.isStatus() ? ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_OK : ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_NG);
+                }catch (Exception e){
+                    mIStaffInforView.onChangePasswordResult(ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_NG);
                 }
                 break;
         }

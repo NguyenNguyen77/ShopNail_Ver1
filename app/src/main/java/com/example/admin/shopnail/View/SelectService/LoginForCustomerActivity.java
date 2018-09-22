@@ -15,12 +15,12 @@ import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.View.ViewManager;
 
-public class LoginForCustomerActivity extends Activity implements View.OnClickListener, ILoginForCustomerView{
+public class LoginForCustomerActivity extends Activity implements View.OnClickListener, ILoginForCustomerView {
 
     private ViewManager mViewManager = ViewManager.getInstance();
     private Button btnNewCustomer;
     private Button btnOldCustomer;
-    private AccountCustomerPresenter mLoginPersenter;
+    AccountCustomerPresenter mLoginPersenter = new AccountCustomerPresenter(this, this);
     private String mNameCustomer = "";
     private String mPhoneCustomer = "";
     private ProgressDialog mProgressDialog;
@@ -39,7 +39,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         btnNewCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"fuck click create new customer",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "fuck click create new customer", Toast.LENGTH_SHORT).show();
                 ShowCreateNewCutomer();
             }
         });
@@ -47,7 +47,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         btnOldCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"fuck click old customer",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "fuck click old customer", Toast.LENGTH_SHORT).show();
                 ShowLoginForOldCustomer();
             }
         });
@@ -55,14 +55,14 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
     }
 
     @Override
-    public void onClick(View v){
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_new_customer:
-                Toast.makeText(this,"click create new customer",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "click create new customer", Toast.LENGTH_SHORT).show();
                 ShowCreateNewCutomer();
                 break;
             case R.id.btn_old_customer:
-                Toast.makeText(this,"click old customer",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "click old customer", Toast.LENGTH_SHORT).show();
                 ShowLoginForOldCustomer();
                 break;
 
@@ -72,7 +72,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
     }
 
     private void ShowCreateNewCutomer() {
-        ContextThemeWrapper ctw = new ContextThemeWrapper( this, R.style.Theme_AlertDialog);
+        ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);
         final Dialog login = new Dialog(ctw);
         login.setContentView(R.layout.create_account_for_customer_dialog);
         login.setTitle(R.string.new_customer);
@@ -83,23 +83,22 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         final EditText txtNameCustomer = (EditText) login.findViewById(R.id.txtNameCustomer);
         final EditText txtPhoneCustomer = (EditText) login.findViewById(R.id.txtPhoneCustomer);
 
-        mLoginPersenter = new AccountCustomerPresenter(this);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                if(txtNameCustomer.getText().toString() != null){
-                    mNameCustomer = txtNameCustomer.getText().toString().trim();
-                    mPhoneCustomer = txtPhoneCustomer.getText().toString();
-                    if (mLoginPersenter.checkLoginForCustomer(mPhoneCustomer) && mNameCustomer!=null) { //Need to check more condition for Username&PWD
-                        login.dismiss();
-                        mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
-                        mProgressDialog.setMessage(getString(R.string.please_wait));
-                        mProgressDialog.show();
-                        mLoginPersenter.createAccountForCustomer(mNameCustomer, mPhoneCustomer);  // Send Username & PWD to persenter: save.
-                    } else {
-                        Toast.makeText(getApplicationContext(), R.string.enter_username_pwd, Toast.LENGTH_LONG).show();
-                    }
+                mNameCustomer = txtNameCustomer.getText().toString().trim();
+                mPhoneCustomer = txtPhoneCustomer.getText().toString();
+                if (mLoginPersenter.checkLoginForCustomer(mPhoneCustomer) && mNameCustomer != null) { //Need to check more condition for Username&PWD
+                    login.dismiss();
+                    mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
+                    mProgressDialog.setMessage(getString(R.string.please_wait));
+                    mProgressDialog.show();
+                    mLoginPersenter.createAccountForCustomer(mNameCustomer, mPhoneCustomer);  // Send Username & PWD to persenter: save.
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.enter_username_pwd, Toast.LENGTH_LONG).show();
+                }
 //                }else {
 //                    return;
 //                }
@@ -115,7 +114,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
     }
 
     private void ShowLoginForOldCustomer() {
-        ContextThemeWrapper ctw = new ContextThemeWrapper( this, R.style.Theme_AlertDialog);
+        ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);
         final Dialog login = new Dialog(ctw);
         login.setContentView(R.layout.login_account_for_customer_dialog);
         login.setTitle(R.string.old_customer);
@@ -125,7 +124,6 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
 
         final EditText txtPhoneCustomer = (EditText) login.findViewById(R.id.txtPhoneCustomer);
 
-        mLoginPersenter = new AccountCustomerPresenter(this);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,10 +151,9 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
 
     @Override
     public void onLoginResult(boolean result) {
+        mProgressDialog.cancel();
         if (result) {
-            mProgressDialog.cancel();
             mViewManager.setView(ViewManager.VIEW_KEY.SELECT_SERVICE);  // Change to next screen
-
         } else {
             Toast.makeText(LoginForCustomerActivity.this, R.string.login_failed, Toast.LENGTH_LONG).show();
         }

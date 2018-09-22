@@ -83,7 +83,6 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         Button btnCancel = (Button) login.findViewById(R.id.btnCancel);
         final EditText txtUsername = (EditText) login.findViewById(R.id.txtUsername);
         final EditText txtPassword = (EditText) login.findViewById(R.id.txtPassword);
-
         final TextView txtForgetPassword = login.findViewById(R.id.txt_forget_password);
 
 

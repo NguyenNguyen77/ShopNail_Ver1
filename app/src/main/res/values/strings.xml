@@ -64,6 +64,7 @@
     <string name="select_staff">Select Staff: </string>
     <string name="customer_name_hint">Customer Name</string>
     <string name="customer_phone_hint">Phone Number</string>
+    <string name="old_pass_wrong">Old PassWord was wrong</string>
 
 
 </resources>

@@ -126,7 +126,7 @@ public class BaseMethod {
         Token = token;
     }
 
-    public String makePostRequest(String link, Uri.Builder builder) {
+    public String makePostRequest(String link, Uri.Builder builder, String Token) {
         Log.d(KeyManager.VinhCNLog, link);
         trustEveryone();
         HttpURLConnection connect;
@@ -150,6 +150,10 @@ public class BaseMethod {
             connect.setRequestMethod(KeyManager.POST);
 //            it must have for add param
             connect.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            if (Token != null) {
+                Token = "Bearer " + Token;
+                connect.setRequestProperty("Authorization", Token);
+            }
             // if param != null let write param to the last character
 //            Uri.Builder builder = new Uri.Builder();
 //            builder.appendQueryParameter(USER_NAME, userID);

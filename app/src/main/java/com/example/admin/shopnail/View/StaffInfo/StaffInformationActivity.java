@@ -3,6 +3,7 @@ package com.example.admin.shopnail.View.StaffInfo;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -34,6 +35,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.example.admin.shopnail.Manager.KeyManager.PASS_WORD;
 import static com.example.admin.shopnail.Manager.KeyManager.USER_NAME;
 
 public class StaffInformationActivity extends Activity implements View.OnClickListener, IStaffInformation {
@@ -174,7 +176,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
                     mProgressDialog = new ProgressDialog(mChangePassDialog.getContext());   // Show in-progress dialog: please wait
                     mProgressDialog.setMessage(getString(R.string.please_wait));
                     mProgressDialog.show();
-                    mStaffInformationPresenter.requestChangePassword(mOldPass, mNewPass, mConfirmNewPass);
+                    mStaffInformationPresenter.requestChangePassword(BaseMethod.getDefaults(PASS_WORD, StaffInformationActivity.this), mNewPass, mConfirmNewPass);
                 }
             }
         });
@@ -192,6 +194,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         mChangePassDialog.dismiss();
         if (resultCode == ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_OK) {
             Toast.makeText(StaffInformationActivity.this, R.string.change_pass_succeccful, Toast.LENGTH_LONG).show();
+            BaseMethod.setDefaults(KeyManager.PASS_WORD, mNewPass, this);
         } else {
             Toast.makeText(StaffInformationActivity.this, R.string.change_pass_fail, Toast.LENGTH_LONG).show();
         }
@@ -226,6 +229,9 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
             result = false;
         } else if (!newPass.equals(mConfirmNewPass)) {
             Toast.makeText(StaffInformationActivity.this, R.string.new_pass_notmatch, Toast.LENGTH_LONG).show();
+            result = false;
+        }else if (!mOldPass.equals(BaseMethod.getDefaults(PASS_WORD, StaffInformationActivity.this))){
+            Toast.makeText(this, R.string.old_pass_wrong, Toast.LENGTH_SHORT).show();
             result = false;
         }
         return result;
