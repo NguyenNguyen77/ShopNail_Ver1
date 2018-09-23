@@ -46,7 +46,7 @@ public class SelectServiceAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.service_item_layout, null);
             holder = new ViewHolder();
-            holder.srcIconService = (ImageView) convertView.findViewById(R.id.img_ServiceIcon);
+//            holder.srcIconService = (ImageView) convertView.findViewById(R.id.img_ServiceIcon);
             holder.nameService = (TextView) convertView.findViewById(R.id.txtServiceName);
             holder.priceService = (TextView) convertView.findViewById(R.id.txtServicePrice);
             convertView.setTag(holder);

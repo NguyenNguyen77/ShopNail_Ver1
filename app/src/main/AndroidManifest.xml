@@ -57,6 +57,12 @@
             android:theme="@style/nailBarTheme"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".View.ManageStaff.ManageStaffActivity"
+            android:theme="@style/nailBarTheme"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

@@ -8,6 +8,7 @@ import com.example.admin.shopnail.View.BookAppointment.BookAppointmentActivity;
 import com.example.admin.shopnail.View.Login.MainActivity;
 import com.example.admin.shopnail.View.CustomerServiceHistory.CustomerServiceHistoryActivity;
 import com.example.admin.shopnail.View.Login.ResetPasswordActivity;
+import com.example.admin.shopnail.View.ManageStaff.ManageStaffActivity;
 import com.example.admin.shopnail.View.MenuFoStaff.MenuForStaffActivity;
 import com.example.admin.shopnail.View.SelectService.LoginForCustomerActivity;
 import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
@@ -34,7 +35,8 @@ public class ViewManager {
         LOGIN_FOR_CUSTOMER,
         CUSTOMER_SERVICE_HISTORY,
         VIEW_CART,
-        RESET_PASSWORD
+        RESET_PASSWORD,
+        MANAGE_STAFF
     }
 
     public void setView(VIEW_KEY key) {
@@ -47,6 +49,9 @@ public class ViewManager {
                 break;
             case STAFF_INFO:
                 viewStaffInformationActivity();
+                break;
+            case MANAGE_STAFF:
+                viewManageStaff();
                 break;
             case SELECT_SERVICE:
                 viewSelectServiceActivity();
@@ -106,6 +111,8 @@ public class ViewManager {
 
             case STAFF_INFO:
                 return StaffInformationActivity.class;
+            case MANAGE_STAFF:
+                return ManageStaffActivity.class;
 
             case MENU_FOR_STAFF:
                 return MenuForStaffActivity.class;
@@ -146,6 +153,16 @@ public class ViewManager {
         Intent intent = new Intent(activity.getApplicationContext(), MenuForStaffActivity.class);
         activity.startActivity(intent);
         setViewKey(VIEW_KEY.MENU_FOR_STAFF);
+    }
+
+    private void viewManageStaff() {
+        Activity activity = currentActivity;
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity.getApplicationContext(), ManageStaffActivity.class);
+        activity.startActivity(intent);
+        setViewKey(VIEW_KEY.MANAGE_STAFF);
     }
 
     private void viewStaffInformationActivity() {

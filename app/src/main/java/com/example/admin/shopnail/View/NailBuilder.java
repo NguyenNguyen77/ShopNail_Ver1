@@ -43,6 +43,9 @@ public class NailBuilder implements NailActionBarBuildable {
             case MENU_FOR_STAFF:
                 builder.setTitle(R.string.menu_for_staff);
                 break;
+            case MANAGE_STAFF:
+                builder.setTitle(R.string.manage_staff);
+                break;
             case STAFF_INFO:
                 builder.setTitle(R.string.staff_info);
                 break;

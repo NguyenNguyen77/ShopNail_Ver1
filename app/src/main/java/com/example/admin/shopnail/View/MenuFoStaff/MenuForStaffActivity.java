@@ -19,6 +19,7 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
     private Button btnCustomerServiceHistory;
     private Button btnStaffInfo;
     private Button btnLogout;
+    private Button btnManageStaff;
 
     protected ViewManager mViewManager = ViewManager.getInstance();
 
@@ -33,12 +34,14 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
 
         btnSelectService = (Button) findViewById(R.id.btn_select_service);
         btnMyCustomer = (Button) findViewById(R.id.btn_my_customer);
+        btnManageStaff = (Button) findViewById(R.id.btn_manage_staff);
         btnCustomerServiceHistory = (Button) findViewById(R.id.btn_customer_service_history);
         btnStaffInfo = (Button) findViewById(R.id.btn_staff_info);
         btnLogout = (Button) findViewById(R.id.btn_logout);
 
         btnSelectService.setOnClickListener(this);
         btnMyCustomer.setOnClickListener(this);
+        btnManageStaff.setOnClickListener(this);
         btnCustomerServiceHistory.setOnClickListener(this);
         btnStaffInfo.setOnClickListener(this);
         btnLogout.setOnClickListener(this);
@@ -55,6 +58,9 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
                 break;
             case R.id.btn_my_customer:
 
+                break;
+            case R.id.btn_manage_staff:
+                tranferToManageStaff();
                 break;
             case R.id.btn_customer_service_history:
                 transferToCustomerServiceHistory();
@@ -83,6 +89,10 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
 
     private void tranferToLoginForCustomer() {
         mViewManager.setView(ViewManager.VIEW_KEY.LOGIN_FOR_CUSTOMER);
+    }
+
+    private void tranferToManageStaff() {
+        mViewManager.setView(ViewManager.VIEW_KEY.MANAGE_STAFF);
     }
 
     private void transferToStaffInformation() {

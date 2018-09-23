@@ -66,5 +66,9 @@
     <string name="customer_phone_hint">Phone Number</string>
     <string name="old_pass_wrong">Old PassWord was wrong</string>
 
-
+    <string name="update_status">Update status</string>
+    <string name="service">Service</string>
+    <string name="wax">Wax</string>
+    <string name="bonus">Bonus</string>
+    <string name="manage_staff">Manage Staff</string>
 </resources>
