@@ -20,6 +20,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
     private ViewManager mViewManager = ViewManager.getInstance();
     private Button btnNewCustomer;
     private Button btnOldCustomer;
+    private Button btnBack;
     AccountCustomerPresenter mLoginPersenter = new AccountCustomerPresenter(this, this);
     private String mNameCustomer = "";
     private String mPhoneCustomer = "";
@@ -33,8 +34,9 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         new NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.SELECT_CUSTOMER_SERVICE);
 
-        btnNewCustomer = (Button) findViewById(R.id.btn_new_customer);
-        btnOldCustomer = (Button) findViewById(R.id.btn_old_customer);
+        btnNewCustomer = findViewById(R.id.btn_new_customer);
+        btnOldCustomer = findViewById(R.id.btn_old_customer);
+        btnBack = findViewById(R.id.btn_go_back);
 
         btnNewCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +53,13 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
                 ShowLoginForOldCustomer();
             }
         });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewManager.handleBackScreen();
+            }
+        });
         mViewManager.setActivity(this);
     }
 
@@ -58,17 +67,26 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_new_customer:
-                Toast.makeText(this, "click create new customer", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "click create new customer", Toast.LENGTH_SHORT).show();
                 ShowCreateNewCutomer();
                 break;
             case R.id.btn_old_customer:
-                Toast.makeText(this, "click old customer", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "click old customer", Toast.LENGTH_SHORT).show();
                 ShowLoginForOldCustomer();
                 break;
-
+            case R.id.btn_go_back:
+                Toast.makeText(this, "click go back", Toast.LENGTH_SHORT).show();
+                mViewManager.handleBackScreen();
+                break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mViewManager.handleBackScreen();
     }
 
     private void ShowCreateNewCutomer() {

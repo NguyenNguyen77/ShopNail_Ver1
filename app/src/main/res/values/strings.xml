@@ -71,4 +71,6 @@
     <string name="wax">Wax</string>
     <string name="bonus">Bonus</string>
     <string name="manage_staff">Manage Staff</string>
+
+    <!--<string name="my_customer">Manage Staff</string>-->
 </resources>

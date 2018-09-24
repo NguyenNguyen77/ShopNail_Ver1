@@ -30,7 +30,7 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
 
         new NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.MENU_FOR_STAFF);
-        mViewManager.setActivity(this);
+
 
         btnSelectService = (Button) findViewById(R.id.btn_select_service);
         btnMyCustomer = (Button) findViewById(R.id.btn_my_customer);
@@ -53,11 +53,11 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_select_service:
-                Toast.makeText(this, "click select service", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "click select service", Toast.LENGTH_SHORT).show();
                 tranferToLoginForCustomer();
                 break;
             case R.id.btn_my_customer:
-
+                tranferToMyCustomer();
                 break;
             case R.id.btn_manage_staff:
                 tranferToManageStaff();
@@ -101,5 +101,9 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
 
     private void transferToCustomerServiceHistory() {
         mViewManager.setView(ViewManager.VIEW_KEY.CUSTOMER_SERVICE_HISTORY);
+    }
+
+    private void tranferToMyCustomer() {
+        mViewManager.setView(ViewManager.VIEW_KEY.MY_CUSTOMER);
     }
 }

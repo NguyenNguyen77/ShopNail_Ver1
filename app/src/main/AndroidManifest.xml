@@ -63,6 +63,11 @@
             android:theme="@style/nailBarTheme"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".View.MyCustomer.MyCustomerActivity"
+            android:theme="@style/nailBarTheme"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

@@ -26,6 +26,7 @@ public class NailActionBarGenerator {
             case RESET_PASSWORD:
             case MANAGE_STAFF:
             case BOOK_APPOINTMENT:
+            case MY_CUSTOMER:
                 actionBarBuilder = new NailBuilder(activity, type);
                 break;
             default:
@@ -49,7 +50,7 @@ public class NailActionBarGenerator {
         VIEW_CART,
         MANAGE_STAFF,
         RESET_PASSWORD,
-
+        MY_CUSTOMER,
         BOOK_APPOINTMENT,
     }
 }

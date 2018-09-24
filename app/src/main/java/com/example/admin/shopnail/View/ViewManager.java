@@ -10,6 +10,7 @@ import com.example.admin.shopnail.View.CustomerServiceHistory.CustomerServiceHis
 import com.example.admin.shopnail.View.Login.ResetPasswordActivity;
 import com.example.admin.shopnail.View.ManageStaff.ManageStaffActivity;
 import com.example.admin.shopnail.View.MenuFoStaff.MenuForStaffActivity;
+import com.example.admin.shopnail.View.MyCustomer.MyCustomerActivity;
 import com.example.admin.shopnail.View.SelectService.LoginForCustomerActivity;
 import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
 import com.example.admin.shopnail.View.StaffInfo.StaffInformationActivity;
@@ -36,7 +37,8 @@ public class ViewManager {
         CUSTOMER_SERVICE_HISTORY,
         VIEW_CART,
         RESET_PASSWORD,
-        MANAGE_STAFF
+        MANAGE_STAFF,
+        MY_CUSTOMER
     }
 
     public void setView(VIEW_KEY key) {
@@ -70,6 +72,8 @@ public class ViewManager {
                 break;
             case BOOK_APPOINTMENT:
                 viewBookAppointmentActivity();
+            case MY_CUSTOMER:
+                viewMyCustomerActivity();
             default:
                 break;
         }
@@ -239,6 +243,17 @@ public class ViewManager {
         setViewKey(VIEW_KEY.BOOK_APPOINTMENT);
     }
 
+    private void viewMyCustomerActivity() {
+        Activity activity = currentActivity;
+        if (activity == null) {
+            return;
+        }
+
+        Intent intent = new Intent(activity.getApplicationContext(), MyCustomerActivity.class);
+        activity.startActivity(intent);
+        setViewKey(VIEW_KEY.MY_CUSTOMER);
+    }
+
     public void handleBackScreen() {
         switch (mViewKey) {
             case SELECT_SERVICE:
@@ -252,6 +267,14 @@ public class ViewManager {
                 break;
             case BOOK_APPOINTMENT:
                 setView(VIEW_KEY.LOGIN_SCREEN);
+                break;
+            case LOGIN_FOR_CUSTOMER:
+                setView(VIEW_KEY.MENU_FOR_STAFF);
+            case MANAGE_STAFF:
+                setView(VIEW_KEY.MENU_FOR_STAFF);
+                break;
+            case MY_CUSTOMER:
+                setView(VIEW_KEY.MENU_FOR_STAFF);
                 break;
             default:
                 break;
