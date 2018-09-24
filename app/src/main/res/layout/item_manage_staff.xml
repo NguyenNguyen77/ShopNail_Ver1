@@ -11,39 +11,49 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center">
-
-        <CheckBox
-            android:id="@+id/itemService"
-            android:layout_width="25dp"
-
-            android:layout_weight="0.5"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            />
-
-        <Spinner
-            android:id="@+id/spinner"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1" />
-
-        <CheckBox
-
-        android:id="@+id/item_wax"
-
+        <LinearLayout
             android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/item_service"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                />
+
+            <Spinner
+                android:id="@+id/spinner_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <CheckBox
+        android:id="@+id/item_wax"
         android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="center"
-        />
+        android:layout_height="25dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <CheckBox
             android:id="@+id/item_bouns"
-            android:layout_weight="1"
             android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            />
+            android:layout_height="25dp"/>
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
