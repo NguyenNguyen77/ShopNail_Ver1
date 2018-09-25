@@ -2,7 +2,6 @@ package com.example.admin.shopnail.Presenter.AccountCustomerPresenter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.Handler;
 import android.util.Log;
 
 import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
@@ -12,9 +11,9 @@ import com.example.admin.shopnail.AsynTaskManager.ResuiltObject;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
+import com.example.admin.shopnail.Model.LoginForCustomer.GsonCMOldLogin;
 import com.example.admin.shopnail.Model.LoginForCustomer.GsonCustomerCreate;
-import com.example.admin.shopnail.View.SelectService.ILoginForCustomerView;
-import com.example.admin.shopnail.View.SelectService.LoginForCustomerActivity;
+import com.example.admin.shopnail.View.LoginCustomer.ILoginForCustomerView;
 
 import static com.example.admin.shopnail.Manager.KeyManager.CREATE_ACCOUNT_CUSTOMER;
 
@@ -42,7 +41,7 @@ public class AccountCustomerPresenter extends BaseMethod implements IAccountCust
 
     @Override
     public boolean checkLoginForCustomer(String phoneCustome) {
-        if (phoneCustome != "" ) {
+        if (phoneCustome != "") {
             mResult = true;
         } else {
             mResult = false;
@@ -52,19 +51,27 @@ public class AccountCustomerPresenter extends BaseMethod implements IAccountCust
 
     @Override
     public void sendRequestLoginForCustomer(String phoneCustomer) {
-        SendData(); //Send request to Websocket!!!
+//        SendData(); //Send request to Websocket!!!
+        new NailTask(this).execute(new CaseManager(mContext, KeyManager.LOGIN_OLD_CUSTOMER, UrlManager.LOGIN_OLD_CUSTOMER_URL, getParamBuilder(phoneCustomer)));
     }
 
-    private void SendData() {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Do something after 100ms
-                iLoginForCustomerView.onLoginResult(mResult);
-            }
-        }, 2000);
+
+    Uri.Builder getParamBuilder(String phoneCustomer) {
+        Uri.Builder builder = new Uri.Builder();
+        builder.appendQueryParameter(KeyManager.PHONE, phoneCustomer);
+        return builder;
     }
+
+//    private void SendData() {
+//        final Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                //Do something after 100ms
+//                iLoginForCustomerView.onLoginResult(mResult);
+//            }
+//        }, 2000);
+//    }
 
 
     private void createAccount(String fullname, String phone) {
@@ -80,26 +87,34 @@ public class AccountCustomerPresenter extends BaseMethod implements IAccountCust
     }
 
 
-    Uri.Builder getParamBuilder(String fullname, String phone){
+    Uri.Builder getParamBuilder(String fullname, String phone) {
         Uri.Builder builder = new Uri.Builder();
         builder.appendQueryParameter(KeyManager.FULL_NAME, fullname);
-        builder.appendQueryParameter(KeyManager.PHONE_NUMBER, phone);
-        return  builder;
+        builder.appendQueryParameter(KeyManager.PHONE, phone);
+        return builder;
     }
 
     @Override
     public void onTaskCompleted(String s, String CaseRequest) {
-            switch (CaseRequest){
-                case CREATE_ACCOUNT_CUSTOMER:
-                    Log.d(KeyManager.VinhCNLog, s);
-                    try{
-                        GsonCustomerCreate mGsonCustomerCreate = getGson().fromJson(s, GsonCustomerCreate.class);
-                        iLoginForCustomerView.onLoginResult(mGsonCustomerCreate.isStatus());
-                    }catch (Exception e){
-                        iLoginForCustomerView.onLoginResult(false);
-                    }
-                    break;
-            }
+        Log.d(KeyManager.VinhCNLog, s);
+        switch (CaseRequest) {
+            case CREATE_ACCOUNT_CUSTOMER:
+                try {
+                    GsonCustomerCreate mGsonCustomerCreate = getGson().fromJson(s, GsonCustomerCreate.class);
+                    iLoginForCustomerView.onLoginResult(mGsonCustomerCreate.isStatus());
+                } catch (Exception e) {
+                    iLoginForCustomerView.onLoginResult(false);
+                }
+                break;
+            case KeyManager.LOGIN_OLD_CUSTOMER:
+                try {
+                    GsonCMOldLogin mGsonCMOldLogin = getGson().fromJson(s, GsonCMOldLogin.class);
+                    iLoginForCustomerView.onLoginResult(mGsonCMOldLogin.isStatus());
+                } catch (Exception e) {
+                    iLoginForCustomerView.onLoginResult(false);
+                }
+                break;
+        }
     }
 
     @Override

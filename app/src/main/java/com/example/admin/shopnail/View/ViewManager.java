@@ -11,7 +11,7 @@ import com.example.admin.shopnail.View.Login.ResetPasswordActivity;
 import com.example.admin.shopnail.View.ManageStaff.ManageStaffActivity;
 import com.example.admin.shopnail.View.MenuFoStaff.MenuForStaffActivity;
 import com.example.admin.shopnail.View.MyCustomer.MyCustomerActivity;
-import com.example.admin.shopnail.View.SelectService.LoginForCustomerActivity;
+import com.example.admin.shopnail.View.LoginCustomer.LoginForCustomerActivity;
 import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
 import com.example.admin.shopnail.View.StaffInfo.StaffInformationActivity;
 import com.example.admin.shopnail.View.ViewCartActivity.ViewCartActivity;

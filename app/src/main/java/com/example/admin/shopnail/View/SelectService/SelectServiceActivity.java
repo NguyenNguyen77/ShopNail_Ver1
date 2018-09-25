@@ -14,8 +14,10 @@ import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.admin.shopnail.Adapter.CategoryAdapter;
 import com.example.admin.shopnail.Adapter.SelectServiceAdapter;
 import com.example.admin.shopnail.Model.ServicesOfShop;
+import com.example.admin.shopnail.Presenter.SelectServicePresenter.ISelectServicePresenter;
 import com.example.admin.shopnail.Presenter.SelectServicePresenter.SelectServicePresenter;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
@@ -23,18 +25,20 @@ import com.example.admin.shopnail.View.ViewManager;
 
 import java.util.List;
 
-public class SelectServiceActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class SelectServiceActivity extends Activity implements ISelectServiceView, View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private ViewManager mViewManager = ViewManager.getInstance();
-    public SelectServicePresenter mSerlectServicePresenter = new SelectServicePresenter();
+    SelectServicePresenter mSerlectServicePresenter = new SelectServicePresenter(this, this);
     Button btnBack;
     Button btnViewcart;
     Spinner spinnerCategory;
     GridView gridSelectService;
-    ArrayAdapter<String> adapterCategory = null;
+//    ArrayAdapter<String> adapterCategory;
     SelectServiceAdapter selectServiceAdapter = null;
     List<ServicesOfShop> mList = null;
-    String[] paths = {"Acrylic", "Natural Nails", "Waxing & Facial"};
+//    String[] paths = {"Acrylic", "Natural Nails", "Waxing & Facial"};
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,18 +52,19 @@ public class SelectServiceActivity extends Activity implements View.OnClickListe
         gridSelectService = findViewById(R.id.gridSelectService);
         btnBack = findViewById(R.id.btn_go_back);
         btnViewcart = findViewById(R.id.btn_view_cart);
+        // request server category add start vinhcn 25/09/2018
+        mSerlectServicePresenter.RequestCategory();
+        // request server category add end vinhcn 25/09/2018
         loadListDataAcrylic();
-
         gridSelectService.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
 
 
-
-
-        adapterCategory = new ArrayAdapter<String>(SelectServiceActivity.this,
-                android.R.layout.simple_spinner_item,paths);
-        adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategory.setAdapter(adapterCategory);
-
+        // comment out here 25/09/2018
+//        adapterCategory = new ArrayAdapter<String>(SelectServiceActivity.this,
+//                android.R.layout.simple_spinner_item, paths);
+//        adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerCategory.setAdapter(adapterCategory);
+        // comment out here 25/09/2018
 
 
         spinnerCategory.setOnItemSelectedListener(this);
@@ -95,14 +100,16 @@ public class SelectServiceActivity extends Activity implements View.OnClickListe
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String category = adapterView.getItemAtPosition(i).toString();
-        if(category == "Acrylic"){
-            loadListDataAcrylic();
-        }else if (category == "Natural Nails"){
-            loadListNaturalNails();
-        }else{
-            loadListWaxingFacial();
-        }
+//        String category = adapterView.getItemAtPosition(i).toString();
+//        if (category == "Acrylic") {
+//            loadListDataAcrylic();
+//        } else if (category == "Natural Nails") {
+//            loadListNaturalNails();
+//        } else {
+//            loadListWaxingFacial();
+//        }
+        mSerlectServicePresenter.requestProduct(i);
+
     }
 
     @Override
@@ -112,7 +119,7 @@ public class SelectServiceActivity extends Activity implements View.OnClickListe
 
     private List<ServicesOfShop> loadListNaturalNails() {
         mList = mSerlectServicePresenter.getListNaturalNails();
-        selectServiceAdapter = new SelectServiceAdapter(this,mList);
+        selectServiceAdapter = new SelectServiceAdapter(this, mList);
         selectServiceAdapter.notifyDataSetChanged();
         gridSelectService.setAdapter(selectServiceAdapter);
         return mList;
@@ -120,7 +127,7 @@ public class SelectServiceActivity extends Activity implements View.OnClickListe
 
     private List<ServicesOfShop> loadListWaxingFacial() {
         mList = mSerlectServicePresenter.getListWaxingFacial();
-        selectServiceAdapter = new SelectServiceAdapter(this,mList);
+        selectServiceAdapter = new SelectServiceAdapter(this, mList);
         selectServiceAdapter.notifyDataSetChanged();
         gridSelectService.setAdapter(selectServiceAdapter);
         return mList;
@@ -128,10 +135,16 @@ public class SelectServiceActivity extends Activity implements View.OnClickListe
 
     private List<ServicesOfShop> loadListDataAcrylic() {
         mList = mSerlectServicePresenter.getListDataAcrylic();
-        selectServiceAdapter = new SelectServiceAdapter(this,mList);
+        selectServiceAdapter = new SelectServiceAdapter(this, mList);
         selectServiceAdapter.notifyDataSetChanged();
         gridSelectService.setAdapter(selectServiceAdapter);
         return mList;
+    }
+
+    @Override
+    public void setCategoryAdapter(CategoryAdapter adapterCategory) {
+//        adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(adapterCategory);
     }
 }
 

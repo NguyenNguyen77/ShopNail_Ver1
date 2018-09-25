@@ -12,7 +12,6 @@
         android:id="@+id/txtPhoneCustomer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
         android:hint="@string/customer_phonenumber">
     </EditText>
 

@@ -1,4 +1,4 @@
-package com.example.admin.shopnail.View.SelectService;
+package com.example.admin.shopnail.View.LoginCustomer;
 
 import android.app.Activity;
 import android.app.Dialog;

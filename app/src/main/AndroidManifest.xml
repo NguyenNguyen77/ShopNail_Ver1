@@ -27,7 +27,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".View.SelectService.LoginForCustomerActivity"
+            android:name=".View.LoginCustomer.LoginForCustomerActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity

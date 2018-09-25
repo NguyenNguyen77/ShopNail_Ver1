@@ -9,4 +9,7 @@ public interface ISelectServicePresenter {
     List<ServicesOfShop> getListNaturalNails();
     List<ServicesOfShop> getListWaxingFacial();
 
+    void RequestCategory();
+
+    void requestProduct(int i);
 }

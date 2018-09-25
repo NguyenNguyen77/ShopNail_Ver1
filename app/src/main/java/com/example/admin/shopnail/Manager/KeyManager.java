@@ -16,7 +16,10 @@ public class KeyManager {
     public static final String TOKEN = "TOKEN";
     public static final String CHANGE_PASSWORD = "CHANGE_PASSWORD";
     public static final String CREATE_ACCOUNT_CUSTOMER = "CREATE_ACCOUNT_CUSTOMER";
+    public static final String LOGIN_OLD_CUSTOMER = "LOGIN_OLD_CUSTOMER";
+    public static final String GET_CATEGORY_LIST = "GET_CATEGORY_LIST";
+    public static final String GET_PRODUCTS_BY_CATEGORY = "GET_PRODUCTS_BY_CATEGORY";
     public static final String FULL_NAME = "fullname";
-    public static final String PHONE_NUMBER = "phone";
+    public static final String PHONE = "phone";
 
 }

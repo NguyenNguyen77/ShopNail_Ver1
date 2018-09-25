@@ -39,6 +39,18 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
                 Resuilt = caseManagers[0].makePostRequest(caseManagers[0].getUrl(), caseManagers[0].getmBuilder(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(KeyManager.CREATE_ACCOUNT_CUSTOMER, Resuilt);
                 break;
+            case KeyManager.LOGIN_OLD_CUSTOMER:
+                Resuilt = caseManagers[0].makePostRequest(caseManagers[0].getUrl(), caseManagers[0].getmBuilder(), caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(KeyManager.LOGIN_OLD_CUSTOMER, Resuilt);
+                break;
+            case KeyManager.GET_CATEGORY_LIST:
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(KeyManager.GET_CATEGORY_LIST, Resuilt);
+                break;
+            case KeyManager.GET_PRODUCTS_BY_CATEGORY:
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(KeyManager.GET_PRODUCTS_BY_CATEGORY, Resuilt);
+                break;
 
         }
         return mResuiltObject;

@@ -1,11 +1,38 @@
 package com.example.admin.shopnail.Presenter.SelectServicePresenter;
 
+import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
+import android.widget.ArrayAdapter;
+
+import com.example.admin.shopnail.Adapter.CategoryAdapter;
+import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
+import com.example.admin.shopnail.AsynTaskManager.CaseManager;
+import com.example.admin.shopnail.AsynTaskManager.NailTask;
+import com.example.admin.shopnail.AsynTaskManager.ResuiltObject;
+import com.example.admin.shopnail.Manager.BaseMethod;
+import com.example.admin.shopnail.Manager.KeyManager;
+import com.example.admin.shopnail.Manager.UrlManager;
+import com.example.admin.shopnail.Model.SelectCustomerService.GsonCategory;
 import com.example.admin.shopnail.Model.ServicesOfShop;
+import com.example.admin.shopnail.View.SelectService.ISelectServiceView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectServicePresenter implements ISelectServicePresenter {
+public class SelectServicePresenter extends BaseMethod implements ISelectServicePresenter, AsyncTaskCompleteListener<ResuiltObject> {
+
+    ISelectServiceView mISelectServiceView;
+    Context mContext;
+    ArrayAdapter<String> adapterCategory;
+    List<String> paths;
+    List<GsonCategory.SuccessBean.DataBean> arrCategory;
+
+    public SelectServicePresenter(ISelectServiceView mISelectServiceView, Context mContext) {
+        this.mISelectServiceView = mISelectServiceView;
+        this.mContext = mContext;
+    }
+
     @Override
     public List<ServicesOfShop> getListDataAcrylic() {
         List<ServicesOfShop> listService = new ArrayList<ServicesOfShop>();
@@ -14,7 +41,6 @@ public class SelectServicePresenter implements ISelectServicePresenter {
         ServicesOfShop Gel_Manicure_French_Tip = new ServicesOfShop("Gel Manicure w/ French Tip", 35, "http//...");
         ServicesOfShop Spa_Pedicure = new ServicesOfShop("Spa Pedicure (Sea Salt & Hot Towel)", 22, "http//...");
         ServicesOfShop Spa_Pedicure_Gel_Polish = new ServicesOfShop("Spa Pedicure w/ Gel Polish (Sea Salt & Hot Towel)", 10, "http//...");
-
         listService.add(Manicure);
         listService.add(Gel_Manicure);
         listService.add(Gel_Manicure_French_Tip);
@@ -55,5 +81,45 @@ public class SelectServicePresenter implements ISelectServicePresenter {
         listService.add(Spa_Pedicure);
         listService.add(Spa_Pedicure_Gel_Polish);
         return listService;
+    }
+
+    @Override
+    public void RequestCategory() {
+        new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_CATEGORY_LIST, UrlManager.GET_CATEGORY_LIST_URL, getParamBuidler()));
+    }
+
+    @Override
+    public void requestProduct(int i) {
+        new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_PRODUCTS_BY_CATEGORY, UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + arrCategory.get(i).getId(), getParamBuidler()));
+    }
+
+    Uri.Builder getParamBuidler() {
+        Uri.Builder builder = new Uri.Builder();
+        return builder;
+    }
+
+    @Override
+    public void onTaskCompleted(String s, String CaseRequest) {
+
+        switch (CaseRequest) {
+            case KeyManager.GET_CATEGORY_LIST:
+                GsonCategory mGsonCategory = getGson().fromJson(s, GsonCategory.class);
+                arrCategory = mGsonCategory.getSuccess().getData();
+                mISelectServiceView.setCategoryAdapter(new CategoryAdapter(arrCategory, mContext));
+//                adapterCategory = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, paths);
+//                adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                mISelectServiceView.setCategoryAdapter(adapterCategory);
+                break;
+            case KeyManager.GET_PRODUCTS_BY_CATEGORY:
+                Log.d(KeyManager.VinhCNLog, s);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onTaskError(String s, String CaseRequest) {
+
     }
 }
