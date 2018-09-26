@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.example.admin.shopnail.Adapter.CategoryAdapter;
+import com.example.admin.shopnail.Adapter.SelectServiceAdapter;
 import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
 import com.example.admin.shopnail.AsynTaskManager.CaseManager;
 import com.example.admin.shopnail.AsynTaskManager.NailTask;
@@ -14,6 +15,7 @@ import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
 import com.example.admin.shopnail.Model.SelectCustomerService.GsonCategory;
+import com.example.admin.shopnail.Model.SelectCustomerService.GsonProductsByCategory;
 import com.example.admin.shopnail.Model.ServicesOfShop;
 import com.example.admin.shopnail.View.SelectService.ISelectServiceView;
 
@@ -112,6 +114,9 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
                 break;
             case KeyManager.GET_PRODUCTS_BY_CATEGORY:
                 Log.d(KeyManager.VinhCNLog, s);
+                GsonProductsByCategory mGsonProductsByCategory = getGson().fromJson(s, GsonProductsByCategory.class);
+                List<GsonProductsByCategory.SuccessBean.DataBean> arrProduct = mGsonProductsByCategory.getSuccess().getData();
+                mISelectServiceView.setProductsByCategoryAdapter(new SelectServiceAdapter(mContext, arrProduct, mISelectServiceView.getArrayChecked()));
                 break;
             default:
                 break;

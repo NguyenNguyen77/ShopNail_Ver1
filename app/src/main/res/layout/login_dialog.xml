@@ -10,6 +10,7 @@
 
 
     <EditText
+        android:text="111-222-3333"
         android:id="@+id/txtUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,6 +21,7 @@
     </EditText>
 
     <EditText
+        android:text="123456"
         android:id="@+id/txtPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

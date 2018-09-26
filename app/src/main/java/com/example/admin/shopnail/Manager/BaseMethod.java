@@ -26,6 +26,7 @@ import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.net.ssl.HostnameVerifier;
@@ -45,6 +46,8 @@ public class BaseMethod {
 
     String userName;
     String passWord;
+
+    public SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("hh:mm");
 
     public Gson getGson() {
         return gson;

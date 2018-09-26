@@ -21,5 +21,8 @@ public class KeyManager {
     public static final String GET_PRODUCTS_BY_CATEGORY = "GET_PRODUCTS_BY_CATEGORY";
     public static final String FULL_NAME = "fullname";
     public static final String PHONE = "phone";
+    public static final String PRODUC_ID = "productId";
+    public static final String PRICE = "price";
+    public static final String TIME_ORDER = "timeOrder";
 
 }

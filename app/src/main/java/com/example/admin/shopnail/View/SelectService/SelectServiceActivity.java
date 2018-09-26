@@ -2,6 +2,7 @@ package com.example.admin.shopnail.View.SelectService;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,12 +17,20 @@ import android.widget.Toast;
 
 import com.example.admin.shopnail.Adapter.CategoryAdapter;
 import com.example.admin.shopnail.Adapter.SelectServiceAdapter;
+import com.example.admin.shopnail.Manager.KeyManager;
+import com.example.admin.shopnail.Model.SelectCustomerService.GsonProductsByCategory;
 import com.example.admin.shopnail.Model.ServicesOfShop;
 import com.example.admin.shopnail.Presenter.SelectServicePresenter.ISelectServicePresenter;
 import com.example.admin.shopnail.Presenter.SelectServicePresenter.SelectServicePresenter;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.View.ViewManager;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -33,11 +42,11 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     Button btnViewcart;
     Spinner spinnerCategory;
     GridView gridSelectService;
-//    ArrayAdapter<String> adapterCategory;
+    //    ArrayAdapter<String> adapterCategory;
     SelectServiceAdapter selectServiceAdapter = null;
-    List<ServicesOfShop> mList = null;
+    List<GsonProductsByCategory.SuccessBean.DataBean> mList = null;
+    JSONArray jsonArray = new JSONArray();
 //    String[] paths = {"Acrylic", "Natural Nails", "Waxing & Facial"};
-
 
 
     @Override
@@ -55,7 +64,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
         // request server category add start vinhcn 25/09/2018
         mSerlectServicePresenter.RequestCategory();
         // request server category add end vinhcn 25/09/2018
-        loadListDataAcrylic();
+//        loadListDataAcrylic();
         gridSelectService.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
 
 
@@ -117,34 +126,72 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
 
     }
 
-    private List<ServicesOfShop> loadListNaturalNails() {
-        mList = mSerlectServicePresenter.getListNaturalNails();
-        selectServiceAdapter = new SelectServiceAdapter(this, mList);
-        selectServiceAdapter.notifyDataSetChanged();
-        gridSelectService.setAdapter(selectServiceAdapter);
-        return mList;
-    }
+//    private List<ServicesOfShop> loadListNaturalNails() {
+//        mList = mSerlectServicePresenter.getListNaturalNails();
+//        selectServiceAdapter = new SelectServiceAdapter(this, mList);
+//        selectServiceAdapter.notifyDataSetChanged();
+//        gridSelectService.setAdapter(selectServiceAdapter);
+//        return mList;
+//    }
 
-    private List<ServicesOfShop> loadListWaxingFacial() {
-        mList = mSerlectServicePresenter.getListWaxingFacial();
-        selectServiceAdapter = new SelectServiceAdapter(this, mList);
-        selectServiceAdapter.notifyDataSetChanged();
-        gridSelectService.setAdapter(selectServiceAdapter);
-        return mList;
-    }
-
-    private List<ServicesOfShop> loadListDataAcrylic() {
-        mList = mSerlectServicePresenter.getListDataAcrylic();
-        selectServiceAdapter = new SelectServiceAdapter(this, mList);
-        selectServiceAdapter.notifyDataSetChanged();
-        gridSelectService.setAdapter(selectServiceAdapter);
-        return mList;
-    }
+//    private List<ServicesOfShop> loadListWaxingFacial() {
+//        mList = mSerlectServicePresenter.getListWaxingFacial();
+//        selectServiceAdapter = new SelectServiceAdapter(this, mList);
+//        selectServiceAdapter.notifyDataSetChanged();
+//        gridSelectService.setAdapter(selectServiceAdapter);
+//        return mList;
+//    }
+//
+//    private List<ServicesOfShop> loadListDataAcrylic() {
+//        mList = mSerlectServicePresenter.getListDataAcrylic();
+//        selectServiceAdapter = new SelectServiceAdapter(this, mList);
+//        selectServiceAdapter.notifyDataSetChanged();
+//        gridSelectService.setAdapter(selectServiceAdapter);
+//        return mList;
+//    }
 
     @Override
     public void setCategoryAdapter(CategoryAdapter adapterCategory) {
 //        adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapterCategory);
+    }
+
+    @Override
+    public void setProductsByCategoryAdapter(SelectServiceAdapter selectServiceAdapter) {
+        gridSelectService.setAdapter(selectServiceAdapter);
+    }
+
+
+
+    @Override
+    public void addJsonArrayService(boolean isChecked, int id, String price, String format) {
+        try {
+            if (isChecked){
+                JSONObject mJsonObject = new JSONObject();
+                mJsonObject.put(KeyManager.PRODUC_ID, id);
+                mJsonObject.put(KeyManager.PRICE, price);
+                mJsonObject.put(KeyManager.TIME_ORDER, format);
+                jsonArray.put(mJsonObject);
+            }else {
+                for (int i=0; i< jsonArray.length(); i++){
+                    JSONObject mJsonObject = jsonArray.getJSONObject(i);
+                    if (id == mJsonObject.getInt(KeyManager.PRODUC_ID)){
+                        jsonArray.remove(i);
+                        break;
+                    }
+
+                }
+            }
+            Log.d(KeyManager.VinhCNLog, jsonArray.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public JSONArray getArrayChecked() {
+        return jsonArray;
     }
 }
 
