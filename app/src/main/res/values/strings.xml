@@ -74,4 +74,6 @@
     <string name="add_more_services"><u>Add More Services...</u></string>
     <string name="note">Note: </string>
     <string name="time">Time: </string>
+    <string name="update_service">Update Service</string>
+    <string name="cancel_service">Cancel Service</string>
 </resources>
