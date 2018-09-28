@@ -71,6 +71,12 @@
     <string name="wax">Wax</string>
     <string name="bonus">Bonus</string>
     <string name="manage_staff">Manage Staff</string>
+<<<<<<< HEAD
+    <string name="add_more_services"><u>Add More Services...</u></string>
+    <string name="note">Note: </string>
+    <string name="time">Time: </string>
+=======
 
     <!--<string name="my_customer">Manage Staff</string>-->
+>>>>>>> a9585c2591b4e7aa6f159ac193c2494f7957aa71
 </resources>

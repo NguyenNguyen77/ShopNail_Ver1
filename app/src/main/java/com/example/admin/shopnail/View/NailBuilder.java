@@ -61,7 +61,10 @@ public class NailBuilder implements NailActionBarBuildable {
 
             case RESET_PASSWORD:
                 builder.setTitle(R.string.reset_password);
-
+                break;
+            case MY_CUSTOMER:
+                builder.setTitle(R.string.my_customer);
+                break;
             case BOOK_APPOINTMENT:
                 builder.setTitle(R.string.book_appointment);
                 break;
