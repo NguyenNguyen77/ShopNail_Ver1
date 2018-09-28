@@ -11,11 +11,7 @@ import com.example.admin.shopnail.View.Login.ResetPasswordActivity;
 import com.example.admin.shopnail.View.ManageStaff.ManageStaffActivity;
 import com.example.admin.shopnail.View.MenuFoStaff.MenuForStaffActivity;
 import com.example.admin.shopnail.View.MyCustomer.MyCustomerActivity;
-<<<<<<< HEAD
-import com.example.admin.shopnail.View.SelectService.LoginForCustomerActivity;
-=======
 import com.example.admin.shopnail.View.LoginCustomer.LoginForCustomerActivity;
->>>>>>> a9585c2591b4e7aa6f159ac193c2494f7957aa71
 import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
 import com.example.admin.shopnail.View.StaffInfo.StaffInformationActivity;
 import com.example.admin.shopnail.View.ViewCartActivity.ViewCartActivity;
@@ -53,9 +49,6 @@ public class ViewManager {
             case MENU_FOR_STAFF:
                 viewMenuForStaffActivity();
                 break;
-            case MY_CUSTOMER:
-                viewMyCustomerActivity();
-                break;
             case STAFF_INFO:
                 viewStaffInformationActivity();
                 break;
@@ -79,6 +72,7 @@ public class ViewManager {
                 break;
             case BOOK_APPOINTMENT:
                 viewBookAppointmentActivity();
+                break;
             case MY_CUSTOMER:
                 viewMyCustomerActivity();
             default:
@@ -165,16 +159,6 @@ public class ViewManager {
         Intent intent = new Intent(activity.getApplicationContext(), MenuForStaffActivity.class);
         activity.startActivity(intent);
         setViewKey(VIEW_KEY.MENU_FOR_STAFF);
-    }
-
-    private void viewMyCustomerActivity() {
-        Activity activity = currentActivity;
-        if (activity == null) {
-            return;
-        }
-        Intent intent = new Intent(activity.getApplicationContext(), MyCustomerActivity.class);
-        activity.startActivity(intent);
-        setViewKey(VIEW_KEY.MY_CUSTOMER);
     }
 
     private void viewManageStaff() {

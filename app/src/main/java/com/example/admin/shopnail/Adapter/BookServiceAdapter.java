@@ -79,9 +79,11 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
 
                 break;
             case R.id.img_delete_service:
-
-                mListusers.remove(1);
-                BookServiceAdapter.this.notifyDataSetChanged();
+                int pos = 1; //Stub
+                if(pos < mListusers.size()) {
+                    mListusers.remove(1);
+                    BookServiceAdapter.this.notifyDataSetChanged();
+                }
                 break;
             default:
                 break;

@@ -53,7 +53,6 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_select_service:
-//                Toast.makeText(this, "click select service", Toast.LENGTH_SHORT).show();
                 tranferToLoginForCustomer();
                 break;
             case R.id.btn_my_customer:

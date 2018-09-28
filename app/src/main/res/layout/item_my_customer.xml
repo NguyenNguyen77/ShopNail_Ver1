@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -84,39 +83,3 @@
     </LinearLayout>
 
 </LinearLayout>
-=======
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_marginStart="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name_customer"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/customer_phone"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/date"/>
-        <ListView
-            android:id="@+id/list_item_my_customer"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4">
-
-        </ListView>
-
-    </LinearLayout>
-</android.support.constraint.ConstraintLayout>
->>>>>>> a9585c2591b4e7aa6f159ac193c2494f7957aa71

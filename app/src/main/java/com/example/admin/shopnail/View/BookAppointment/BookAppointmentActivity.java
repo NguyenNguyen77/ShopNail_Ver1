@@ -85,13 +85,6 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mBtnSubmit.setEnabled(false);
         mBtnSubmit.setClickable(false);
 
-        mLvSelectServiceItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mViewManager.setmPosBookAppointment(position);
-            }
-        });
-
         getDefaultInfo(); //display current date
 
         mEtCustomerPhone.addTextChangedListener(new TextWatcher() {

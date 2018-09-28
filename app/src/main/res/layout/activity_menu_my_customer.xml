@@ -1,42 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-<<<<<<< HEAD
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-=======
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
->>>>>>> a9585c2591b4e7aa6f159ac193c2494f7957aa71
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-<<<<<<< HEAD
-        android:background="@drawable/background_custom"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:ignore="MissingConstraints">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_weight="5"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:layout_margin="15dp">
-
-
-            <GridView
-                android:id="@+id/gridSelectService"
-                android:layout_width="match_parent"
-                android:layout_margin="5dp"
-                android:layout_height="match_parent"
-                android:numColumns="auto_fit"
-                android:layout_gravity="center"
-                android:listSelector="@drawable/list_selecter"/>
-=======
         android:orientation="vertical">
 
         <LinearLayout
@@ -48,33 +18,10 @@
             android:gravity="center">
 
 
->>>>>>> a9585c2591b4e7aa6f159ac193c2494f7957aa71
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-<<<<<<< HEAD
-            android:layout_weight="1"
-            android:layout_height="0dp"
-            android:gravity="bottom"
-            android:orientation="vertical">
-
-
-            <Button
-                android:id="@+id/btn_go_back"
-                android:layout_width="250dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="30dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/button_nail"
-                android:text="@string/back"
-                android:textColor="@drawable/button_text" />
-
-
-        </LinearLayout>
-
-=======
             android:layout_height="0dp"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
@@ -101,6 +48,5 @@
                 android:textColor="@drawable/button_text" />
 
         </LinearLayout>
->>>>>>> a9585c2591b4e7aa6f159ac193c2494f7957aa71
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

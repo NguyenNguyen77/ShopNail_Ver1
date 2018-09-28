@@ -25,7 +25,6 @@ public class NailActionBarGenerator {
             case VIEW_CART:
             case RESET_PASSWORD:
             case MANAGE_STAFF:
-            case MY_CUSTOMER:
             case BOOK_APPOINTMENT:
             case MY_CUSTOMER:
                 actionBarBuilder = new NailBuilder(activity, type);
