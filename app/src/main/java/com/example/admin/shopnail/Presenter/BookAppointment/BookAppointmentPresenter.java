@@ -25,4 +25,18 @@ public class BookAppointmentPresenter implements IBookAppointmentPresenter {
         mBookAppointmentView.updateStaffList(arrayOfStaff);
     }
 
+    @Override
+    public void reqGetServiceList() {
+        //Send request to Server
+        //Stub
+        ArrayList<String> arrayOfService = new ArrayList<String>();
+        arrayOfService.add("Hair1");
+        arrayOfService.add("Hair2");
+        arrayOfService.add("Hair3");
+        arrayOfService.add("Hair4");
+        arrayOfService.add("Hair5");
+        mBookAppointmentView.updateServiceList(arrayOfService);
+    }
+
+
 }
