@@ -16,50 +16,55 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
 
             <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:orientation="horizontal">
-            <TextView
-                android:id="@+id/txt_service"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:text="@string/service"/>
+
+                <TextView
+                    android:id="@+id/txt_service"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/service" />
             </LinearLayout>
+
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="0dp"
-                android:gravity="center"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="horizontal">
-            <TextView
-                android:id="@+id/txt_wax"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/wax"/>
+
+                <TextView
+                    android:id="@+id/txt_wax"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/wax" />
             </LinearLayout>
+
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="0dp"
-                android:gravity="center"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="horizontal">
-            <TextView
-                android:id="@+id/txt_bonus"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/bonus"/>
+
+                <TextView
+                    android:id="@+id/txt_bonus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/bonus" />
             </LinearLayout>
         </LinearLayout>
 
@@ -68,15 +73,22 @@
             android:layout_height="0dp"
             android:layout_gravity="bottom"
             android:layout_marginBottom="10dp"
-            android:layout_weight="3"
+            android:layout_weight="5"
             android:orientation="vertical">
-
 
             <ListView
                 android:id="@+id/listStatusService"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="2"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/btn_make_appointment_online"
@@ -97,8 +109,9 @@
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_nail"
-                android:text="@string/exit"
+                android:text="@string/back"
                 android:textColor="@drawable/button_text" />
+
         </LinearLayout>
     </LinearLayout>
 

@@ -54,7 +54,6 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
 
     private ArrayList<BookService> mListBookService = new ArrayList<BookService>();
 
-    private static BookAppointmentActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,12 +124,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         });
 
     }
-    public static synchronized BookAppointmentActivity getInstance() {
-        if (instance == null) {
-            instance = new BookAppointmentActivity();
-        }
-        return instance;
-    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

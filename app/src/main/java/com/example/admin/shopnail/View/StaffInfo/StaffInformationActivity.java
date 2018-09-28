@@ -129,6 +129,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.action_select_service).setVisible(true);
         menu.findItem(R.id.action_my_customer).setVisible(true);
+        menu.findItem(R.id.action_manage_staff).setVisible(true);
         menu.findItem(R.id.action_customer_service_history).setVisible(true);
         menu.findItem(R.id.action_menu_for_staff).setVisible(true);
         return true;
@@ -144,7 +145,10 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
                 mViewManager.setView(ViewManager.VIEW_KEY.SELECT_SERVICE);
                 return true;
             case R.id.action_my_customer:
-                Toast.makeText(this, R.string.my_customer, Toast.LENGTH_SHORT).show();
+                mViewManager.setView(ViewManager.VIEW_KEY.MY_CUSTOMER);
+                return true;
+            case R.id.action_manage_staff:
+                mViewManager.setView(ViewManager.VIEW_KEY.MANAGE_STAFF);
                 return true;
             case R.id.action_customer_service_history:
                 mViewManager.setView(ViewManager.VIEW_KEY.CUSTOMER_SERVICE_HISTORY);

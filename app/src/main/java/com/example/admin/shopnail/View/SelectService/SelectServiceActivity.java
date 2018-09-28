@@ -95,6 +95,45 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getActionBar().setIcon(R.drawable.ic_menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.action_menu_for_staff).setVisible(true);
+        menu.findItem(R.id.action_my_customer).setVisible(true);
+        menu.findItem(R.id.action_manage_staff).setVisible(true);
+        menu.findItem(R.id.action_customer_service_history).setVisible(true);
+        menu.findItem(R.id.action_staff_info).setVisible(true);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_menu_for_staff:
+                mViewManager.setView(ViewManager.VIEW_KEY.MENU_FOR_STAFF);
+                return true;
+            case R.id.action_my_customer:
+                mViewManager.setView(ViewManager.VIEW_KEY.MY_CUSTOMER);
+                return true;
+            case R.id.action_manage_staff:
+                mViewManager.setView(ViewManager.VIEW_KEY.MANAGE_STAFF);
+                return true;
+            case R.id.action_customer_service_history:
+                mViewManager.setView(ViewManager.VIEW_KEY.CUSTOMER_SERVICE_HISTORY);
+                return true;
+            case R.id.action_staff_info:
+                mViewManager.setView(ViewManager.VIEW_KEY.STAFF_INFO);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public void onClick(View view) {

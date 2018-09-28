@@ -117,6 +117,7 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
         menu.findItem(R.id.action_menu_for_staff).setVisible(true);
         menu.findItem(R.id.action_select_service).setVisible(true);
         menu.findItem(R.id.action_my_customer).setVisible(true);
+        menu.findItem(R.id.action_manage_staff).setVisible(true);
         menu.findItem(R.id.action_staff_info).setVisible(true);
         return true;
     }
@@ -131,7 +132,10 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
                 mViewManager.setView(ViewManager.VIEW_KEY.SELECT_SERVICE);
                 return true;
             case R.id.action_my_customer:
-                Toast.makeText(this, R.string.my_customer, Toast.LENGTH_SHORT).show();
+                mViewManager.setView(ViewManager.VIEW_KEY.MY_CUSTOMER);
+                return true;
+            case R.id.action_manage_staff:
+                mViewManager.setView(ViewManager.VIEW_KEY.MANAGE_STAFF);
                 return true;
             case R.id.action_staff_info:
                 mViewManager.setView(ViewManager.VIEW_KEY.STAFF_INFO);

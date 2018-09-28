@@ -5,6 +5,10 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +29,9 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
     private String mNameCustomer = "";
     private String mPhoneCustomer = "";
     private ProgressDialog mProgressDialog;
+
+    private int mTextSizeBefore = 0;
+    private int mTextSizeAfter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +74,9 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_new_customer:
-//                Toast.makeText(this, "click create new customer", Toast.LENGTH_SHORT).show();
                 ShowCreateNewCutomer();
                 break;
             case R.id.btn_old_customer:
-//                Toast.makeText(this, "click old customer", Toast.LENGTH_SHORT).show();
                 ShowLoginForOldCustomer();
                 break;
             case R.id.btn_go_back:
@@ -89,6 +94,47 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         mViewManager.handleBackScreen();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getActionBar().setIcon(R.drawable.ic_menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.action_menu_for_staff).setVisible(true);
+        menu.findItem(R.id.action_my_customer).setVisible(true);
+        menu.findItem(R.id.action_manage_staff).setVisible(true);
+        menu.findItem(R.id.action_customer_service_history).setVisible(true);
+        menu.findItem(R.id.action_staff_info).setVisible(true);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_menu_for_staff:
+                mViewManager.setView(ViewManager.VIEW_KEY.MENU_FOR_STAFF);
+                return true;
+            case R.id.action_my_customer:
+                mViewManager.setView(ViewManager.VIEW_KEY.MY_CUSTOMER);
+                return true;
+            case R.id.action_manage_staff:
+                mViewManager.setView(ViewManager.VIEW_KEY.MANAGE_STAFF);
+                return true;
+            case R.id.action_customer_service_history:
+                mViewManager.setView(ViewManager.VIEW_KEY.CUSTOMER_SERVICE_HISTORY);
+                return true;
+            case R.id.action_staff_info:
+                mViewManager.setView(ViewManager.VIEW_KEY.STAFF_INFO);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
     private void ShowCreateNewCutomer() {
         ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);
         final Dialog login = new Dialog(ctw);
@@ -100,6 +146,27 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
 
         final EditText txtNameCustomer = (EditText) login.findViewById(R.id.txtNameCustomer);
         final EditText txtPhoneCustomer = (EditText) login.findViewById(R.id.txtPhoneCustomer);
+
+        txtPhoneCustomer.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable text) {
+                mTextSizeAfter = text.length();
+                if (mTextSizeAfter > mTextSizeBefore) {
+                    if ((text.length() == 3) || (text.length() == 7)) {
+                        text.append('-');
+                    }
+                }
+                mTextSizeBefore = mTextSizeAfter;
+            }
+        });
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +189,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
 //                }
             }
         });
+
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

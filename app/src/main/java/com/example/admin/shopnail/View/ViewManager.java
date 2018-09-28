@@ -260,8 +260,12 @@ public class ViewManager {
         switch (mViewKey) {
             case SELECT_SERVICE:
                 setView(VIEW_KEY.LOGIN_FOR_CUSTOMER);
+                break;
             case STAFF_INFO:
             case CUSTOMER_SERVICE_HISTORY:
+            case LOGIN_FOR_CUSTOMER:
+            case MANAGE_STAFF:
+            case MY_CUSTOMER:
                 setView(VIEW_KEY.MENU_FOR_STAFF);
                 break;
             case MENU_FOR_STAFF:
@@ -270,13 +274,8 @@ public class ViewManager {
             case BOOK_APPOINTMENT:
                 setView(VIEW_KEY.LOGIN_SCREEN);
                 break;
-            case LOGIN_FOR_CUSTOMER:
-                setView(VIEW_KEY.MENU_FOR_STAFF);
-            case MANAGE_STAFF:
-                setView(VIEW_KEY.MENU_FOR_STAFF);
-                break;
-            case MY_CUSTOMER:
-                setView(VIEW_KEY.MENU_FOR_STAFF);
+            case VIEW_CART:
+                setView(VIEW_KEY.SELECT_SERVICE);
                 break;
             default:
                 break;

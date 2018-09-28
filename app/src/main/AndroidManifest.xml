@@ -20,14 +20,17 @@
         </activity>
         <activity
             android:name=".View.MenuFoStaff.MenuForStaffActivity"
+            android:theme="@style/nailBarTheme"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".View.SelectService.SelectServiceActivity"
+            android:theme="@style/nailBarTheme"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".View.LoginCustomer.LoginForCustomerActivity"
+            android:theme="@style/nailBarTheme"
             android:screenOrientation="portrait">
         </activity>
         <activity
