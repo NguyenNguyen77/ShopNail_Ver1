@@ -58,24 +58,6 @@ public class StaffInformationPresenter extends BaseMethod implements IStaffInfor
     }
 
     @Override
-    public String getStaffID() {
-        String staffID = "8076";
-        return staffID;
-    }
-
-    @Override
-    public String getStaffName() {
-        String staffName = "KhoaNguyen";
-        return staffName;
-    }
-
-    @Override
-    public String getStaffPhoneNumber() {
-        String staffPhoneNumber = "0973603509";
-        return staffPhoneNumber;
-    }
-
-    @Override
     public void requestInfor(String defaults) {
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_USER_BY_ID, UrlManager.GET_USER_BY_ID_URL + defaults, getParamBuilder()));
     }
@@ -98,10 +80,10 @@ public class StaffInformationPresenter extends BaseMethod implements IStaffInfor
                 break;
             case KeyManager.CHANGE_PASSWORD:
                 Log.d(KeyManager.VinhCNLog, s);
-                try{
+                try {
                     GsonChangePass mGsonChangePass = getGson().fromJson(s, GsonChangePass.class);
                     mIStaffInforView.onChangePasswordResult(mGsonChangePass.isStatus() ? ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_OK : ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_NG);
-                }catch (Exception e){
+                } catch (Exception e) {
                     mIStaffInforView.onChangePasswordResult(ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_NG);
                 }
                 break;

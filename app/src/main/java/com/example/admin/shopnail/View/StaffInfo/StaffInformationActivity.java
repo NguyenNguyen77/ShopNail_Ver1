@@ -72,6 +72,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         mID = (TextView) findViewById(R.id.tv_staff_id);
         mName = (TextView) findViewById(R.id.tv_staff_name);
         mPhone = (TextView) findViewById(R.id.tv_staff_phone_number);
+
         btnChangeAvatar.setOnClickListener(this);
         btnChangePassword.setOnClickListener(this);
         btnBack.setOnClickListener(this);
