@@ -139,6 +139,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
                 break;
             case R.id.btn_back:
                 mViewManager.handleBackScreen();
+                mViewManager.finishActivity(this);
                 break;
             default:
                 break;
@@ -148,6 +149,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     @Override
     public void onBackPressed() {
         mViewManager.handleBackScreen();
+        mViewManager.finishActivity(this);
     }
 
     private void reqBookAppointment() {

@@ -4,13 +4,10 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -61,6 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/customer_phone_hint"
+                        android:inputType="phone"
                         android:maxLength="12"
                         android:maxLines="1"
                         android:minLines="1"
@@ -102,7 +100,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="4"
+                android:layout_weight="5"
                 android:orientation="vertical">
 
                 <ListView
@@ -123,14 +121,14 @@
                 android:layout_height="0dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:text="@string/add_more_services" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="5dp"
-                android:layout_weight="2.5"
+                android:layout_weight="3"
                 android:gravity="bottom"
                 android:orientation="vertical">
 
@@ -159,5 +157,4 @@
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
 </android.support.constraint.ConstraintLayout>

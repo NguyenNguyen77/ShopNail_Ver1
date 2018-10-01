@@ -102,21 +102,18 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
                 break;
             case R.id.btn_back:
                 mViewManager.handleBackScreen();
+                mViewManager.finishActivity(this);
                 break;
             default:
                 break;
         }
     }
 
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                mViewManager.handleBackScreen();
-                return true;
-            default:
-                return false;
-        }
+   @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mViewManager.handleBackScreen();
+        mViewManager.finishActivity(this);
     }
 
     @Override

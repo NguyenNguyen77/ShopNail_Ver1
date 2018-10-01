@@ -70,10 +70,18 @@ public class MyCustomerActivity extends Activity implements View.OnClickListener
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mViewManager.handleBackScreen();
+        mViewManager.finishActivity(this);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_go_back:
                 mViewManager.handleBackScreen();
+                mViewManager.finishActivity(this);
                 break;
             default:
                 break;

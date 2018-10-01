@@ -45,28 +45,10 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         btnOldCustomer = findViewById(R.id.btn_old_customer);
         btnBack = findViewById(R.id.btn_go_back);
 
-        btnNewCustomer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Toast.makeText(getApplicationContext(), "fuck click create new customer", Toast.LENGTH_SHORT).show();
-                ShowCreateNewCutomer();
-            }
-        });
+        btnNewCustomer.setOnClickListener(this);
+        btnOldCustomer.setOnClickListener(this);
+        btnBack.setOnClickListener(this);
 
-        btnOldCustomer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "fuck click old customer", Toast.LENGTH_SHORT).show();
-                ShowLoginForOldCustomer();
-            }
-        });
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mViewManager.handleBackScreen();
-            }
-        });
         mViewManager.setActivity(this);
     }
 
@@ -82,6 +64,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
             case R.id.btn_go_back:
                 Toast.makeText(this, "click go back", Toast.LENGTH_SHORT).show();
                 mViewManager.handleBackScreen();
+                mViewManager.finishActivity(this);
                 break;
             default:
                 break;
@@ -92,6 +75,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
     public void onBackPressed() {
         super.onBackPressed();
         mViewManager.handleBackScreen();
+        mViewManager.finishActivity(this);
     }
 
     @Override

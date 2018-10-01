@@ -61,6 +61,8 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
         gridSelectService = findViewById(R.id.gridSelectService);
         btnBack = findViewById(R.id.btn_go_back);
         btnViewcart = findViewById(R.id.btn_view_cart);
+        btnBack.setOnClickListener(this);
+        btnViewcart.setOnClickListener(this);
         // request server category add start vinhcn 25/09/2018
         mSerlectServicePresenter.RequestCategory();
         // request server category add end vinhcn 25/09/2018
@@ -79,20 +81,6 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
         spinnerCategory.setOnItemSelectedListener(this);
 
         mViewManager.setActivity(this);
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mViewManager.handleBackScreen();
-            }
-        });
-
-        btnViewcart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mViewManager.setView(ViewManager.VIEW_KEY.VIEW_CART);
-            }
-        });
     }
 
     @Override
@@ -136,10 +124,21 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mViewManager.handleBackScreen();
+        mViewManager.finishActivity(this);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btn_view_cart:
+                mViewManager.setView(ViewManager.VIEW_KEY.VIEW_CART);
+            break;
             case R.id.btn_go_back:
                 mViewManager.handleBackScreen();
+                mViewManager.finishActivity(this);
                 break;
             default:
                 break;

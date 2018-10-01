@@ -35,6 +35,8 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
 
         listManageStaff = findViewById(R.id.listStatusService);
         btn_back = findViewById(R.id.btn_go_back);
+        btn_back.setOnClickListener(this);
+
         ManageStaff staffA = new ManageStaff(true,"cat toc",false,false);
         ManageStaff staffB = new ManageStaff(true,"cat toc",false,false);
         ManageStaff staffC = new ManageStaff(true,"cat toc",false,false);
@@ -49,14 +51,6 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
 
         listManageStaff.setAdapter(manageStaffAdapter);
 
-
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "click go back", Toast.LENGTH_SHORT).show();
-                mViewManager.handleBackScreen();
-            }
-        });
         mViewManager.setActivity(this);
     }
 
@@ -106,6 +100,7 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
         switch (view.getId()) {
             case R.id.btn_go_back:
                 mViewManager.handleBackScreen();
+                mViewManager.finishActivity(this);
                 break;
             default:
                 break;
@@ -116,5 +111,6 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
     public void onBackPressed() {
         super.onBackPressed();
         mViewManager.handleBackScreen();
+        mViewManager.finishActivity(this);
     }
 }

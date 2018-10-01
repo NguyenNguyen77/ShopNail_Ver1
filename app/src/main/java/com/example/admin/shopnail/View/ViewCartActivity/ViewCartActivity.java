@@ -39,7 +39,7 @@ public class ViewCartActivity extends Activity implements View.OnClickListener {
 
         edtExtra = findViewById(R.id.edt_Extra);
         listCart = findViewById(R.id.listView);
-        mBtnConfirm = (Button) findViewById(R.id.btn_view_cart);
+        mBtnConfirm = (Button) findViewById(R.id.btn_confirm);
         mBtnBack = (Button) findViewById(R.id.btn_go_back);
 
         mBtnConfirm.setOnClickListener(this);
@@ -105,14 +105,16 @@ public class ViewCartActivity extends Activity implements View.OnClickListener {
     public void onBackPressed() {
         super.onBackPressed();
         mViewManager.handleBackScreen();
+        mViewManager.finishActivity(this);
     }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_view_cart:
+            case R.id.btn_confirm:
                 break;
             case R.id.btn_go_back:
                 mViewManager.handleBackScreen();
+                mViewManager.finishActivity(this);
                 break;
             default:
                 break;

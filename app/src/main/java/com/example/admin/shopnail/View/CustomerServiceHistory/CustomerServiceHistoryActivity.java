@@ -94,6 +94,7 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
                 break;
             case R.id.btn_back:
                 mViewManager.handleBackScreen();
+                mViewManager.finishActivity(this);
                 break;
             default:
                 break;
@@ -103,6 +104,7 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
     @Override
     public void onBackPressed() {
         mViewManager.handleBackScreen();
+        mViewManager.finishActivity(this);
     }
 
     @Override

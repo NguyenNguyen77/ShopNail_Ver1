@@ -290,4 +290,13 @@ public class ViewManager {
         }
         mListActivity.clear();
     }
+
+    public void finishActivity (Activity activity) {
+        for (Activity stack : mListActivity) {
+            if (stack == activity) {
+                stack.finish();
+                mListActivity.remove(stack);
+            }
+        }
+    }
 }

@@ -69,6 +69,7 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
                 break;
             case R.id.btn_logout:
                 mViewManager.handleBackScreen();
+                mViewManager.finishActivity(this);
                 break;
             default:
                 break;
@@ -76,14 +77,9 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
     }
 
     @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                mViewManager.finishListActivity();
-                return true;
-            default:
-                return false;
-        }
+    public void onBackPressed() {
+        super.onBackPressed();
+        mViewManager.finishListActivity();
     }
 
     private void tranferToLoginForCustomer() {
