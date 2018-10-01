@@ -9,9 +9,14 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.admin.shopnail.Adapter.MyCustomerAdapter;
+import com.example.admin.shopnail.Model.ServicesOfShop;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.View.ViewManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyCustomerActivity extends Activity implements View.OnClickListener {
 
@@ -20,6 +25,8 @@ public class MyCustomerActivity extends Activity implements View.OnClickListener
     private Button mBtnUpdateService;
     private Button mBtnCancelService;
     private ListView mLvMyCustomerList;
+
+    List<ServicesOfShop> listService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +41,32 @@ public class MyCustomerActivity extends Activity implements View.OnClickListener
         mBtnCancelService = (Button) findViewById(R.id.btn_cancel_service);
         mLvMyCustomerList = (ListView)findViewById(R.id.list_my_customer);
 
+
+        listService = getListDataAcrylic();
+        MyCustomerAdapter myCustomerAdapter = new MyCustomerAdapter(getApplicationContext(),listService);
+        mLvMyCustomerList.setAdapter(myCustomerAdapter);
+
         mBtnBack.setOnClickListener(this);
         mBtnUpdateService.setOnClickListener(this);
         mBtnCancelService.setOnClickListener(this);
         mViewManager.setActivity(this);
 
+    }
+
+
+    public List<ServicesOfShop> getListDataAcrylic() {
+        List<ServicesOfShop> listService = new ArrayList<ServicesOfShop>();
+        ServicesOfShop Manicure = new ServicesOfShop("Manicure", 17, "http//...");
+        ServicesOfShop Gel_Manicure = new ServicesOfShop("Gel Manicure", 30, "http//...");
+        ServicesOfShop Gel_Manicure_French_Tip = new ServicesOfShop("Gel Manicure w/ French Tip", 35, "http//...");
+        ServicesOfShop Spa_Pedicure = new ServicesOfShop("Spa Pedicure (Sea Salt & Hot Towel)", 22, "http//...");
+        ServicesOfShop Spa_Pedicure_Gel_Polish = new ServicesOfShop("Spa Pedicure w/ Gel Polish (Sea Salt & Hot Towel)", 10, "http//...");
+        listService.add(Manicure);
+        listService.add(Gel_Manicure);
+        listService.add(Gel_Manicure_French_Tip);
+        listService.add(Spa_Pedicure);
+        listService.add(Spa_Pedicure_Gel_Polish);
+        return listService;
     }
 
     @Override

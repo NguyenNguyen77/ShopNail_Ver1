@@ -95,8 +95,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="6"
             android:gravity="bottom"
             android:orientation="horizontal">
@@ -105,53 +105,37 @@
                 android:id="@+id/list_my_customer"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_margin="10dp"
+                android:layout_weight="1.4">
 
             </ListView>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="2">
-
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/btn_update_service"
-                    android:layout_width="150dp"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_nail"
-                    android:text="@string/update_service"
-                    android:textColor="@drawable/button_text" />
-
-                <Button
-                    android:id="@+id/btn_cancel_service"
-                    android:layout_width="150dp"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_nail"
-                    android:text="@string/cancel_service"
-                    android:textColor="@drawable/button_text" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="2">
-
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
+
+
+
+            <Button
+                android:id="@+id/btn_update_service"
+                android:layout_width="150dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/button_nail"
+                android:text="@string/update_service"
+                android:textColor="@drawable/button_text" />
+
+            <Button
+                android:id="@+id/btn_cancel_service"
+                android:layout_width="150dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_nail"
+                android:text="@string/cancel_service"
+                android:textColor="@drawable/button_text" />
+
 
         <Button
             android:id="@+id/btn_go_back"
@@ -159,7 +143,7 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:background="@drawable/button_nail"
             android:text="@string/go_back"
