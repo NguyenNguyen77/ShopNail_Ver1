@@ -137,7 +137,6 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
             @Override
             public void onClick(View view) {
                 tranferToLResetPassword();
-                Toast.makeText(MainActivity.this, "show activity reset pasword", Toast.LENGTH_LONG).show();
             }
         });
         login.show();

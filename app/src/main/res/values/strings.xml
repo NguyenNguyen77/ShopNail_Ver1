@@ -59,9 +59,9 @@
     <string name="reset_password">Reset Password</string>
 
     <string name="book_appointment">Book Appointment</string>
-    <string name="customer_name">Name: </string>
-    <string name="customer_phone">Phone: </string>
-    <string name="select_staff">Select Staff: </string>
+    <string name="customer_name">Name </string>
+    <string name="customer_phone">Phone </string>
+    <string name="select_staff">Staff </string>
     <string name="customer_name_hint">Customer Name</string>
     <string name="customer_phone_hint">Phone Number</string>
     <string name="old_pass_wrong">Old PassWord was wrong</string>
@@ -76,4 +76,5 @@
     <string name="time">Time: </string>
     <string name="update_service">Update Service</string>
     <string name="cancel_service">Cancel Service</string>
+    <string name="enter_your_phone">Enter your Phone</string>
 </resources>

@@ -268,6 +268,7 @@ public class ViewManager {
             case MY_CUSTOMER:
                 setView(VIEW_KEY.MENU_FOR_STAFF);
                 break;
+            case RESET_PASSWORD:
             case MENU_FOR_STAFF:
                 setView(VIEW_KEY.LOGIN_SCREEN);
                 break;

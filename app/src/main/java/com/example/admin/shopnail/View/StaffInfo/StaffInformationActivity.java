@@ -110,7 +110,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         }
     }
 
-   @Override
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         mViewManager.handleBackScreen();
@@ -232,7 +232,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         } else if (!newPass.equals(mConfirmNewPass)) {
             Toast.makeText(StaffInformationActivity.this, R.string.new_pass_notmatch, Toast.LENGTH_LONG).show();
             result = false;
-        }else if (!mOldPass.equals(BaseMethod.getDefaults(PASS_WORD, StaffInformationActivity.this))){
+        } else if (!mOldPass.equals(BaseMethod.getDefaults(PASS_WORD, StaffInformationActivity.this))) {
             Toast.makeText(this, R.string.old_pass_wrong, Toast.LENGTH_SHORT).show();
             result = false;
         }
