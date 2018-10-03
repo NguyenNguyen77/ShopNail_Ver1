@@ -1,10 +1,12 @@
 package com.example.admin.shopnail.Adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.admin.shopnail.Model.ServiceHistory;
@@ -26,8 +28,19 @@ public class ServiceHistoryAdapter extends ArrayAdapter<ServiceHistory> {
             }
             TextView tvServiceName = (TextView) convertView.findViewById(R.id.tv_service_name);
             TextView tvServicePrice = (TextView) convertView.findViewById(R.id.tv_service_price);
+            LinearLayout lvItem = (LinearLayout) convertView.findViewById(R.id.item_list);
             tvServiceName.setText(user.mServiceName);
             tvServicePrice.setText( Float.toString(user.mServicePrice));
+
+            if(position %2 == 1) {
+                int backgroundColor = ContextCompat.getColor(convertView.getContext(), R.color.list_1);
+                lvItem.setBackgroundColor(backgroundColor);
+            }
+            else
+            {
+                int backgroundColor = ContextCompat.getColor(convertView.getContext(), R.color.list_2);
+                lvItem.setBackgroundColor(backgroundColor);
+            }
             return convertView;
         }
 

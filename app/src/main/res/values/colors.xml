@@ -7,4 +7,6 @@
     <color name="textTitle">#006600</color>
     <color name="nail_title_background">#FFFFFF</color>
     <color name="text_color">#000000</color>
+    <color name="list_1">#F2F5A9</color>
+    <color name="list_2">#F7D358</color>
 </resources>
