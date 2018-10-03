@@ -47,7 +47,7 @@
     <string name="submit">Submit</string>
     <string name="date">Date</string>
     <string name="select_date_to_view_history">Select Date to view History</string>
-    <string name="filter_by_day">Filter by day: </string>
+    <string name="filter_by_day">Select Date: </string>
     <string name="view_cart">View cart</string>
     <string name="extra">Extra</string>
     <string name="add">Add</string>

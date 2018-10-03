@@ -1,6 +1,7 @@
 package com.example.admin.shopnail.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,16 @@ public class CustomerAdapter extends ArrayAdapter<Customer> {
         TextView tvHome = (TextView) convertView.findViewById(R.id.tv_phone);
         tvName.setText(user.name);
         tvHome.setText(user.phone);
+
+        if(position %2 == 1)
+        {
+            convertView.setBackgroundColor(Color.parseColor("#FFB6B546"));
+        }
+        else
+        {
+            convertView.setBackgroundColor(Color.parseColor("#FFCCCB4C"));
+        }
+
         return convertView;
     }
 

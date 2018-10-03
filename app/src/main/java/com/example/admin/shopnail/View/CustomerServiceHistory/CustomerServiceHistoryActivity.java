@@ -6,13 +6,18 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -38,7 +43,6 @@ import java.util.Locale;
 
 public class CustomerServiceHistoryActivity extends Activity implements View.OnClickListener, ICustomerServiceHistoryView {
     protected ViewManager mViewManager = ViewManager.getInstance();
-    private Button mBtDate;
     private Button mBtSubmit;
     private Button mBtBack;
     private TextView mTvDate;
@@ -58,7 +62,6 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
                 NailActionBarGenerator.BarType.CUSTOMER_SERVICE_HISTORY);
         mViewManager.setActivity(this);
 
-        mBtDate = (Button) findViewById(R.id.btn_date);
         mBtSubmit = (Button) findViewById(R.id.btn_submit_date);
         mBtBack = (Button) findViewById(R.id.btn_back);
         mTvDate = (TextView) findViewById(R.id.tv_date);
@@ -66,9 +69,9 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
         mLayoutList = (LinearLayout) findViewById(R.id.layout_list);
         mListCustomerServiceHistoryByDate = (ListView) findViewById(R.id.lv_service_history);
 
-        mBtDate.setOnClickListener(this);
         mBtSubmit.setOnClickListener(this);
         mBtBack.setOnClickListener(this);
+        mTvDate.setOnClickListener(this);
 
         getDefaultInfo();
 
@@ -86,7 +89,7 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_date:
+            case R.id.tv_date:
                 showDatePickerDialog();
                 break;
             case R.id.btn_submit_date:
@@ -153,7 +156,10 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
         dft = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         mDateSelected = mCalender.getTime();
         String strDate = dft.format(mCalender.getTime());
-        mTvDate.setText(strDate);
+        SpannableString strSpanned = new SpannableString(strDate);
+        strSpanned.setSpan(new StyleSpan(Typeface.ITALIC), 0, 10, 0);
+        strSpanned.setSpan(new UnderlineSpan(), 0, 10, 0);
+        mTvDate.setText(strSpanned);
     }
 
     public void showDatePickerDialog() {
@@ -161,7 +167,11 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
             public void onDateSet(DatePicker view, int year,
                                   int monthOfYear,
                                   int dayOfMonth) {
-                mTvDate.setText((dayOfMonth) + "/" + (monthOfYear + 1) + "/" + year);
+                String strDate = (dayOfMonth) + "/" + (monthOfYear + 1) + "/" + year;
+                SpannableString strSpanned = new SpannableString(strDate);
+                strSpanned.setSpan(new StyleSpan(Typeface.ITALIC), 0, 10, 0);
+                strSpanned.setSpan(new UnderlineSpan(), 0, 10, 0);
+                mTvDate.setText(strSpanned);
                 mDateSelected = mCalender.getTime();
             }
         };
@@ -193,6 +203,7 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
     private void loadCustomerServiceHistoryByID(String name, String phone) {
         mCustomerServiceHistoryPresenter.loadCustomerServiceHistoryByID(name, phone);
     }
+
     @Override
     public void showListCustomerServiceHistoryByID(ArrayList<ServiceHistory> listCustomerServiceHistoryByID) {
         if (listCustomerServiceHistoryByID.size() > 0) {
