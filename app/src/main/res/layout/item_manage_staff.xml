@@ -36,23 +36,25 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:gravity="center"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
         <CheckBox
         android:id="@+id/item_wax"
         android:layout_width="25dp"
-        android:layout_height="25dp"/>
+        android:layout_height="25dp"
+            android:layout_gravity="center"/>
         </LinearLayout>
         <LinearLayout
             android:layout_weight="1"
             android:layout_width="0dp"
             android:gravity="center"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
         <CheckBox
             android:id="@+id/item_bouns"
             android:layout_width="25dp"
-            android:layout_height="25dp"/>
+            android:layout_height="25dp"
+            android:layout_gravity="center"/>
         </LinearLayout>
     </LinearLayout>
 
