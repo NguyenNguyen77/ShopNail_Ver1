@@ -8,5 +8,8 @@ public class UrlManager {
     public static final String LOGIN_OLD_CUSTOMER_URL = "http://142.93.29.45:8888/api/clientLogin";
     public static final String GET_CATEGORY_LIST_URL = "http://142.93.29.45:8888/api/getAllCategory";
     public static final String GET_PRODUCTS_BY_CATEGORY_URL = "http://142.93.29.45:8888/api/getProductByCate";
+    public static final String CHANGE_AVATAR_URL = "http://142.93.29.45:8888/api/changeAvatar";
+    public static final String GET_ALL_STAFF_URL = "http://142.93.29.45:8888/api/getAllStaff";
+    public static final String GET_ALL_SERVICE_URL = "http://142.93.29.45:8888/api/getAllNavigateStaff";
 
 }

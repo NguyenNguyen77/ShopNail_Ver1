@@ -24,5 +24,7 @@ public class KeyManager {
     public static final String PRODUC_ID = "productId";
     public static final String PRICE = "price";
     public static final String TIME_ORDER = "timeOrder";
+    public static final String GET_ALL_STAFF_ID = "GET_ALL_STAFF";
+    public static final String GET_ALL_SERVICE_ID = "GET_ALL_SERVICE";
 
 }

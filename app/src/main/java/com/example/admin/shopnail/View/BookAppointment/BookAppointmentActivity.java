@@ -3,6 +3,7 @@ package com.example.admin.shopnail.View.BookAppointment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,7 +19,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.admin.shopnail.Adapter.BookServiceAdapter;
+import com.example.admin.shopnail.Manager.BaseMethod;
+import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Model.BookAppointment.BookService;
+import com.example.admin.shopnail.Model.BookAppointment.GsonAllStaff;
 import com.example.admin.shopnail.Model.Employee;
 import com.example.admin.shopnail.Presenter.BookAppointment.BookAppointmentPresenter;
 import com.example.admin.shopnail.R;
@@ -50,9 +54,10 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     private int mTextSizeAfter = 0;
     ArrayAdapter<String> mAdapterStaff = null;
     ArrayAdapter<String> mAdapterService = null;
-    private BookAppointmentPresenter mBookAppointmentPresenter = new BookAppointmentPresenter(this);
+    private BookAppointmentPresenter mBookAppointmentPresenter = new BookAppointmentPresenter(this, this);
 
     private ArrayList<BookService> mListBookService = new ArrayList<BookService>();
+    private ProgressDialog mProgressDialog;
 
 
     @Override
@@ -72,10 +77,8 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mLvSelectServiceItem = (ListView) findViewById(R.id.lv_select_services);
         mTvAddMoreervice = (TextView) findViewById(R.id.tv_add_more_services);
 
-        reqStaffList();
-        reqServiceList();
-        addMoreService();//Add 1 service first
 
+        loadInitData();
 
         mBtnSubmit.setOnClickListener(this);
         mBtnBack.setOnClickListener(this);
@@ -183,14 +186,17 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     public void updateStaffList(ArrayList<String> staffList) {
         mAdapterStaff = new ArrayAdapter<String>(BookAppointmentActivity.this,
                 android.R.layout.simple_spinner_item, staffList);
-        mAdapterStaff.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mProgressDialog.cancel();
+        addMoreService();//Add 1 service first
+//        mAdapterStaff.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
 
     @Override
     public void updateServiceList(ArrayList<String> serviceList) {
         mAdapterService = new ArrayAdapter<String>(BookAppointmentActivity.this,
                 android.R.layout.simple_spinner_item, serviceList);
-        mAdapterService.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        addMoreService();//Add 1 service first
+//        mAdapterService.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
 
     @Override
@@ -235,9 +241,12 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     }
 
     public void addMoreService() {
-        mListBookService.add(getDefaultBookServiceItem());
-        mBookServiceAdapter = new BookServiceAdapter(this, mListBookService);
-        mLvSelectServiceItem.setAdapter(mBookServiceAdapter);
+        BookService defaultService = getDefaultBookServiceItem();
+        if (defaultService != null) {
+            mListBookService.add(defaultService);
+            mBookServiceAdapter = new BookServiceAdapter(this, mListBookService);
+            mLvSelectServiceItem.setAdapter(mBookServiceAdapter);
+        }
     }
 
     public BookService getDefaultBookServiceItem() {
@@ -258,5 +267,13 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
 
         defaultBookService = new BookService(listStaff, listService, getCurrentTime(), "N/A");
         return defaultBookService;
+    }
+
+    private void loadInitData() {
+        mProgressDialog = new ProgressDialog(this);   // Show inprogress dialog: please wait
+        mProgressDialog.setMessage(getString(R.string.please_wait));
+        mProgressDialog.show();
+        reqStaffList();
+        reqServiceList();
     }
 }

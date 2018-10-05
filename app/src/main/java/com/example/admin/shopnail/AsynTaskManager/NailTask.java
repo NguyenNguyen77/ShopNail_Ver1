@@ -51,7 +51,14 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
                 Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(KeyManager.GET_PRODUCTS_BY_CATEGORY, Resuilt);
                 break;
-
+            case KeyManager.GET_ALL_STAFF_ID:
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(KeyManager.GET_ALL_STAFF_ID, Resuilt);
+                break;
+            case KeyManager.GET_ALL_SERVICE_ID:
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(KeyManager.GET_ALL_SERVICE_ID, Resuilt);
+                break;
         }
         return mResuiltObject;
     }
