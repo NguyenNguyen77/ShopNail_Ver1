@@ -7,7 +7,9 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -184,7 +186,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
 
     @Override
     public void updateStaffList(ArrayList<String> staffList) {
-        mAdapterStaff = new ArrayAdapter<String>(BookAppointmentActivity.this,
+         mAdapterStaff = new ArrayAdapter<String>(BookAppointmentActivity.this,
                 android.R.layout.simple_spinner_item, staffList);
         mProgressDialog.cancel();
         addMoreService();//Add 1 service first
@@ -210,7 +212,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         dft = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         mDateSelected = mCalender.getTime();
         String strDate = dft.format(mCalender.getTime());
-        mTvDate.setText(strDate);
+        showUnderLineText(strDate, mTvDate);
     }
 
     public String getCurrentTime() {
@@ -226,7 +228,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             public void onDateSet(DatePicker view, int year,
                                   int monthOfYear,
                                   int dayOfMonth) {
-                mTvDate.setText((dayOfMonth) + "/" + (monthOfYear + 1) + "/" + year);
+                showUnderLineText((dayOfMonth) + "/" + (monthOfYear + 1) + "/" + year, mTvDate);
                 mDateSelected = mCalender.getTime();
             }
         };
@@ -275,5 +277,11 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mProgressDialog.show();
         reqStaffList();
         reqServiceList();
+    }
+
+    private void showUnderLineText(String text, TextView id) {
+        SpannableString contentspanned = new SpannableString(text);
+        contentspanned.setSpan(new UnderlineSpan(), 0, text.length(), 0);
+        id.setText(contentspanned);
     }
 }

@@ -3,6 +3,8 @@ package com.example.admin.shopnail.Adapter;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
     ArrayAdapter<String> adapterCategoryStaff = null;
     ArrayAdapter<String> adapterCategoryService = null;
     ArrayList<BookService> mListusers = null;
+    TextView mServiceTime;
     public int mHour, mMinute;
     private View mView;
     protected ViewManager mViewManager = ViewManager.getInstance();
@@ -45,12 +48,12 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         }
         Spinner spinnerStaff = (Spinner) convertView.findViewById(R.id.spinnerStaff);
         Spinner spinnerService = (Spinner) convertView.findViewById(R.id.spinnerService);
-        TextView serviceTime = (TextView) convertView.findViewById(R.id.tv_time);
+        mServiceTime = (TextView) convertView.findViewById(R.id.tv_time);
         EditText serviceNote = (EditText) convertView.findViewById(R.id.et_note);
         ImageView removeBookService = (ImageView) convertView.findViewById(R.id.img_delete_service);
 
         removeBookService.setOnClickListener(this);
-        serviceTime.setOnClickListener(this);
+        mServiceTime.setOnClickListener(this);
         serviceNote.setOnClickListener(this);
 
         adapterCategoryStaff = new ArrayAdapter<String>(convertView.getContext(),
@@ -62,10 +65,15 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                 android.R.layout.simple_spinner_item, user.mListService);
         adapterCategoryService.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerService.setAdapter(adapterCategoryService);
-        serviceTime.setText(user.mServiceTime);
+        showUnderLineText(user.mServiceTime.toString(), mServiceTime);
         serviceNote.setText(user.mNote);
 
         mView = convertView;
+
+        removeBookService.setVisibility(View.INVISIBLE);
+        if (mListusers.size() > 1) {
+            removeBookService.setVisibility(View.VISIBLE);
+        }
         return convertView;
     }
 
@@ -105,9 +113,16 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                                           int minute) {
 
                         //txtTime.setText(hourOfDay + ":" + minute);
+                        showUnderLineText(hourOfDay + ":" + minute, mServiceTime);
                         int a = hourOfDay;
                     }
                 }, mHour, mMinute, true);
         timePickerDialog.show();
+    }
+
+    private void showUnderLineText(String text, TextView id) {
+        SpannableString contentSpanned = new SpannableString(text);
+        contentSpanned.setSpan(new UnderlineSpan(), 0, text.length(), 0);
+        id.setText(contentSpanned);
     }
 }

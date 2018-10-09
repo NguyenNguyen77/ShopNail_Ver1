@@ -79,4 +79,5 @@
     <string name="enter_your_phone">Enter your Phone</string>
 
     <string name="email_customer">Email Customer</string>
+    <string name="email">Email</string>
 </resources>
