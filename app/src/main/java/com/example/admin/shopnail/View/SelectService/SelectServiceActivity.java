@@ -1,6 +1,7 @@
 package com.example.admin.shopnail.View.SelectService;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ActionMode;
@@ -42,6 +43,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     Button btnViewcart;
     Spinner spinnerCategory;
     GridView gridSelectService;
+    private ProgressDialog mProgressDialog;
     //    ArrayAdapter<String> adapterCategory;
     SelectServiceAdapter selectServiceAdapter = null;
     List<GsonProductsByCategory.SuccessBean.DataBean> mList = null;
@@ -57,7 +59,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
         new NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.SELECT_CUSTOMER_SERVICE);
 
-        spinnerCategory = findViewById(R.id.spinnerCategoty);
+        spinnerCategory = findViewById(R.id.spinnerCategory);
         gridSelectService = findViewById(R.id.gridSelectService);
         btnBack = findViewById(R.id.btn_go_back);
         btnViewcart = findViewById(R.id.btn_view_cart);
@@ -155,6 +157,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
 //        } else {
 //            loadListWaxingFacial();
 //        }
+        showInprogressDialog();
         mSerlectServicePresenter.requestProduct(i);
 
     }
@@ -197,6 +200,9 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     @Override
     public void setProductsByCategoryAdapter(SelectServiceAdapter selectServiceAdapter) {
         gridSelectService.setAdapter(selectServiceAdapter);
+        if (mProgressDialog != null) {
+            mProgressDialog.cancel();
+        }
     }
 
 
@@ -230,6 +236,15 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     @Override
     public JSONArray getArrayChecked() {
         return jsonArray;
+    }
+
+    private void showInprogressDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog.cancel();
+        }
+        mProgressDialog = new ProgressDialog(this);   // Show inprogress dialog: please wait
+        mProgressDialog.setMessage(getString(R.string.please_wait));
+        mProgressDialog.show();
     }
 }
 

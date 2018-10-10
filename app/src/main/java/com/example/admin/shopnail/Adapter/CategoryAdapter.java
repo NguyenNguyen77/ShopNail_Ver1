@@ -41,7 +41,7 @@ public class CategoryAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.custom_category_list, null);
-        TextView tvCategoryName =  convertView.findViewById(R.id.catelory_name);
+        TextView tvCategoryName =  convertView.findViewById(R.id.category_name);
         tvCategoryName.setText((object.get(position).getName()));
         return convertView;
     }

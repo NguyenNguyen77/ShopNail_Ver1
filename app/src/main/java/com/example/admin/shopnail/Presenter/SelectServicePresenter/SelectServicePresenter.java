@@ -2,6 +2,7 @@ package com.example.admin.shopnail.Presenter.SelectServicePresenter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
@@ -20,7 +21,10 @@ import com.example.admin.shopnail.Model.ServicesOfShop;
 import com.example.admin.shopnail.View.SelectService.ISelectServiceView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class SelectServicePresenter extends BaseMethod implements ISelectServicePresenter, AsyncTaskCompleteListener<ResuiltObject> {
 
@@ -29,6 +33,8 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
     ArrayAdapter<String> adapterCategory;
     List<String> paths;
     List<GsonCategory.SuccessBean.DataBean> arrCategory;
+    List<GsonCategory.SuccessBean.DataBean> arrCategoryJson;
+    GsonCategory.SuccessBean.DataBean categoryAll;
 
     public SelectServicePresenter(ISelectServiceView mISelectServiceView, Context mContext) {
         this.mISelectServiceView = mISelectServiceView;
@@ -91,8 +97,15 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
     }
 
     @Override
-    public void requestProduct(int i) {
-        new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_PRODUCTS_BY_CATEGORY, UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + arrCategory.get(i).getId(), getParamBuidler()));
+    public void requestProduct(int pos) {
+        if (pos == 0) {
+            new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_PRODUCTS_BY_CATEGORY, UrlManager.GET_PRODUCTS_BY_CATEGORY_URL, getParamBuidler()));//For item All
+        } else {
+            if (pos >= arrCategory.size()) {
+                return;
+            }
+            new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_PRODUCTS_BY_CATEGORY, UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + arrCategory.get(pos - 1).getId(), getParamBuidler()));
+        }
     }
 
     Uri.Builder getParamBuidler() {
@@ -106,7 +119,17 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
         switch (CaseRequest) {
             case KeyManager.GET_CATEGORY_LIST:
                 GsonCategory mGsonCategory = getGson().fromJson(s, GsonCategory.class);
-                arrCategory = mGsonCategory.getSuccess().getData();
+                categoryAll = new GsonCategory.SuccessBean.DataBean();
+                categoryAll.setId(0);
+                categoryAll.setName("All");
+                arrCategoryJson = mGsonCategory.getSuccess().getData();
+
+                arrCategory = new ArrayList<GsonCategory.SuccessBean.DataBean>();
+                arrCategory.add(categoryAll);
+
+                for (int i = 0; i < arrCategoryJson.size(); i++) {
+                    arrCategory.add(arrCategoryJson.get(i));
+                }
                 mISelectServiceView.setCategoryAdapter(new CategoryAdapter(arrCategory, mContext));
 //                adapterCategory = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, paths);
 //                adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
