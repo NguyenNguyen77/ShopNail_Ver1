@@ -28,14 +28,14 @@ public class CustomerServiceHistoryPresenter implements ICustomerServiceHistoryP
     @Override
     public void loadCustomerServiceHistoryByID(String name, String phone) {
         ArrayList<ServiceHistory> arrayOfServiceHistories = new ArrayList<ServiceHistory>();
-        arrayOfServiceHistories.add(new ServiceHistory("Hair", 50));
-        arrayOfServiceHistories.add(new ServiceHistory("Nail clipper", 20));
-        arrayOfServiceHistories.add(new ServiceHistory("Nail polish", 30));
-        arrayOfServiceHistories.add(new ServiceHistory("Pedicure", 50));
-        arrayOfServiceHistories.add(new ServiceHistory("Pedicure", 50));
-        arrayOfServiceHistories.add(new ServiceHistory("Pedicure", 50));
-        arrayOfServiceHistories.add(new ServiceHistory("Pedicure", 50));
-        arrayOfServiceHistories.add(new ServiceHistory("Pedicure", 50));
+        arrayOfServiceHistories.add(new ServiceHistory("Hair", 50, true, 30));
+        arrayOfServiceHistories.add(new ServiceHistory("Nail clipper", 20, false, 0));
+        arrayOfServiceHistories.add(new ServiceHistory("Nail polish", 30, true, 10));
+        arrayOfServiceHistories.add(new ServiceHistory("Pedicure", 50, true, 20));
+        arrayOfServiceHistories.add(new ServiceHistory("Pedicure", 50, true, 20));
+        arrayOfServiceHistories.add(new ServiceHistory("Pedicure", 50, false, 0));
+        arrayOfServiceHistories.add(new ServiceHistory("Pedicure", 50, false, 0));
+        arrayOfServiceHistories.add(new ServiceHistory("Pedicure", 50, false, 0));
         mCustomerServiceHistoryView.showListCustomerServiceHistoryByID(arrayOfServiceHistories);
 
     }

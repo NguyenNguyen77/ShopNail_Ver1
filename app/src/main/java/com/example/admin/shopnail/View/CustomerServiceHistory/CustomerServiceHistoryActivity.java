@@ -215,29 +215,31 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
 
     private void showDetailServiceDialog(ArrayList<ServiceHistory> listServiceHistory) {
         ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);
-        final Dialog login = new Dialog(ctw);
-        login.setContentView(R.layout.service_history_dialog);
-        login.setTitle(R.string.customer_info);
+        final Dialog detailService = new Dialog(ctw);
+        detailService.setContentView(R.layout.service_history_dialog);
+        detailService.setTitle(R.string.customer_info);
 
-        Button btnLogin = (Button) login.findViewById(R.id.btnOK);
-        Button btnCancel = (Button) login.findViewById(R.id.btnCancel);
-        ListView lvServiceHistory = (ListView) login.findViewById(R.id.lv_customer_service_history);
+        Button btnLogin = (Button) detailService.findViewById(R.id.btnOK);
+        Button btnCancel = (Button) detailService.findViewById(R.id.btnCancel);
+        TextView tvDateDetail = (TextView) detailService.findViewById(R.id.tv_date_select);
+        ListView lvServiceHistory = (ListView) detailService.findViewById(R.id.lv_customer_service_history);
         ServiceHistoryAdapter adapter = new ServiceHistoryAdapter(this, listServiceHistory);
         lvServiceHistory.setVisibility(View.VISIBLE);
         lvServiceHistory.setAdapter(adapter);
 
+        tvDateDetail.setText(mTvDate.getText());
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login.dismiss();
+                detailService.dismiss();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login.dismiss();
+                detailService.dismiss();
             }
         });
-        login.show();
+        detailService.show();
     }
 }
