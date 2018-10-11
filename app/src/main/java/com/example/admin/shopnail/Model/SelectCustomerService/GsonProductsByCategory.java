@@ -74,6 +74,7 @@ public class GsonProductsByCategory {
             private String desc;
             private String price;
             private String is_new;
+            private String is_Hot;
             private String created_at;
             private String updated_at;
 
@@ -131,6 +132,14 @@ public class GsonProductsByCategory {
 
             public void setIs_new(String is_new) {
                 this.is_new = is_new;
+            }
+
+            public String getIs_Hot() {
+                return is_Hot;
+            }
+
+            public void setIs_Hot(String is_Hot) {
+                this.is_Hot = is_Hot;
             }
 
             public String getCreated_at() {

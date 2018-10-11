@@ -1,6 +1,7 @@
 package com.example.admin.shopnail.Adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ public class SelectServiceAdapter extends BaseAdapter implements View.OnClickLis
     LayoutInflater layoutInflater;
     BaseMethod method = new BaseMethod();
     JSONArray mJSONArray;
+    ViewHolder mHolder;
 
     public SelectServiceAdapter(Context context, List<GsonProductsByCategory.SuccessBean.DataBean> listService, JSONArray mArray) {
         this.mContext = context;
@@ -59,28 +61,35 @@ public class SelectServiceAdapter extends BaseAdapter implements View.OnClickLis
 
     @Override
     public View getView(final int position, View convertView, ViewGroup viewGroup) {
-        final ViewHolder holder;
+        String isNew;
+        String isHot;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.service_item_layout, null);
-            holder = new ViewHolder();
-            holder.nameService = (TextView) convertView.findViewById(R.id.txtServiceName);
-            holder.priceService = (TextView) convertView.findViewById(R.id.txtServicePrice);
-            holder.cbItems = convertView.findViewById(R.id.itemCheckBox);
-            convertView.setTag(holder);
+            mHolder = new ViewHolder();
+            mHolder.nameService = (TextView) convertView.findViewById(R.id.txtServiceName);
+            mHolder.priceService = (TextView) convertView.findViewById(R.id.txtServicePrice);
+            mHolder.srcIconService = (ImageView) convertView.findViewById(R.id.image_hot_new);
+            mHolder.cbItems = convertView.findViewById(R.id.itemCheckBox);
+
+            convertView.setTag(mHolder);
         } else {
-            holder = (ViewHolder) convertView.getTag();
+            mHolder = (ViewHolder) convertView.getTag();
         }
         final GsonProductsByCategory.SuccessBean.DataBean itemService = this.listService.get(position);
-        holder.nameService.setText(itemService.getName());
-        holder.nameService.setTag(position);
-        holder.priceService.setText(itemService.getPrice() + " $");
-        holder.priceService.setTag(position);
-        holder.cbItems.setTag(position);
-        beforeCheck(mJSONArray, holder.cbItems, itemService);
-        holder.cbItems.setOnClickListener(new View.OnClickListener() {
+        mHolder.nameService.setText(itemService.getName());
+        mHolder.nameService.setTag(position);
+        mHolder.priceService.setText(itemService.getPrice() + " $");
+        mHolder.priceService.setTag(position);
+        isNew = itemService.getIs_new();
+        isHot = itemService.getIs_Hot();
+        updateImageNewHot(isNew, isHot);
+
+        mHolder.cbItems.setTag(position);
+        beforeCheck(mJSONArray, mHolder.cbItems, itemService);
+        mHolder.cbItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isChecked = holder.cbItems.isChecked();
+                boolean isChecked = mHolder.cbItems.isChecked();
                 ((SelectServiceActivity) mContext).addJsonArrayService(isChecked, itemService.getId(), itemService.getPrice(), method.mSimpleDateFormat.format(Calendar.getInstance().getTime()));
             }
         });
@@ -121,5 +130,20 @@ public class SelectServiceAdapter extends BaseAdapter implements View.OnClickLis
         TextView nameService;
         TextView priceService;
         CheckBox cbItems;
+    }
+
+    private void updateImageNewHot(String isNew, String isHot) {
+        if (isNew != null) {
+            if (isNew.equals("1")) {
+                mHolder.srcIconService.setVisibility(View.VISIBLE);
+                mHolder.srcIconService.setBackgroundResource(R.drawable.ic_new);
+            }
+        }
+        if (isHot != null) {
+            if (isHot.equals("1")) {
+                mHolder.srcIconService.setVisibility(View.VISIBLE);
+                mHolder.srcIconService.setBackgroundResource(R.drawable.ic_hot);
+            }
+        }
     }
 }
