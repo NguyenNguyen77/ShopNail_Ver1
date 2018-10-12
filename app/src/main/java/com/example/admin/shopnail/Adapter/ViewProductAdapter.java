@@ -1,12 +1,15 @@
 package com.example.admin.shopnail.Adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.admin.shopnail.Model.ServicesOfShop;
@@ -40,31 +43,40 @@ public class ViewProductAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int i, View view, ViewGroup viewGroup) {
+    public View getView(final int position, View view, ViewGroup viewGroup) {
 
         ViewProduct holder;
         if (view == null) {
             view = layoutInflater.inflate(R.layout.product_item_layout, null);
-            holder = new ViewProduct();
-            holder.nameService = (TextView) view.findViewById(R.id.txtProductName);
-            holder.priceService = (TextView) view.findViewById(R.id.txtProductPrice);
-            holder.btnRemove = (Button) view.findViewById(R.id.btn_remove) ;
-            view.setTag(holder);
         } else {
             holder = (ViewProduct) view.getTag();
         }
+        holder = new ViewProduct();
+        holder.nameService = (TextView) view.findViewById(R.id.txtProductName);
+        holder.priceService = (TextView) view.findViewById(R.id.txtProductPrice);
+        holder.imgTrash = (ImageView) view.findViewById(R.id.img_trash);
+        LinearLayout lvItem = (LinearLayout) view.findViewById(R.id.item_list_product);
+        view.setTag(holder);
 
-        ServicesOfShop itemService = this.listService.get(i);
+        ServicesOfShop itemService = this.listService.get(position);
         holder.nameService.setText(itemService.nameService);
-        holder.priceService.setText(itemService.priceService+" $");
-        holder.btnRemove.setOnClickListener(new View.OnClickListener() {
+        holder.priceService.setText(itemService.priceService + " $");
+        holder.imgTrash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listService.remove(i);
-                Log.d("NguyenNK2","remove item: "+i);
+                listService.remove(position);
+                Log.d("NguyenNK2", "remove item: " + position);
                 ViewProductAdapter.this.notifyDataSetChanged();
             }
         });
+
+        if (position % 2 == 1) {
+            int backgroundColor = ContextCompat.getColor(view.getContext(), R.color.list_1);
+            lvItem.setBackgroundColor(backgroundColor);
+        } else {
+            int backgroundColor = ContextCompat.getColor(view.getContext(), R.color.list_2);
+            lvItem.setBackgroundColor(backgroundColor);
+        }
 
 
         return view;
@@ -74,6 +86,6 @@ public class ViewProductAdapter extends BaseAdapter {
     class ViewProduct {
         TextView nameService;
         TextView priceService;
-        Button btnRemove;
+        ImageView imgTrash;
     }
 }
