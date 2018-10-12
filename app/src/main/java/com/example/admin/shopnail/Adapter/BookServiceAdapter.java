@@ -3,6 +3,7 @@ package com.example.admin.shopnail.Adapter;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -51,6 +53,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         mServiceTime = (TextView) convertView.findViewById(R.id.tv_time);
         EditText serviceNote = (EditText) convertView.findViewById(R.id.et_note);
         ImageView removeBookService = (ImageView) convertView.findViewById(R.id.img_delete_service);
+        LinearLayout lvItem = (LinearLayout) convertView.findViewById(R.id.item_list_book);
 
         removeBookService.setOnClickListener(this);
         mServiceTime.setOnClickListener(this);
@@ -67,6 +70,14 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         spinnerService.setAdapter(adapterCategoryService);
         showUnderLineText(user.mServiceTime.toString(), mServiceTime);
         serviceNote.setText(user.mNote);
+
+        if (position % 2 == 1) {
+            int backgroundColor = ContextCompat.getColor(convertView.getContext(), R.color.list_1);
+            lvItem.setBackgroundColor(backgroundColor);
+        } else {
+            int backgroundColor = ContextCompat.getColor(convertView.getContext(), R.color.list_2);
+            lvItem.setBackgroundColor(backgroundColor);
+        }
 
         mView = convertView;
 

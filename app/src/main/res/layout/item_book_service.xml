@@ -5,16 +5,18 @@
     android:background="@color/nail_title_background">
 
     <LinearLayout
+        android:id="@+id/item_list_book"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -45,8 +47,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:gravity="center_vertical"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:text="@string/note"
                 android:textColor="@color/text_color" />
 
@@ -56,6 +58,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
             <Spinner
@@ -63,23 +67,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_gravity="left"
-                android:gravity="center_vertical"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center_vertical" />
 
             <Spinner
                 android:id="@+id/spinnerService"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_gravity="left"
-                android:gravity="center_vertical"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center_vertical" />
 
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:gravity="center_vertical"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:textColor="@color/text_color"
                 android:textStyle="italic" />
 
@@ -87,19 +91,31 @@
                 android:id="@+id/et_note"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:gravity="center_vertical"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:textColor="@color/text_color" />
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/img_delete_service"
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@drawable/ic_delete" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/img_delete_service"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/ic_trash" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <TextView
