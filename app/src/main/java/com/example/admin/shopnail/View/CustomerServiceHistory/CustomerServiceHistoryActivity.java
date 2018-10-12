@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ import java.util.Locale;
 
 public class CustomerServiceHistoryActivity extends Activity implements View.OnClickListener, ICustomerServiceHistoryView {
     protected ViewManager mViewManager = ViewManager.getInstance();
-    private Button mBtSubmit;
+    private ImageView mImgSubmit;
     private Button mBtBack;
     private TextView mTvDate;
     private Date mDateSelected;
@@ -62,14 +63,14 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
                 NailActionBarGenerator.BarType.CUSTOMER_SERVICE_HISTORY);
         mViewManager.setActivity(this);
 
-        mBtSubmit = (Button) findViewById(R.id.btn_submit_date);
+        mImgSubmit = (ImageView) findViewById(R.id.img_submit);
         mBtBack = (Button) findViewById(R.id.btn_back);
         mTvDate = (TextView) findViewById(R.id.tv_date);
         mTvEmpty = (TextView) findViewById(R.id.txt_not_found_history);
         mLayoutList = (LinearLayout) findViewById(R.id.layout_list);
         mListCustomerServiceHistoryByDate = (ListView) findViewById(R.id.lv_service_history);
 
-        mBtSubmit.setOnClickListener(this);
+        mImgSubmit.setOnClickListener(this);
         mBtBack.setOnClickListener(this);
         mTvDate.setOnClickListener(this);
 
@@ -92,7 +93,7 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
             case R.id.tv_date:
                 showDatePickerDialog();
                 break;
-            case R.id.btn_submit_date:
+            case R.id.img_submit:
                 loadCustomerServiceHistoryByDate(mDateSelected);
                 break;
             case R.id.btn_back:
@@ -169,8 +170,8 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
                                   int dayOfMonth) {
                 String strDate = (dayOfMonth) + "/" + (monthOfYear + 1) + "/" + year;
                 SpannableString strSpanned = new SpannableString(strDate);
-                strSpanned.setSpan(new StyleSpan(Typeface.ITALIC), 0, 10, 0);
-                strSpanned.setSpan(new UnderlineSpan(), 0, 10, 0);
+                strSpanned.setSpan(new StyleSpan(Typeface.ITALIC), 0, strSpanned.length(), 0);
+                strSpanned.setSpan(new UnderlineSpan(), 0, strSpanned.length(), 0);
                 mTvDate.setText(strSpanned);
                 mDateSelected = mCalender.getTime();
             }
