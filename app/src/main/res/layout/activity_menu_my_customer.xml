@@ -105,15 +105,13 @@
                 android:id="@+id/list_my_customer"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+
                 android:layout_weight="1.4">
 
             </ListView>
 
 
         </LinearLayout>
-
-
 
             <Button
                 android:id="@+id/btn_update_service"
