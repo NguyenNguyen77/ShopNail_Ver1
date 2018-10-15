@@ -26,5 +26,10 @@ public class KeyManager {
     public static final String TIME_ORDER = "timeOrder";
     public static final String GET_ALL_STAFF_ID = "GET_ALL_STAFF";
     public static final String GET_ALL_SERVICE_ID = "GET_ALL_SERVICE";
+    public static final String ARRAY_PRODUCT = "ARRAY_PRODUCT";
+    public static final String NAME = "name";
+    public static final String CLIENT_NAME = "CLIENT_NAME";
+    public static final String CLIENT_ID = "CLIENT_ID";
+    public static final String CUSTOMER_PHONE_NUMBER = "CUSTOMER_PHONE_NUMBER";
 
 }

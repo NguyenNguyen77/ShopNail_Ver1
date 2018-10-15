@@ -136,8 +136,8 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_view_cart:
-                mViewManager.setView(ViewManager.VIEW_KEY.VIEW_CART);
-            break;
+                mViewManager.setView(ViewManager.VIEW_KEY.VIEW_CART, jsonArray);
+                break;
             case R.id.btn_go_back:
                 mViewManager.handleBackScreen();
                 mViewManager.finishActivity(this);
@@ -206,20 +206,20 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     }
 
 
-
     @Override
-    public void addJsonArrayService(boolean isChecked, int id, String price, String format) {
+    public void addJsonArrayService(boolean isChecked, String name, int id, String price, String format) {
         try {
-            if (isChecked){
+            if (isChecked) {
                 JSONObject mJsonObject = new JSONObject();
                 mJsonObject.put(KeyManager.PRODUC_ID, id);
+                mJsonObject.put(KeyManager.NAME, name);
                 mJsonObject.put(KeyManager.PRICE, price);
                 mJsonObject.put(KeyManager.TIME_ORDER, format);
                 jsonArray.put(mJsonObject);
-            }else {
-                for (int i=0; i< jsonArray.length(); i++){
+            } else {
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject mJsonObject = jsonArray.getJSONObject(i);
-                    if (id == mJsonObject.getInt(KeyManager.PRODUC_ID)){
+                    if (id == mJsonObject.getInt(KeyManager.PRODUC_ID)) {
                         jsonArray.remove(i);
                         break;
                     }

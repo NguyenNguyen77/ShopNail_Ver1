@@ -15,13 +15,17 @@ import com.example.admin.shopnail.Model.LoginForCustomer.GsonCMOldLogin;
 import com.example.admin.shopnail.Model.LoginForCustomer.GsonCustomerCreate;
 import com.example.admin.shopnail.View.LoginCustomer.ILoginForCustomerView;
 
+import static com.example.admin.shopnail.Manager.KeyManager.CLIENT_ID;
+import static com.example.admin.shopnail.Manager.KeyManager.CLIENT_NAME;
 import static com.example.admin.shopnail.Manager.KeyManager.CREATE_ACCOUNT_CUSTOMER;
+import static com.example.admin.shopnail.Manager.KeyManager.CUSTOMER_PHONE_NUMBER;
 
 public class AccountCustomerPresenter extends BaseMethod implements IAccountCustomer, AsyncTaskCompleteListener<ResuiltObject> {
 
     ILoginForCustomerView iLoginForCustomerView;
     Context mContext;
     private boolean mResult = false;
+    String phoneNumber;
 
 //    public AccountCustomerPresenter(ILoginForCustomerView iLogin) {
 //        this.iLoginForCustomerView = iLogin;
@@ -52,6 +56,7 @@ public class AccountCustomerPresenter extends BaseMethod implements IAccountCust
     @Override
     public void sendRequestLoginForCustomer(String phoneCustomer) {
 //        SendData(); //Send request to Websocket!!!
+        phoneNumber = phoneCustomer;
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.LOGIN_OLD_CUSTOMER, UrlManager.LOGIN_OLD_CUSTOMER_URL, getParamBuilder(phoneCustomer)));
     }
 
@@ -109,6 +114,9 @@ public class AccountCustomerPresenter extends BaseMethod implements IAccountCust
             case KeyManager.LOGIN_OLD_CUSTOMER:
                 try {
                     GsonCMOldLogin mGsonCMOldLogin = getGson().fromJson(s, GsonCMOldLogin.class);
+                    setDefaults(CLIENT_NAME, mGsonCMOldLogin.getSuccess().getFullname(), mContext);
+                    setDefaults(CLIENT_ID, String.valueOf(mGsonCMOldLogin.getSuccess().getUser_id()), mContext);
+                    setDefaults(CUSTOMER_PHONE_NUMBER, phoneNumber, mContext);
                     iLoginForCustomerView.onLoginResult(mGsonCMOldLogin.isStatus());
                 } catch (Exception e) {
                     iLoginForCustomerView.onLoginResult(false);

@@ -35,7 +35,7 @@ public class SelectServiceAdapter extends BaseAdapter implements View.OnClickLis
     LayoutInflater layoutInflater;
     BaseMethod method = new BaseMethod();
     JSONArray mJSONArray;
-    ViewHolder mHolder;
+
 
     public SelectServiceAdapter(Context context, List<GsonProductsByCategory.SuccessBean.DataBean> listService, JSONArray mArray) {
         this.mContext = context;
@@ -63,6 +63,7 @@ public class SelectServiceAdapter extends BaseAdapter implements View.OnClickLis
     public View getView(final int position, View convertView, ViewGroup viewGroup) {
         String isNew;
         String isHot;
+        final ViewHolder mHolder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.service_item_layout, null);
             mHolder = new ViewHolder();
@@ -70,7 +71,6 @@ public class SelectServiceAdapter extends BaseAdapter implements View.OnClickLis
             mHolder.priceService = (TextView) convertView.findViewById(R.id.txtServicePrice);
             mHolder.srcIconService = (ImageView) convertView.findViewById(R.id.image_hot_new);
             mHolder.cbItems = convertView.findViewById(R.id.itemCheckBox);
-
             convertView.setTag(mHolder);
         } else {
             mHolder = (ViewHolder) convertView.getTag();
@@ -80,19 +80,24 @@ public class SelectServiceAdapter extends BaseAdapter implements View.OnClickLis
         mHolder.nameService.setTag(position);
         mHolder.priceService.setText(itemService.getPrice() + " $");
         mHolder.priceService.setTag(position);
-        isNew = itemService.getIs_new();
-        isHot = itemService.getIs_Hot();
-        updateImageNewHot(isNew, isHot);
-
+        if (itemService.getIs_new()!=null)
+        mHolder.srcIconService.setVisibility(itemService.getIs_new().equals("1") ? View.VISIBLE : View.GONE);
+        if (itemService.getIs_new()!=null)
+        mHolder.srcIconService.setBackgroundResource(itemService.getIs_new().equals("1") ? R.drawable.ic_new : 0);
+        if (itemService.getIs_Hot()!=null)
+        mHolder.srcIconService.setVisibility(itemService.getIs_Hot().equals("1") ? View.VISIBLE : View.GONE);
+        if (itemService.getIs_Hot()!=null)
+        mHolder.srcIconService.setBackgroundResource(itemService.getIs_Hot().equals("1") ? R.drawable.ic_hot : 0);
         mHolder.cbItems.setTag(position);
         beforeCheck(mJSONArray, mHolder.cbItems, itemService);
         mHolder.cbItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isChecked = mHolder.cbItems.isChecked();
-                ((SelectServiceActivity) mContext).addJsonArrayService(isChecked, itemService.getId(), itemService.getPrice(), method.mSimpleDateFormat.format(Calendar.getInstance().getTime()));
+                ((SelectServiceActivity) mContext).addJsonArrayService(isChecked,  itemService.getName() , itemService.getId(), itemService.getPrice(), method.mSimpleDateFormat.format(Calendar.getInstance().getTime()));
             }
         });
+
 //        Picasso.get().load(itemService.getImage()).into(holder.srcIconService);
         return convertView;
     }
@@ -130,20 +135,5 @@ public class SelectServiceAdapter extends BaseAdapter implements View.OnClickLis
         TextView nameService;
         TextView priceService;
         CheckBox cbItems;
-    }
-
-    private void updateImageNewHot(String isNew, String isHot) {
-        if (isNew != null) {
-            if (isNew.equals("1")) {
-                mHolder.srcIconService.setVisibility(View.VISIBLE);
-                mHolder.srcIconService.setBackgroundResource(R.drawable.ic_new);
-            }
-        }
-        if (isHot != null) {
-            if (isHot.equals("1")) {
-                mHolder.srcIconService.setVisibility(View.VISIBLE);
-                mHolder.srcIconService.setBackgroundResource(R.drawable.ic_hot);
-            }
-        }
     }
 }

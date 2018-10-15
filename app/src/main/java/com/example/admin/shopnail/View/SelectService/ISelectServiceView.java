@@ -13,7 +13,7 @@ public interface ISelectServiceView {
 
     void setProductsByCategoryAdapter(SelectServiceAdapter selectServiceAdapter);
 
-    void addJsonArrayService(boolean isChecked, int id, String price, String format);
+    void addJsonArrayService(boolean isChecked, String name, int id, String price, String format);
 
     JSONArray getArrayChecked();
 }

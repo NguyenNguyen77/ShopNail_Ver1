@@ -13,16 +13,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.admin.shopnail.Model.ServicesOfShop;
+import com.example.admin.shopnail.Model.ViewProductPresenter.GsonProductChoosed;
 import com.example.admin.shopnail.R;
 
 import java.util.List;
 
 public class ViewProductAdapter extends BaseAdapter {
 
-    List<ServicesOfShop> listService;
+    List<GsonProductChoosed> listService;
     LayoutInflater layoutInflater;
 
-    public ViewProductAdapter(Context context, List<ServicesOfShop> listService) {
+    public ViewProductAdapter(Context context,  List<GsonProductChoosed> listService) {
         this.listService = listService;
         layoutInflater = LayoutInflater.from(context);
     }
@@ -57,10 +58,9 @@ public class ViewProductAdapter extends BaseAdapter {
         holder.imgTrash = (ImageView) view.findViewById(R.id.img_trash);
         LinearLayout lvItem = (LinearLayout) view.findViewById(R.id.item_list_product);
         view.setTag(holder);
-
-        ServicesOfShop itemService = this.listService.get(position);
-        holder.nameService.setText(itemService.nameService);
-        holder.priceService.setText(itemService.priceService + " $");
+        GsonProductChoosed itemService = this.listService.get(position);
+        holder.nameService.setText(itemService.getName());
+        holder.priceService.setText(itemService.getPrice() + " $");
         holder.imgTrash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

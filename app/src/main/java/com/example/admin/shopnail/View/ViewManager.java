@@ -15,11 +15,15 @@ import com.example.admin.shopnail.View.LoginCustomer.LoginForCustomerActivity;
 import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
 import com.example.admin.shopnail.View.StaffInfo.StaffInformationActivity;
 import com.example.admin.shopnail.View.ViewCartActivity.ViewCartActivity;
+import com.google.gson.JsonArray;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
+import static com.example.admin.shopnail.Manager.KeyManager.ARRAY_PRODUCT;
 
 public class ViewManager {
     private Activity currentActivity = null;
@@ -82,6 +86,16 @@ public class ViewManager {
     }
 
 
+    public void setView(VIEW_KEY key, JSONArray array) {
+        switch (key) {
+            case VIEW_CART:
+                viewViewCartActivity(array);
+                break;
+        }
+
+    }
+
+
     public static synchronized ViewManager getInstance() {
         if (instance == null) {
             instance = new ViewManager();
@@ -119,7 +133,7 @@ public class ViewManager {
             case MANAGE_STAFF:
                 return ManageStaffActivity.class;
             case MY_CUSTOMER:
-                return  MyCustomerActivity.class;
+                return MyCustomerActivity.class;
             case MENU_FOR_STAFF:
                 return MenuForStaffActivity.class;
 
@@ -222,6 +236,17 @@ public class ViewManager {
         setViewKey(VIEW_KEY.VIEW_CART);
     }
 
+    private void viewViewCartActivity(JSONArray array) {
+        Activity activity = currentActivity;
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity.getApplicationContext(), ViewCartActivity.class);
+        intent.putExtra(ARRAY_PRODUCT, array.toString());
+        activity.startActivity(intent);
+        setViewKey(VIEW_KEY.VIEW_CART);
+    }
+
 
     private void viewResetPasswordActivity() {
         Activity activity = currentActivity;
@@ -292,7 +317,7 @@ public class ViewManager {
         mListActivity.clear();
     }
 
-    public void finishActivity (Activity activity) {
+    public void finishActivity(Activity activity) {
         for (Activity stack : mListActivity) {
             if (stack == activity) {
                 stack.finish();
