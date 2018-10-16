@@ -11,5 +11,6 @@ public class UrlManager {
     public static final String CHANGE_AVATAR_URL = "http://142.93.29.45:8888/api/changeAvatar";
     public static final String GET_ALL_STAFF_URL = "http://142.93.29.45:8888/api/getAllStaff";
     public static final String GET_ALL_SERVICE_URL = "http://142.93.29.45:8888/api/getAllNavigateStaff";
+    public static final String ORDER_SERVICE_BY_STAFF_URL = "http://142.93.29.45:8888/api/order";
 
 }

@@ -5,11 +5,15 @@ import android.net.Uri;
 
 import com.example.admin.shopnail.Manager.BaseMethod;
 
+import org.json.JSONObject;
+
 public class CaseManager extends BaseMethod {
     Context Context;
     String Case;
     String Url;
     Uri.Builder mBuilder;
+    String paramJson;
+
 
     public CaseManager(android.content.Context context, String aCase, String url, Uri.Builder mBuilder) {
         Context = context;
@@ -17,6 +21,22 @@ public class CaseManager extends BaseMethod {
         Url = url;
         this.mBuilder = mBuilder;
         getInforAccountFromShareReferenced(context);
+    }
+
+    public CaseManager(android.content.Context context, String aCase, String url, String paramJson) {
+        Context = context;
+        Case = aCase;
+        Url = url;
+        this.paramJson = paramJson;
+        getInforAccountFromShareReferenced(context);
+    }
+
+    public String getParamJson() {
+        return paramJson;
+    }
+
+    public void setParamJson(String paramJson) {
+        this.paramJson = paramJson;
     }
 
     public android.content.Context getContext() {

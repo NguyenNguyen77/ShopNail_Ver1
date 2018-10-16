@@ -9,6 +9,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import org.apache.http.NameValuePair;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -35,6 +36,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.X509TrustManager;
 
+import static com.example.admin.shopnail.Manager.KeyManager.CLIENT_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.PASS_WORD;
 import static com.example.admin.shopnail.Manager.KeyManager.POST;
 import static com.example.admin.shopnail.Manager.KeyManager.TOKEN;
@@ -46,6 +48,24 @@ public class BaseMethod {
 
     String userName;
     String passWord;
+    String clientID;
+    String staffId;
+
+    public String getClientID(Context context) {
+        return BaseMethod.getDefaults(CLIENT_ID, context);
+    }
+
+    public void setClientID(String clientID) {
+        this.clientID = clientID;
+    }
+
+    public String getStaffId(Context context) {
+        return BaseMethod.getDefaults(USER_ID, context);
+    }
+
+    public void setStaffId(String staffId) {
+        this.staffId = staffId;
+    }
 
     public SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("hh:mm");
 
@@ -199,6 +219,84 @@ public class BaseMethod {
             connect.disconnect();
         }
     }
+
+
+
+    public String makePostRequestJson(String link, String jsonParam, String Token) {
+        Log.d(KeyManager.VinhCNLog, link);
+        trustEveryone();
+        HttpURLConnection connect;
+        URL url = null;
+        try {
+            url = new URL(link);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return "Error!";
+        }
+        try {
+            // cấu hình HttpURLConnection
+            connect = (HttpURLConnection) url.openConnection();
+//            connect.setSSLSocketFactory(SSLCertificateSocketFactory.getInsecure(0, null));
+//            connect.setHostnameVerifier(new AllowAllHostnameVerifier());
+            connect.setReadTimeout(15000);
+            connect.setConnectTimeout(15000);
+            connect.setDoOutput(true);
+            connect.setDoInput(true);
+            connect.setInstanceFollowRedirects(false);
+            // unable POST method to send
+            connect.setRequestMethod(KeyManager.POST);
+//            it must have for add param
+//            connect.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            connect.setRequestProperty("Content-Type", "application/json");
+            if (Token != null) {
+                Token = "Bearer " + Token;
+                connect.setRequestProperty("Authorization", Token);
+            }
+            // if param != null let write param to the last character
+//            Uri.Builder builder = new Uri.Builder();
+//            builder.appendQueryParameter("Param", jsonParam);
+//            builder.appendQueryParameter(PASS_WORD, passWord);
+//            String query = builder.build().getEncodedQuery();
+            // open connect data
+            OutputStream os = connect.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+            writer.write(jsonParam);
+            writer.flush();
+            writer.close();
+            os.close();
+            connect.connect();
+            Log.d("VinhCNLog JsonParam: ", connect + "");
+        } catch (IOException e1) {
+            return "Error!";
+        }
+        try {
+            int response_code = connect.getResponseCode();
+
+            // kiểm tra kết nối ok
+            if (response_code == HttpURLConnection.HTTP_OK) {
+                // Đọc nội dung trả về
+                InputStreamReader streamReader = new InputStreamReader(connect.getInputStream());
+//                InputStreamReader streamReader = new InputStreamReader(connect.getErrorStream());
+                BufferedReader reader = new BufferedReader(streamReader);
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+                return result.toString();
+            } else {
+                return String.valueOf(response_code);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error!";
+        } finally {
+            connect.disconnect();
+        }
+    }
+
+
 
 
     public String makeGetRequest(String link, String Token) {

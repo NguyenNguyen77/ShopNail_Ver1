@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -47,6 +48,9 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     private TextView tvName;
     private TextView tvPhone;
     private TextView tvDate;
+    private  TextView tvTotalPrice;
+    private ImageView imgAdd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +59,6 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
         new NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.VIEW_CART);
         initView();
-        mBtnConfirm.setOnClickListener(this);
-        mBtnBack.setOnClickListener(this);
         mViewProductPresenter.showProductChoosed(getIntent().getStringExtra(ARRAY_PRODUCT));
 //        List<ServicesOfShop> listService = mViewProductPresenter.getListProduct();
 //        viewProductAdapter = new ViewProductAdapter(this, listService);
@@ -80,10 +82,12 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
         tvPhone = findViewById(R.id.txt_phone_customer);
         tvPhone.setText(BaseMethod.getDefaults(CUSTOMER_PHONE_NUMBER, this));
         tvDate = findViewById(R.id.txt_date_customer);
-        tvDate.setText(new SimpleDateFormat("MM-dd-yyyy").format(Calendar.getInstance().getTime()));
-        String userId = BaseMethod.getDefaults(CLIENT_ID, this);
-        String staffId = BaseMethod.getDefaults(USER_ID, this);
-        Log.d(KeyManager.VinhCNLog, "userId" + userId + "staffId" + staffId);
+        tvTotalPrice = findViewById(R.id.txt_total);
+        imgAdd = findViewById(R.id.img_add);
+        imgAdd.setOnClickListener(this);
+        mBtnConfirm.setOnClickListener(this);
+        mBtnBack.setOnClickListener(this);
+        tvDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
     }
 
     @Override
@@ -137,18 +141,46 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_confirm:
+                mViewProductPresenter.sendData();
                 break;
             case R.id.btn_go_back:
                 mViewManager.handleBackScreen();
                 mViewManager.finishActivity(this);
+                break;
+            case R.id.img_add:
+                addExtra();
                 break;
             default:
                 break;
         }
     }
 
+    private void addExtra() {
+        tvTotalPrice.setText(String.valueOf(getTotal() + getExtraPrice()));
+    }
+
     @Override
     public void setAdapterProductChoosed(ViewProductAdapter viewProductAdapter) {
         listCart.setAdapter(viewProductAdapter);
+    }
+
+    @Override
+    public void setTotalExpectExtra(int totalPrice) {
+        tvTotalPrice.setText(String.valueOf(totalPrice));
+    }
+
+    @Override
+    public int getTotal() {
+        return Integer.parseInt(tvTotalPrice.getText().toString());
+    }
+
+    @Override
+    public int getExtraPrice() {
+        return !edtExtra.getText().toString().equals("") ? Integer.parseInt(edtExtra.getText().toString()) : 0;
+    }
+
+    @Override
+    public String getDateOrder() {
+        return tvDate.getText().toString();
     }
 }

@@ -19,6 +19,7 @@ public class KeyManager {
     public static final String LOGIN_OLD_CUSTOMER = "LOGIN_OLD_CUSTOMER";
     public static final String GET_CATEGORY_LIST = "GET_CATEGORY_LIST";
     public static final String GET_PRODUCTS_BY_CATEGORY = "GET_PRODUCTS_BY_CATEGORY";
+    public static final String ORDER_SERVICE_BY_STAFF = "ORDER_SERVICE_BY_STAFF";
     public static final String FULL_NAME = "fullname";
     public static final String PHONE = "phone";
     public static final String PRODUC_ID = "productId";
@@ -31,5 +32,10 @@ public class KeyManager {
     public static final String CLIENT_NAME = "CLIENT_NAME";
     public static final String CLIENT_ID = "CLIENT_ID";
     public static final String CUSTOMER_PHONE_NUMBER = "CUSTOMER_PHONE_NUMBER";
+    public static final String STAFF_ID = "staffId";
+    public static final String EXTRA = "extra";
+    public static final String DATE_ORDER = "dateOrder";
+    public static final String VALUES = "values";
+    public static final String USER_ID_KEY = "userId";
 
 }

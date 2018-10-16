@@ -5,6 +5,8 @@ import com.example.admin.shopnail.Model.ServicesOfShop;
 import java.util.List;
 
 public interface IViewProductPresenter {
-    List<ServicesOfShop> getListProduct();
+//    List<ServicesOfShop> getListProduct();
     void showProductChoosed(String stringExtra);
+
+    void sendData();
 }
