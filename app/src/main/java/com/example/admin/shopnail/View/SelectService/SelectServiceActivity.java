@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     Button btnViewcart;
     Spinner spinnerCategory;
     GridView gridSelectService;
+    private ImageView mImgSpiner;
     private ProgressDialog mProgressDialog;
     //    ArrayAdapter<String> adapterCategory;
     SelectServiceAdapter selectServiceAdapter = null;
@@ -63,8 +65,12 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
         gridSelectService = findViewById(R.id.gridSelectService);
         btnBack = findViewById(R.id.btn_go_back);
         btnViewcart = findViewById(R.id.btn_view_cart);
+
+        mImgSpiner = (ImageView) findViewById(R.id.img_spiner);
+
         btnBack.setOnClickListener(this);
         btnViewcart.setOnClickListener(this);
+        mImgSpiner.setOnClickListener(this);
         // request server category add start vinhcn 25/09/2018
         mSerlectServicePresenter.RequestCategory();
         // request server category add end vinhcn 25/09/2018
@@ -141,6 +147,9 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
             case R.id.btn_go_back:
                 mViewManager.handleBackScreen();
                 mViewManager.finishActivity(this);
+                break;
+            case R.id.img_spiner:
+                spinnerCategory.performClick();
                 break;
             default:
                 break;

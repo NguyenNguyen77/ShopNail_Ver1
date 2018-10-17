@@ -31,6 +31,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="@string/customer_name"
+                    android:textStyle="bold"
                     android:textColor="@color/text_color" />
 
 
@@ -41,6 +42,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="@string/email"
+                    android:textStyle="bold"
                     android:textColor="@color/text_color" />
 
                 <TextView
@@ -50,6 +52,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="@string/customer_phone"
+                    android:textStyle="bold"
                     android:textColor="@color/text_color" />
 
                 <TextView
@@ -58,6 +61,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="@string/date"
+                    android:textStyle="bold"
                     android:textColor="@color/text_color" />
 
             </LinearLayout>
@@ -149,6 +153,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="0.7"
+            android:textStyle="bold"
             android:text="@string/add_more_services" />
 
         <LinearLayout
