@@ -60,7 +60,7 @@ public class ViewProductAdapter extends BaseAdapter {
         view.setTag(holder);
         GsonProductChoosed itemService = this.listService.get(position);
         holder.nameService.setText(itemService.getName());
-        holder.priceService.setText(itemService.getPrice() + " $");
+        holder.priceService.setText(itemService.getPrice() + "$");
         holder.imgTrash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

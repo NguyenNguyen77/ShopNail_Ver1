@@ -15,11 +15,12 @@
     <string name="login_failed">Login Failed. Please try again!</string>
     <string name="please_wait">Please Wait...</string>
     <string name="phone_number">Phone Number</string>
-    <string name="menu_for_staff">Menu For Staff</string>
-    <string name="select_service">Select customer services</string>
-    <string name="my_customer">My Customer</string>
-    <string name="customer_service_history">Customer service history</string>
-    <string name="staff_info">Staff Information</string>
+    <string name="phone">Phone</string>
+    <string name="menu_for_staff">Menu</string>
+    <string name="select_service">Services</string>
+    <string name="my_customer">Customer</string>
+    <string name="customer_service_history">History</string>
+    <string name="staff_info">Profile</string>
     <string name="logout">Logout</string>
     <string name="go_back">Go Back</string>
     <string name="title_my_customer">My Customer</string>
@@ -41,7 +42,7 @@
     <string name="new_pass_notmatch">New Password are not match</string>
     <string name="change_pass_succeccful">Change Password Successful</string>
     <string name="change_pass_fail">Change Password Failed</string>
-    <string name="name_customer">Name Customer</string>
+    <string name="name_customer">Name</string>
     <string name="customer_phonenumber">Phone Number Customer</string>
     <string name="empty">Empty</string>
     <string name="submit">Submit</string>
@@ -76,8 +77,8 @@
     <string name="time">Time: </string>
     <string name="update_service">Update Service</string>
     <string name="cancel_service">Cancel Service</string>
-    <string name="enter_your_phone">Enter your Phone</string>
+    <string name="enter_your_phone">Enter your phone</string>
 
-    <string name="email_customer">Email Customer</string>
+    <string name="email_customer">Email</string>
     <string name="email">Email</string>
 </resources>
