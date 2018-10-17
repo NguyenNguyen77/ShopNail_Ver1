@@ -269,7 +269,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             listService.add(mAdapterService.getItem(i));
         }
 
-        defaultBookService = new BookService(listStaff, listService, getCurrentTime(), "N/A");
+        defaultBookService = new BookService(listStaff, listService, getCurrentTime(), "");
         return defaultBookService;
     }
 
