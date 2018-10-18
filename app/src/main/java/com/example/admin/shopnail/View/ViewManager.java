@@ -1,9 +1,11 @@
 package com.example.admin.shopnail.View;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.BookAppointment.BookAppointmentActivity;
 import com.example.admin.shopnail.View.Login.MainActivity;
 import com.example.admin.shopnail.View.CustomerServiceHistory.CustomerServiceHistoryActivity;
@@ -30,6 +32,7 @@ public class ViewManager {
     private VIEW_KEY mViewKey = VIEW_KEY.LOGIN_SCREEN;
     private List<Activity> mListActivity = new ArrayList<Activity>();
     private static ViewManager instance;
+    public ProgressDialog mProgressDialog;
 
     public enum VIEW_KEY {
         LOGIN_SCREEN,
@@ -323,6 +326,21 @@ public class ViewManager {
                 stack.finish();
                 mListActivity.remove(stack);
             }
+        }
+    }
+
+    public void showInprogressDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog.cancel();
+        }
+        mProgressDialog = new ProgressDialog(currentActivity);
+        mProgressDialog.setMessage("Please wait...");
+        mProgressDialog.show();
+    }
+
+    public void dismissInprogressDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog.cancel();
         }
     }
 }
