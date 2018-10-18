@@ -52,6 +52,7 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
     private TextView mTvEmpty;
     private LinearLayout mLayoutList;
     private ListView mListCustomerServiceHistoryByDate;
+    private ProgressDialog mProgressDialog;
     private CustomerServiceHistoryPresenter mCustomerServiceHistoryPresenter = new CustomerServiceHistoryPresenter(this);
 
     @Override
@@ -187,11 +188,15 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
     }
 
     private void loadCustomerServiceHistoryByDate(Date selected) {
+        showInprogressDialog();
         mCustomerServiceHistoryPresenter.loadCustomerServiceHistoryByDate(selected);
     }
 
     @Override
     public void updateListCustomerServiceHistoryByDate(ArrayList<Customer> listCustomerServiceHistory) {
+        if (mProgressDialog != null) {
+            mProgressDialog.cancel();
+        }
         if (listCustomerServiceHistory.size() > 0) {
             mLayoutList.setVisibility(View.VISIBLE);
             mListCustomerServiceHistoryByDate.setVisibility(View.VISIBLE);
@@ -242,5 +247,14 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
             }
         });
         detailService.show();
+    }
+
+    private void showInprogressDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog.cancel();
+        }
+        mProgressDialog = new ProgressDialog(this);   // Show inprogress dialog: please wait
+        mProgressDialog.setMessage(getString(R.string.please_wait));
+        mProgressDialog.show();
     }
 }
