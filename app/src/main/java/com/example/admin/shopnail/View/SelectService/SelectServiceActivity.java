@@ -45,7 +45,6 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     Spinner spinnerCategory;
     GridView gridSelectService;
     private ImageView mImgSpiner;
-    private ProgressDialog mProgressDialog;
     //    ArrayAdapter<String> adapterCategory;
     SelectServiceAdapter selectServiceAdapter = null;
     List<GsonProductsByCategory.SuccessBean.DataBean> mList = null;
@@ -166,7 +165,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
 //        } else {
 //            loadListWaxingFacial();
 //        }
-        showInprogressDialog();
+        mViewManager.showInprogressDialog();
         mSerlectServicePresenter.requestProduct(i);
 
     }
@@ -209,9 +208,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     @Override
     public void setProductsByCategoryAdapter(SelectServiceAdapter selectServiceAdapter) {
         gridSelectService.setAdapter(selectServiceAdapter);
-        if (mProgressDialog != null) {
-            mProgressDialog.cancel();
-        }
+        mViewManager.dismissInprogressDialog();
     }
 
 
@@ -247,13 +244,5 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
         return jsonArray;
     }
 
-    private void showInprogressDialog() {
-        if (mProgressDialog != null) {
-            mProgressDialog.cancel();
-        }
-        mProgressDialog = new ProgressDialog(this);   // Show inprogress dialog: please wait
-        mProgressDialog.setMessage(getString(R.string.please_wait));
-        mProgressDialog.show();
-    }
 }
 
