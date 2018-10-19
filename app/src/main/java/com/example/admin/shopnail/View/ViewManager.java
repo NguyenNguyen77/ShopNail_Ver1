@@ -1,6 +1,7 @@
 package com.example.admin.shopnail.View;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.util.Log;
 
@@ -11,11 +12,11 @@ import com.example.admin.shopnail.View.Login.ResetPasswordActivity;
 import com.example.admin.shopnail.View.ManageStaff.ManageStaffActivity;
 import com.example.admin.shopnail.View.MenuFoStaff.MenuForStaffActivity;
 import com.example.admin.shopnail.View.MyCustomer.MyCustomerActivity;
+import com.example.admin.shopnail.View.MyDetailCustomer.MyDetailCustomerActivity;
 import com.example.admin.shopnail.View.LoginCustomer.LoginForCustomerActivity;
 import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
 import com.example.admin.shopnail.View.StaffInfo.StaffInformationActivity;
 import com.example.admin.shopnail.View.ViewCartActivity.ViewCartActivity;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 
@@ -30,6 +31,7 @@ public class ViewManager {
     private VIEW_KEY mViewKey = VIEW_KEY.LOGIN_SCREEN;
     private List<Activity> mListActivity = new ArrayList<Activity>();
     private static ViewManager instance;
+    public ProgressDialog mProgressDialog;
 
     public enum VIEW_KEY {
         LOGIN_SCREEN,
@@ -42,7 +44,8 @@ public class ViewManager {
         VIEW_CART,
         RESET_PASSWORD,
         MANAGE_STAFF,
-        MY_CUSTOMER
+        MY_CUSTOMER,
+        MY_DETAIL_CUSTOMER
     }
 
     public void setView(VIEW_KEY key) {
@@ -79,6 +82,10 @@ public class ViewManager {
                 break;
             case MY_CUSTOMER:
                 viewMyCustomerActivity();
+                break;
+            case MY_DETAIL_CUSTOMER:
+                viewMyDetailCustomerActivity();
+                break;
             default:
                 break;
         }
@@ -134,6 +141,8 @@ public class ViewManager {
                 return ManageStaffActivity.class;
             case MY_CUSTOMER:
                 return MyCustomerActivity.class;
+            case MY_DETAIL_CUSTOMER:
+                return MyDetailCustomerActivity.class;
             case MENU_FOR_STAFF:
                 return MenuForStaffActivity.class;
 
@@ -281,6 +290,17 @@ public class ViewManager {
         setViewKey(VIEW_KEY.MY_CUSTOMER);
     }
 
+    private void viewMyDetailCustomerActivity() {
+        Activity activity = currentActivity;
+        if (activity == null) {
+            return;
+        }
+
+        Intent intent = new Intent(activity.getApplicationContext(), MyDetailCustomerActivity.class);
+        activity.startActivity(intent);
+        setViewKey(VIEW_KEY.MY_DETAIL_CUSTOMER);
+    }
+
     public void handleBackScreen() {
         switch (mViewKey) {
             case SELECT_SERVICE:
@@ -323,6 +343,21 @@ public class ViewManager {
                 stack.finish();
                 mListActivity.remove(stack);
             }
+        }
+    }
+
+    public void showInprogressDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog.cancel();
+        }
+        mProgressDialog = new ProgressDialog(currentActivity);
+        mProgressDialog.setMessage("Please wait...");
+        mProgressDialog.show();
+    }
+
+    public void dismissInprogressDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog.cancel();
         }
     }
 }

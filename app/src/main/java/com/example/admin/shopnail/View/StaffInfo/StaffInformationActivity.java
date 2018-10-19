@@ -77,19 +77,11 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         btnChangePassword.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         imgAvatar.setOnClickListener(this);
-        mStaffInformationPresenter.requestInfor(BaseMethod.getDefaults(KeyManager.USER_ID, this));
         mViewManager.setActivity(this);
-//        init();
-    }
 
-//    private void init() {
-//        //Load ID, Name, Phone
-//        mID.setText(mStaffInformationPresenter.getStaffID());
-//        mName.setText(mStaffInformationPresenter.getStaffName());
-//        mPhone.setText(mStaffInformationPresenter.getStaffPhoneNumber());
-//        //Load Avatar
-//
-//    }
+        mViewManager.showInprogressDialog();
+        mStaffInformationPresenter.requestInfor(BaseMethod.getDefaults(KeyManager.USER_ID, this));
+    }
 
     @Override
     public void onClick(View view) {
@@ -212,6 +204,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
 
     @Override
     public void setStaffInfor(GsonStaffInfor.SuccessBean success) {
+        mViewManager.dismissInprogressDialog();
         mID.setText(String.valueOf(success.getId()));
         mName.setText(success.getFullname());
         mPhone.setText(BaseMethod.getDefaults(USER_NAME, this));

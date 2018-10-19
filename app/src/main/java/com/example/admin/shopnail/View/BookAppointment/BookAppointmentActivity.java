@@ -59,7 +59,6 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     private BookAppointmentPresenter mBookAppointmentPresenter = new BookAppointmentPresenter(this, this);
 
     private ArrayList<BookService> mListBookService = new ArrayList<BookService>();
-    private ProgressDialog mProgressDialog;
 
 
     @Override
@@ -79,7 +78,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mLvSelectServiceItem = (ListView) findViewById(R.id.lv_select_services);
         mTvAddMoreervice = (TextView) findViewById(R.id.tv_add_more_services);
 
-        showInprogressDialog();
+        mViewManager.showInprogressDialog();
         loadInitData();
 
         mBtnSubmit.setOnClickListener(this);
@@ -188,9 +187,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     public void updateStaffList(ArrayList<String> staffList) {
          mAdapterStaff = new ArrayAdapter<String>(BookAppointmentActivity.this,
                 android.R.layout.simple_spinner_item, staffList);
-         if (mProgressDialog != null) {
-             mProgressDialog.cancel();
-         }
+         mViewManager.dismissInprogressDialog();
         addMoreService();//Add 1 service first
 //        mAdapterStaff.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
@@ -282,11 +279,5 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         SpannableString contentspanned = new SpannableString(text);
         contentspanned.setSpan(new UnderlineSpan(), 0, text.length(), 0);
         id.setText(contentspanned);
-    }
-
-    private void showInprogressDialog() {
-        mProgressDialog = new ProgressDialog(this);   // Show inprogress dialog: please wait
-        mProgressDialog.setMessage(getString(R.string.please_wait));
-        mProgressDialog.show();
     }
 }

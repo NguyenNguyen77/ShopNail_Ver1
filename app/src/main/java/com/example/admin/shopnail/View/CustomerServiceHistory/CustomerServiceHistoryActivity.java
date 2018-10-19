@@ -187,11 +187,13 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
     }
 
     private void loadCustomerServiceHistoryByDate(Date selected) {
+        mViewManager.showInprogressDialog();
         mCustomerServiceHistoryPresenter.loadCustomerServiceHistoryByDate(selected);
     }
 
     @Override
     public void updateListCustomerServiceHistoryByDate(ArrayList<Customer> listCustomerServiceHistory) {
+        mViewManager.dismissInprogressDialog();
         if (listCustomerServiceHistory.size() > 0) {
             mLayoutList.setVisibility(View.VISIBLE);
             mListCustomerServiceHistoryByDate.setVisibility(View.VISIBLE);
