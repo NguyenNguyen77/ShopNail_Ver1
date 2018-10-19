@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.admin.shopnail.Adapter.MyCustomerAdapter;
 import com.example.admin.shopnail.Model.ServicesOfShop;
+import com.example.admin.shopnail.Presenter.MyCustomerPresenter.MyCustommerLogic;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.View.ViewManager;
@@ -18,39 +19,40 @@ import com.example.admin.shopnail.View.ViewManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyCustomerActivity extends Activity implements View.OnClickListener {
+public class MyCustomerActivity extends Activity implements MyCustomerView, View.OnClickListener {
 
     protected ViewManager mViewManager = ViewManager.getInstance();
     private Button mBtnBack;
     private Button mBtnUpdateService;
     private Button mBtnCancelService;
     private ListView mLvMyCustomerList;
-
+    private MyCustommerLogic myCustommerLogic = new MyCustommerLogic(this, this);
     List<ServicesOfShop> listService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_my_customer);
-
-        new NailActionBarGenerator().generate(this,
-                NailActionBarGenerator.BarType.MY_CUSTOMER);
-
-        mBtnBack = (Button) findViewById(R.id.btn_go_back);
-        mBtnUpdateService = (Button) findViewById(R.id.btn_update_service);
-        mBtnCancelService = (Button) findViewById(R.id.btn_cancel_service);
-        mLvMyCustomerList = (ListView)findViewById(R.id.list_my_customer);
-
-
+        initView();
+        myCustommerLogic.requestCustomerOrder();
         listService = getListDataAcrylic();
         MyCustomerAdapter myCustomerAdapter = new MyCustomerAdapter(getApplicationContext(),listService);
         mLvMyCustomerList.setAdapter(myCustomerAdapter);
 
+
+    }
+
+    private void initView() {
+        new NailActionBarGenerator().generate(this,
+                NailActionBarGenerator.BarType.MY_CUSTOMER);
+        mBtnBack = (Button) findViewById(R.id.btn_go_back);
+        mBtnUpdateService = (Button) findViewById(R.id.btn_update_service);
+        mBtnCancelService = (Button) findViewById(R.id.btn_cancel_service);
+        mLvMyCustomerList = (ListView)findViewById(R.id.list_my_customer);
         mBtnBack.setOnClickListener(this);
         mBtnUpdateService.setOnClickListener(this);
         mBtnCancelService.setOnClickListener(this);
         mViewManager.setActivity(this);
-
     }
 
 

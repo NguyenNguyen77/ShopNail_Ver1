@@ -4,6 +4,7 @@ public class KeyManager {
 
     public static final String VinhCNLog = "VinhCNLog";
     public static final String LOGIN = "LOGIN";
+    public static final String GET_CLIENT_OF_STAFF = "GET_CLIENT_OF_STAFF";
     public static final String POST = "POST";
     public static final String GET = "GET";
     public static final String GET_USER_BY_ID = "GET_USER_BY_ID";
@@ -37,5 +38,6 @@ public class KeyManager {
     public static final String DATE_ORDER = "dateOrder";
     public static final String VALUES = "values";
     public static final String USER_ID_KEY = "userId";
+    public static final String DATE = "date";
 
 }

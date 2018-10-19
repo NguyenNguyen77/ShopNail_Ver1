@@ -7,6 +7,7 @@ import com.example.admin.shopnail.Manager.KeyManager;
 
 import static com.example.admin.shopnail.Manager.KeyManager.CHANGE_PASSWORD;
 import static com.example.admin.shopnail.Manager.KeyManager.CREATE_ACCOUNT_CUSTOMER;
+import static com.example.admin.shopnail.Manager.KeyManager.GET_CLIENT_OF_STAFF;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_USER_BY_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.LOGIN;
 import static com.example.admin.shopnail.Manager.KeyManager.ORDER_SERVICE_BY_STAFF;
@@ -27,6 +28,10 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
             case ORDER_SERVICE_BY_STAFF:
                 Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(ORDER_SERVICE_BY_STAFF, Resuilt);
+                break;
+            case GET_CLIENT_OF_STAFF:
+                Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(GET_CLIENT_OF_STAFF, Resuilt);
                 break;
             case LOGIN:
                 Resuilt = caseManagers[0].makePostRequest(caseManagers[0].getUrl(), caseManagers[0].getmBuilder(), caseManagers[0].getToken());
