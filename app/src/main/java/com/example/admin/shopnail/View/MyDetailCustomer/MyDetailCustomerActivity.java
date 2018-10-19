@@ -1,11 +1,14 @@
 package com.example.admin.shopnail.View.MyDetailCustomer;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,6 +40,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
     private TextView tvDate;
     private TextView tvName;
     private TextView tvPhone;
+    private TextView tvExtra;
 
 
     List<ServicesOfShop> listService;
@@ -63,6 +67,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
         tvName =  findViewById(R.id.tv_customer_name);
         tvDate = findViewById(R.id.tv_date);
         tvPhone = findViewById(R.id.tv_customer_phone);
+        tvExtra = findViewById(R.id.txt_extra);
         mBtnBack.setOnClickListener(this);
         mBtnUpdateService.setOnClickListener(this);
         mBtnCancelService.setOnClickListener(this);
@@ -72,6 +77,12 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
         tvPhone.setText(getClientChoosed().getClientPhone());
 
 
+        tvExtra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogUpdateExtra();
+            }
+        });
     }
 
     private List<String> getListOrderID(){
@@ -116,9 +127,38 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
                 mViewManager.handleBackScreen();
                 mViewManager.finishActivity(this);
                 break;
+            case R.id.txt_extra:
+                showDialogUpdateExtra();
+                break;
             default:
                 break;
         }
+    }
+    private Dialog mChangePassDialog;
+    private void showDialogUpdateExtra() {
+        ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);
+        mChangePassDialog = new Dialog(ctw);
+        mChangePassDialog.setContentView(R.layout.update_extra_dialog);
+        mChangePassDialog.setTitle("Update extra");
+
+        Button btnUpdate = (Button) mChangePassDialog.findViewById(R.id.btnUpdate);
+        Button btnCancel = (Button) mChangePassDialog.findViewById(R.id.btnCancel);
+        final EditText txtExtra = (EditText) mChangePassDialog.findViewById(R.id.txt_extra);
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvExtra.setText(txtExtra.getText()+"$");
+                mChangePassDialog.dismiss();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mChangePassDialog.dismiss();
+            }
+        });
+        mChangePassDialog.show();
     }
 
     @Override

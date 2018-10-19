@@ -24,7 +24,7 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingLeft="20dp"
-                android:paddingTop="10dp">
+                android:paddingTop="5dp">
 
                 <TextView
                     android:layout_width="50dp"
@@ -49,7 +49,7 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingLeft="20dp"
-                android:paddingTop="10dp">
+                android:paddingTop="5dp">
 
                 <TextView
                     android:layout_width="50dp"
@@ -73,7 +73,7 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingLeft="20dp"
-                android:paddingTop="10dp">
+                android:paddingTop="5dp">
 
                 <TextView
                     android:layout_width="50dp"
@@ -87,18 +87,82 @@
                     android:layout_height="wrap_content"
                     android:text="29/09/2018"
                     android:textColor="@color/text_color_load_data" />
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time"
+                    android:textColor="@color/text_color" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12:30"
+                    android:textColor="@color/text_color_load_data" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp">
+
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp">
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/note"
+                    android:textColor="@color/text_color" />
+                <TextView
+                    android:id="@+id/txt_note"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="abcd"
+                    android:textColor="@color/text_color_load_data" />
 
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp">
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/extra"
+                    android:textColor="@color/text_color" />
+                <TextView
+                    android:id="@+id/txt_extra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="italic|bold"
+                    android:text="Click to update extra for this order"
+                    android:textColor="@color/text_color_load_data" />
+
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:layout_weight="6"
+            android:layout_weight="4"
             android:gravity="bottom"
             android:orientation="horizontal">
 
@@ -107,43 +171,40 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
 
-                android:layout_weight="1.4">
+                android:layout_weight="1.2">
 
             </ListView>
 
 
         </LinearLayout>
 
-            <Button
+        <Button
                 android:id="@+id/btn_update_service"
                 android:layout_width="150dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
+
                 android:background="@drawable/button_nail"
                 android:text="@string/update_service"
                 android:textColor="@drawable/button_text" />
 
-            <Button
+        <Button
                 android:id="@+id/btn_cancel_service"
                 android:layout_width="150dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
-                android:layout_weight="1"
                 android:background="@drawable/button_nail"
                 android:text="@string/cancel_service"
                 android:textColor="@drawable/button_text" />
 
-
         <Button
             android:id="@+id/btn_go_back"
             android:layout_width="150dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp"
-            android:layout_weight="1"
             android:background="@drawable/button_nail"
             android:text="@string/back"
             android:textColor="@drawable/button_text" />

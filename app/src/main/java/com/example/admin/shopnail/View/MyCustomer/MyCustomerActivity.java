@@ -3,8 +3,12 @@ package com.example.admin.shopnail.View.MyCustomer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.view.ContextThemeWrapper;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
@@ -12,10 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.admin.shopnail.Adapter.MyCustomerAdapter;
@@ -50,7 +56,7 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
     private Date mDateSelected;
     private Calendar mCalender;
 
-
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +66,7 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
 //        listService = getListDataAcrylic();
 //        MyCustomerAdapter myCustomerAdapter = new MyCustomerAdapter(getApplicationContext(), listService);
 //        mLvMyCustomerList.setAdapter(myCustomerAdapter);
-
+        context = this;
 
     }
 
@@ -98,7 +104,8 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
         listCustomer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                myCustommerLogic.tranfertoDetailCustomer(i);
+//                myCustommerLogic.tranfertoDetailCustomer(i);
+                showDialogSelectTimer();
             }
         });
 
@@ -112,6 +119,7 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
         txt_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"A nên chọn ngày 19-10-2018 để có data",Toast.LENGTH_LONG).show();
                 showDatePickerDialog();
             }
         });
@@ -219,5 +227,27 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
     public void setAdapterClients(List<GsonGetClient.SuccessBean.ClientsBean> arrClient) {
         CustomerAdapter mCustomerAdapter = new CustomerAdapter(this, arrClient);
         listCustomer.setAdapter(mCustomerAdapter);
+    }
+
+    public void showDialogSelectTimer(){
+        // setup the alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Select time booked");
+
+        // add a list
+        String[] animals = {"12:30","15:30","18:30"};
+        builder.setItems(animals, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // stub timer add
+                which = 0;
+                myCustommerLogic.tranfertoDetailCustomer(which);
+                // stub timer end
+            }
+        });
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

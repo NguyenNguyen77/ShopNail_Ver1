@@ -62,7 +62,7 @@ public class MyCustomerAdapter extends BaseAdapter {
             holder.nameService = convertView.findViewById(R.id.txt_name_service);
             holder.priceService = convertView.findViewById(R.id.txt_price_service);
             LinearLayout lvItem = (LinearLayout) convertView.findViewById(R.id.item_list_my_customer);
-            txt_date = convertView.findViewById(R.id.txt_time_service);
+//            txt_date = convertView.findViewById(R.id.txt_time_service);
 
             convertView.setTag(holder);
 
