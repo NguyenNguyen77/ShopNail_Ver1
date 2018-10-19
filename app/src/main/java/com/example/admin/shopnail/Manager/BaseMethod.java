@@ -1,5 +1,6 @@
 package com.example.admin.shopnail.Manager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -43,7 +44,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.TOKEN;
 import static com.example.admin.shopnail.Manager.KeyManager.USER_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.USER_NAME;
 
-public class BaseMethod {
+public class BaseMethod   {
     Gson gson = new Gson();
 
     String userName;

@@ -5,6 +5,7 @@ public class KeyManager {
     public static final String VinhCNLog = "VinhCNLog";
     public static final String LOGIN = "LOGIN";
     public static final String GET_CLIENT_OF_STAFF = "GET_CLIENT_OF_STAFF";
+    public static final String GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY = "GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY";
     public static final String POST = "POST";
     public static final String GET = "GET";
     public static final String GET_USER_BY_ID = "GET_USER_BY_ID";
@@ -29,6 +30,7 @@ public class KeyManager {
     public static final String GET_ALL_STAFF_ID = "GET_ALL_STAFF";
     public static final String GET_ALL_SERVICE_ID = "GET_ALL_SERVICE";
     public static final String ARRAY_PRODUCT = "ARRAY_PRODUCT";
+    public static final String CLIENT_HISTORY_CHOOSED = "CLIENT_HISTORY_CHOOSED";
     public static final String NAME = "name";
     public static final String CLIENT_NAME = "CLIENT_NAME";
     public static final String CLIENT_ID = "CLIENT_ID";

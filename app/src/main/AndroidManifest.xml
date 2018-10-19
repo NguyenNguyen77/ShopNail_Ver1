@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.admin.shopnail">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.Login.MainActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".View.Login.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,64 +24,54 @@
         </activity>
         <activity
             android:name=".View.MenuFoStaff.MenuForStaffActivity"
-            android:theme="@style/nailBarTheme"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/nailBarTheme"></activity>
         <activity
             android:name=".View.SelectService.SelectServiceActivity"
-            android:theme="@style/nailBarTheme"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/nailBarTheme"></activity>
         <activity
             android:name=".View.LoginCustomer.LoginForCustomerActivity"
-            android:theme="@style/nailBarTheme"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/nailBarTheme"></activity>
         <activity
             android:name=".View.StaffInfo.StaffInformationActivity"
-            android:theme="@style/nailBarTheme"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/nailBarTheme"></activity>
         <activity
             android:name=".View.CustomerServiceHistory.CustomerServiceHistoryActivity"
-            android:theme="@style/nailBarTheme"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/nailBarTheme"></activity>
         <activity
             android:name=".View.ViewCartActivity.ViewCartActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/nailBarTheme"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait">
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
 
 
         <activity
             android:name=".View.Login.ResetPasswordActivity"
-            android:theme="@style/nailBarTheme"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/nailBarTheme"></activity>
         <activity
             android:name=".View.BookAppointment.BookAppointmentActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/nailBarTheme"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait">
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
 
         <activity
             android:name=".View.ManageStaff.ManageStaffActivity"
-            android:theme="@style/nailBarTheme"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/nailBarTheme"></activity>
         <activity
             android:name=".View.MyDetailCustomer.MyDetailCustomerActivity"
-            android:theme="@style/nailBarTheme"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/nailBarTheme"></activity>
         <activity
             android:name=".View.MyCustomer.MyCustomerActivity"
-            android:theme="@style/nailBarTheme"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/nailBarTheme"></activity>
+
     </application>
 
 </manifest>

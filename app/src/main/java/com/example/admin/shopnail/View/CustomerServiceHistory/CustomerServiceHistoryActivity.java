@@ -198,8 +198,8 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
             mLayoutList.setVisibility(View.VISIBLE);
             mListCustomerServiceHistoryByDate.setVisibility(View.VISIBLE);
             mTvEmpty.setVisibility(View.GONE);
-            CustomerAdapter adapter = new CustomerAdapter(this, listCustomerServiceHistory);
-            mListCustomerServiceHistoryByDate.setAdapter(adapter);
+//            CustomerAdapter adapter = new CustomerAdapter(this, listCustomerServiceHistory);
+//            mListCustomerServiceHistoryByDate.setAdapter(adapter);
         }
     }
 
