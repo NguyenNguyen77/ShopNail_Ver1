@@ -104,8 +104,8 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
         listCustomer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                myCustommerLogic.tranfertoDetailCustomer(i);
-                showDialogSelectTimer();
+                myCustommerLogic.tranfertoDetailCustomer(i);
+//                showDialogSelectTimer();
             }
         });
 

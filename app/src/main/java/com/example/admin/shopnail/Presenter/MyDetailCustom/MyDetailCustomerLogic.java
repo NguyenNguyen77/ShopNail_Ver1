@@ -44,7 +44,6 @@ public class MyDetailCustomerLogic extends BaseMethod implements IMyDetailCustom
     public void onTaskCompleted(String s, String CaseRequest) {
         switch (CaseRequest){
             case GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY:
-                // TODO: 10/19/2018 VinhCN, here is data, doing this tomorrow
                 GsonProductHistories mGsonProductHistories = getGson().fromJson(s, GsonProductHistories.class);
                 Log.d(KeyManager.VinhCNLog, s);
                 break;
