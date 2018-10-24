@@ -61,6 +61,7 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_my_customer);
+        mViewManager.setActivity(this);
         initView();
         myCustommerLogic.requestCustomerOrder(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
 //        listService = getListDataAcrylic();
@@ -123,7 +124,6 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
                 showDatePickerDialog();
             }
         });
-        mViewManager.setActivity(this);
     }
 
 
@@ -209,6 +209,7 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
                 strSpanned.setSpan(new UnderlineSpan(), 0, strSpanned.length(), 0);
                 txt_date.setText(strSpanned);
                 mDateSelected = mCalender.getTime();
+                mViewManager.showInprogressDialog();
                 myCustommerLogic.requestCustomerOrder(txt_date.getText().toString());
 
             }
@@ -227,6 +228,7 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
     public void setAdapterClients(List<GsonGetClient.SuccessBean.ClientsBean> arrClient) {
         CustomerAdapter mCustomerAdapter = new CustomerAdapter(this, arrClient);
         listCustomer.setAdapter(mCustomerAdapter);
+        mViewManager.dismissInprogressDialog();
     }
 
     public void showDialogSelectTimer(){
