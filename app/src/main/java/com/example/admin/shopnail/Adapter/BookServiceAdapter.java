@@ -2,7 +2,6 @@ package com.example.admin.shopnail.Adapter;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -18,15 +17,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.admin.shopnail.Model.BookAppointment.BookService;
-import com.example.admin.shopnail.Model.CustomerInfo.Customer;
 import com.example.admin.shopnail.R;
-import com.example.admin.shopnail.View.BookAppointment.BookAppointmentActivity;
-import com.example.admin.shopnail.View.ViewManager;
+import com.example.admin.shopnail.Manager.ViewManager;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class BookServiceAdapter extends ArrayAdapter<BookService> implements View.OnClickListener {
     ArrayAdapter<String> adapterCategoryStaff = null;

@@ -58,7 +58,6 @@ public class NailBuilder implements NailActionBarBuildable {
             case VIEW_CART:
                 builder.setTitle(R.string.view_cart);
                 break;
-
             case RESET_PASSWORD:
                 builder.setTitle(R.string.reset_password);
                 break;

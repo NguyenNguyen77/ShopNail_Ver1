@@ -1,4 +1,4 @@
-package com.example.admin.shopnail.View;
+package com.example.admin.shopnail.Manager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -8,7 +8,7 @@ import android.util.Log;
 import com.example.admin.shopnail.View.BookAppointment.BookAppointmentActivity;
 import com.example.admin.shopnail.View.Login.MainActivity;
 import com.example.admin.shopnail.View.CustomerServiceHistory.CustomerServiceHistoryActivity;
-import com.example.admin.shopnail.View.Login.ResetPasswordActivity;
+import com.example.admin.shopnail.View.ResetPassword.ResetPasswordActivity;
 import com.example.admin.shopnail.View.ManageStaff.ManageStaffActivity;
 import com.example.admin.shopnail.View.MenuFoStaff.MenuForStaffActivity;
 import com.example.admin.shopnail.View.MyCustomer.MyCustomerActivity;

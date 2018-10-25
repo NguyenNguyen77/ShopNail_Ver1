@@ -3,12 +3,10 @@ package com.example.admin.shopnail.View.MyCustomer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.view.ContextThemeWrapper;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
@@ -16,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
@@ -24,21 +21,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.example.admin.shopnail.Adapter.MyCustomerAdapter;
 import com.example.admin.shopnail.Model.MyCustomer.GsonGetClient;
 import com.example.admin.shopnail.Model.ServicesOfShop;
 import com.example.admin.shopnail.Presenter.MyCustomerPresenter.MyCustommerLogic;
 
 import com.example.admin.shopnail.Adapter.CustomerAdapter;
-import com.example.admin.shopnail.Model.CustomerInfo.Customer;
 
 import com.example.admin.shopnail.R;
-import com.example.admin.shopnail.View.CustomerServiceHistory.CustomerServiceHistoryActivity;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
-import com.example.admin.shopnail.View.ViewManager;
+import com.example.admin.shopnail.Manager.ViewManager;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;

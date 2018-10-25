@@ -3,35 +3,25 @@ package com.example.admin.shopnail.View.BookAppointment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.admin.shopnail.Adapter.BookServiceAdapter;
-import com.example.admin.shopnail.Manager.BaseMethod;
-import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Model.BookAppointment.BookService;
-import com.example.admin.shopnail.Model.BookAppointment.GsonAllStaff;
-import com.example.admin.shopnail.Model.Employee;
 import com.example.admin.shopnail.Presenter.BookAppointment.BookAppointmentPresenter;
 import com.example.admin.shopnail.R;
-import com.example.admin.shopnail.View.CustomerServiceHistory.CustomerServiceHistoryActivity;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
-import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
-import com.example.admin.shopnail.View.ViewManager;
+import com.example.admin.shopnail.Manager.ViewManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,6 +55,13 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_appointment);
+        initView();
+        loadInitData();
+
+
+    }
+
+    private void initView() {
 
         new NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.BOOK_APPOINTMENT);
@@ -79,7 +76,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mTvAddMoreervice = (TextView) findViewById(R.id.tv_add_more_services);
 
         mViewManager.showInprogressDialog();
-        loadInitData();
+
 
         mBtnSubmit.setOnClickListener(this);
         mBtnBack.setOnClickListener(this);
@@ -126,7 +123,6 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             public void afterTextChanged(Editable text) {
             }
         });
-
     }
 
     @Override

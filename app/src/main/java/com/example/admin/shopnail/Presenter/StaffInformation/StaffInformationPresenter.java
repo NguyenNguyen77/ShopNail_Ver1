@@ -2,7 +2,6 @@ package com.example.admin.shopnail.Presenter.StaffInformation;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.Handler;
 import android.util.Log;
 
 import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
@@ -15,7 +14,6 @@ import com.example.admin.shopnail.Manager.UrlManager;
 import com.example.admin.shopnail.Model.StaffInfor.GsonChangePass;
 import com.example.admin.shopnail.Model.StaffInfor.GsonStaffInfor;
 import com.example.admin.shopnail.View.ERROR_CODE;
-import com.example.admin.shopnail.View.ILoginView;
 import com.example.admin.shopnail.View.StaffInfo.IStaffInformation;
 
 public class StaffInformationPresenter extends BaseMethod implements IStaffInformationPresenter, AsyncTaskCompleteListener<ResuiltObject> {

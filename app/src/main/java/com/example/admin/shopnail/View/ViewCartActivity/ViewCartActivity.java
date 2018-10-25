@@ -2,7 +2,6 @@ package com.example.admin.shopnail.View.ViewCartActivity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,30 +9,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.example.admin.shopnail.Adapter.ViewProductAdapter;
 import com.example.admin.shopnail.Manager.BaseMethod;
-import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Model.ServicesOfShop;
-import com.example.admin.shopnail.Presenter.ViewProductPresenter.IViewProductPresenter;
 import com.example.admin.shopnail.Presenter.ViewProductPresenter.ViewProductPresenter;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
-import com.example.admin.shopnail.View.ViewManager;
+import com.example.admin.shopnail.Manager.ViewManager;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import static com.example.admin.shopnail.Manager.KeyManager.ARRAY_PRODUCT;
-import static com.example.admin.shopnail.Manager.KeyManager.CLIENT_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.CLIENT_NAME;
 import static com.example.admin.shopnail.Manager.KeyManager.CUSTOMER_PHONE_NUMBER;
-import static com.example.admin.shopnail.Manager.KeyManager.USER_ID;
-import static com.example.admin.shopnail.Manager.KeyManager.VinhCNLog;
 
 public class ViewCartActivity extends Activity implements CartView, View.OnClickListener {
 

@@ -7,6 +7,7 @@ import com.example.admin.shopnail.Manager.KeyManager;
 
 import static com.example.admin.shopnail.Manager.KeyManager.CHANGE_PASSWORD;
 import static com.example.admin.shopnail.Manager.KeyManager.CREATE_ACCOUNT_CUSTOMER;
+import static com.example.admin.shopnail.Manager.KeyManager.FORGOT_PASSWORD;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_CLIENT_OF_STAFF;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_USER_BY_ID;
@@ -26,6 +27,10 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
         String Resuilt = "";
         ResuiltObject mResuiltObject = null;
         switch (caseManagers[0].getCase()) {
+            case FORGOT_PASSWORD:
+                Resuilt = caseManagers[0].makePostRequest(caseManagers[0].getUrl(), caseManagers[0].getmBuilder(), caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(FORGOT_PASSWORD, Resuilt);
+                break;
             case GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY:
                 Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY, Resuilt);

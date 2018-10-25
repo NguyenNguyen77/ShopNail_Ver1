@@ -1,34 +1,25 @@
 package com.example.admin.shopnail.View.SelectService;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.admin.shopnail.Adapter.CategoryAdapter;
 import com.example.admin.shopnail.Adapter.SelectServiceAdapter;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Model.SelectCustomerService.GsonProductsByCategory;
-import com.example.admin.shopnail.Model.ServicesOfShop;
-import com.example.admin.shopnail.Presenter.SelectServicePresenter.ISelectServicePresenter;
 import com.example.admin.shopnail.Presenter.SelectServicePresenter.SelectServicePresenter;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
-import com.example.admin.shopnail.View.ViewManager;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.example.admin.shopnail.Manager.ViewManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;

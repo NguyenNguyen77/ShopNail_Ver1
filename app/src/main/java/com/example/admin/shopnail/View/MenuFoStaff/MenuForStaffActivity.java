@@ -2,15 +2,12 @@ package com.example.admin.shopnail.View.MenuFoStaff;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.admin.shopnail.R;
-import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
-import com.example.admin.shopnail.View.ViewManager;
+import com.example.admin.shopnail.Manager.ViewManager;
 
 public class MenuForStaffActivity extends Activity implements View.OnClickListener {
 

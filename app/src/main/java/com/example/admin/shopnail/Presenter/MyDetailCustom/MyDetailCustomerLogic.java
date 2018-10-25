@@ -45,6 +45,7 @@ public class MyDetailCustomerLogic extends BaseMethod implements IMyDetailCustom
         switch (CaseRequest){
             case GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY:
                 GsonProductHistories mGsonProductHistories = getGson().fromJson(s, GsonProductHistories.class);
+                // TODO: 10/24/2018 conflict idea
                 Log.d(KeyManager.VinhCNLog, s);
                 break;
         }
