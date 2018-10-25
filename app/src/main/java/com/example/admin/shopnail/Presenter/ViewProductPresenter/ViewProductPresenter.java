@@ -88,7 +88,7 @@ public class ViewProductPresenter extends BaseMethod implements IViewProductPres
                 JSONObject object = new JSONObject();
                 object.put(PRODUC_ID, pd.getProductId());
                 object.put(PRICE, pd.getPrice());
-                object.put(TIME_ORDER, pd.getTimeOrder());
+//                object.put(TIME_ORDER, pd.getTimeOrder());
                 array.put(object);
             } catch (JSONException e) {
                 e.printStackTrace();

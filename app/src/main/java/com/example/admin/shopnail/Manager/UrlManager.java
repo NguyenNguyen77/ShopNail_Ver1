@@ -16,4 +16,8 @@ public class UrlManager {
     public static final String GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY_URL = "http://142.93.29.45:8888/api/historyClientByStaff";
     public static final String FORGOT_PASSWORD_URL = "http://142.93.29.45:8888/api/forgotPassword";
 
+
+
+    public static final String GET_TIME_OF_CLIENT_FROM_STAFF_URL = "http://142.93.29.45:8888/api/getCustomerTimeOrder";
+
 }

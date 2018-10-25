@@ -24,7 +24,7 @@ public class ManagerStaffLogic implements ManagerStaffImp, AsyncTaskCompleteList
     }
 
     @Override
-    public void requestListService() {
+    public void createCheckbox() {
         new NailTask(this).execute(new CaseManager(mContext, GET_ALL_SERVICE_ID, UrlManager.GET_ALL_SERVICE_URL, getParamBuilder()));
     }
 
@@ -46,4 +46,5 @@ public class ManagerStaffLogic implements ManagerStaffImp, AsyncTaskCompleteList
     public void onTaskError(String s, String CaseRequest) {
 
     }
+
 }

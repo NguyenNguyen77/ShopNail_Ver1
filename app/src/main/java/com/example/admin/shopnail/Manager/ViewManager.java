@@ -27,6 +27,8 @@ import static android.content.ContentValues.TAG;
 import static com.example.admin.shopnail.Manager.KeyManager.ARRAY_PRODUCT;
 import static com.example.admin.shopnail.Manager.KeyManager.CLIENT_HISTORY_CHOOSED;
 import static com.example.admin.shopnail.Manager.KeyManager.DATE;
+import static com.example.admin.shopnail.Manager.KeyManager.ORDER_ID;
+import static com.example.admin.shopnail.Manager.KeyManager.TIME_ORDER;
 
 public class ViewManager {
     private Activity currentActivity = null;
@@ -104,10 +106,10 @@ public class ViewManager {
 
     }
 
-    public void setView(VIEW_KEY key, String json, String date) {
+    public void setView(VIEW_KEY key, String orderID, String Time, String JsonInfor) {
         switch (key) {
             case MY_DETAIL_CUSTOMER:
-                viewMyDetailCustomerActivity(json, date);
+                viewMyDetailCustomerActivity(orderID, Time, JsonInfor);
                 break;
         }
 
@@ -315,15 +317,15 @@ public class ViewManager {
         setViewKey(VIEW_KEY.MY_DETAIL_CUSTOMER);
     }
 
-    private void viewMyDetailCustomerActivity(String json, String date) {
+    private void viewMyDetailCustomerActivity(String orderID, String Time, String JsonInfor) {
         Activity activity = currentActivity;
         if (activity == null) {
             return;
         }
-
         Intent intent = new Intent(activity.getApplicationContext(), MyDetailCustomerActivity.class);
-        intent.putExtra(CLIENT_HISTORY_CHOOSED, json);
-        intent.putExtra(DATE, date);
+        intent.putExtra(ORDER_ID, orderID);
+        intent.putExtra(TIME_ORDER, Time);
+        intent.putExtra(CLIENT_HISTORY_CHOOSED, JsonInfor);
         activity.startActivity(intent);
         setViewKey(VIEW_KEY.MY_DETAIL_CUSTOMER);
     }

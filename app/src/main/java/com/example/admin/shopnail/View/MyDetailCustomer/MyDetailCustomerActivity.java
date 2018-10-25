@@ -26,6 +26,8 @@ import java.util.List;
 
 import static com.example.admin.shopnail.Manager.KeyManager.CLIENT_HISTORY_CHOOSED;
 import static com.example.admin.shopnail.Manager.KeyManager.DATE;
+import static com.example.admin.shopnail.Manager.KeyManager.ORDER_ID;
+import static com.example.admin.shopnail.Manager.KeyManager.TIME_ORDER;
 
 public class MyDetailCustomerActivity extends Activity implements View.OnClickListener, MyDetailCustomerView {
 
@@ -50,11 +52,15 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_my_detail_customer);
         initView();
+        getOrderID();
+        getTimeName();
         mMyDetailCustomerLogic.requestCustomerProducts(getListOrderID());
         listService = getListDataAcrylic();
         MyCustomerAdapter myDetailCustomerAdapter = new MyCustomerAdapter(getApplicationContext(), listService);
         mLvMyCustomerList.setAdapter(myDetailCustomerAdapter);
     }
+
+
 
     private void initView() {
         new NailActionBarGenerator().generate(this,
@@ -199,5 +205,20 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+
+
+    @Override
+    public String getOrderID() {
+        String orderId = getIntent().getStringExtra(ORDER_ID);
+        return orderId;
+    }
+
+    @Override
+    public String getTimeName() {
+        String TimeName = getIntent().getStringExtra(TIME_ORDER);
+        return TimeName;
     }
 }

@@ -2,7 +2,6 @@ package com.example.admin.shopnail.Presenter.MyDetailCustom;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Half;
 import android.util.Log;
 
 import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
@@ -12,9 +11,8 @@ import com.example.admin.shopnail.AsynTaskManager.ResuiltObject;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
-import com.example.admin.shopnail.Model.MyDetailCustomer.GsonProductHistories;
+import com.example.admin.shopnail.Model.MyDetailCustomer.GsonProductCustomer;
 import com.example.admin.shopnail.View.MyDetailCustomer.MyDetailCustomerView;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 
@@ -29,6 +27,7 @@ public class MyDetailCustomerLogic extends BaseMethod implements IMyDetailCustom
     public MyDetailCustomerLogic(Context mContext, MyDetailCustomerView myDetailCustomerView) {
         this.mContext = mContext;
         this.myDetailCustomerView = myDetailCustomerView;
+
     }
 
     @Override
@@ -44,7 +43,7 @@ public class MyDetailCustomerLogic extends BaseMethod implements IMyDetailCustom
     public void onTaskCompleted(String s, String CaseRequest) {
         switch (CaseRequest){
             case GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY:
-                GsonProductHistories mGsonProductHistories = getGson().fromJson(s, GsonProductHistories.class);
+                GsonProductCustomer mGsonProductHistories = getGson().fromJson(s, GsonProductCustomer.class);
                 // TODO: 10/24/2018 conflict idea
                 Log.d(KeyManager.VinhCNLog, s);
                 break;

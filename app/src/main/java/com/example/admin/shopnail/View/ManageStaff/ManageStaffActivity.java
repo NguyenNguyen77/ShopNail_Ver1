@@ -31,7 +31,7 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_staff);
         initView();
-        managerStaffLogic.requestListService();
+        managerStaffLogic.createCheckbox();
 
 
     }
