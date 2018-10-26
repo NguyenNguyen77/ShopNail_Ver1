@@ -7,7 +7,7 @@ public class GsonProductCustomer {
 
     /**
      * status : true
-     * success : {"code":200,"products":[{"orderId":"19","extraMoney":"20","product":[{"productId":"1","productName":"Natural Full Set","productPrice":"10"},{"productId":"2","productName":"Manicure","productPrice":"20"},{"productId":"3","productName":"Eye Brows","productPrice":"10"},{"productId":"4","productName":"Eye Brows Tinting","productPrice":"40"}]},{"orderId":"20","extraMoney":"20","product":[{"productId":"1","productName":"Natural Full Set","productPrice":"10"},{"productId":"2","productName":"Manicure","productPrice":"20"},{"productId":"3","productName":"Eye Brows","productPrice":"10"},{"productId":"4","productName":"Eye Brows Tinting","productPrice":"40"}]},{"orderId":"21","extraMoney":"22","product":[{"productId":"1","productName":"Natural Full Set","productPrice":"10"},{"productId":"2","productName":"Manicure","productPrice":"20"},{"productId":"3","productName":"Eye Brows","productPrice":"10"},{"productId":"4","productName":"Eye Brows Tinting","productPrice":"40"}]}]}
+     * success : {"code":200,"products":[{"orderId":"19","extraMoney":"20","product":[{"productId":"1","productName":"Natural Full Set","productPrice":"10"},{"productId":"2","productName":"Manicure","productPrice":"20"},{"productId":"3","productName":"Eye Brows","productPrice":"10"},{"productId":"4","productName":"Eye Brows Tinting","productPrice":"40"}]}]}
      */
 
     private boolean status;
@@ -32,7 +32,7 @@ public class GsonProductCustomer {
     public static class SuccessBean {
         /**
          * code : 200
-         * products : [{"orderId":"19","extraMoney":"20","product":[{"productId":"1","productName":"Natural Full Set","productPrice":"10"},{"productId":"2","productName":"Manicure","productPrice":"20"},{"productId":"3","productName":"Eye Brows","productPrice":"10"},{"productId":"4","productName":"Eye Brows Tinting","productPrice":"40"}]},{"orderId":"20","extraMoney":"20","product":[{"productId":"1","productName":"Natural Full Set","productPrice":"10"},{"productId":"2","productName":"Manicure","productPrice":"20"},{"productId":"3","productName":"Eye Brows","productPrice":"10"},{"productId":"4","productName":"Eye Brows Tinting","productPrice":"40"}]},{"orderId":"21","extraMoney":"22","product":[{"productId":"1","productName":"Natural Full Set","productPrice":"10"},{"productId":"2","productName":"Manicure","productPrice":"20"},{"productId":"3","productName":"Eye Brows","productPrice":"10"},{"productId":"4","productName":"Eye Brows Tinting","productPrice":"40"}]}]
+         * products : [{"orderId":"19","extraMoney":"20","product":[{"productId":"1","productName":"Natural Full Set","productPrice":"10"},{"productId":"2","productName":"Manicure","productPrice":"20"},{"productId":"3","productName":"Eye Brows","productPrice":"10"},{"productId":"4","productName":"Eye Brows Tinting","productPrice":"40"}]}]
          */
 
         private int code;

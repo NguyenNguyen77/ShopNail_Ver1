@@ -106,10 +106,10 @@ public class ViewManager {
 
     }
 
-    public void setView(VIEW_KEY key, String orderID, String Time, String JsonInfor) {
+    public void setView(VIEW_KEY key, String orderID, String Time, String JsonInfor, String date) {
         switch (key) {
             case MY_DETAIL_CUSTOMER:
-                viewMyDetailCustomerActivity(orderID, Time, JsonInfor);
+                viewMyDetailCustomerActivity(orderID, Time, JsonInfor, date);
                 break;
         }
 
@@ -317,7 +317,7 @@ public class ViewManager {
         setViewKey(VIEW_KEY.MY_DETAIL_CUSTOMER);
     }
 
-    private void viewMyDetailCustomerActivity(String orderID, String Time, String JsonInfor) {
+    private void viewMyDetailCustomerActivity(String orderID, String Time, String JsonInfor, String date) {
         Activity activity = currentActivity;
         if (activity == null) {
             return;
@@ -326,6 +326,7 @@ public class ViewManager {
         intent.putExtra(ORDER_ID, orderID);
         intent.putExtra(TIME_ORDER, Time);
         intent.putExtra(CLIENT_HISTORY_CHOOSED, JsonInfor);
+        intent.putExtra(DATE, date);
         activity.startActivity(intent);
         setViewKey(VIEW_KEY.MY_DETAIL_CUSTOMER);
     }

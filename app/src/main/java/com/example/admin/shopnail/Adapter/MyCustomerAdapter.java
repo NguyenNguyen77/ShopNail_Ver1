@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.admin.shopnail.CustomViewListExpand.NonScrollListView;
+import com.example.admin.shopnail.Model.MyDetailCustomer.GsonProductCustomer;
 import com.example.admin.shopnail.Model.ServicesOfShop;
 import com.example.admin.shopnail.R;
 
@@ -19,71 +21,54 @@ import java.util.List;
 
 public class MyCustomerAdapter extends BaseAdapter {
 
-    List<ServicesOfShop> listService;
+    List<GsonProductCustomer.SuccessBean.ProductsBean> object;
     LayoutInflater layoutInflater;
-    TextView txt_name_service;
-    TextView txt_price_service;
-    TextView txt_date;
+    Context mContext;
 
-    public MyCustomerAdapter(Context context,List<ServicesOfShop> objects) {
+    public MyCustomerAdapter(Context context, List<GsonProductCustomer.SuccessBean.ProductsBean> objects) {
         layoutInflater = LayoutInflater.from(context);
-        listService= objects;
+        this.object = objects;
+        this.mContext = context;
     }
 
-    //    public MyCustomerAdapter(Context context, List<ServicesOfShop> listService) {
-////        this.context = context;
-//        this.listService = listService;
-//        layoutInflater = LayoutInflater.from(context);
-//    }
+
     @Override
     public int getCount() {
-        return listService.size();
+        return object.size();
     }
 
     @Override
     public long getItemId(int i) {
         return i;
     }
+
     @Override
     public Object getItem(int position) {
-        return listService.get(position);
+        return object.get(position);
     }
 
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
         ViewHolder holder;
-
         if (convertView == null) {
+            holder = new ViewHolder();
             convertView = layoutInflater.inflate(R.layout.item_my_customer_detail_service, null);
-        } else {
-            holder = (MyCustomerAdapter.ViewHolder) convertView.getTag();
-        }
-            holder = new MyCustomerAdapter.ViewHolder();
-            holder.nameService = convertView.findViewById(R.id.txt_name_service);
-            holder.priceService = convertView.findViewById(R.id.txt_price_service);
-            LinearLayout lvItem = (LinearLayout) convertView.findViewById(R.id.item_list_my_customer);
-//            txt_date = convertView.findViewById(R.id.txt_time_service);
-
+            holder.tvExtra = convertView.findViewById(R.id.txt_extra);
+            holder.lv = convertView.findViewById(R.id.list_products);
             convertView.setTag(holder);
-
-
-        holder.nameService.setText(listService.get(i).nameService);
-//        holder.priceService.setText((int) listService.get(i).priceService);
-
-        if (i % 2 == 1) {
-            int backgroundColor = ContextCompat.getColor(convertView.getContext(), R.color.list_1);
-            lvItem.setBackgroundColor(backgroundColor);
         } else {
-            int backgroundColor = ContextCompat.getColor(convertView.getContext(), R.color.list_2);
-            lvItem.setBackgroundColor(backgroundColor);
+            holder = (ViewHolder) convertView.getTag();
         }
+        GsonProductCustomer.SuccessBean.ProductsBean mProductsBean = object.get(i);
+        holder.tvExtra.setText(String.valueOf(mProductsBean.getExtraMoney()) + "$");
+        List<GsonProductCustomer.SuccessBean.ProductsBean.ProductBean> arrProduct = object.get(i).getProduct();
+        ProductsCustomerAdapter adapter = new ProductsCustomerAdapter(arrProduct, mContext, mProductsBean.getOrderId(), mProductsBean.getExtraMoney());
+        holder.lv.setAdapter(adapter);
         return convertView;
     }
 
     class ViewHolder {
-        ImageView srcIconService;
-        TextView nameService;
-        TextView priceService;
-        CheckBox cbItems;
+        TextView tvExtra;
+        NonScrollListView lv;
     }
 }

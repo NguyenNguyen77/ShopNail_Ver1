@@ -12,4 +12,6 @@ public interface MyCustomerView {
     void showDialogChoosedTime(GsonGetClient.SuccessBean.ClientsBean clientsBean);
 
     void showTimeDialog(List<GsonClientTime.SuccessBean.TimeBean> listTime);
+
+    String getDateChoosed();
 }

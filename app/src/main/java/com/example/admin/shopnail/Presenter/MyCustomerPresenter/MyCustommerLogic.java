@@ -59,7 +59,7 @@ public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTa
 
     @Override
     public void openDetailCustomer(int which, List<TimeSelect> arrTimeSelect) {
-        mViewManager.setView(ViewManager.VIEW_KEY.MY_DETAIL_CUSTOMER, arrTimeSelect.get(which).getOrderID(), arrTimeSelect.get(which).getTimeName(),  getGson().toJson(clientChoosed));
+        mViewManager.setView(ViewManager.VIEW_KEY.MY_DETAIL_CUSTOMER, arrTimeSelect.get(which).getOrderID(), arrTimeSelect.get(which).getTimeName(),  getGson().toJson(clientChoosed), myCustomerView.getDateChoosed());
     }
 
     private JSONArray getArrayClientOrderID(GsonGetClient.SuccessBean.ClientsBean clientsBean) {

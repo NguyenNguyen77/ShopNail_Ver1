@@ -248,6 +248,11 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
         showDialogSelectTimer(arrTimeSelect);
     }
 
+    @Override
+    public String getDateChoosed() {
+        return txt_date.getText().toString();
+    }
+
     public void showDialogSelectTimer(List<TimeSelect> arr) {
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
