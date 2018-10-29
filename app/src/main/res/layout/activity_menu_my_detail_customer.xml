@@ -139,6 +139,7 @@
                     android:textColor="@color/text_color_load_data" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -160,7 +161,6 @@
                     android:textStyle="italic|bold"
                     android:text="Click to update extra for this order"
                     android:textColor="@color/text_color_load_data" />
-
             </LinearLayout>
         </LinearLayout>
 

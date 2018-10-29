@@ -21,9 +21,8 @@ import com.example.admin.shopnail.Manager.MyApplication;
 import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Presenter.LoginPresenter;
 import com.example.admin.shopnail.R;
-import com.example.admin.shopnail.View.ILoginView;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
-import com.example.admin.shopnail.View.ViewManager;
+import com.example.admin.shopnail.Manager.ViewManager;
 
 import static com.example.admin.shopnail.Manager.KeyManager.PASS_WORD;
 import static com.example.admin.shopnail.Manager.KeyManager.USER_ID;

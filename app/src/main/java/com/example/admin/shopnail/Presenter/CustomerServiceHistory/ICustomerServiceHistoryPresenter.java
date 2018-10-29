@@ -10,4 +10,8 @@ public interface ICustomerServiceHistoryPresenter {
 
     public void loadCustomerServiceHistoryByDate(Date selected);
     public void loadCustomerServiceHistoryByID (String name, String phone);
+
+    void requestCustomerOrder(String s);
+
+    void OpenHistorisDetail(int position);
 }

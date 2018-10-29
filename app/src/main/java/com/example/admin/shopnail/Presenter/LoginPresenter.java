@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.widget.Toast;
 
 import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
 import com.example.admin.shopnail.AsynTaskManager.CaseManager;
@@ -14,8 +13,7 @@ import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
 import com.example.admin.shopnail.Model.Login.GsonLogin;
-import com.example.admin.shopnail.View.ILoginView;
-import com.google.gson.Gson;
+import com.example.admin.shopnail.View.Login.ILoginView;
 
 import static com.example.admin.shopnail.Manager.KeyManager.PASS_WORD;
 import static com.example.admin.shopnail.Manager.KeyManager.TOKEN;

@@ -1,4 +1,4 @@
-package com.example.admin.shopnail.View;
+package com.example.admin.shopnail.Manager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -10,7 +10,7 @@ import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.View.BookAppointment.BookAppointmentActivity;
 import com.example.admin.shopnail.View.Login.MainActivity;
 import com.example.admin.shopnail.View.CustomerServiceHistory.CustomerServiceHistoryActivity;
-import com.example.admin.shopnail.View.Login.ResetPasswordActivity;
+import com.example.admin.shopnail.View.ResetPassword.ResetPasswordActivity;
 import com.example.admin.shopnail.View.ManageStaff.ManageStaffActivity;
 import com.example.admin.shopnail.View.MenuFoStaff.MenuForStaffActivity;
 import com.example.admin.shopnail.View.MyCustomer.MyCustomerActivity;
@@ -29,6 +29,8 @@ import static android.content.ContentValues.TAG;
 import static com.example.admin.shopnail.Manager.KeyManager.ARRAY_PRODUCT;
 import static com.example.admin.shopnail.Manager.KeyManager.CLIENT_HISTORY_CHOOSED;
 import static com.example.admin.shopnail.Manager.KeyManager.DATE;
+import static com.example.admin.shopnail.Manager.KeyManager.ORDER_ID;
+import static com.example.admin.shopnail.Manager.KeyManager.TIME_ORDER;
 
 public class ViewManager {
     private Activity currentActivity = null;
@@ -106,10 +108,10 @@ public class ViewManager {
 
     }
 
-    public void setView(VIEW_KEY key, String json, String date) {
+    public void setView(VIEW_KEY key, String orderID, String Time, String JsonInfor, String date) {
         switch (key) {
             case MY_DETAIL_CUSTOMER:
-                viewMyDetailCustomerActivity(json, date);
+                viewMyDetailCustomerActivity(orderID, Time, JsonInfor, date);
                 break;
         }
 
@@ -317,14 +319,15 @@ public class ViewManager {
         setViewKey(VIEW_KEY.MY_DETAIL_CUSTOMER);
     }
 
-    private void viewMyDetailCustomerActivity(String json, String date) {
+    private void viewMyDetailCustomerActivity(String orderID, String Time, String JsonInfor, String date) {
         Activity activity = currentActivity;
         if (activity == null) {
             return;
         }
-
         Intent intent = new Intent(activity.getApplicationContext(), MyDetailCustomerActivity.class);
-        intent.putExtra(CLIENT_HISTORY_CHOOSED, json);
+        intent.putExtra(ORDER_ID, orderID);
+        intent.putExtra(TIME_ORDER, Time);
+        intent.putExtra(CLIENT_HISTORY_CHOOSED, JsonInfor);
         intent.putExtra(DATE, date);
         activity.startActivity(intent);
         setViewKey(VIEW_KEY.MY_DETAIL_CUSTOMER);

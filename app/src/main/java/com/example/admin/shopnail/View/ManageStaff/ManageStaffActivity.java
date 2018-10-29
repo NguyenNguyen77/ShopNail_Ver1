@@ -7,29 +7,36 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.admin.shopnail.Adapter.ManageStaffAdapter;
 import com.example.admin.shopnail.Model.ManageStaff.ManageStaff;
+import com.example.admin.shopnail.Presenter.ManagerStaff.ManagerStaffLogic;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
-import com.example.admin.shopnail.View.ViewManager;
+import com.example.admin.shopnail.Manager.ViewManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageStaffActivity extends Activity implements View.OnClickListener {
+public class ManageStaffActivity extends Activity implements View.OnClickListener, ManagerStaffView {
     protected ViewManager mViewManager = ViewManager.getInstance();
     Button btn_back;
     ListView listManageStaff;
     ManageStaffAdapter manageStaffAdapter = null;
     List<ManageStaff> mList = new ArrayList<ManageStaff>();
+    ManagerStaffLogic managerStaffLogic = new ManagerStaffLogic(this, this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_staff);
+        initView();
+        managerStaffLogic.createCheckbox();
 
+
+    }
+
+    private void initView() {
         new com.example.admin.shopnail.View.NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.MANAGE_STAFF);
 

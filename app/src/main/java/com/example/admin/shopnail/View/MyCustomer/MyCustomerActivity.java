@@ -3,12 +3,10 @@ package com.example.admin.shopnail.View.MyCustomer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.view.ContextThemeWrapper;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
@@ -16,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
@@ -24,18 +21,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.example.admin.shopnail.Adapter.MyCustomerAdapter;
+import com.example.admin.shopnail.Model.MyCustomer.GsonClientTime;
 import com.example.admin.shopnail.Model.MyCustomer.GsonGetClient;
+import com.example.admin.shopnail.Model.MyCustomer.TimeSelect;
 import com.example.admin.shopnail.Model.ServicesOfShop;
 import com.example.admin.shopnail.Presenter.MyCustomerPresenter.MyCustommerLogic;
 
 import com.example.admin.shopnail.Adapter.CustomerAdapter;
-import com.example.admin.shopnail.Model.CustomerInfo.Customer;
 
 import com.example.admin.shopnail.R;
-import com.example.admin.shopnail.View.CustomerServiceHistory.CustomerServiceHistoryActivity;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
-import com.example.admin.shopnail.View.ViewManager;
+import com.example.admin.shopnail.Manager.ViewManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -57,10 +53,12 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
     private Calendar mCalender;
 
     Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_my_customer);
+        mViewManager.setActivity(this);
         initView();
         myCustommerLogic.requestCustomerOrder(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
 //        listService = getListDataAcrylic();
@@ -100,12 +98,11 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
         getDefaultInfo();
 
 
-
         listCustomer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 myCustommerLogic.tranfertoDetailCustomer(i);
-//                showDialogSelectTimer();
+
             }
         });
 
@@ -116,16 +113,15 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
                 mViewManager.finishActivity(MyCustomerActivity.this);
             }
         });
+
         txt_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"A nên chọn ngày 19-10-2018 để có data",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "A nên chọn ngày 19-10-2018 để có data", Toast.LENGTH_LONG).show();
                 showDatePickerDialog();
             }
         });
-        mViewManager.setActivity(this);
     }
-
 
 
     @Override
@@ -203,12 +199,13 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
             public void onDateSet(DatePicker view, int year,
                                   int monthOfYear,
                                   int dayOfMonth) {
-                String strDate = year + "-" +  (monthOfYear + 1) + "-" + (dayOfMonth);
+                String strDate = year + "-" + (monthOfYear + 1) + "-" + (dayOfMonth);
                 SpannableString strSpanned = new SpannableString(strDate);
                 strSpanned.setSpan(new StyleSpan(Typeface.ITALIC), 0, strSpanned.length(), 0);
                 strSpanned.setSpan(new UnderlineSpan(), 0, strSpanned.length(), 0);
                 txt_date.setText(strSpanned);
                 mDateSelected = mCalender.getTime();
+                mViewManager.showInprogressDialog();
                 myCustommerLogic.requestCustomerOrder(txt_date.getText().toString());
 
             }
@@ -227,21 +224,55 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
     public void setAdapterClients(List<GsonGetClient.SuccessBean.ClientsBean> arrClient) {
         CustomerAdapter mCustomerAdapter = new CustomerAdapter(this, arrClient);
         listCustomer.setAdapter(mCustomerAdapter);
+        mViewManager.dismissInprogressDialog();
     }
 
-    public void showDialogSelectTimer(){
+    @Override
+    public void showDialogChoosedTime(GsonGetClient.SuccessBean.ClientsBean clientsBean) {
+//        showDialogSelectTimer(clientsBean);
+    }
+
+
+    List<TimeSelect> arrTimeSelect;
+
+    @Override
+    public void showTimeDialog(List<GsonClientTime.SuccessBean.TimeBean> listTime) {
+        arrTimeSelect = new ArrayList<>();
+        for (int i = 0; i < listTime.size(); i++) {
+            String orderId = listTime.get(i).getOrderId();
+            List<String> arrTime = listTime.get(i).getTime();
+            for (int j = 0; j < arrTime.size(); j++) {
+                arrTimeSelect.add(new TimeSelect(orderId, arrTime.get(j).toString()));
+            }
+        }
+        showDialogSelectTimer(arrTimeSelect);
+    }
+
+    @Override
+    public String getDateChoosed() {
+        return txt_date.getText().toString();
+    }
+
+    public void showDialogSelectTimer(List<TimeSelect> arr) {
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Select time booked");
-
         // add a list
-        String[] animals = {"12:30","15:30","18:30"};
+//        String[] animals = {"12:30", "15:30", "18:30"};
+        String[] animals = new String[arr.size()];
+        for (int i = 0; i < arr.size(); i++) {
+            animals[i] = arr.get(i).getTimeName();
+        }
+//        String[] animals = new String[]{};
+//        for (int i = 0; i < arrTimeSet.size(); i++){
+//            animals[i] = arrTimeSet.get(i);
+//        }
         builder.setItems(animals, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // stub timer add
-                which = 0;
-                myCustommerLogic.tranfertoDetailCustomer(which);
+//                which = 0;
+                myCustommerLogic.openDetailCustomer(which, arrTimeSelect);
                 // stub timer end
             }
         });
