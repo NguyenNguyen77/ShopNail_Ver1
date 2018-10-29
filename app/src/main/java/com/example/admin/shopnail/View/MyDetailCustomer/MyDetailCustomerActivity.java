@@ -33,7 +33,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.TIME_ORDER;
 public class MyDetailCustomerActivity extends Activity implements View.OnClickListener, MyDetailCustomerView {
 
     protected ViewManager mViewManager = ViewManager.getInstance();
-    MyDetailCustomerLogic mMyDetailCustomerLogic = new MyDetailCustomerLogic(this,this);
+    MyDetailCustomerLogic mMyDetailCustomerLogic = new MyDetailCustomerLogic(this, this);
 
     private Button mBtnBack;
     private Button mBtnUpdateService;
@@ -43,8 +43,8 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
     private TextView tvDate;
     private TextView tvName;
     private TextView tvPhone;
-//    private TextView tvExtra;
-    private  TextView tvTime;
+    //    private TextView tvExtra;
+    private TextView tvTime;
     List<ServicesOfShop> listService;
 
     @Override
@@ -77,7 +77,6 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
     }
 
 
-
     private void initView() {
         new NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.MY_CUSTOMER);
@@ -85,8 +84,8 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
         mBtnUpdateService = (Button) findViewById(R.id.btn_update_service);
         mBtnCancelService = (Button) findViewById(R.id.btn_cancel_service);
         mLvMyCustomerList = (ListView) findViewById(R.id.list_my_customer);
-        tvTime  = findViewById(R.id.tv_time);
-        tvName =  findViewById(R.id.tv_customer_name);
+        tvTime = findViewById(R.id.tv_time);
+        tvName = findViewById(R.id.tv_customer_name);
         tvDate = findViewById(R.id.tv_date);
         tvPhone = findViewById(R.id.tv_customer_phone);
 //        tvExtra = findViewById(R.id.txt_extra);
@@ -106,7 +105,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
 //        });
     }
 
-    private List<String> getListOrderID(){
+    private List<String> getListOrderID() {
         return getClientChoosed().getClientOrderId();
     }
 
@@ -114,7 +113,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
         return method.getGson().fromJson(getIntent().getStringExtra(CLIENT_HISTORY_CHOOSED), GsonGetClient.SuccessBean.ClientsBean.class);
     }
 
-    private String getDateChoosed(){
+    private String getDateChoosed() {
         return getIntent().getStringExtra(DATE);
     }
 
@@ -155,7 +154,9 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
                 break;
         }
     }
+
     private Dialog mChangePassDialog;
+
     private void showDialogUpdateExtra() {
         ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);
         mChangePassDialog = new Dialog(ctw);

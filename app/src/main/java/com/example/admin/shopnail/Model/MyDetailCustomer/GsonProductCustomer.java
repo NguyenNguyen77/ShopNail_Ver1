@@ -99,6 +99,7 @@ public class GsonProductCustomer {
                 private String productId;
                 private String productName;
                 private String productPrice;
+                boolean isStatus = false;
 
                 public String getProductId() {
                     return productId;
@@ -122,6 +123,14 @@ public class GsonProductCustomer {
 
                 public void setProductPrice(String productPrice) {
                     this.productPrice = productPrice;
+                }
+
+                public boolean isStatus() {
+                    return isStatus;
+                }
+
+                public void setStatus(boolean status) {
+                    isStatus = status;
                 }
             }
         }

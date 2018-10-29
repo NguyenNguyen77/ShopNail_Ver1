@@ -21,11 +21,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.admin.shopnail.Adapter.CustomerAdapter;
 import com.example.admin.shopnail.Adapter.ServiceHistoryAdapter;
 import com.example.admin.shopnail.Model.CustomerInfo.Customer;
+import com.example.admin.shopnail.Model.MyCustomer.GsonGetClient;
 import com.example.admin.shopnail.Model.ServiceHistory;
 import com.example.admin.shopnail.Presenter.CustomerServiceHistory.CustomerServiceHistoryPresenter;
 import com.example.admin.shopnail.R;
+import com.example.admin.shopnail.View.MyCustomer.MyCustomerActivity;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.Manager.ViewManager;
 
@@ -33,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class CustomerServiceHistoryActivity extends Activity implements View.OnClickListener, ICustomerServiceHistoryView {
@@ -45,13 +49,25 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
     private TextView mTvEmpty;
     private LinearLayout mLayoutList;
     private ListView mListCustomerServiceHistoryByDate;
-    private CustomerServiceHistoryPresenter mCustomerServiceHistoryPresenter = new CustomerServiceHistoryPresenter(this);
+    private CustomerServiceHistoryPresenter mCustomerServiceHistoryPresenter;
+
+    private CustomerServiceHistoryPresenter getPresenter(){
+        if (mCustomerServiceHistoryPresenter==null){
+            mCustomerServiceHistoryPresenter = new CustomerServiceHistoryPresenter(this, this);
+        }
+        return mCustomerServiceHistoryPresenter;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_service_history);
+        initView();
+        getPresenter().requestCustomerOrder(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
+    }
 
+    private void initView() {
         new com.example.admin.shopnail.View.NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.CUSTOMER_SERVICE_HISTORY);
         mViewManager.setActivity(this);
@@ -72,12 +88,13 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
         mListCustomerServiceHistoryByDate.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Customer selectedItem = (Customer) parent.getItemAtPosition(position);
-                loadCustomerServiceHistoryByID(selectedItem.name, selectedItem.phone);  //Get ID Customer & send to server
+//                Customer selectedItem = (Customer) parent.getItemAtPosition(position);
+//                loadCustomerServiceHistoryByID(selectedItem.name, selectedItem.phone);  //Get ID Customer & send to server
+                getPresenter().OpenHistorisDetail(position);
             }
         });
 
-        loadCustomerServiceHistoryByDate(mDateSelected);    //Show history current date
+//        loadCustomerServiceHistoryByDate(mDateSelected);
     }
 
     @Override
@@ -147,7 +164,7 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
     public void getDefaultInfo() {
         mCalender = Calendar.getInstance();
         SimpleDateFormat dft = null;
-        dft = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        dft = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         mDateSelected = mCalender.getTime();
         String strDate = dft.format(mCalender.getTime());
         SpannableString strSpanned = new SpannableString(strDate);
@@ -161,20 +178,23 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
             public void onDateSet(DatePicker view, int year,
                                   int monthOfYear,
                                   int dayOfMonth) {
-                String strDate = (dayOfMonth) + "/" + (monthOfYear + 1) + "/" + year;
+                String strDate = year + "-" + (monthOfYear + 1) + "-" + (dayOfMonth);
                 SpannableString strSpanned = new SpannableString(strDate);
                 strSpanned.setSpan(new StyleSpan(Typeface.ITALIC), 0, strSpanned.length(), 0);
                 strSpanned.setSpan(new UnderlineSpan(), 0, strSpanned.length(), 0);
                 mTvDate.setText(strSpanned);
                 mDateSelected = mCalender.getTime();
+                mViewManager.showInprogressDialog();
+                getPresenter().requestCustomerOrder(mTvDate.getText().toString());
+
             }
         };
         String s = mTvDate.getText() + "";
-        String strArrtmp[] = s.split("/");
-        int date = Integer.parseInt(strArrtmp[0]);
+        String strArrtmp[] = s.split("-");
+        int date = Integer.parseInt(strArrtmp[2]);
         int month = Integer.parseInt(strArrtmp[1]) - 1;
-        int year = Integer.parseInt(strArrtmp[2]);
-        DatePickerDialog pic = new DatePickerDialog(CustomerServiceHistoryActivity.this, AlertDialog.THEME_HOLO_LIGHT, callback, year, month, date);
+        int year = Integer.parseInt(strArrtmp[0]);
+        DatePickerDialog pic = new DatePickerDialog(this, AlertDialog.THEME_HOLO_LIGHT, callback, year, month, date);
         pic.setTitle(R.string.select_date_to_view_history);
         pic.show();
     }
@@ -207,6 +227,18 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
         } else {
             //Show error dialog
         }
+    }
+
+    @Override
+    public void setAdapterClients(List<GsonGetClient.SuccessBean.ClientsBean> arrClient) {
+        CustomerAdapter mCustomerAdapter = new CustomerAdapter(this, arrClient);
+        mListCustomerServiceHistoryByDate.setAdapter(mCustomerAdapter);
+        if (arrClient.size() > 0) {
+            mLayoutList.setVisibility(View.VISIBLE);
+            mListCustomerServiceHistoryByDate.setVisibility(View.VISIBLE);
+            mTvEmpty.setVisibility(View.GONE);
+        }
+        mViewManager.dismissInprogressDialog();
     }
 
     private void showDetailServiceDialog(ArrayList<ServiceHistory> listServiceHistory) {
