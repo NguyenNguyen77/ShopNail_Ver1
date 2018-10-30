@@ -3,6 +3,8 @@ package com.example.admin.shopnail.View.Login;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.Editable;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.shopnail.Manager.BaseMethod;
+import com.example.admin.shopnail.Manager.MyApplication;
+import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Presenter.LoginPresenter;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
@@ -25,7 +29,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.USER_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.USER_NAME;
 
 
-public class MainActivity extends Activity implements View.OnClickListener, ILoginView {
+public class MainActivity extends Activity implements View.OnClickListener, ILoginView, NetworkReceiver.ConnectivityReceiverListener {
     private Button btnExit;
     private Button btnLogin;
     private Button btnMakeAppointment;
@@ -50,11 +54,33 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         btnLogin = (Button) findViewById(R.id.btn_login_for_staff);
         btnMakeAppointment = (Button) findViewById(R.id.btn_make_appointment_online);
 
+        if(isInternetOn())
+        {
+//            Toast.makeText(getApplicationContext(),"da ket noi internet",Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(getApplicationContext(),"Vui long kiem tra lai ket noi internet",Toast.LENGTH_SHORT).show();
+        }
+
+
+
         btnMakeAppointment.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         btnExit.setOnClickListener(this);
         mViewManager.setActivity(this);
+//        mViewManager.checkConnection();
     }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        mViewManager.showSnack(isConnected);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -170,4 +196,30 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
                 return false;
         }
     }
+
+    public boolean isInternetOn() {
+
+        // get Connectivity Manager object to check connection
+        ConnectivityManager connec =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Check for network connections
+        if (connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
+                connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED) {
+
+
+            return true;
+
+        } else if (
+                connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
+                        connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED) {
+
+
+            return false;
+        }
+        return false;
+    }
 }
+

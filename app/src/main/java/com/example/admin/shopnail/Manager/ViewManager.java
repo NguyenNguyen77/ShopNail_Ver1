@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.View.BookAppointment.BookAppointmentActivity;
 import com.example.admin.shopnail.View.Login.MainActivity;
 import com.example.admin.shopnail.View.CustomerServiceHistory.CustomerServiceHistoryActivity;
@@ -388,6 +390,21 @@ public class ViewManager {
     public void dismissInprogressDialog() {
         if (mProgressDialog != null) {
             mProgressDialog.cancel();
+        }
+    }
+
+    public void checkConnection() {
+        boolean isConnected = NetworkReceiver.isConnected();
+        showSnack(isConnected);
+    }
+
+    public void showSnack(boolean isConnected) {
+        if (isConnected) {
+            Toast.makeText(currentActivity.getApplicationContext(),"Da ket noi internet",Toast.LENGTH_SHORT).show();
+            Log.d("NguyenNK2","ViewManager === da ket noi internet");
+        } else {
+            Toast.makeText(currentActivity.getApplicationContext(),"Vui long kiem tra lai ket noi internet",Toast.LENGTH_SHORT).show();
+            Log.d("NguyenNK2","ViewManager === ko ket noi internet");
         }
     }
 }

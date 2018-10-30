@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.admin.shopnail.Manager.MyApplication;
+import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.Manager.ViewManager;
 
-public class MenuForStaffActivity extends Activity implements View.OnClickListener {
+public class MenuForStaffActivity extends Activity implements View.OnClickListener, NetworkReceiver.ConnectivityReceiverListener {
 
     private Button btnSelectService;
     private Button btnMyCustomer;
@@ -42,6 +44,9 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
         btnCustomerServiceHistory.setOnClickListener(this);
         btnStaffInfo.setOnClickListener(this);
         btnLogout.setOnClickListener(this);
+
+
+        mViewManager.checkConnection();
 
         mViewManager.setActivity(this);
     }
@@ -98,4 +103,16 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
     private void tranferToMyCustomer() {
         mViewManager.setView(ViewManager.VIEW_KEY.MY_CUSTOMER);
     }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        mViewManager.showSnack(isConnected);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
 }
