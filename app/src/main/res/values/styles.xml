@@ -22,4 +22,11 @@
     <style name="nailActionbarTitleTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textSize">15dp</item>
     </style>
+
+
+    <style name="mydialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowMinWidthMajor">65%</item>
+        <item name="windowMinWidthMinor">95%</item>
+    </style>
 </resources>

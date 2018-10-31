@@ -2,8 +2,16 @@ package com.example.admin.shopnail.View.MyDetailCustomer;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.app.AlertDialog;
+import android.text.Html;
 import android.view.ContextThemeWrapper;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.admin.shopnail.Adapter.MyCustomerAdapter;
+import com.example.admin.shopnail.CustomViewListExpand.SingleToast;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Model.MyCustomer.GsonGetClient;
 import com.example.admin.shopnail.Model.MyDetailCustomer.GsonProductCustomer;
@@ -35,7 +44,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
 
     protected ViewManager mViewManager = ViewManager.getInstance();
     IMyDetailCustomer mMyDetailCustomerLogic = new MyDetailCustomerLogic(this, this);
-
+    public AlertDialog alertErrorInternet;
     private Button mBtnBack;
     private Button mBtnUpdateService;
     private Button mBtnCancelService;
@@ -44,7 +53,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
     private TextView tvDate;
     private TextView tvName;
     private TextView tvPhone;
-    private  Button btnUpdateService;
+    private Button btnUpdateService;
     //    private TextView tvExtra;
     private TextView tvTime;
     List<ServicesOfShop> listService;
@@ -68,10 +77,21 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
     }
 
     @Override
+    public ViewManager getViewManager() {
+        return mViewManager;
+    }
+
+    @Override
+    public void closeProgress() {
+        getViewManager().dismissInprogressDialog();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_my_detail_customer);
         initView();
+        getViewManager().showInprogressDialog();
         mMyDetailCustomerLogic.requestCustomerProducts(getOrderID());
 //        listService = getListDataAcrylic();
 //        MyCustomerAdapter myDetailCustomerAdapter = new MyCustomerAdapter(getApplicationContext(), listService);
@@ -153,13 +173,31 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
 //                showDialogUpdateExtra();
 //                break;
             case R.id.btn_update_service:
-                mMyDetailCustomerLogic.updateServiceRequest();
+                requestUpdate();
                 break;
             case R.id.btn_cancel_service:
-                mMyDetailCustomerLogic.cancelService();
+                reuquetCancel();
+
                 break;
             default:
                 break;
+        }
+    }
+
+    private void reuquetCancel() {
+        if (mMyDetailCustomerLogic.isCheckedSomething()) {
+            showDialogInform("Do you want to remove those services?", this);
+        } else {
+            SingleToast.show(this, "Please check service want to remove", 3000);
+        }
+    }
+
+    private void requestUpdate() {
+        if (mMyDetailCustomerLogic.isCheckedSomething()) {
+            getViewManager().showInprogressDialog();
+            mMyDetailCustomerLogic.updateServiceRequest();
+        } else {
+            SingleToast.show(this, "Please check service want to change", 3000);
         }
     }
 
@@ -229,5 +267,28 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    public void showDialogInform(String msg, final Context context) {
+        final AlertDialog alertDialog = new AlertDialog.Builder(MyDetailCustomerActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth).create();
+        alertDialog.setTitle("Note");
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE, "YES",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        getViewManager().showInprogressDialog();
+                        mMyDetailCustomerLogic.cancelService();
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
     }
 }

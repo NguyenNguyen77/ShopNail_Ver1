@@ -8,10 +8,13 @@ import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
 import com.example.admin.shopnail.AsynTaskManager.CaseManager;
 import com.example.admin.shopnail.AsynTaskManager.NailTask;
 import com.example.admin.shopnail.AsynTaskManager.ResuiltObject;
+import com.example.admin.shopnail.CustomViewListExpand.SingleToast;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
+import com.example.admin.shopnail.Manager.ViewManager;
 import com.example.admin.shopnail.Model.MyDetailCustomer.GsonProductCustomer;
+import com.example.admin.shopnail.Model.MyDetailCustomer.GsonResuiltUpdate;
 import com.example.admin.shopnail.View.MyDetailCustomer.MyDetailCustomerView;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -35,20 +38,21 @@ public class MyDetailCustomerLogic extends BaseMethod implements IMyDetailCustom
     Context mContext;
     MyDetailCustomerView myDetailCustomerView;
     List<GsonProductCustomer.SuccessBean.ProductsBean> listProduct;
+    String OrderId;
 
     public MyDetailCustomerLogic(Context mContext, MyDetailCustomerView myDetailCustomerView) {
         this.mContext = mContext;
         this.myDetailCustomerView = myDetailCustomerView;
-
     }
 
     @Override
     public void requestCustomerProducts(String s) {
+        OrderId = s;
         new NailTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
                 new CaseManager(mContext,
-                GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY,
-                UrlManager.GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY_URL,
-                getJsonRequest(s).toString()));
+                        GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY,
+                        UrlManager.GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY_URL,
+                        getJsonRequest(s).toString()));
     }
 
     @Override
@@ -69,15 +73,31 @@ public class MyDetailCustomerLogic extends BaseMethod implements IMyDetailCustom
                         getCancelServiceJson().toString()));
     }
 
+    @Override
+    public boolean isCheckedSomething() {
+        boolean isCheckSomething = false;
+        for (int i = 0; i < listProduct.size(); i++) {
+            GsonProductCustomer.SuccessBean.ProductsBean pds = listProduct.get(i);
+            for (GsonProductCustomer.SuccessBean.ProductsBean.ProductBean pd : listProduct.get(i).getProduct()) {
+                if (pd.isStatus()) {
+                    isCheckSomething = true;
+                    break;
+                }
+            }
+        }
+        return isCheckSomething;
+    }
+
+
     private JSONObject getCancelServiceJson() {
         JSONObject object = new JSONObject();
-        for (int i = 0; i < listProduct.size(); i++){
+        for (int i = 0; i < listProduct.size(); i++) {
             GsonProductCustomer.SuccessBean.ProductsBean pds = listProduct.get(i);
             JSONArray array = new JSONArray();
             try {
                 object.put(ORDER_ID, pds.getOrderId());
-                for (GsonProductCustomer.SuccessBean.ProductsBean.ProductBean pd : listProduct.get(i).getProduct()){
-                    if (pd.isStatus()){
+                for (GsonProductCustomer.SuccessBean.ProductsBean.ProductBean pd : listProduct.get(i).getProduct()) {
+                    if (pd.isStatus()) {
                         JSONObject child = new JSONObject();
                         child.put(PRODUC_ID, pd.getProductId());
                         array.put(child);
@@ -94,23 +114,42 @@ public class MyDetailCustomerLogic extends BaseMethod implements IMyDetailCustom
 
     @Override
     public void onTaskCompleted(String s, String CaseRequest) {
-        switch (CaseRequest){
+        switch (CaseRequest) {
             case GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY:
-                try{
+                try {
                     GsonProductCustomer mGsonProductHistories = getGson().fromJson(s, GsonProductCustomer.class);
-                    listProduct  = mGsonProductHistories.getSuccess().getProducts();
+                    listProduct = mGsonProductHistories.getSuccess().getProducts();
                     myDetailCustomerView.setListProducts(listProduct);
-                }catch (Exception e){
-
+                } catch (Exception e) {
+                    SingleToast.show(mContext, "Server error", 3000);
                 }
                 break;
             case UPDATE_STATUS_SERVICE:
                 Log.d(KeyManager.VinhCNLog, s);
+                try {
+                    GsonResuiltUpdate update = getGson().fromJson(s, GsonResuiltUpdate.class);
+                    SingleToast.show(mContext, update.isStatus() ? "Update services success" : "Update services fail", 3000);
+//                    if (update.isStatus())
+//                        requestCustomerProducts(OrderId);
+                } catch (Exception e) {
+                    SingleToast.show(mContext, "Server error", 3000);
+                }
                 break;
             case CANCEL_SERVICE:
                 Log.d(KeyManager.VinhCNLog, s);
+                try {
+                    GsonResuiltUpdate update = getGson().fromJson(s, GsonResuiltUpdate.class);
+                    SingleToast.show(mContext, update.isStatus() ? "Remove services success" : "Remove services fail", 3000);
+                    if (update.isStatus())
+                        requestCustomerProducts(OrderId);
+                } catch (Exception e) {
+                    SingleToast.show(mContext, "Server error", 3000);
+                }
+                break;
+            default:
                 break;
         }
+        myDetailCustomerView.closeProgress();
     }
 
     @Override
@@ -126,12 +165,12 @@ public class MyDetailCustomerLogic extends BaseMethod implements IMyDetailCustom
 
     public JSONObject getJsonUpdateService() {
         JSONObject object = new JSONObject();
-        for (int i = 0; i < listProduct.size(); i++){
+        for (int i = 0; i < listProduct.size(); i++) {
             GsonProductCustomer.SuccessBean.ProductsBean pds = listProduct.get(i);
             JSONArray array = new JSONArray();
             try {
                 object.put(ORDER_ID, pds.getOrderId());
-                for (GsonProductCustomer.SuccessBean.ProductsBean.ProductBean pd : listProduct.get(i).getProduct()){
+                for (GsonProductCustomer.SuccessBean.ProductsBean.ProductBean pd : listProduct.get(i).getProduct()) {
                     JSONObject child = new JSONObject();
                     child.put(PRODUC_ID, pd.getProductId());
                     child.put(STATUS, pd.isStatus() ? 1 : 0);

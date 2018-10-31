@@ -6,4 +6,6 @@ public interface IMyDetailCustomer {
     void updateServiceRequest();
 
     void cancelService();
+
+    boolean isCheckedSomething();
 }
