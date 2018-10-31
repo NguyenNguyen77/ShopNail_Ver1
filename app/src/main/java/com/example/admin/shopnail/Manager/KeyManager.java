@@ -6,6 +6,8 @@ public class KeyManager {
     public static final String LOGIN = "LOGIN";
     public static final String GET_CLIENT_OF_STAFF = "GET_CLIENT_OF_STAFF";
     public static final String GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY = "GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY";
+    public static final String UPDATE_STATUS_SERVICE = "UPDATE_STATUS_SERVICE";
+    public static final String CANCEL_SERVICE = "CANCEL_SERVICE";
     public static final String POST = "POST";
     public static final String GET = "GET";
     public static final String GET_USER_BY_ID = "GET_USER_BY_ID";
@@ -26,6 +28,7 @@ public class KeyManager {
     public static final String FULL_NAME = "fullname";
     public static final String PHONE = "phone";
     public static final String PRODUC_ID = "productId";
+    public static final String PRODUCTS = "products";
     public static final String PRICE = "price";
     public static final String TIME_ORDER = "timeOrder";
     public static final String GET_ALL_STAFF_ID = "GET_ALL_STAFF";
@@ -43,6 +46,7 @@ public class KeyManager {
     public static final String VALUES = "values";
     public static final String USER_ID_KEY = "userId";
     public static final String DATE = "date";
-    public static final String ORDER_ID = "ORDER_ID";
+    public static final String ORDER_ID = "orderID";
+    public static final String STATUS = "status";
 
 }

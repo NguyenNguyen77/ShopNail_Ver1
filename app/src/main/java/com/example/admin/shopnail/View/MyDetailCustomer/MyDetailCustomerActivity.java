@@ -17,6 +17,7 @@ import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Model.MyCustomer.GsonGetClient;
 import com.example.admin.shopnail.Model.MyDetailCustomer.GsonProductCustomer;
 import com.example.admin.shopnail.Model.ServicesOfShop;
+import com.example.admin.shopnail.Presenter.MyDetailCustom.IMyDetailCustomer;
 import com.example.admin.shopnail.Presenter.MyDetailCustom.MyDetailCustomerLogic;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
@@ -33,7 +34,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.TIME_ORDER;
 public class MyDetailCustomerActivity extends Activity implements View.OnClickListener, MyDetailCustomerView {
 
     protected ViewManager mViewManager = ViewManager.getInstance();
-    MyDetailCustomerLogic mMyDetailCustomerLogic = new MyDetailCustomerLogic(this, this);
+    IMyDetailCustomer mMyDetailCustomerLogic = new MyDetailCustomerLogic(this, this);
 
     private Button mBtnBack;
     private Button mBtnUpdateService;
@@ -43,6 +44,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
     private TextView tvDate;
     private TextView tvName;
     private TextView tvPhone;
+    private  Button btnUpdateService;
     //    private TextView tvExtra;
     private TextView tvTime;
     List<ServicesOfShop> listService;
@@ -147,8 +149,14 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
                 mViewManager.handleBackScreen();
                 mViewManager.finishActivity(this);
                 break;
-            case R.id.txt_extra:
-                showDialogUpdateExtra();
+//            case R.id.txt_extra:
+//                showDialogUpdateExtra();
+//                break;
+            case R.id.btn_update_service:
+                mMyDetailCustomerLogic.updateServiceRequest();
+                break;
+            case R.id.btn_cancel_service:
+                mMyDetailCustomerLogic.cancelService();
                 break;
             default:
                 break;
@@ -162,7 +170,6 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
         mChangePassDialog = new Dialog(ctw);
         mChangePassDialog.setContentView(R.layout.update_extra_dialog);
         mChangePassDialog.setTitle("Update extra");
-
         Button btnUpdate = (Button) mChangePassDialog.findViewById(R.id.btnUpdate);
         Button btnCancel = (Button) mChangePassDialog.findViewById(R.id.btnCancel);
         final EditText txtExtra = (EditText) mChangePassDialog.findViewById(R.id.txt_extra);
