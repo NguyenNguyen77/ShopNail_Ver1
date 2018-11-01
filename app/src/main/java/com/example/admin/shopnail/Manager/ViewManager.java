@@ -1,12 +1,21 @@
 package com.example.admin.shopnail.Manager;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.v7.view.ContextThemeWrapper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.shopnail.Manager.NetworkReceiver;
+import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.BookAppointment.BookAppointmentActivity;
 import com.example.admin.shopnail.View.Login.MainActivity;
 import com.example.admin.shopnail.View.CustomerServiceHistory.CustomerServiceHistoryActivity;
@@ -30,7 +39,10 @@ import static com.example.admin.shopnail.Manager.KeyManager.ARRAY_PRODUCT;
 import static com.example.admin.shopnail.Manager.KeyManager.CLIENT_HISTORY_CHOOSED;
 import static com.example.admin.shopnail.Manager.KeyManager.DATE;
 import static com.example.admin.shopnail.Manager.KeyManager.ORDER_ID;
+import static com.example.admin.shopnail.Manager.KeyManager.PASS_WORD;
 import static com.example.admin.shopnail.Manager.KeyManager.TIME_ORDER;
+import static com.example.admin.shopnail.Manager.KeyManager.USER_ID;
+import static com.example.admin.shopnail.Manager.KeyManager.USER_NAME;
 
 public class ViewManager {
     private Activity currentActivity = null;
@@ -116,9 +128,6 @@ public class ViewManager {
         }
 
     }
-
-
-
 
 
     public static synchronized ViewManager getInstance() {
@@ -400,11 +409,44 @@ public class ViewManager {
 
     public void showSnack(boolean isConnected) {
         if (isConnected) {
-            Toast.makeText(currentActivity.getApplicationContext(),"Da ket noi internet",Toast.LENGTH_SHORT).show();
-            Log.d("NguyenNK2","ViewManager === da ket noi internet");
+            Toast.makeText(currentActivity.getApplicationContext(), "Da ket noi internet", Toast.LENGTH_SHORT).show();
+            Log.d("NguyenNK2", "ViewManager === da ket noi internet");
         } else {
-            Toast.makeText(currentActivity.getApplicationContext(),"Vui long kiem tra lai ket noi internet",Toast.LENGTH_SHORT).show();
-            Log.d("NguyenNK2","ViewManager === ko ket noi internet");
+            Toast.makeText(currentActivity.getApplicationContext(), "Vui long kiem tra lai ket noi internet", Toast.LENGTH_SHORT).show();
+            Log.d("NguyenNK2", "ViewManager === ko ket noi internet");
         }
+    }
+
+    public void showDialog(String title, String content, boolean isOK, boolean isCancel) {
+        ContextThemeWrapper ctw = new ContextThemeWrapper(currentActivity, R.style.Theme_AlertDialog);
+        final Dialog commonDialog = new Dialog(ctw);
+        commonDialog.setContentView(R.layout.common_dialog);
+        commonDialog.setTitle(title);
+
+        TextView tvContent = (TextView) commonDialog.findViewById(R.id.txt_dialog_content);
+        tvContent.setText(content);
+
+        if (isOK) {
+            Button btnOK = (Button) commonDialog.findViewById(R.id.btnOK);
+            btnOK.setVisibility(View.VISIBLE);
+            btnOK.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    commonDialog.dismiss();
+                }
+            });
+        }
+
+        if (isCancel) {
+            Button btnCancel = (Button) commonDialog.findViewById(R.id.btnCancel);
+            btnCancel.setVisibility(View.VISIBLE);
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    commonDialog.dismiss();
+                }
+            });
+        }
+        commonDialog.show();
     }
 }
