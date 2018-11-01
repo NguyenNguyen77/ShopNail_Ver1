@@ -16,10 +16,11 @@ import com.example.admin.shopnail.CustomViewListExpand.NonScrollListView;
 import com.example.admin.shopnail.Model.MyDetailCustomer.GsonProductCustomer;
 import com.example.admin.shopnail.Model.ServicesOfShop;
 import com.example.admin.shopnail.R;
+import com.example.admin.shopnail.View.MyDetailCustomer.MyDetailCustomerActivity;
 
 import java.util.List;
 
-public class MyCustomerAdapter extends BaseAdapter {
+public class MyCustomerAdapter extends BaseAdapter implements View.OnClickListener {
 
     List<GsonProductCustomer.SuccessBean.ProductsBean> object;
     LayoutInflater layoutInflater;
@@ -60,11 +61,23 @@ public class MyCustomerAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         GsonProductCustomer.SuccessBean.ProductsBean mProductsBean = object.get(i);
-        holder.tvExtra.setText(String.valueOf(mProductsBean.getExtraMoney()) + "$");
+        holder.tvExtra.setText(String.valueOf(mProductsBean.getExtraMoney()) + "$" + " ( Click to update extra for this order)");
+        holder.tvExtra.setTag(i);
+        holder.tvExtra.setOnClickListener(this);
         List<GsonProductCustomer.SuccessBean.ProductsBean.ProductBean> arrProduct = object.get(i).getProduct();
         ProductsCustomerAdapter adapter = new ProductsCustomerAdapter(arrProduct, mContext, mProductsBean.getOrderId(), mProductsBean.getExtraMoney());
         holder.lv.setAdapter(adapter);
         return convertView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int position = (int) v.getTag();
+        switch (v.getId()){
+            case R.id.txt_extra:
+                ((MyDetailCustomerActivity) mContext).OpenDialogUpdate(object.get(position).getOrderId());
+                break;
+        }
     }
 
     class ViewHolder {

@@ -8,4 +8,6 @@ public interface IMyDetailCustomer {
     void cancelService();
 
     boolean isCheckedSomething();
+
+    void reuquestUpdate(String orderId, String s);
 }

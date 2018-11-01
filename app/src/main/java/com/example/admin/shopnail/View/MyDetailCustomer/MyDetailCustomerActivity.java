@@ -72,7 +72,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
 
     @Override
     public void setListProducts(List<GsonProductCustomer.SuccessBean.ProductsBean> listProduct) {
-        MyCustomerAdapter myDetailCustomerAdapter = new MyCustomerAdapter(getApplicationContext(), listProduct);
+        MyCustomerAdapter myDetailCustomerAdapter = new MyCustomerAdapter(this, listProduct);
         mLvMyCustomerList.setAdapter(myDetailCustomerAdapter);
     }
 
@@ -84,6 +84,11 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
     @Override
     public void closeProgress() {
         getViewManager().dismissInprogressDialog();
+    }
+
+    @Override
+    public void OpenDialogUpdate(String orderId) {
+        showDialogUpdateExtra(orderId);
     }
 
     @Override
@@ -203,7 +208,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
 
     private Dialog mChangePassDialog;
 
-    private void showDialogUpdateExtra() {
+    private void showDialogUpdateExtra(final String orderId) {
         ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);
         mChangePassDialog = new Dialog(ctw);
         mChangePassDialog.setContentView(R.layout.update_extra_dialog);
@@ -211,14 +216,19 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
         Button btnUpdate = (Button) mChangePassDialog.findViewById(R.id.btnUpdate);
         Button btnCancel = (Button) mChangePassDialog.findViewById(R.id.btnCancel);
         final EditText txtExtra = (EditText) mChangePassDialog.findViewById(R.id.txt_extra);
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (txtExtra.getText().toString().equals("")) {
+                    SingleToast.show(MyDetailCustomerActivity.this, "Please input", 3000);
+                }else {
+                    getViewManager().showInprogressDialog();
+                    mMyDetailCustomerLogic.reuquestUpdate(orderId, txtExtra.getText().toString());
+                    mChangePassDialog.dismiss();
+                }
 
-//        btnUpdate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                tvExtra.setText(txtExtra.getText()+"$");
-//                mChangePassDialog.dismiss();
-//            }
-//        });
+            }
+        });
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override

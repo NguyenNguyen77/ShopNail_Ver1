@@ -8,6 +8,7 @@ public class KeyManager {
     public static final String GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY = "GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY";
     public static final String UPDATE_STATUS_SERVICE = "UPDATE_STATUS_SERVICE";
     public static final String CANCEL_SERVICE = "CANCEL_SERVICE";
+    public static final String UPDATE_EXTRA = "UPDATE_EXTRA";
     public static final String POST = "POST";
     public static final String GET = "GET";
     public static final String GET_USER_BY_ID = "GET_USER_BY_ID";

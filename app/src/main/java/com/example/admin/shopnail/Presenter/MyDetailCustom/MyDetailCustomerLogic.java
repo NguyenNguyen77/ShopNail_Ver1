@@ -26,12 +26,14 @@ import org.json.JSONObject;
 import java.util.List;
 
 import static com.example.admin.shopnail.Manager.KeyManager.CANCEL_SERVICE;
+import static com.example.admin.shopnail.Manager.KeyManager.EXTRA;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY;
 import static com.example.admin.shopnail.Manager.KeyManager.ORDER_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.PRODUCTS;
 import static com.example.admin.shopnail.Manager.KeyManager.PRODUC_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.STAFF_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.STATUS;
+import static com.example.admin.shopnail.Manager.KeyManager.UPDATE_EXTRA;
 import static com.example.admin.shopnail.Manager.KeyManager.UPDATE_STATUS_SERVICE;
 
 public class MyDetailCustomerLogic extends BaseMethod implements IMyDetailCustomer, AsyncTaskCompleteListener<ResuiltObject> {
@@ -71,6 +73,15 @@ public class MyDetailCustomerLogic extends BaseMethod implements IMyDetailCustom
                         CANCEL_SERVICE,
                         UrlManager.CANCEL_SERVICE_SERVICE_URL,
                         getCancelServiceJson().toString()));
+    }
+
+    @Override
+    public void reuquestUpdate(String orderId, String s) {
+        new NailTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+                new CaseManager(mContext,
+                        UPDATE_EXTRA,
+                        UrlManager.UPDATE_EXTRA_URL,
+                        getJsonUpdateExtra(orderId, s).toString()));
     }
 
     @Override
@@ -146,6 +157,18 @@ public class MyDetailCustomerLogic extends BaseMethod implements IMyDetailCustom
                     SingleToast.show(mContext, "Server error", 3000);
                 }
                 break;
+
+            case UPDATE_EXTRA:
+                Log.d(KeyManager.VinhCNLog, s);
+                try {
+                    GsonResuiltUpdate update = getGson().fromJson(s, GsonResuiltUpdate.class);
+                    SingleToast.show(mContext, update.isStatus() ? "Update extra success" : "Update extra fail", 3000);
+                    if (update.isStatus())
+                        requestCustomerProducts(OrderId);
+                } catch (Exception e) {
+                    SingleToast.show(mContext, "Server error", 3000);
+                }
+                break;
             default:
                 break;
         }
@@ -180,6 +203,17 @@ public class MyDetailCustomerLogic extends BaseMethod implements IMyDetailCustom
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+        return object;
+    }
+
+    public JSONObject getJsonUpdateExtra(String orderId, String extra) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put(ORDER_ID, Integer.parseInt(orderId));
+            object.put(EXTRA, Integer.parseInt(extra));
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return object;
     }

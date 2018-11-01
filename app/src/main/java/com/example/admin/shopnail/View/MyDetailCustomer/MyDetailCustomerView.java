@@ -15,4 +15,6 @@ public interface MyDetailCustomerView {
     ViewManager getViewManager();
 
     void closeProgress();
+
+    void OpenDialogUpdate(String orderId);
 }

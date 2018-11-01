@@ -15,6 +15,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.GET_TIME_OF_CLIENT_F
 import static com.example.admin.shopnail.Manager.KeyManager.GET_USER_BY_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.LOGIN;
 import static com.example.admin.shopnail.Manager.KeyManager.ORDER_SERVICE_BY_STAFF;
+import static com.example.admin.shopnail.Manager.KeyManager.UPDATE_EXTRA;
 import static com.example.admin.shopnail.Manager.KeyManager.UPDATE_STATUS_SERVICE;
 
 public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
@@ -30,6 +31,10 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
         String Resuilt = "";
         ResuiltObject mResuiltObject = null;
         switch (caseManagers[0].getCase()) {
+            case UPDATE_EXTRA:
+                Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(UPDATE_EXTRA, Resuilt);
+                break;
             case CANCEL_SERVICE:
                 Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(CANCEL_SERVICE, Resuilt);
