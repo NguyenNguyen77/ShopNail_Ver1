@@ -22,9 +22,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.admin.shopnail.Adapter.CustomerAdapter;
+import com.example.admin.shopnail.Adapter.HistoriesDetailsAdapter;
+import com.example.admin.shopnail.Adapter.MyCustomerAdapter;
 import com.example.admin.shopnail.Adapter.ServiceHistoryAdapter;
+import com.example.admin.shopnail.CustomViewListExpand.SingleToast;
 import com.example.admin.shopnail.Model.CustomerInfo.Customer;
 import com.example.admin.shopnail.Model.MyCustomer.GsonGetClient;
+import com.example.admin.shopnail.Model.MyDetailCustomer.GsonProductCustomer;
 import com.example.admin.shopnail.Model.ServiceHistory;
 import com.example.admin.shopnail.Presenter.CustomerServiceHistory.CustomerServiceHistoryPresenter;
 import com.example.admin.shopnail.R;
@@ -64,6 +68,7 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_service_history);
         initView();
+        mViewManager.showInprogressDialog();
         getPresenter().requestCustomerOrder(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
     }
 
@@ -90,6 +95,8 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                Customer selectedItem = (Customer) parent.getItemAtPosition(position);
 //                loadCustomerServiceHistoryByID(selectedItem.name, selectedItem.phone);  //Get ID Customer & send to server
+
+                mViewManager.showInprogressDialog();
                 getPresenter().OpenHistorisDetail(position);
             }
         });
@@ -104,7 +111,7 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
                 showDatePickerDialog();
                 break;
             case R.id.img_submit:
-                loadCustomerServiceHistoryByDate(mDateSelected);
+//                loadCustomerServiceHistoryByDate(mDateSelected);
                 break;
             case R.id.btn_back:
                 mViewManager.handleBackScreen();
@@ -201,7 +208,7 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
 
     private void loadCustomerServiceHistoryByDate(Date selected) {
         mViewManager.showInprogressDialog();
-        mCustomerServiceHistoryPresenter.loadCustomerServiceHistoryByDate(selected);
+//        mCustomerServiceHistoryPresenter.loadCustomerServiceHistoryByDate(selected);
     }
 
     @Override
@@ -216,18 +223,18 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
         }
     }
 
-    private void loadCustomerServiceHistoryByID(String name, String phone) {
-        mCustomerServiceHistoryPresenter.loadCustomerServiceHistoryByID(name, phone);
-    }
+//    private void loadCustomerServiceHistoryByID(String name, String phone) {
+//        mCustomerServiceHistoryPresenter.loadCustomerServiceHistoryByID(name, phone);
+//    }
 
-    @Override
-    public void showListCustomerServiceHistoryByID(ArrayList<ServiceHistory> listCustomerServiceHistoryByID) {
-        if (listCustomerServiceHistoryByID.size() > 0) {
-            showDetailServiceDialog(listCustomerServiceHistoryByID);
-        } else {
-            //Show error dialog
-        }
-    }
+//    @Override
+//    public void showListCustomerServiceHistoryByID(ArrayList<ServiceHistory> listCustomerServiceHistoryByID) {
+////        if (listCustomerServiceHistoryByID.size() > 0) {
+////            showDetailServiceDialog(listCustomerServiceHistoryByID);
+////        } else {
+////            //Show error dialog
+////        }
+//    }
 
     @Override
     public void setAdapterClients(List<GsonGetClient.SuccessBean.ClientsBean> arrClient) {
@@ -241,20 +248,32 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
         mViewManager.dismissInprogressDialog();
     }
 
-    private void showDetailServiceDialog(ArrayList<ServiceHistory> listServiceHistory) {
+    @Override
+    public void OpenDialogHistories(List<GsonProductCustomer.SuccessBean.ProductsBean> listProduct) {
+        if (listProduct.size() > 0) {
+            showDetailServiceDialog(listProduct);
+        } else {
+            SingleToast.show(this, "Empty", 3000);
+        }
+    }
+
+    @Override
+    public void closeProgress() {
+        mViewManager.dismissInprogressDialog();
+    }
+
+    private void showDetailServiceDialog(List<GsonProductCustomer.SuccessBean.ProductsBean> listServiceHistory) {
         ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);
         final Dialog detailService = new Dialog(ctw);
         detailService.setContentView(R.layout.service_history_dialog);
         detailService.setTitle(R.string.customer_info);
-
         Button btnLogin = (Button) detailService.findViewById(R.id.btnOK);
         Button btnCancel = (Button) detailService.findViewById(R.id.btnCancel);
         TextView tvDateDetail = (TextView) detailService.findViewById(R.id.tv_date_select);
         ListView lvServiceHistory = (ListView) detailService.findViewById(R.id.lv_customer_service_history);
-        ServiceHistoryAdapter adapter = new ServiceHistoryAdapter(this, listServiceHistory);
+        HistoriesDetailsAdapter myDetailCustomerAdapter = new HistoriesDetailsAdapter(this, listServiceHistory);
+        lvServiceHistory.setAdapter(myDetailCustomerAdapter);
         lvServiceHistory.setVisibility(View.VISIBLE);
-        lvServiceHistory.setAdapter(adapter);
-
         tvDateDetail.setText(mTvDate.getText());
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

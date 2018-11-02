@@ -18,6 +18,7 @@ public class UrlManager {
     public static final String UPDATE_STATUS_SERVICE_URL = "http://142.93.29.45:8888/api/updateStatusService";
     public static final String CANCEL_SERVICE_SERVICE_URL = "http://142.93.29.45:8888/api/deleteServiceOrder";
     public static final String UPDATE_EXTRA_URL = "http://142.93.29.45:8888/api/updateExtraByOrder";
+    public static final String GENERATE_CHECK_BOX_URL = "http://142.93.29.45:8888/api/generateCheckbox";
 
 
 

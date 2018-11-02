@@ -12,6 +12,7 @@ import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
 import com.example.admin.shopnail.View.ManageStaff.ManagerStaffView;
 
+import static com.example.admin.shopnail.Manager.KeyManager.GENERATE_CHECK_BOX;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_ALL_SERVICE_ID;
 
 public class ManagerStaffLogic implements ManagerStaffImp, AsyncTaskCompleteListener<ResuiltObject> {
@@ -25,7 +26,7 @@ public class ManagerStaffLogic implements ManagerStaffImp, AsyncTaskCompleteList
 
     @Override
     public void createCheckbox() {
-        new NailTask(this).execute(new CaseManager(mContext, GET_ALL_SERVICE_ID, UrlManager.GET_ALL_SERVICE_URL, getParamBuilder()));
+        new NailTask(this).execute(new CaseManager(mContext, GENERATE_CHECK_BOX, UrlManager.GENERATE_CHECK_BOX_URL, getParamBuilder()));
     }
 
     private Uri.Builder getParamBuilder() {
@@ -35,7 +36,7 @@ public class ManagerStaffLogic implements ManagerStaffImp, AsyncTaskCompleteList
     @Override
     public void onTaskCompleted(String s, String CaseRequest) {
         switch (CaseRequest) {
-            case GET_ALL_SERVICE_ID:
+            case GENERATE_CHECK_BOX:
                 Log.d(KeyManager.VinhCNLog, s);
 
                 break;

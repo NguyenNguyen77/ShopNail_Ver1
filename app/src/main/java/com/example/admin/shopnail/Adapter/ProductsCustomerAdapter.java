@@ -24,13 +24,15 @@ public class ProductsCustomerAdapter extends BaseAdapter {
     String OrderID;
     String Price;
     Context mContext;
+    boolean isHistory;
 
-    public ProductsCustomerAdapter(List<GsonProductCustomer.SuccessBean.ProductsBean.ProductBean> object, Context context, String orderid, String price) {
+    public ProductsCustomerAdapter(List<GsonProductCustomer.SuccessBean.ProductsBean.ProductBean> object, Context context, String orderid, String price, boolean ishistory) {
         this.object = object;
         layoutInflater = LayoutInflater.from(context);
         this.OrderID = orderid;
         this.Price = price;
         this.mContext = context;
+        this.isHistory = ishistory;
     }
 
     @Override
@@ -67,12 +69,14 @@ public class ProductsCustomerAdapter extends BaseAdapter {
         holder.nameService.setText(productBean.getProductName());
         holder.priceService.setText(productBean.getProductPrice() + "$");
         holder.cbItems.setChecked(productBean.isStatus());
+        holder.cbItems.setVisibility(isHistory ? View.GONE : View.VISIBLE);
         holder.cbItems.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 object.get(position).setStatus(isChecked);
             }
         });
+
         return convertView;
     }
 

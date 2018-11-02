@@ -34,6 +34,7 @@ public class KeyManager {
     public static final String TIME_ORDER = "timeOrder";
     public static final String GET_ALL_STAFF_ID = "GET_ALL_STAFF";
     public static final String GET_ALL_SERVICE_ID = "GET_ALL_SERVICE";
+    public static final String GENERATE_CHECK_BOX = "GENERATE_CHECK_BOX";
     public static final String ARRAY_PRODUCT = "ARRAY_PRODUCT";
     public static final String CLIENT_HISTORY_CHOOSED = "CLIENT_HISTORY_CHOOSED";
     public static final String NAME = "name";

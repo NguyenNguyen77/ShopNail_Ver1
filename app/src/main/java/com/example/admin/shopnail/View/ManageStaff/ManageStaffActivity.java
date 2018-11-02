@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.example.admin.shopnail.Adapter.ManageStaffAdapter;
 import com.example.admin.shopnail.Model.ManageStaff.ManageStaff;
+import com.example.admin.shopnail.Presenter.ManagerStaff.ManagerStaffImp;
 import com.example.admin.shopnail.Presenter.ManagerStaff.ManagerStaffLogic;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
@@ -24,7 +25,7 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
     ListView listManageStaff;
     ManageStaffAdapter manageStaffAdapter = null;
     List<ManageStaff> mList = new ArrayList<ManageStaff>();
-    ManagerStaffLogic managerStaffLogic = new ManagerStaffLogic(this, this);
+    ManagerStaffImp managerStaffLogic = new ManagerStaffLogic(this, this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,25 +40,19 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
     private void initView() {
         new com.example.admin.shopnail.View.NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.MANAGE_STAFF);
-
         listManageStaff = findViewById(R.id.listStatusService);
         btn_back = findViewById(R.id.btn_go_back);
         btn_back.setOnClickListener(this);
-
         ManageStaff staffA = new ManageStaff(true,"cat toc",false,false);
         ManageStaff staffB = new ManageStaff(true,"cat toc",false,false);
         ManageStaff staffC = new ManageStaff(true,"cat toc",false,false);
         ManageStaff staffD = new ManageStaff(true,"cat toc",false,false);
-
         mList.add(staffA);
         mList.add(staffB);
         mList.add(staffC);
         mList.add(staffD);
-
         manageStaffAdapter = new ManageStaffAdapter(ManageStaffActivity.this,mList);
-
         listManageStaff.setAdapter(manageStaffAdapter);
-
         mViewManager.setActivity(this);
     }
 

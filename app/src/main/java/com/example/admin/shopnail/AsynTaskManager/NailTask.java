@@ -9,6 +9,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.CANCEL_SERVICE;
 import static com.example.admin.shopnail.Manager.KeyManager.CHANGE_PASSWORD;
 import static com.example.admin.shopnail.Manager.KeyManager.CREATE_ACCOUNT_CUSTOMER;
 import static com.example.admin.shopnail.Manager.KeyManager.FORGOT_PASSWORD;
+import static com.example.admin.shopnail.Manager.KeyManager.GENERATE_CHECK_BOX;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_CLIENT_OF_STAFF;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_TIME_OF_CLIENT_FROM_STAFF;
@@ -31,6 +32,10 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
         String Resuilt = "";
         ResuiltObject mResuiltObject = null;
         switch (caseManagers[0].getCase()) {
+            case GENERATE_CHECK_BOX:
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(GENERATE_CHECK_BOX, Resuilt);
+                break;
             case UPDATE_EXTRA:
                 Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(UPDATE_EXTRA, Resuilt);
