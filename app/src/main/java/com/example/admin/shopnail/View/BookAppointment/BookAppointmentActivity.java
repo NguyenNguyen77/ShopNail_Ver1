@@ -3,17 +3,20 @@ package com.example.admin.shopnail.View.BookAppointment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.admin.shopnail.Adapter.BookServiceAdapter;
@@ -39,7 +42,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     private EditText mEtCustomerPhone;
     private TextView mTvDate;
     private ListView mLvSelectServiceItem;
-    private TextView mTvAddMoreervice;
+    private TextView mTvAddMoreService;
 
     private BookServiceAdapter mBookServiceAdapter;
     private int mTextSizeBefore = 0;
@@ -57,8 +60,6 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         setContentView(R.layout.activity_book_appointment);
         initView();
         loadInitData();
-
-
     }
 
     private void initView() {
@@ -73,15 +74,12 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mEtCustomerPhone = (EditText) findViewById(R.id.et_customer_phone);
         mTvDate = (TextView) findViewById(R.id.tv_date);
         mLvSelectServiceItem = (ListView) findViewById(R.id.lv_select_services);
-        mTvAddMoreervice = (TextView) findViewById(R.id.tv_add_more_services);
-
-        mViewManager.showInprogressDialog();
-
+        mTvAddMoreService = (TextView) findViewById(R.id.tv_add_more_services);
 
         mBtnSubmit.setOnClickListener(this);
         mBtnBack.setOnClickListener(this);
         mTvDate.setOnClickListener(this);
-        mTvAddMoreervice.setOnClickListener(this);
+        mTvAddMoreService.setOnClickListener(this);
         mBtnSubmit.setEnabled(false);
         mBtnSubmit.setClickable(false);
 
@@ -138,8 +136,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
                 reqBookAppointment();
                 break;
             case R.id.btn_back:
-                mViewManager.handleBackScreen();
-                mViewManager.finishActivity(this);
+                handleBack();
                 break;
             default:
                 break;
@@ -148,6 +145,9 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
 
     @Override
     public void onBackPressed() {
+        handleBack();
+    }
+    private void handleBack () {
         mViewManager.handleBackScreen();
         mViewManager.finishActivity(this);
     }
@@ -181,24 +181,32 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
 
     @Override
     public void updateStaffList(ArrayList<String> staffList) {
-         mAdapterStaff = new ArrayAdapter<String>(BookAppointmentActivity.this,
+        mAdapterStaff = new ArrayAdapter<String>(BookAppointmentActivity.this,
                 android.R.layout.simple_spinner_item, staffList);
-         mViewManager.dismissInprogressDialog();
-        addMoreService();//Add 1 service first
-//        mAdapterStaff.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        reqServiceList();
     }
 
     @Override
     public void updateServiceList(ArrayList<String> serviceList) {
         mAdapterService = new ArrayAdapter<String>(BookAppointmentActivity.this,
                 android.R.layout.simple_spinner_item, serviceList);
+        mViewManager.dismissInprogressDialog();
         addMoreService();//Add 1 service first
-//        mAdapterService.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
 
     @Override
     public void onReqCallback(boolean result) {
 
+    }
+
+    @Override
+    public void showErrorDialog(ViewManager.ERROR_CODE errorCode) {
+        mViewManager.dismissInprogressDialog();
+        if (errorCode == ViewManager.ERROR_CODE.GET_STAFF_FAIL) {
+            showErrorDialog(getString(R.string.error_title), getString(R.string.error_get_staff));
+        } else if (errorCode == ViewManager.ERROR_CODE.GET_SERVICE_FAIL) {
+            showErrorDialog(getString(R.string.error_title), getString(R.string.error_get_service));
+        }
     }
 
     public void getDefaultInfo() {
@@ -267,13 +275,33 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     }
 
     private void loadInitData() {
+        mViewManager.showInprogressDialog();
         reqStaffList();
-        reqServiceList();
     }
 
     private void showUnderLineText(String text, TextView id) {
         SpannableString contentspanned = new SpannableString(text);
         contentspanned.setSpan(new UnderlineSpan(), 0, text.length(), 0);
         id.setText(contentspanned);
+    }
+
+    public void showErrorDialog(String title, String content) {
+        android.support.v7.view.ContextThemeWrapper ctw = new android.support.v7.view.ContextThemeWrapper(this, R.style.Theme_AlertDialog);
+        final Dialog commonDialog = new Dialog(ctw);
+        commonDialog.setContentView(R.layout.error_dialog);
+        commonDialog.setTitle(title);
+
+        TextView tvContent = (TextView) commonDialog.findViewById(R.id.txt_dialog_content);
+        tvContent.setText(content);
+
+        Button btnOK = (Button) commonDialog.findViewById(R.id.btnOK);
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commonDialog.dismiss();
+                handleBack();
+            }
+        });
+        commonDialog.show();
     }
 }

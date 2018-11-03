@@ -12,6 +12,7 @@ import com.example.admin.shopnail.AsynTaskManager.ResuiltObject;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
+import com.example.admin.shopnail.Manager.ViewManager;
 import com.example.admin.shopnail.Model.BookAppointment.GsonAllStaff;
 import com.example.admin.shopnail.Model.StaffInfor.GsonChangePass;
 import com.example.admin.shopnail.Model.StaffInfor.GsonStaffInfor;
@@ -66,7 +67,7 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
                     staffList.add(mGsonAllStaff.getSuccess().getStaffBean().get(0).getName());
                     mBookAppointmentView.updateStaffList(staffList);
                 } catch (Exception e) {
-//                    mIStaffInforView.showError();
+                    mBookAppointmentView.showErrorDialog(ViewManager.ERROR_CODE.GET_STAFF_FAIL);
                 }
                 break;
             case KeyManager.GET_ALL_SERVICE_ID:
@@ -76,7 +77,7 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
                     serviceList.add(mGsonAllStaff.getSuccess().getStaffBean().get(0).getName());
                     mBookAppointmentView.updateServiceList(serviceList);
                 } catch (Exception e) {
-                    // Show error
+                    mBookAppointmentView.showErrorDialog(ViewManager.ERROR_CODE.GET_SERVICE_FAIL);
                 }
                 break;
             default:

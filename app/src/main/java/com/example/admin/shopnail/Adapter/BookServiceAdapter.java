@@ -1,14 +1,17 @@
 package com.example.admin.shopnail.Adapter;
 
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,17 +31,21 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
     ArrayAdapter<String> adapterCategoryService = null;
     ArrayList<BookService> mListusers = null;
     TextView mServiceTime;
+    private Context mContext = null;
+    private int mPosition = 0;
     public int mHour, mMinute;
     private View mView;
     protected ViewManager mViewManager = ViewManager.getInstance();
 
     public BookServiceAdapter(Context context, ArrayList<BookService> users) {
         super(context, 0, users);
+        this.mContext = context;
         mListusers = users;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        this.mPosition = position;
         BookService user = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_book_service, parent, false);
@@ -93,11 +100,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
 
                 break;
             case R.id.img_delete_service:
-                int pos = 1; //Stub
-                if(pos < mListusers.size()) {
-                    mListusers.remove(1);
-                    BookServiceAdapter.this.notifyDataSetChanged();
-                }
+                showConfirmDialog("Confirm", "Do you want to delete?");
                 break;
             default:
                 break;
@@ -105,10 +108,9 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
     }
 
     private void showTimePickerDialog() {
-        // Get Current Time
-        final Calendar c = Calendar.getInstance();
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
+        String strArrtmp[] = mServiceTime.getText().toString().split(":");
+        mHour = Integer.parseInt(strArrtmp[0]);
+        mMinute = Integer.parseInt(strArrtmp[1]);
 
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(mView.getContext(),
@@ -117,10 +119,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-
-                        //txtTime.setText(hourOfDay + ":" + minute);
                         showUnderLineText(hourOfDay + ":" + minute, mServiceTime);
-                        int a = hourOfDay;
                     }
                 }, mHour, mMinute, true);
         timePickerDialog.show();
@@ -130,5 +129,37 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         SpannableString contentSpanned = new SpannableString(text);
         contentSpanned.setSpan(new UnderlineSpan(), 0, text.length(), 0);
         id.setText(contentSpanned);
+    }
+
+    public void showConfirmDialog(String title, String content) {
+        ContextThemeWrapper ctw = new ContextThemeWrapper(mContext, R.style.Theme_AlertDialog);
+        final Dialog commonDialog = new Dialog(ctw);
+        commonDialog.setContentView(R.layout.confirm_dialog);
+        commonDialog.setTitle(title);
+
+        TextView tvContent = (TextView) commonDialog.findViewById(R.id.tv_dialog_content);
+        tvContent.setText(content);
+
+        Button btnOK = (Button) commonDialog.findViewById(R.id.btn_ok);
+        btnOK.setVisibility(View.VISIBLE);
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commonDialog.dismiss();
+                if (mPosition < mListusers.size()) {
+                    mListusers.remove(mPosition);
+                    BookServiceAdapter.this.notifyDataSetChanged();
+                }
+            }
+        });
+        Button btnCancel = (Button) commonDialog.findViewById(R.id.btn_cancel);
+        btnCancel.setVisibility(View.VISIBLE);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commonDialog.dismiss();
+            }
+        });
+        commonDialog.show();
     }
 }

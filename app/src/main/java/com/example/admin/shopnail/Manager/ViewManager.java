@@ -58,6 +58,11 @@ public class ViewManager {
         MY_CUSTOMER,
         MY_DETAIL_CUSTOMER
     }
+    public enum ERROR_CODE {
+        LOGIN_FAIL,
+        GET_STAFF_FAIL,
+        GET_SERVICE_FAIL,
+    }
 
     public void setView(VIEW_KEY key) {
         switch (key) {
