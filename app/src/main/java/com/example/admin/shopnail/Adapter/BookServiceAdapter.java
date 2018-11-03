@@ -30,8 +30,9 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
     ArrayAdapter<String> adapterCategoryStaff = null;
     ArrayAdapter<String> adapterCategoryService = null;
     ArrayList<BookService> mListusers = null;
-    TextView mServiceTime;
+    //TextView mServiceTime;
     private Context mContext = null;
+    private LayoutInflater inflater;
     private int mPosition = 0;
     public int mHour, mMinute;
     private View mView;
@@ -41,74 +42,113 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         super(context, 0, users);
         this.mContext = context;
         mListusers = users;
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final ViewHolder holder;
         this.mPosition = position;
-        BookService user = getItem(position);
+        final BookService user = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_book_service, parent, false);
-        }
-        Spinner spinnerStaff = (Spinner) convertView.findViewById(R.id.spinnerStaff);
-        Spinner spinnerService = (Spinner) convertView.findViewById(R.id.spinnerService);
-        mServiceTime = (TextView) convertView.findViewById(R.id.tv_time);
-        EditText serviceNote = (EditText) convertView.findViewById(R.id.et_note);
-        ImageView removeBookService = (ImageView) convertView.findViewById(R.id.img_delete_service);
-        LinearLayout lvItem = (LinearLayout) convertView.findViewById(R.id.item_list_book);
 
-        removeBookService.setOnClickListener(this);
-        mServiceTime.setOnClickListener(this);
-        serviceNote.setOnClickListener(this);
+            holder = new ViewHolder();
+
+            holder.spinnerStaff = (Spinner) convertView.findViewById(R.id.spinnerStaff);
+            holder.spinnerService = (Spinner) convertView.findViewById(R.id.spinnerService);
+            holder.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
+            holder.edNote = (EditText) convertView.findViewById(R.id.et_note);
+            holder.imgTrash = (ImageView) convertView.findViewById(R.id.img_delete_service);
+            holder.llListItem = (LinearLayout) convertView.findViewById(R.id.item_list_book);
+
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        holder.imgTrash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showConfirmDialog("Confirm", "Do you want to delete?", position);
+            }
+        });
+
+        holder.tvTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(holder);
+            }
+        });
+
+
+        holder.edNote.setText(user.getNote());
+        holder.edNote.setId(position);
+
+        holder.edNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                if (!hasFocus) {
+                    if (position < mListusers.size()) {
+                        final int position = v.getId();
+                        final EditText Caption = (EditText) v;
+                        mListusers.get(position).setNote(Caption.getText().toString());
+                    }
+                }
+            }
+        });
 
         adapterCategoryStaff = new ArrayAdapter<String>(convertView.getContext(),
                 android.R.layout.simple_spinner_item, user.mListStaff);
         adapterCategoryStaff.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerStaff.setAdapter(adapterCategoryStaff);
+        holder.spinnerStaff.setAdapter(adapterCategoryStaff);
 
         adapterCategoryService = new ArrayAdapter<String>(convertView.getContext(),
                 android.R.layout.simple_spinner_item, user.mListService);
         adapterCategoryService.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerService.setAdapter(adapterCategoryService);
-        showUnderLineText(user.mServiceTime.toString(), mServiceTime);
-        serviceNote.setText(user.mNote);
+        holder.spinnerService.setAdapter(adapterCategoryService);
 
+        showUnderLineText(user.mServiceTime.toString(), holder.tvTime);
+
+        holder.edNote.setText(user.mNote);
+
+        //Set color for list view
         if (position % 2 == 1) {
             int backgroundColor = ContextCompat.getColor(convertView.getContext(), R.color.list_1);
-            lvItem.setBackgroundColor(backgroundColor);
+            holder.llListItem.setBackgroundColor(backgroundColor);
         } else {
             int backgroundColor = ContextCompat.getColor(convertView.getContext(), R.color.list_2);
-            lvItem.setBackgroundColor(backgroundColor);
+            holder.llListItem.setBackgroundColor(backgroundColor);
         }
 
         mView = convertView;
 
-        removeBookService.setVisibility(View.INVISIBLE);
+        holder.imgTrash.setVisibility(View.INVISIBLE);
         if (mListusers.size() > 1) {
-            removeBookService.setVisibility(View.VISIBLE);
+            holder.imgTrash.setVisibility(View.VISIBLE);
         }
         return convertView;
+    }
+
+    static class ViewHolder {
+        LinearLayout llListItem;
+
+        Spinner spinnerStaff;
+        Spinner spinnerService;
+        TextView tvTime;
+        EditText edNote;
+        ImageView imgTrash;
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_time:
-                showTimePickerDialog();
-                break;
-            case R.id.et_note:
-
-                break;
-            case R.id.img_delete_service:
-                showConfirmDialog("Confirm", "Do you want to delete?");
-                break;
-            default:
-                break;
         }
     }
 
-    private void showTimePickerDialog() {
-        String strArrtmp[] = mServiceTime.getText().toString().split(":");
+    private void showTimePickerDialog(final ViewHolder holder) {
+        String strArrtmp[] = holder.tvTime.getText().toString().split(":");
         mHour = Integer.parseInt(strArrtmp[0]);
         mMinute = Integer.parseInt(strArrtmp[1]);
 
@@ -119,7 +159,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-                        showUnderLineText(hourOfDay + ":" + minute, mServiceTime);
+                        showUnderLineText(hourOfDay + ":" + minute, holder.tvTime);
                     }
                 }, mHour, mMinute, true);
         timePickerDialog.show();
@@ -131,7 +171,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         id.setText(contentSpanned);
     }
 
-    public void showConfirmDialog(String title, String content) {
+    public void showConfirmDialog(final String title, String content, final int pos) {
         ContextThemeWrapper ctw = new ContextThemeWrapper(mContext, R.style.Theme_AlertDialog);
         final Dialog commonDialog = new Dialog(ctw);
         commonDialog.setContentView(R.layout.confirm_dialog);
@@ -147,7 +187,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
             public void onClick(View v) {
                 commonDialog.dismiss();
                 if (mPosition < mListusers.size()) {
-                    mListusers.remove(mPosition);
+                    mListusers.remove(pos);
                     BookServiceAdapter.this.notifyDataSetChanged();
                 }
             }

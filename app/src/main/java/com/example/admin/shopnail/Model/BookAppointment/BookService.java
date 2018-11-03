@@ -18,4 +18,12 @@ public class BookService {
         this.mNote = note;
     }
 
+    public String getNote () {
+        return mNote;
+    }
+
+    public void setNote (String note) {
+        mNote = note;
+    }
+
 }

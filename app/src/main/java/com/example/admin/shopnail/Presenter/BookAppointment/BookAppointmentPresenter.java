@@ -45,7 +45,7 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
     @Override
     public void reqGetServiceList() {
         //Send request to Server
-        new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_ALL_SERVICE_ID, UrlManager.GET_ALL_SERVICE_URL, getParamBuilder()));
+//        new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_ALL_SERVICE_ID, UrlManager.GET_ALL_SERVICE_URL, getParamBuilder()));
         //Stub
         ArrayList<String> arrayOfService = new ArrayList<String>();
         arrayOfService.add("Hair1");
