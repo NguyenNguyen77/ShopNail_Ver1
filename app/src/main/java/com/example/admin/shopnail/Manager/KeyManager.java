@@ -37,6 +37,7 @@ public class KeyManager {
     public static final String GENERATE_CHECK_BOX = "GENERATE_CHECK_BOX";
     public static final String ARRAY_PRODUCT = "ARRAY_PRODUCT";
     public static final String CLIENT_HISTORY_CHOOSED = "CLIENT_HISTORY_CHOOSED";
+    public static final String BOOK_ONLINE = "BOOK_ONLINE";
     public static final String NAME = "name";
     public static final String CLIENT_NAME = "CLIENT_NAME";
     public static final String CLIENT_ID = "CLIENT_ID";
@@ -50,5 +51,6 @@ public class KeyManager {
     public static final String DATE = "date";
     public static final String ORDER_ID = "orderId";
     public static final String STATUS = "status";
+    public static final String NOTE = "note";
 
 }

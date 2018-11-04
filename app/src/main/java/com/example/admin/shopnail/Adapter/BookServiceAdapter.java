@@ -4,12 +4,15 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
 import android.text.SpannableString;
+import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +25,7 @@ import android.widget.TimePicker;
 import com.example.admin.shopnail.Model.BookAppointment.BookService;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.Manager.ViewManager;
+import com.example.admin.shopnail.View.BookAppointment.BookAppointmentActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,6 +34,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
     ArrayAdapter<String> adapterCategoryStaff = null;
     ArrayAdapter<String> adapterCategoryService = null;
     ArrayList<BookService> mListusers = null;
+    BookAppointmentActivity mBookAppointmentActivity;
     //TextView mServiceTime;
     private Context mContext = null;
     private LayoutInflater inflater;
@@ -38,10 +43,11 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
     private View mView;
     protected ViewManager mViewManager = ViewManager.getInstance();
 
-    public BookServiceAdapter(Context context, ArrayList<BookService> users) {
+    public BookServiceAdapter(Context context, ArrayList<BookService> users, BookAppointmentActivity view) {
         super(context, 0, users);
         this.mContext = context;
         mListusers = users;
+        this.mBookAppointmentActivity = view;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -67,6 +73,20 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
             holder = (ViewHolder) convertView.getTag();
         }
 
+        holder.spinnerService.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+                        Object item = parent.getItemAtPosition(pos);
+                        String selectStaff = (String) item;
+                        holder.spinnerService.setSelection(pos);
+                        mListusers.get(position).setSelectService(pos);
+                    }
+
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
+
         holder.imgTrash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,10 +94,13 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
             }
         });
 
+
+        holder.tvTime.setText(user.getServiceTime());
+        holder.tvTime.setId(position);
         holder.tvTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(holder);
+                showTimePickerDialog(holder, v);
             }
         });
 
@@ -103,11 +126,18 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                 android.R.layout.simple_spinner_item, user.mListStaff);
         adapterCategoryStaff.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.spinnerStaff.setAdapter(adapterCategoryStaff);
+        if (user.getSelectStaff() <= adapterCategoryStaff.getCount()) {
+            holder.spinnerStaff.setSelection(user.getSelectStaff());
+        }
 
         adapterCategoryService = new ArrayAdapter<String>(convertView.getContext(),
                 android.R.layout.simple_spinner_item, user.mListService);
         adapterCategoryService.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.spinnerService.setAdapter(adapterCategoryService);
+
+        if (user.getSelectService() <= adapterCategoryService.getCount()) {
+            holder.spinnerService.setSelection(user.getSelectService());
+        }
 
         showUnderLineText(user.mServiceTime.toString(), holder.tvTime);
 
@@ -147,7 +177,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         }
     }
 
-    private void showTimePickerDialog(final ViewHolder holder) {
+    private void showTimePickerDialog(final ViewHolder holder, View v) {
         String strArrtmp[] = holder.tvTime.getText().toString().split(":");
         mHour = Integer.parseInt(strArrtmp[0]);
         mMinute = Integer.parseInt(strArrtmp[1]);
@@ -160,6 +190,8 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
                         showUnderLineText(hourOfDay + ":" + minute, holder.tvTime);
+                        final TextView Caption = (TextView) holder.tvTime;
+                        mListusers.get(mPosition).setServiceTime(Caption.getText().toString());
                     }
                 }, mHour, mMinute, true);
         timePickerDialog.show();

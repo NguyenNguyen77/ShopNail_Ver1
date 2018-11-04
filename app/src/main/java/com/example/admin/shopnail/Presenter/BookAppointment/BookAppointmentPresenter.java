@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.util.JsonReader;
 import android.util.Log;
 
+import com.example.admin.shopnail.Adapter.BookServiceAdapter;
 import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
 import com.example.admin.shopnail.AsynTaskManager.CaseManager;
 import com.example.admin.shopnail.AsynTaskManager.NailTask;
@@ -16,13 +17,29 @@ import com.example.admin.shopnail.Manager.ViewManager;
 import com.example.admin.shopnail.Model.BookAppointment.GsonAllStaff;
 import com.example.admin.shopnail.Model.StaffInfor.GsonChangePass;
 import com.example.admin.shopnail.Model.StaffInfor.GsonStaffInfor;
+import com.example.admin.shopnail.Model.ViewProductPresenter.GsonProductChoosed;
 import com.example.admin.shopnail.View.BookAppointment.IBookAppointmentView;
 import com.example.admin.shopnail.View.ERROR_CODE;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import static com.example.admin.shopnail.Manager.KeyManager.DATE_ORDER;
+import static com.example.admin.shopnail.Manager.KeyManager.EXTRA;
+import static com.example.admin.shopnail.Manager.KeyManager.FULL_NAME;
+import static com.example.admin.shopnail.Manager.KeyManager.NOTE;
+import static com.example.admin.shopnail.Manager.KeyManager.PASS_WORD;
+import static com.example.admin.shopnail.Manager.KeyManager.PHONE;
+import static com.example.admin.shopnail.Manager.KeyManager.PRICE;
+import static com.example.admin.shopnail.Manager.KeyManager.PRODUC_ID;
+import static com.example.admin.shopnail.Manager.KeyManager.STAFF_ID;
+import static com.example.admin.shopnail.Manager.KeyManager.USER_ID_KEY;
+import static com.example.admin.shopnail.Manager.KeyManager.USER_NAME;
+import static com.example.admin.shopnail.Manager.KeyManager.VALUES;
 
 public class BookAppointmentPresenter extends BaseMethod implements IBookAppointmentPresenter, AsyncTaskCompleteListener<ResuiltObject> {
     private IBookAppointmentView mBookAppointmentView;
@@ -54,6 +71,41 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
         arrayOfService.add("Hair4");
         arrayOfService.add("Hair5");
         mBookAppointmentView.updateServiceList(arrayOfService);
+    }
+
+    @Override
+    public void reqBookOnline(String fullName, String phone, String date, BookServiceAdapter serviceAdapter) {
+        String json = addJsonRequest(fullName, phone,date, serviceAdapter).toString();
+        new NailTask(this).execute(new CaseManager(mContext, KeyManager.BOOK_ONLINE, UrlManager.ADD_BOOKING_ONLINE, json));
+    }
+
+
+    JSONObject addJsonRequest(String fullName, String phone, String date, BookServiceAdapter serviceAdapter){
+        JSONObject mJsonObject  = new JSONObject();
+        try {
+            mJsonObject.put(FULL_NAME, fullName);
+            mJsonObject.put(PHONE, phone);
+            mJsonObject.put(VALUES, getArrayProduct(date, serviceAdapter));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return  mJsonObject;
+    }
+
+    JSONArray getArrayProduct(String date, BookServiceAdapter serviceAdapter){
+        JSONArray array =  new JSONArray();
+        for (int i = 0; i < serviceAdapter.getCount(); i++){
+            try {
+                JSONObject object = new JSONObject();
+                object.put(DATE_ORDER, date);
+                object.put(NOTE, serviceAdapter.getItem(i).getNote());
+                object.put(STAFF_ID, serviceAdapter.getItem(i).getStaffList().get(serviceAdapter.getItem(i).getSelectStaff()));
+                array.put(object);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return array;
     }
 
 
