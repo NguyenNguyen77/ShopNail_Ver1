@@ -62,6 +62,7 @@ public class ViewManager {
         LOGIN_FAIL,
         GET_STAFF_FAIL,
         GET_SERVICE_FAIL,
+        GET_ORDER_FAIL
     }
 
     public void setView(VIEW_KEY key) {

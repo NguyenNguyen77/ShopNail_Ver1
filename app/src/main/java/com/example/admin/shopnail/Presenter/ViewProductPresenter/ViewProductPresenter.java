@@ -12,6 +12,7 @@ import com.example.admin.shopnail.AsynTaskManager.ResuiltObject;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
+import com.example.admin.shopnail.Manager.ViewManager;
 import com.example.admin.shopnail.Model.ServicesOfShop;
 import com.example.admin.shopnail.Model.ViewProductPresenter.GsonOrderResuilt;
 import com.example.admin.shopnail.Model.ViewProductPresenter.GsonProductChoosed;
@@ -124,11 +125,18 @@ public class ViewProductPresenter extends BaseMethod implements IViewProductPres
     public void onTaskCompleted(String s, String CaseRequest) {
         switch (CaseRequest){
             case ORDER_SERVICE_BY_STAFF:
-                Log.d(VinhCNLog, s);
-                GsonOrderResuilt mGsonOrderResuilt = getGson().fromJson(s, GsonOrderResuilt.class);
-                // here is resuilt
-                Log.d(KeyManager.VinhCNLog, String.valueOf(mGsonOrderResuilt.isStatus()));
-                break;
+                try {
+                    Log.d(VinhCNLog, s);
+                    GsonOrderResuilt mGsonOrderResuilt = getGson().fromJson(s, GsonOrderResuilt.class);
+                    mCartView.updateUIAfterOrder();
+                    // here is resuilt
+                    Log.d(KeyManager.VinhCNLog,"NguyenNK2 ===="+ String.valueOf(mGsonOrderResuilt.isStatus()));
+                    break;
+                }
+                catch (Exception e){
+                    mCartView.showErrorDialog(ViewManager.ERROR_CODE.GET_ORDER_FAIL);
+                }
+
         }
     }
 

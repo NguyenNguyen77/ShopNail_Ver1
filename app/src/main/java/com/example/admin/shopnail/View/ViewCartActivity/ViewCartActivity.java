@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.shopnail.Adapter.ViewProductAdapter;
 import com.example.admin.shopnail.Manager.BaseMethod;
@@ -134,6 +135,7 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_confirm:
+                mViewManager.showInprogressDialog();
                 mViewProductPresenter.sendData();
                 break;
             case R.id.btn_go_back:
@@ -175,6 +177,18 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     @Override
     public String getDateOrder() {
         return tvDate.getText().toString();
+    }
+
+    @Override
+    public void updateUIAfterOrder() {
+        mViewManager.dismissInprogressDialog();
+        Toast.makeText(getApplicationContext(),"Order successfully",Toast.LENGTH_SHORT).show();
+        mViewManager.setView(ViewManager.VIEW_KEY.MENU_FOR_STAFF);
+    }
+
+    @Override
+    public void showErrorDialog(ViewManager.ERROR_CODE errorCode) {
+        Toast.makeText(getApplicationContext(),"Order failed",Toast.LENGTH_SHORT).show();
     }
 
     // Check Internet
