@@ -20,6 +20,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.admin.shopnail.Adapter.BookServiceAdapter;
+import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Model.BookAppointment.BookService;
 import com.example.admin.shopnail.Presenter.BookAppointment.BookAppointmentPresenter;
 import com.example.admin.shopnail.R;
@@ -32,7 +33,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class BookAppointmentActivity extends Activity implements View.OnClickListener, IBookAppointmentView {
+public class BookAppointmentActivity extends Activity implements View.OnClickListener, IBookAppointmentView, NetworkReceiver.ConnectivityReceiverListener {
     protected ViewManager mViewManager = ViewManager.getInstance();
     private Calendar mCalender;
     private Date mDateSelected;
@@ -303,5 +304,11 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             }
         });
         commonDialog.show();
+    }
+
+    // Check Internet
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        mViewManager.showSnack(isConnected);
     }
 }

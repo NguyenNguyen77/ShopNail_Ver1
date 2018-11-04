@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.admin.shopnail.Adapter.ViewProductAdapter;
 import com.example.admin.shopnail.Manager.BaseMethod;
+import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Model.ServicesOfShop;
 import com.example.admin.shopnail.Presenter.ViewProductPresenter.ViewProductPresenter;
 import com.example.admin.shopnail.R;
@@ -27,7 +28,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.ARRAY_PRODUCT;
 import static com.example.admin.shopnail.Manager.KeyManager.CLIENT_NAME;
 import static com.example.admin.shopnail.Manager.KeyManager.CUSTOMER_PHONE_NUMBER;
 
-public class ViewCartActivity extends Activity implements CartView, View.OnClickListener {
+public class ViewCartActivity extends Activity implements CartView, View.OnClickListener, NetworkReceiver.ConnectivityReceiverListener {
 
     private ViewManager mViewManager = ViewManager.getInstance();
     EditText edtExtra;
@@ -174,5 +175,11 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     @Override
     public String getDateOrder() {
         return tvDate.getText().toString();
+    }
+
+    // Check Internet
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        mViewManager.showSnack(isConnected);
     }
 }

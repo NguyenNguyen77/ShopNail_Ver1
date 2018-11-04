@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.admin.shopnail.Adapter.MyCustomerAdapter;
 import com.example.admin.shopnail.CustomViewListExpand.SingleToast;
 import com.example.admin.shopnail.Manager.BaseMethod;
+import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Model.MyCustomer.GsonGetClient;
 import com.example.admin.shopnail.Model.MyDetailCustomer.GsonProductCustomer;
 import com.example.admin.shopnail.Model.ServicesOfShop;
@@ -40,7 +41,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.DATE;
 import static com.example.admin.shopnail.Manager.KeyManager.ORDER_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.TIME_ORDER;
 
-public class MyDetailCustomerActivity extends Activity implements View.OnClickListener, MyDetailCustomerView {
+public class MyDetailCustomerActivity extends Activity implements View.OnClickListener, MyDetailCustomerView, NetworkReceiver.ConnectivityReceiverListener {
 
     protected ViewManager mViewManager = ViewManager.getInstance();
     IMyDetailCustomer mMyDetailCustomerLogic = new MyDetailCustomerLogic(this, this);
@@ -300,5 +301,11 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
         });
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
+    }
+
+    // Check Internet
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        mViewManager.showSnack(isConnected);
     }
 }

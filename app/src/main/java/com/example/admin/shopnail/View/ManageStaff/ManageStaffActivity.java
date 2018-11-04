@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.admin.shopnail.Adapter.ManageStaffAdapter;
+import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Model.ManageStaff.CheckBoxObject;
 import com.example.admin.shopnail.Model.ManageStaff.ManageStaff;
 import com.example.admin.shopnail.Presenter.ManagerStaff.ManagerStaffImp;
@@ -20,7 +21,7 @@ import com.example.admin.shopnail.Manager.ViewManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageStaffActivity extends Activity implements View.OnClickListener, ManagerStaffView {
+public class ManageStaffActivity extends Activity implements View.OnClickListener, ManagerStaffView,NetworkReceiver.ConnectivityReceiverListener {
     protected ViewManager mViewManager = ViewManager.getInstance();
     Button btn_back;
     ListView listManageStaff;
@@ -122,5 +123,11 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
     public void setListCheckBox(List<CheckBoxObject> arrCheckBox) {
         manageStaffAdapter = new ManageStaffAdapter(ManageStaffActivity.this,arrCheckBox);
         listManageStaff.setAdapter(manageStaffAdapter);
+    }
+
+    // Check Internet
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        mViewManager.showSnack(isConnected);
     }
 }

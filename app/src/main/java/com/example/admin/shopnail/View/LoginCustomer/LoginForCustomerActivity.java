@@ -14,12 +14,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Presenter.AccountCustomerPresenter.AccountCustomerPresenter;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.Manager.ViewManager;
 
-public class LoginForCustomerActivity extends Activity implements View.OnClickListener, ILoginForCustomerView {
+public class LoginForCustomerActivity extends Activity implements View.OnClickListener, ILoginForCustomerView, NetworkReceiver.ConnectivityReceiverListener {
 
     private ViewManager mViewManager = ViewManager.getInstance();
     private Button btnNewCustomer;
@@ -227,5 +228,11 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         } else {
             Toast.makeText(LoginForCustomerActivity.this, R.string.login_failed, Toast.LENGTH_LONG).show();
         }
+    }
+
+    // Check Internet
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        mViewManager.showSnack(isConnected);
     }
 }

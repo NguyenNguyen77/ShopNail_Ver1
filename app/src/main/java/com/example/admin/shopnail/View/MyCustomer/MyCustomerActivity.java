@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Model.MyCustomer.GsonClientTime;
 import com.example.admin.shopnail.Model.MyCustomer.GsonGetClient;
 import com.example.admin.shopnail.Model.MyCustomer.TimeSelect;
@@ -41,7 +42,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class MyCustomerActivity extends Activity implements MyCustomerView, View.OnClickListener {
+public class MyCustomerActivity extends Activity implements MyCustomerView, View.OnClickListener, NetworkReceiver.ConnectivityReceiverListener {
 
     protected ViewManager mViewManager = ViewManager.getInstance();
     private MyCustommerLogic myCustommerLogic = new MyCustommerLogic(this, this);
@@ -280,5 +281,11 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
         // create and show the alert dialog
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    // Check Internet
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        mViewManager.showSnack(isConnected);
     }
 }

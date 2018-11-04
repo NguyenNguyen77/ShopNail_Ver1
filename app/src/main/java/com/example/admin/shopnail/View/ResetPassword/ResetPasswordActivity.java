@@ -9,12 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Presenter.ResetPassword.ResetPasswordPresenter;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.Manager.ViewManager;
 
-public class ResetPasswordActivity extends Activity implements View.OnClickListener, ResetPasswordView {
+public class ResetPasswordActivity extends Activity implements View.OnClickListener, ResetPasswordView, NetworkReceiver.ConnectivityReceiverListener {
 
     protected ViewManager mViewManager = ViewManager.getInstance();
     private Button mBtnResetPass;
@@ -106,5 +107,11 @@ public class ResetPasswordActivity extends Activity implements View.OnClickListe
     @Override
     public void showToastResuilt(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    // Check Internet
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        mViewManager.showSnack(isConnected);
     }
 }

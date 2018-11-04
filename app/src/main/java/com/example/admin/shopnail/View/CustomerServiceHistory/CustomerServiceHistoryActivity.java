@@ -26,6 +26,7 @@ import com.example.admin.shopnail.Adapter.HistoriesDetailsAdapter;
 import com.example.admin.shopnail.Adapter.MyCustomerAdapter;
 import com.example.admin.shopnail.Adapter.ServiceHistoryAdapter;
 import com.example.admin.shopnail.CustomViewListExpand.SingleToast;
+import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Model.CustomerInfo.Customer;
 import com.example.admin.shopnail.Model.MyCustomer.GsonGetClient;
 import com.example.admin.shopnail.Model.MyDetailCustomer.GsonProductCustomer;
@@ -43,7 +44,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class CustomerServiceHistoryActivity extends Activity implements View.OnClickListener, ICustomerServiceHistoryView {
+public class CustomerServiceHistoryActivity extends Activity implements View.OnClickListener, ICustomerServiceHistoryView, NetworkReceiver.ConnectivityReceiverListener {
     protected ViewManager mViewManager = ViewManager.getInstance();
     private ImageView mImgSubmit;
     private Button mBtBack;
@@ -288,5 +289,11 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
             }
         });
         detailService.show();
+    }
+
+    // Check Internet
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        mViewManager.showSnack(isConnected);
     }
 }

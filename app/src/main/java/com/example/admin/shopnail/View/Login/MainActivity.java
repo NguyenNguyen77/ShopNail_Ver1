@@ -199,6 +199,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
 
     public boolean isInternetOn() {
 
+        boolean checkConnect = false;
         // get Connectivity Manager object to check connection
         ConnectivityManager connec =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -209,17 +210,15 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
                 connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
                 connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED) {
 
-
-            return true;
+            checkConnect = true;
 
         } else if (
                 connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
                         connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED) {
 
-
-            return false;
+            checkConnect = false;
         }
-        return false;
+        return checkConnect;
     }
 }
 

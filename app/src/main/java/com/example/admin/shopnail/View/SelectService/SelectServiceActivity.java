@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import com.example.admin.shopnail.Adapter.CategoryAdapter;
 import com.example.admin.shopnail.Adapter.SelectServiceAdapter;
 import com.example.admin.shopnail.Manager.KeyManager;
+import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Model.SelectCustomerService.GsonProductsByCategory;
 import com.example.admin.shopnail.Presenter.SelectServicePresenter.SelectServicePresenter;
 import com.example.admin.shopnail.R;
@@ -27,7 +28,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class SelectServiceActivity extends Activity implements ISelectServiceView, View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class SelectServiceActivity extends Activity implements ISelectServiceView, View.OnClickListener, AdapterView.OnItemSelectedListener, NetworkReceiver.ConnectivityReceiverListener {
 
     private ViewManager mViewManager = ViewManager.getInstance();
     SelectServicePresenter mSerlectServicePresenter = new SelectServicePresenter(this, this);
@@ -235,5 +236,10 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
         return jsonArray;
     }
 
+    // Check Internet
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        mViewManager.showSnack(isConnected);
+    }
 }
 

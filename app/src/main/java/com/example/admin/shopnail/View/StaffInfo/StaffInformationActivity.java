@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
+import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Model.StaffInfor.GsonStaffInfor;
 import com.example.admin.shopnail.Presenter.StaffInformation.StaffInformationPresenter;
 import com.example.admin.shopnail.R;
@@ -31,7 +32,7 @@ import com.squareup.picasso.Picasso;
 import static com.example.admin.shopnail.Manager.KeyManager.PASS_WORD;
 import static com.example.admin.shopnail.Manager.KeyManager.USER_NAME;
 
-public class StaffInformationActivity extends Activity implements View.OnClickListener, IStaffInformation {
+public class StaffInformationActivity extends Activity implements View.OnClickListener, IStaffInformation, NetworkReceiver.ConnectivityReceiverListener {
     private ImageView imgAvatar;
     private Button btnChangeAvatar;
     private Button btnChangePassword;
@@ -250,5 +251,11 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
             imgAvatar.setBackgroundColor(R.drawable.background_avatar);
             imgAvatar.setImageBitmap(BitmapFactory.decodeFile(picturePath));
         }
+    }
+
+    // Check Internet
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        mViewManager.showSnack(isConnected);
     }
 }

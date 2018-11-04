@@ -46,7 +46,7 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
         btnLogout.setOnClickListener(this);
 
 
-        mViewManager.checkConnection();
+//        mViewManager.checkConnection();
 
         mViewManager.setActivity(this);
     }
@@ -112,7 +112,8 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
-        MyApplication.getInstance().setConnectivityListener(this);
+//        MyApplication.getInstance().setConnectivityListener(this);
+//        mViewManager.checkConnection();
     }
 
 }
