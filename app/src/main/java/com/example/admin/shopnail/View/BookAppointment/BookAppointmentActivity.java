@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -12,6 +13,7 @@ import android.text.style.UnderlineSpan;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -154,8 +156,11 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     }
 
     private void reqBookAppointment() {
-        String customerName = mEtCustomerName.getText().toString().trim();
-        String customerPhone = mEtCustomerPhone.getText().toString().trim();
+        String fullName = mEtCustomerName.getText().toString().trim();
+        String phone = mEtCustomerPhone.getText().toString().trim();
+        String dateOder = mTvDate.getText().toString();
+        mBookServiceAdapter = (BookServiceAdapter) mLvSelectServiceItem.getAdapter();
+        mBookAppointmentPresenter.reqBookOnline(fullName, phone, dateOder, mBookServiceAdapter);
 
     }
 
@@ -213,7 +218,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     public void getDefaultInfo() {
         mCalender = Calendar.getInstance();
         SimpleDateFormat dft = null;
-        dft = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        dft = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         mDateSelected = mCalender.getTime();
         String strDate = dft.format(mCalender.getTime());
         showUnderLineText(strDate, mTvDate);
@@ -232,15 +237,15 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             public void onDateSet(DatePicker view, int year,
                                   int monthOfYear,
                                   int dayOfMonth) {
-                showUnderLineText((dayOfMonth) + "/" + (monthOfYear + 1) + "/" + year, mTvDate);
+                showUnderLineText(year + "-" + (monthOfYear + 1) + "-" + (dayOfMonth), mTvDate);
                 mDateSelected = mCalender.getTime();
             }
         };
         String s = mTvDate.getText() + "";
-        String strArrtmp[] = s.split("/");
-        int date = Integer.parseInt(strArrtmp[0]);
+        String strArrtmp[] = s.split("-");
+        int date = Integer.parseInt(strArrtmp[2]);
         int month = Integer.parseInt(strArrtmp[1]) - 1;
-        int year = Integer.parseInt(strArrtmp[2]);
+        int year = Integer.parseInt(strArrtmp[0]);
         DatePickerDialog pic = new DatePickerDialog(BookAppointmentActivity.this, AlertDialog.THEME_HOLO_LIGHT, callback, year, month, date);
         pic.setTitle(R.string.select_date_to_view_history);
         pic.show();
@@ -249,8 +254,14 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     public void addMoreService() {
         BookService defaultService = getDefaultBookServiceItem();
         if (defaultService != null) {
-            mListBookService.add(defaultService);
-            mBookServiceAdapter = new BookServiceAdapter(this, mListBookService);
+            if ((mLvSelectServiceItem.getAdapter() != null) && mLvSelectServiceItem.getAdapter().getCount() > 0) {
+                mBookServiceAdapter = (BookServiceAdapter) mLvSelectServiceItem.getAdapter();
+                mBookServiceAdapter.add(defaultService);
+            } else {
+                mListBookService.add(defaultService);
+                mBookServiceAdapter = new BookServiceAdapter(this, mListBookService, this);
+            }
+
             mLvSelectServiceItem.setAdapter(mBookServiceAdapter);
         }
     }
@@ -271,7 +282,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             listService.add(mAdapterService.getItem(i));
         }
 
-        defaultBookService = new BookService(listStaff, listService, getCurrentTime(), "");
+        defaultBookService = new BookService(listStaff, listService, getCurrentTime(), "", 0, 0);
         return defaultBookService;
     }
 
@@ -281,9 +292,9 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     }
 
     private void showUnderLineText(String text, TextView id) {
-        SpannableString contentspanned = new SpannableString(text);
-        contentspanned.setSpan(new UnderlineSpan(), 0, text.length(), 0);
-        id.setText(contentspanned);
+        SpannableString contentSpanned = new SpannableString(text);
+        contentSpanned.setSpan(new UnderlineSpan(), 0, text.length(), 0);
+        id.setText(contentSpanned);
     }
 
     public void showErrorDialog(String title, String content) {
