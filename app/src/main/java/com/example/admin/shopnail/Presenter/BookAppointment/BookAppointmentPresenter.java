@@ -14,6 +14,7 @@ import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
 import com.example.admin.shopnail.Manager.ViewManager;
+import com.example.admin.shopnail.Model.BookAppointment.GsonAllService;
 import com.example.admin.shopnail.Model.BookAppointment.GsonAllStaff;
 import com.example.admin.shopnail.Model.StaffInfor.GsonChangePass;
 import com.example.admin.shopnail.Model.StaffInfor.GsonStaffInfor;
@@ -35,8 +36,10 @@ import static com.example.admin.shopnail.Manager.KeyManager.NOTE;
 import static com.example.admin.shopnail.Manager.KeyManager.PASS_WORD;
 import static com.example.admin.shopnail.Manager.KeyManager.PHONE;
 import static com.example.admin.shopnail.Manager.KeyManager.PRICE;
+import static com.example.admin.shopnail.Manager.KeyManager.PRODUCT;
 import static com.example.admin.shopnail.Manager.KeyManager.PRODUC_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.STAFF_ID;
+import static com.example.admin.shopnail.Manager.KeyManager.TIME_ORDER;
 import static com.example.admin.shopnail.Manager.KeyManager.USER_ID_KEY;
 import static com.example.admin.shopnail.Manager.KeyManager.USER_NAME;
 import static com.example.admin.shopnail.Manager.KeyManager.VALUES;
@@ -44,6 +47,10 @@ import static com.example.admin.shopnail.Manager.KeyManager.VALUES;
 public class BookAppointmentPresenter extends BaseMethod implements IBookAppointmentPresenter, AsyncTaskCompleteListener<ResuiltObject> {
     private IBookAppointmentView mBookAppointmentView;
     Context mContext;
+    private GsonAllStaff mGsonAllStaff;
+    private GsonAllService mGsonAllService;
+    int mProductID = 0;
+    String mProductPrice = "";
 
     public BookAppointmentPresenter(Context context, IBookAppointmentView bookAppointmentView) {
         this.mContext = context;
@@ -62,44 +69,40 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
     @Override
     public void reqGetServiceList() {
         //Send request to Server
-//        new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_ALL_SERVICE_ID, UrlManager.GET_ALL_SERVICE_URL, getParamBuilder()));
-        //Stub
-        ArrayList<String> arrayOfService = new ArrayList<String>();
-        arrayOfService.add("Hair1");
-        arrayOfService.add("Hair2");
-        arrayOfService.add("Hair3");
-        arrayOfService.add("Hair4");
-        arrayOfService.add("Hair5");
-        mBookAppointmentView.updateServiceList(arrayOfService);
+        new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_ALL_SERVICE_ID, UrlManager.GET_ALL_SERVICE_URL, getParamBuilder()));
     }
 
     @Override
     public void reqBookOnline(String fullName, String phone, String date, BookServiceAdapter serviceAdapter) {
-        String json = addJsonRequest(fullName, phone,date, serviceAdapter).toString();
+        String json = addJsonRequest(fullName, phone, date, serviceAdapter).toString();
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.BOOK_ONLINE, UrlManager.ADD_BOOKING_ONLINE, json));
     }
 
 
-    JSONObject addJsonRequest(String fullName, String phone, String date, BookServiceAdapter serviceAdapter){
-        JSONObject mJsonObject  = new JSONObject();
+    JSONObject addJsonRequest(String fullName, String phone, String date, BookServiceAdapter serviceAdapter) {
+        JSONObject mJsonObject = new JSONObject();
         try {
             mJsonObject.put(FULL_NAME, fullName);
             mJsonObject.put(PHONE, phone);
-            mJsonObject.put(VALUES, getArrayProduct(date, serviceAdapter));
+            mJsonObject.put(VALUES, getArrayValues(date, serviceAdapter));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return  mJsonObject;
+        return mJsonObject;
     }
 
-    JSONArray getArrayProduct(String date, BookServiceAdapter serviceAdapter){
-        JSONArray array =  new JSONArray();
-        for (int i = 0; i < serviceAdapter.getCount(); i++){
+    JSONArray getArrayValues(String date, BookServiceAdapter serviceAdapter) {
+        JSONArray array = new JSONArray();
+        for (int i = 0; i < serviceAdapter.getCount(); i++) {
             try {
                 JSONObject object = new JSONObject();
+                String staffName = serviceAdapter.getItem(i).getStaffList().get(serviceAdapter.getItem(i).getSelectStaff());
+                int selectedStaffPos = serviceAdapter.getItem(i).getSelectStaff();
+
                 object.put(DATE_ORDER, date);
                 object.put(NOTE, serviceAdapter.getItem(i).getNote());
-                object.put(STAFF_ID, serviceAdapter.getItem(i).getStaffList().get(serviceAdapter.getItem(i).getSelectStaff()));
+                object.put(STAFF_ID, getStaffID(staffName, selectedStaffPos));
+                object.put(PRODUCT, getProduct(serviceAdapter, i));
                 array.put(object);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -109,12 +112,30 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
     }
 
 
+    JSONArray getProduct(BookServiceAdapter serviceAdapter, int pos) {
+        JSONArray array = new JSONArray();
+        for (int i = 0; i < serviceAdapter.getCount(); i++) {
+            try {
+                JSONObject object = new JSONObject();
+                String productName = serviceAdapter.getItem(i).getServiceList().get(serviceAdapter.getItem(i).getSelectService());
+                Boolean result = getProductInfo(productName);
+                object.put(PRODUC_ID, mProductID);
+                object.put(PRICE, mProductPrice);
+                object.put(TIME_ORDER, serviceAdapter.getItem(pos).getServiceTime());
+                array.put(object);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return array;
+    }
+
     @Override
     public void onTaskCompleted(String s, String CaseRequest) {
         switch (CaseRequest) {
             case KeyManager.GET_ALL_STAFF_ID:
                 try {
-                    GsonAllStaff mGsonAllStaff = getGson().fromJson(s, GsonAllStaff.class);
+                    mGsonAllStaff = getGson().fromJson(s, GsonAllStaff.class);
                     ArrayList<String> staffList = new ArrayList<String>();
                     staffList.add(mGsonAllStaff.getSuccess().getStaffBean().get(0).getName());
                     mBookAppointmentView.updateStaffList(staffList);
@@ -124,13 +145,24 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
                 break;
             case KeyManager.GET_ALL_SERVICE_ID:
                 try {
-                    GsonAllStaff mGsonAllStaff = getGson().fromJson(s, GsonAllStaff.class);
+                    mGsonAllService = getGson().fromJson(s, GsonAllService.class);
                     ArrayList<String> serviceList = new ArrayList<String>();
-                    serviceList.add(mGsonAllStaff.getSuccess().getStaffBean().get(0).getName());
+                    int productNum = mGsonAllService.getSuccess().getProduct().size();
+                    for (int i = 0; i < productNum; i++) {
+                        int cateChildNum = mGsonAllService.getSuccess().getProduct().get(i).getCateChild().size();
+                        for (int j = 0; j < cateChildNum; j++) {
+                            serviceList.add(mGsonAllService.getSuccess().getProduct().get(i).getCateChild().get(j).getProductName());
+                        }
+                    }
                     mBookAppointmentView.updateServiceList(serviceList);
                 } catch (Exception e) {
                     mBookAppointmentView.showErrorDialog(ViewManager.ERROR_CODE.GET_SERVICE_FAIL);
                 }
+                break;
+            case KeyManager.BOOK_ONLINE:
+                int i = 0;
+                i++;
+
                 break;
             default:
                 break;
@@ -140,5 +172,37 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
     @Override
     public void onTaskError(String s, String CaseRequest) {
 
+    }
+
+    private int getStaffID(String staffname, int posstaffname) {
+        int staffID = 0;
+
+        int staffNum = mGsonAllStaff.getSuccess().getStaffBean().size();
+        for (int i = 0; i < staffNum; i++) {
+
+            if ((staffname.equals(mGsonAllStaff.getSuccess().getStaffBean().get(i).getName()))
+                    && (posstaffname == i)) {
+                staffID = mGsonAllStaff.getSuccess().getStaffBean().get(i).getId();
+            }
+        }
+        return staffID;
+    }
+
+    private boolean getProductInfo(String productname) {
+        mProductID = 0;
+        mProductPrice = "";
+
+        int serviceNum = mGsonAllService.getSuccess().getProduct().size();
+        for (int i = 0; i < serviceNum; i++) {
+            int cateChildNum = mGsonAllService.getSuccess().getProduct().get(i).getCateChild().size();
+            for (int j = 0; j < cateChildNum; j++) {
+                if (productname.equals(mGsonAllService.getSuccess().getProduct().get(i).getCateChild().get(j).getProductName())) {
+                    mProductID = mGsonAllService.getSuccess().getProduct().get(i).getCateChild().get(j).getProductId();
+                    mProductPrice = mGsonAllService.getSuccess().getProduct().get(i).getCateChild().get(j).getProductPrice();
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

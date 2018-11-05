@@ -52,5 +52,6 @@ public class KeyManager {
     public static final String ORDER_ID = "orderId";
     public static final String STATUS = "status";
     public static final String NOTE = "note";
+    public static final String PRODUCT = "product";
 
 }

@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 
+import static com.example.admin.shopnail.Manager.KeyManager.BOOK_ONLINE;
 import static com.example.admin.shopnail.Manager.KeyManager.CANCEL_SERVICE;
 import static com.example.admin.shopnail.Manager.KeyManager.CHANGE_PASSWORD;
 import static com.example.admin.shopnail.Manager.KeyManager.CREATE_ACCOUNT_CUSTOMER;
@@ -103,6 +104,10 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
             case KeyManager.GET_ALL_SERVICE_ID:
                 Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(KeyManager.GET_ALL_SERVICE_ID, Resuilt);
+                break;
+            case BOOK_ONLINE:
+                Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(BOOK_ONLINE, Resuilt);
                 break;
         }
         return mResuiltObject;

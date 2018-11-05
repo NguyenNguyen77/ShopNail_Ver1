@@ -62,5 +62,12 @@ public class BookService {
         mListStaff = listStaff;
     }
 
+    public ArrayList<String> getServiceList () {
+        return mListService;
+    }
+
+    public void setServiceList (ArrayList<String> listService) {
+        mListService = listService;
+    }
 
 }
