@@ -75,6 +75,7 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
     @Override
     public void reqBookOnline(String fullName, String phone, String date, BookServiceAdapter serviceAdapter) {
         String json = addJsonRequest(fullName, phone, date, serviceAdapter).toString();
+        Log.d("KhoaND14", "KhoaNguyen: Json: " + json);
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.BOOK_ONLINE, UrlManager.ADD_BOOKING_ONLINE, json));
     }
 
@@ -112,22 +113,22 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
     }
 
 
-    JSONArray getProduct(BookServiceAdapter serviceAdapter, int pos) {
-        JSONArray array = new JSONArray();
+    JSONObject getProduct(BookServiceAdapter serviceAdapter, int pos) {
+        JSONObject json = new JSONObject();
         for (int i = 0; i < serviceAdapter.getCount(); i++) {
             try {
-                JSONObject object = new JSONObject();
+                //JSONObject object = new JSONObject();
                 String productName = serviceAdapter.getItem(i).getServiceList().get(serviceAdapter.getItem(i).getSelectService());
                 Boolean result = getProductInfo(productName);
-                object.put(PRODUC_ID, mProductID);
-                object.put(PRICE, mProductPrice);
-                object.put(TIME_ORDER, serviceAdapter.getItem(pos).getServiceTime());
-                array.put(object);
+                json.put(PRODUC_ID, mProductID);
+                json.put(PRICE, mProductPrice);
+                json.put(TIME_ORDER, serviceAdapter.getItem(pos).getServiceTime());
+                //json.put(object);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        return array;
+        return json;
     }
 
     @Override
