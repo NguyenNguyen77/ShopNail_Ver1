@@ -1,4 +1,4 @@
-package com.example.admin.shopnail.Presenter.MyDetailCustom;
+package com.example.admin.shopnail.Presenter.MyDetailCustomer;
 
 public interface IMyDetailCustomer {
     void requestCustomerProducts(String s);

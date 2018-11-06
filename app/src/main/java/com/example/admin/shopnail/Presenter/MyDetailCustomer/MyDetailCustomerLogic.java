@@ -1,4 +1,4 @@
-package com.example.admin.shopnail.Presenter.MyDetailCustom;
+package com.example.admin.shopnail.Presenter.MyDetailCustomer;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -12,12 +12,9 @@ import com.example.admin.shopnail.CustomViewListExpand.SingleToast;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
-import com.example.admin.shopnail.Manager.ViewManager;
 import com.example.admin.shopnail.Model.MyDetailCustomer.GsonProductCustomer;
 import com.example.admin.shopnail.Model.MyDetailCustomer.GsonResuiltUpdate;
 import com.example.admin.shopnail.View.MyDetailCustomer.MyDetailCustomerView;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +28,6 @@ import static com.example.admin.shopnail.Manager.KeyManager.GET_HISTORY_OF_STAFF
 import static com.example.admin.shopnail.Manager.KeyManager.ORDER_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.PRODUCTS;
 import static com.example.admin.shopnail.Manager.KeyManager.PRODUC_ID;
-import static com.example.admin.shopnail.Manager.KeyManager.STAFF_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.STATUS;
 import static com.example.admin.shopnail.Manager.KeyManager.UPDATE_EXTRA;
 import static com.example.admin.shopnail.Manager.KeyManager.UPDATE_STATUS_SERVICE;

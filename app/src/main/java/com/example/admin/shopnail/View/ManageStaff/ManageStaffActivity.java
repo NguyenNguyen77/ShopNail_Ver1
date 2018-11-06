@@ -28,13 +28,16 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
     ManageStaffAdapter manageStaffAdapter = null;
     List<ManageStaff> mList = new ArrayList<ManageStaff>();
     ManagerStaffImp managerStaffLogic = new ManagerStaffLogic(this, this);
+    Button btnUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_staff);
         initView();
+        mViewManager.showInprogressDialog();
         managerStaffLogic.createCheckbox();
+        managerStaffLogic.getServiceType();
 
 
     }
@@ -46,6 +49,8 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
         listManageStaff = findViewById(R.id.listStatusService);
         btn_back = findViewById(R.id.btn_go_back);
         btn_back.setOnClickListener(this);
+        btnUpdate = findViewById(R.id.btn_update_service);
+        btnUpdate.setOnClickListener(this);
 //        ManageStaff staffA = new ManageStaff(true,"cat toc",false,false);
 //        ManageStaff staffB = new ManageStaff(true,"cat toc",false,false);
 //        ManageStaff staffC = new ManageStaff(true,"cat toc",false,false);
@@ -107,6 +112,10 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
                 mViewManager.handleBackScreen();
                 mViewManager.finishActivity(this);
                 break;
+            case R.id.btn_update_service:
+                mViewManager.showInprogressDialog();
+                managerStaffLogic.updateService();
+                break;
             default:
                 break;
         }
@@ -123,6 +132,11 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
     public void setListCheckBox(List<CheckBoxObject> arrCheckBox) {
         manageStaffAdapter = new ManageStaffAdapter(ManageStaffActivity.this,arrCheckBox);
         listManageStaff.setAdapter(manageStaffAdapter);
+    }
+
+    @Override
+    public void closeProgress() {
+        mViewManager.dismissInprogressDialog();
     }
 
     // Check Internet

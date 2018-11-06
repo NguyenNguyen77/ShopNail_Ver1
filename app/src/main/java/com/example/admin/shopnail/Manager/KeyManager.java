@@ -35,6 +35,11 @@ public class KeyManager {
     public static final String GET_ALL_STAFF_ID = "GET_ALL_STAFF";
     public static final String GET_ALL_SERVICE_ID = "GET_ALL_SERVICE";
     public static final String GENERATE_CHECK_BOX = "GENERATE_CHECK_BOX";
+    public static final String GET_SERVICE_TYPE = "GET_SERVICE_TYPE";
+
+
+
+
     public static final String ARRAY_PRODUCT = "ARRAY_PRODUCT";
     public static final String CLIENT_HISTORY_CHOOSED = "CLIENT_HISTORY_CHOOSED";
     public static final String BOOK_ONLINE = "BOOK_ONLINE";
@@ -43,15 +48,20 @@ public class KeyManager {
     public static final String CLIENT_ID = "CLIENT_ID";
     public static final String CUSTOMER_PHONE_NUMBER = "CUSTOMER_PHONE_NUMBER";
     public static final String GET_TIME_OF_CLIENT_FROM_STAFF = "GET_TIME_OF_CLIENT_FROM_STAFF";
+    public static final String ADD_OR_UPDATE_SERVICE_CHECKING = "ADD_OR_UPDATE_SERVICE_CHECKING";
     public static final String STAFF_ID = "staffId";
     public static final String EXTRA = "extra";
     public static final String DATE_ORDER = "dateOrder";
     public static final String VALUES = "values";
+    public static final String VALUE = "value";
     public static final String USER_ID_KEY = "userId";
     public static final String DATE = "date";
     public static final String ORDER_ID = "orderId";
     public static final String STATUS = "status";
     public static final String NOTE = "note";
     public static final String PRODUCT = "product";
+    public static final String TYPE = "type";
+    public static final String ORDER = "order";
+    public static final String SERVICES = "services";
 
 }

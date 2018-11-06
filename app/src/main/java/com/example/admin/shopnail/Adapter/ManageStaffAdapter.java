@@ -45,8 +45,8 @@ public class ManageStaffAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
-        ManageStaffAdapter.ViewHolder holder;
+    public View getView(final int position, View convertView, ViewGroup viewGroup) {
+        final ManageStaffAdapter.ViewHolder holder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.item_manage_staff, null);
             holder = new ViewHolder();
@@ -59,7 +59,6 @@ public class ManageStaffAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
         adapterCategory = new ArrayAdapter<String>(convertView.getContext(),
                 android.R.layout.simple_spinner_item,paths);
         adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -68,6 +67,26 @@ public class ManageStaffAdapter extends BaseAdapter {
         holder.lnService.setVisibility(objects.get(position).isService() ? View.VISIBLE : View.INVISIBLE);
         holder.checkBonus.setVisibility(objects.get(position).isBonus() ? View.VISIBLE : View.INVISIBLE);
         holder.checkWax.setVisibility(objects.get(position).isWax() ? View.VISIBLE : View.INVISIBLE);
+        holder.checkService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                objects.get(position).setValueService(holder.checkService.isChecked() ? 1 : 0);
+            }
+        });
+
+        holder.checkBonus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                objects.get(position).setValueBonus(holder.checkBonus.isChecked() ? 1 : 0);
+            }
+        });
+
+        holder.checkWax.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                objects.get(position).setValueWax(holder.checkWax.isChecked() ? 1 : 0);
+            }
+        });
         return convertView;
     }
 

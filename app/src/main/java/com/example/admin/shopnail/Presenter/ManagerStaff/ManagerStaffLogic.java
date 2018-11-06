@@ -3,23 +3,39 @@ package com.example.admin.shopnail.Presenter.ManagerStaff;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
 import com.example.admin.shopnail.AsynTaskManager.CaseManager;
 import com.example.admin.shopnail.AsynTaskManager.NailTask;
 import com.example.admin.shopnail.AsynTaskManager.ResuiltObject;
+import com.example.admin.shopnail.CustomViewListExpand.SingleToast;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
 import com.example.admin.shopnail.Model.ManageStaff.CheckBoxObject;
 import com.example.admin.shopnail.Model.ManageStaff.GsonGenerateCheckbox;
+import com.example.admin.shopnail.Model.MyDetailCustomer.GsonResuiltUpdate;
 import com.example.admin.shopnail.View.ManageStaff.ManagerStaffView;
+import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.admin.shopnail.Manager.KeyManager.ADD_OR_UPDATE_SERVICE_CHECKING;
 import static com.example.admin.shopnail.Manager.KeyManager.GENERATE_CHECK_BOX;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_ALL_SERVICE_ID;
+import static com.example.admin.shopnail.Manager.KeyManager.GET_SERVICE_TYPE;
+import static com.example.admin.shopnail.Manager.KeyManager.ORDER;
+import static com.example.admin.shopnail.Manager.KeyManager.SERVICES;
+import static com.example.admin.shopnail.Manager.KeyManager.STAFF_ID;
+import static com.example.admin.shopnail.Manager.KeyManager.TYPE;
+import static com.example.admin.shopnail.Manager.KeyManager.VALUE;
+import static com.example.admin.shopnail.Manager.KeyManager.VALUES;
 
 public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, AsyncTaskCompleteListener<ResuiltObject> {
     Context mContext;
@@ -36,6 +52,45 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
         new NailTask(this).execute(new CaseManager(mContext, GENERATE_CHECK_BOX, UrlManager.GENERATE_CHECK_BOX_URL, getParamBuilder()));
     }
 
+    @Override
+    public void updateService() {
+        new NailTask(this).execute(new CaseManager(mContext, ADD_OR_UPDATE_SERVICE_CHECKING, UrlManager.ADD_OR_UPDATE_SERVICE_CHECKING_URL, getJsonParamUpdateService().toString()));
+    }
+
+    @Override
+    public void getServiceType() {
+        new NailTask(this).execute(new CaseManager(mContext, GET_SERVICE_TYPE, UrlManager.GET_SERVICE_TYPE_URL, getParamBuilder()));
+    }
+
+    private JSONObject getJsonParamUpdateService() {
+        JSONObject object = new JSONObject();
+        try {
+            object.put(STAFF_ID, getStaffId(mContext));
+            JSONArray services = new JSONArray();
+            for (int i = 0; i < arrCheckBox.size(); i++) {
+                JSONObject objects = new JSONObject();
+                objects.put(TYPE, arrCheckBox.get(i).getTypeService());
+                objects.put(ORDER, arrCheckBox.get(i).getOrder());
+                objects.put(VALUE, arrCheckBox.get(i).getValueService());
+                services.put(objects);
+                objects = new JSONObject();
+                objects.put(TYPE, arrCheckBox.get(i).getTypeWax());
+                objects.put(ORDER, arrCheckBox.get(i).getOrder());
+                objects.put(VALUE, arrCheckBox.get(i).getValueWax());
+                services.put(objects);
+                objects = new JSONObject();
+                objects.put(TYPE, arrCheckBox.get(i).getTypeBonus());
+                objects.put(ORDER, arrCheckBox.get(i).getOrder());
+                objects.put(VALUE, arrCheckBox.get(i).getValueBonus());
+                services.put(objects);
+            }
+            object.put(SERVICES, services);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return object;
+    }
+
     private Uri.Builder getParamBuilder() {
         return new Uri.Builder();
     }
@@ -44,18 +99,34 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
     public void onTaskCompleted(String s, String CaseRequest) {
         switch (CaseRequest) {
             case GENERATE_CHECK_BOX:
-                arrCheckBox  = new ArrayList<>();
+                arrCheckBox = new ArrayList<>();
                 Log.d(KeyManager.VinhCNLog, s);
                 GsonGenerateCheckbox mGsonGenerateCheckbox = getGson().fromJson(s, GsonGenerateCheckbox.class);
                 int serviceNumber = Integer.parseInt(mGsonGenerateCheckbox.getSuccess().getSetting().getService_number());
                 int Bonus = Integer.parseInt(mGsonGenerateCheckbox.getSuccess().getSetting().getBonus());
                 int Wax = Integer.parseInt(mGsonGenerateCheckbox.getSuccess().getSetting().getWax());
                 for (int i = 0; i < getMaxLine(serviceNumber, Bonus, Wax); i++) {
-                    arrCheckBox.add(new CheckBoxObject(mGsonGenerateCheckbox.getSuccess().getSetting().getId(), i < serviceNumber ? true : false, i < Bonus ? true : false, i < Wax ? true : false));
+                    arrCheckBox.add(new CheckBoxObject(mGsonGenerateCheckbox.getSuccess().getSetting().getId(), i < serviceNumber ? true : false, i < Bonus ? true : false, i < Wax ? true : false, i + 1, 1, 3, 2, 0, 0, 0));
                 }
                 managerStaffView.setListCheckBox(arrCheckBox);
                 break;
+            case ADD_OR_UPDATE_SERVICE_CHECKING:
+                Log.d(KeyManager.VinhCNLog, s);
+                try {
+                    GsonResuiltUpdate update = getGson().fromJson(s, GsonResuiltUpdate.class);
+                    SingleToast.show(mContext, update.isStatus() ? "Update Service success" : "Update Service fail", 3000);
+                } catch (Exception e) {
+                    SingleToast.show(mContext, "Server error", 3000);
+                }
+                break;
+            case GET_SERVICE_TYPE:
+                Log.d(KeyManager.VinhCNLog, s);
+                break;
+            default:
+                break;
+
         }
+        managerStaffView.closeProgress();
     }
 
     private int getMaxLine(int service_number, int bonus, int wax) {

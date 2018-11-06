@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ManagerStaffView {
     void setListCheckBox(List<CheckBoxObject> arrCheckBox);
+
+    void closeProgress();
 }

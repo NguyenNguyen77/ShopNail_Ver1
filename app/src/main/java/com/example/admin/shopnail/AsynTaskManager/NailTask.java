@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 
+import static com.example.admin.shopnail.Manager.KeyManager.ADD_OR_UPDATE_SERVICE_CHECKING;
 import static com.example.admin.shopnail.Manager.KeyManager.BOOK_ONLINE;
 import static com.example.admin.shopnail.Manager.KeyManager.CANCEL_SERVICE;
 import static com.example.admin.shopnail.Manager.KeyManager.CHANGE_PASSWORD;
@@ -13,6 +14,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.FORGOT_PASSWORD;
 import static com.example.admin.shopnail.Manager.KeyManager.GENERATE_CHECK_BOX;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_CLIENT_OF_STAFF;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY;
+import static com.example.admin.shopnail.Manager.KeyManager.GET_SERVICE_TYPE;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_TIME_OF_CLIENT_FROM_STAFF;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_USER_BY_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.LOGIN;
@@ -33,6 +35,14 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
         String Resuilt = "";
         ResuiltObject mResuiltObject = null;
         switch (caseManagers[0].getCase()) {
+            case GET_SERVICE_TYPE:
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(GET_SERVICE_TYPE, Resuilt);
+                break;
+            case ADD_OR_UPDATE_SERVICE_CHECKING:
+                Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(ADD_OR_UPDATE_SERVICE_CHECKING, Resuilt);
+                break;
             case GENERATE_CHECK_BOX:
                 Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(GENERATE_CHECK_BOX, Resuilt);
