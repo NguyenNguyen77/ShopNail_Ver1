@@ -15,6 +15,7 @@ import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
 import com.example.admin.shopnail.Model.ManageStaff.CheckBoxObject;
 import com.example.admin.shopnail.Model.ManageStaff.GsonGenerateCheckbox;
+import com.example.admin.shopnail.Model.ManageStaff.GsonServiceType;
 import com.example.admin.shopnail.Model.MyDetailCustomer.GsonResuiltUpdate;
 import com.example.admin.shopnail.View.ManageStaff.ManagerStaffView;
 import com.google.gson.JsonObject;
@@ -41,6 +42,7 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
     Context mContext;
     ManagerStaffView managerStaffView;
     List<CheckBoxObject> arrCheckBox;
+    List<GsonServiceType.SuccessBean.ServiceTypeBean> arrServiceType;
 
     public ManagerStaffLogic(Context mContext, ManagerStaffView managerStaffView) {
         this.mContext = mContext;
@@ -108,7 +110,7 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
                 for (int i = 0; i < getMaxLine(serviceNumber, Bonus, Wax); i++) {
                     arrCheckBox.add(new CheckBoxObject(mGsonGenerateCheckbox.getSuccess().getSetting().getId(), i < serviceNumber ? true : false, i < Bonus ? true : false, i < Wax ? true : false, i + 1, 1, 3, 2, 0, 0, 0));
                 }
-                managerStaffView.setListCheckBox(arrCheckBox);
+                managerStaffView.setListCheckBox(arrCheckBox, arrServiceType);
                 break;
             case ADD_OR_UPDATE_SERVICE_CHECKING:
                 Log.d(KeyManager.VinhCNLog, s);
@@ -121,6 +123,13 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
                 break;
             case GET_SERVICE_TYPE:
                 Log.d(KeyManager.VinhCNLog, s);
+                try {
+                    GsonServiceType type = getGson().fromJson(s, GsonServiceType.class);
+                    arrServiceType = type.getSuccess().getServiceType();
+                    createCheckbox();
+                } catch (Exception e) {
+                    SingleToast.show(mContext, "Server error", 3000);
+                }
                 break;
             default:
                 break;

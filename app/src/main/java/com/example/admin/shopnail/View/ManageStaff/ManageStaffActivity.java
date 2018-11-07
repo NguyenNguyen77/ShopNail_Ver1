@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.example.admin.shopnail.Adapter.ManageStaffAdapter;
 import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Model.ManageStaff.CheckBoxObject;
+import com.example.admin.shopnail.Model.ManageStaff.GsonServiceType;
 import com.example.admin.shopnail.Model.ManageStaff.ManageStaff;
 import com.example.admin.shopnail.Presenter.ManagerStaff.ManagerStaffImp;
 import com.example.admin.shopnail.Presenter.ManagerStaff.ManagerStaffLogic;
@@ -36,7 +37,6 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
         setContentView(R.layout.activity_manage_staff);
         initView();
         mViewManager.showInprogressDialog();
-        managerStaffLogic.createCheckbox();
         managerStaffLogic.getServiceType();
 
 
@@ -129,8 +129,8 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
     }
 
     @Override
-    public void setListCheckBox(List<CheckBoxObject> arrCheckBox) {
-        manageStaffAdapter = new ManageStaffAdapter(ManageStaffActivity.this,arrCheckBox);
+    public void setListCheckBox(List<CheckBoxObject> arrCheckBox, List<GsonServiceType.SuccessBean.ServiceTypeBean> arrServiceType) {
+        manageStaffAdapter = new ManageStaffAdapter(ManageStaffActivity.this,arrCheckBox, arrServiceType);
         listManageStaff.setAdapter(manageStaffAdapter);
     }
 
