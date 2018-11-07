@@ -28,6 +28,7 @@ public class KeyManager {
     public static final String ORDER_SERVICE_BY_STAFF = "ORDER_SERVICE_BY_STAFF";
     public static final String FULL_NAME = "fullname";
     public static final String PHONE = "phone";
+    public static final String EMAIL = "email";
     public static final String PRODUC_ID = "productId";
     public static final String PRODUCTS = "products";
     public static final String PRICE = "price";

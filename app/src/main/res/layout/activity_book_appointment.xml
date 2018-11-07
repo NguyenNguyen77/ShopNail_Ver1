@@ -94,6 +94,7 @@
                     android:maxLines="1"
                     android:minLines="1"
                     android:singleLine="true"
+                    android:inputType="textEmailAddress"
                     android:textColor="@color/text_color" />
 
                 <EditText

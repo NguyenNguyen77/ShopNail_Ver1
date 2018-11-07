@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.shopnail.Adapter.BookServiceAdapter;
 import com.example.admin.shopnail.Manager.NetworkReceiver;
@@ -43,9 +44,12 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     private Button mBtnSubmit;
     private EditText mEtCustomerName;
     private EditText mEtCustomerPhone;
+    private EditText mEtCustomerEmail;
     private TextView mTvDate;
     private ListView mLvSelectServiceItem;
     private TextView mTvAddMoreService;
+    private String mEmailText;
+    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     private BookServiceAdapter mBookServiceAdapter;
     private int mTextSizeBefore = 0;
@@ -74,6 +78,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mBtnBack = (Button) findViewById(R.id.btn_back);
         mBtnSubmit = (Button) findViewById(R.id.btn_submit);
         mEtCustomerName = (EditText) findViewById(R.id.et_customer_name);
+        mEtCustomerEmail = (EditText) findViewById(R.id.et_customer_email);
         mEtCustomerPhone = (EditText) findViewById(R.id.et_customer_phone);
         mTvDate = (TextView) findViewById(R.id.tv_date);
         mLvSelectServiceItem = (ListView) findViewById(R.id.lv_select_services);
@@ -124,6 +129,22 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             public void afterTextChanged(Editable text) {
             }
         });
+
+        //Validate Email
+        mEtCustomerEmail.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // other stuffs
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkEnableSubmitButton();
+                validateEmail();
+            }
+        });
     }
 
     @Override
@@ -136,7 +157,11 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
                 addMoreService();
                 break;
             case R.id.btn_submit:
-                reqBookAppointment();
+                if (validateEmail()) {
+                    reqBookAppointment();
+                } else {
+                    Toast.makeText(getApplicationContext(), "The email address is not valid.\nPlease check it and try again", Toast.LENGTH_LONG).show();
+                }
                 break;
             case R.id.btn_back:
                 handleBack();
@@ -150,7 +175,8 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     public void onBackPressed() {
         handleBack();
     }
-    private void handleBack () {
+
+    private void handleBack() {
         mViewManager.handleBackScreen();
         mViewManager.finishActivity(this);
     }
@@ -159,16 +185,18 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         String fullName = mEtCustomerName.getText().toString().trim();
         String phone = mEtCustomerPhone.getText().toString().trim();
         String dateOder = mTvDate.getText().toString();
+        String email = mEtCustomerEmail.getText().toString().trim();
         mBookServiceAdapter = (BookServiceAdapter) mLvSelectServiceItem.getAdapter();
-        mBookAppointmentPresenter.reqBookOnline(fullName, phone, dateOder, mBookServiceAdapter);
+        mBookAppointmentPresenter.reqBookOnline(fullName, email, phone, dateOder, mBookServiceAdapter);
 
     }
 
     private void checkEnableSubmitButton() {
         int phoneSize = mEtCustomerPhone.getText().toString().trim().length();
         int nameSize = mEtCustomerName.getText().toString().trim().length();
+        int emailSize = mEtCustomerEmail.getText().toString().trim().length();
 
-        if (phoneSize == 12 & nameSize > 0) {
+        if ((phoneSize == 12) & (nameSize > 0) && (emailSize > 0)) {
             mBtnSubmit.setEnabled(true);
             mBtnSubmit.setClickable(true);
         } else {
@@ -321,5 +349,16 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
         mViewManager.showSnack(isConnected);
+    }
+
+    public boolean validateEmail() {
+        mEmailText = mEtCustomerEmail.getEditableText().toString().trim();
+        if (mEmailText.matches(emailPattern) && mEmailText.length() > 0) {
+            mEtCustomerEmail.setTextColor(getResources().getColor(R.color.email_ok));
+            return true;
+        } else {
+            mEtCustomerEmail.setTextColor(getResources().getColor(R.color.email_failed));
+            return false;
+        }
     }
 }

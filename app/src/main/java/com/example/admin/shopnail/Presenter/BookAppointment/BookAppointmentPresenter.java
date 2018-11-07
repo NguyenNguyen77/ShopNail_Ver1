@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.JsonReader;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.admin.shopnail.Adapter.BookServiceAdapter;
 import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
@@ -16,11 +17,14 @@ import com.example.admin.shopnail.Manager.UrlManager;
 import com.example.admin.shopnail.Manager.ViewManager;
 import com.example.admin.shopnail.Model.BookAppointment.GsonAllService;
 import com.example.admin.shopnail.Model.BookAppointment.GsonAllStaff;
+import com.example.admin.shopnail.Model.BookAppointment.GsonResBookAppointment;
 import com.example.admin.shopnail.Model.StaffInfor.GsonChangePass;
 import com.example.admin.shopnail.Model.StaffInfor.GsonStaffInfor;
 import com.example.admin.shopnail.Model.ViewProductPresenter.GsonProductChoosed;
+import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.BookAppointment.IBookAppointmentView;
 import com.example.admin.shopnail.View.ERROR_CODE;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +34,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import static com.example.admin.shopnail.Manager.KeyManager.DATE_ORDER;
+import static com.example.admin.shopnail.Manager.KeyManager.EMAIL;
 import static com.example.admin.shopnail.Manager.KeyManager.EXTRA;
 import static com.example.admin.shopnail.Manager.KeyManager.FULL_NAME;
 import static com.example.admin.shopnail.Manager.KeyManager.NOTE;
@@ -73,18 +78,19 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
     }
 
     @Override
-    public void reqBookOnline(String fullName, String phone, String date, BookServiceAdapter serviceAdapter) {
-        String json = addJsonRequest(fullName, phone, date, serviceAdapter).toString();
+    public void reqBookOnline(String fullName, String email, String phone, String date, BookServiceAdapter serviceAdapter) {
+        String json = addJsonRequest(fullName, email, phone, date, serviceAdapter).toString();
         Log.d("KhoaND14", "KhoaNguyen: Json: " + json);
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.BOOK_ONLINE, UrlManager.ADD_BOOKING_ONLINE, json));
     }
 
 
-    JSONObject addJsonRequest(String fullName, String phone, String date, BookServiceAdapter serviceAdapter) {
+    JSONObject addJsonRequest(String fullName, String email, String phone, String date, BookServiceAdapter serviceAdapter) {
         JSONObject mJsonObject = new JSONObject();
         try {
             mJsonObject.put(FULL_NAME, fullName);
             mJsonObject.put(PHONE, phone);
+            mJsonObject.put(EMAIL, email);
             mJsonObject.put(VALUES, getArrayValues(date, serviceAdapter));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -161,9 +167,19 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
                 }
                 break;
             case KeyManager.BOOK_ONLINE:
-                int i = 0;
-                i++;
-
+                try {
+                    GsonResBookAppointment result = getGson().fromJson(s, GsonResBookAppointment.class);
+                    int resultCode = result.getSuccess().getCode();
+                    if (resultCode == 200) {
+                        String message = getGson().fromJson(s, GsonResBookAppointment.class).getSuccess().getMessage();
+                        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(mContext, R.string.error_book_appointment, Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+//                    Toast.makeText(mContext, R.string.error_book_appointment, Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "KhoaNd14. Result GSON:\n" + s, Toast.LENGTH_LONG).show();
+                }
                 break;
             default:
                 break;

@@ -5,5 +5,5 @@ import com.example.admin.shopnail.Adapter.BookServiceAdapter;
 public interface IBookAppointmentPresenter {
     public void reqGetStaffList ();
     public void reqGetServiceList ();
-    public void reqBookOnline (String fullName, String phone, String date, BookServiceAdapter serviceAdapter);
+    public void reqBookOnline (String fullName, String email, String phone, String date, BookServiceAdapter serviceAdapter);
 }
