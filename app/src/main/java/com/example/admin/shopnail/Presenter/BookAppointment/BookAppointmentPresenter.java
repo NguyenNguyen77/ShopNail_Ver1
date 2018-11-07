@@ -121,18 +121,14 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
 
     JSONObject getProduct(BookServiceAdapter serviceAdapter, int pos) {
         JSONObject json = new JSONObject();
-        for (int i = 0; i < serviceAdapter.getCount(); i++) {
-            try {
-                //JSONObject object = new JSONObject();
-                String productName = serviceAdapter.getItem(i).getServiceList().get(serviceAdapter.getItem(i).getSelectService());
-                Boolean result = getProductInfo(productName);
-                json.put(PRODUC_ID, mProductID);
-                json.put(PRICE, mProductPrice);
-                json.put(TIME_ORDER, serviceAdapter.getItem(pos).getServiceTime());
-                //json.put(object);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        try {
+            String productName = serviceAdapter.getItem(pos).getServiceList().get(serviceAdapter.getItem(pos).getSelectService());
+            Boolean result = getProductInfo(productName);
+            json.put(PRODUC_ID, mProductID);
+            json.put(PRICE, mProductPrice);
+            json.put(TIME_ORDER, serviceAdapter.getItem(pos).getServiceTime());
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return json;
     }

@@ -87,4 +87,5 @@
     <string name="error_get_staff">Cannot get Staff Information.\nPlease Check Internet connection.\n And try again</string>
     <string name="error_get_service">Cannot get Service Information.\nPlease Check Internet connection.\nAnd try again</string>
     <string name="error_book_appointment">Cannot book your services.\nPlease Check Internet connection.\nAnd try again</string>
+    <string name="error_select_date">Do not select dates in the past.\nPlease select a date from current to future.</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.text.Editable;
@@ -39,7 +40,6 @@ import java.util.Locale;
 public class BookAppointmentActivity extends Activity implements View.OnClickListener, IBookAppointmentView, NetworkReceiver.ConnectivityReceiverListener {
     protected ViewManager mViewManager = ViewManager.getInstance();
     private Calendar mCalender;
-    private Date mDateSelected;
     private Button mBtnBack;
     private Button mBtnSubmit;
     private EditText mEtCustomerName;
@@ -50,6 +50,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     private TextView mTvAddMoreService;
     private String mEmailText;
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private Context mContext;
 
     private BookServiceAdapter mBookServiceAdapter;
     private int mTextSizeBefore = 0;
@@ -67,6 +68,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         setContentView(R.layout.activity_book_appointment);
         initView();
         loadInitData();
+        mContext = this;
     }
 
     private void initView() {
@@ -247,7 +249,6 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mCalender = Calendar.getInstance();
         SimpleDateFormat dft = null;
         dft = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        mDateSelected = mCalender.getTime();
         String strDate = dft.format(mCalender.getTime());
         showUnderLineText(strDate, mTvDate);
     }
@@ -265,8 +266,12 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             public void onDateSet(DatePicker view, int year,
                                   int monthOfYear,
                                   int dayOfMonth) {
-                showUnderLineText(year + "-" + (monthOfYear + 1) + "-" + (dayOfMonth), mTvDate);
-                mDateSelected = mCalender.getTime();
+                if (validateDatTime(year, monthOfYear, dayOfMonth)) {
+                    showUnderLineText(year + "-" + (monthOfYear + 1) + "-" + (dayOfMonth), mTvDate);
+                } else {
+                    Toast.makeText(mContext, R.string.error_select_date, Toast.LENGTH_LONG).show();
+                    getDefaultInfo();
+                }
             }
         };
         String s = mTvDate.getText() + "";
@@ -358,6 +363,24 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             return true;
         } else {
             mEtCustomerEmail.setTextColor(getResources().getColor(R.color.email_failed));
+            return false;
+        }
+    }
+
+    private boolean validateDatTime (int year, int month, int day) {
+        mCalender = Calendar.getInstance();
+        SimpleDateFormat dft = null;
+        dft = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String strDate = dft.format(mCalender.getTime());
+
+        String strArrtmp[] = strDate.split("-");
+        int curentDay = Integer.parseInt(strArrtmp[2]);
+        int curentMonth = Integer.parseInt(strArrtmp[1]) - 1;
+        int curentYear = Integer.parseInt(strArrtmp[0]);
+
+        if ((year >= curentYear) && (month >= curentMonth) && (day >= curentDay)) {
+            return true;
+        } else {
             return false;
         }
     }
