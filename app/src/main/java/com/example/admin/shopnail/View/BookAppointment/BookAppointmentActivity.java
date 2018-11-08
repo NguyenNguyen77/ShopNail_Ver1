@@ -52,6 +52,10 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private Context mContext;
 
+    private String currentTime;
+    private String orderTime;
+    private int currentPosition;
+
     private BookServiceAdapter mBookServiceAdapter;
     private int mTextSizeBefore = 0;
     private int mTextSizeAfter = 0;
@@ -247,8 +251,21 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
 
     @Override
     public void checkTimeBookOnline(String staffName, int pos, String timeOrder) {
+        currentTime = mBookServiceAdapter.getItem(pos).getServiceTime();
+        orderTime = timeOrder;
+        currentPosition = pos;
         String date = mTvDate.getText().toString();
-        mBookAppointmentPresenter.checkTimeBookOnline(staffName, pos, date, timeOrder);
+        int selectStaff = mBookServiceAdapter.getItem(pos).getSelectStaff();
+        mBookAppointmentPresenter.checkTimeBookOnline(staffName, selectStaff, date, timeOrder);
+    }
+
+    @Override
+    public void updateOrderTime() {
+        if (currentPosition <= mBookServiceAdapter.getCount()) {
+            BookService test = mBookServiceAdapter.getItem(currentPosition);
+            mBookServiceAdapter.getItem(currentPosition).setServiceTime(orderTime);
+            mBookServiceAdapter.notifyDataSetChanged();
+        }
     }
 
     public void getDefaultInfo() {
@@ -321,7 +338,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             listService.add(mAdapterService.getItem(i));
         }
 
-        defaultBookService = new BookService(listStaff, listService, getCurrentTime(), "", 0, 0);
+        defaultBookService = new BookService(listStaff, listService, "--:--", "", 0, 0);
         return defaultBookService;
     }
 

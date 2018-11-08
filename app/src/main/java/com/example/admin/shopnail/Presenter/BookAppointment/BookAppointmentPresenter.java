@@ -89,8 +89,8 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
     }
 
     @Override
-    public void checkTimeBookOnline(String staffName, int position, String date, String timeorder) {
-        String json = addJsonRequestCheckTimeBooking(staffName, position, date, timeorder).toString();
+    public void checkTimeBookOnline(String staffName, int selectStaff, String date, String timeorder) {
+        String json = addJsonRequestCheckTimeBooking(staffName, selectStaff, date, timeorder).toString();
         Log.d("KhoaND14", "checkTimeBookOnline: Json: " + json);
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.CHECK_TIME_BOOK_ONLINE, UrlManager.BOOKING_TIME_CHECKING_URL, json));
     }
@@ -144,10 +144,10 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
         return json;
     }
 
-    JSONObject addJsonRequestCheckTimeBooking(String staffName, int position, String date, String timeorder) {
+    JSONObject addJsonRequestCheckTimeBooking(String staffName, int selectStaff, String date, String timeorder) {
         JSONObject mJsonObject = new JSONObject();
         try {
-            int staffid = getStaffID(staffName, position);
+            int staffid = getStaffID(staffName, selectStaff);
             mJsonObject.put(STAFF_ID, staffid);
             mJsonObject.put(DATE, date);
             mJsonObject.put(TIMEWORK, timeorder);
@@ -165,7 +165,10 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
                 try {
                     mGsonAllStaff = getGson().fromJson(s, GsonAllStaff.class);
                     ArrayList<String> staffList = new ArrayList<String>();
-                    staffList.add(mGsonAllStaff.getSuccess().getStaffBean().get(0).getName());
+                    int staffNum = mGsonAllStaff.getSuccess().getStaffBean().size();
+                    for (int i = 0; i < staffNum; i++) {
+                        staffList.add(mGsonAllStaff.getSuccess().getStaffBean().get(i).getName());
+                    }
                     mBookAppointmentView.updateStaffList(staffList);
                 } catch (Exception e) {
                     mBookAppointmentView.showErrorDialog(ViewManager.ERROR_CODE.GET_STAFF_FAIL);
@@ -209,6 +212,7 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
                     int resultCode = result.getSuccess().getCode();
                     if (resultCode == 200) {
                         String message = getGson().fromJson(s, GsonResCheckBookingTime.class).getSuccess().getMessage();
+                        mBookAppointmentView.updateOrderTime();
                         //Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();  //Not show
                     } else {
                         Toast.makeText(mContext, R.string.error_check_time_booking, Toast.LENGTH_LONG).show();

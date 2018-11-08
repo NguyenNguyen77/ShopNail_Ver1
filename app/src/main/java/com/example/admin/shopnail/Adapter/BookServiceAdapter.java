@@ -73,12 +73,21 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
             holder = (ViewHolder) convertView.getTag();
         }
 
+
+        holder.spinnerStaff.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                        holder.spinnerStaff.setSelection(pos);
+                        mListusers.get(position).setSelectStaff(pos);
+                    }
+
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
+
         holder.spinnerService.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
-                        Object item = parent.getItemAtPosition(pos);
-                        String selectStaff = (String) item;
                         holder.spinnerService.setSelection(pos);
                         mListusers.get(position).setSelectService(pos);
                     }
@@ -178,10 +187,15 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
     }
 
     private void showTimePickerDialog(final ViewHolder holder, View v) {
-        String strArrtmp[] = holder.tvTime.getText().toString().split(":");
-        mHour = Integer.parseInt(strArrtmp[0]);
-        mMinute = Integer.parseInt(strArrtmp[1]);
-
+        if (holder.tvTime.getText().toString().equals("--:--")) {
+            final Calendar c = Calendar.getInstance();
+            mHour = c.get(Calendar.HOUR_OF_DAY);
+            mMinute = c.get(Calendar.MINUTE);
+        } else {
+            String strArrtmp[] = holder.tvTime.getText().toString().split(":");
+            mHour = Integer.parseInt(strArrtmp[0]);
+            mMinute = Integer.parseInt(strArrtmp[1]);
+        }
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(mView.getContext(),
                 new TimePickerDialog.OnTimeSetListener() {
@@ -189,11 +203,12 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-                        showUnderLineText(hourOfDay + ":" + minute, holder.tvTime);
-                        final TextView Caption = (TextView) holder.tvTime;
-                        mListusers.get(mPosition).setServiceTime(Caption.getText().toString());
+                        //showUnderLineText(hourOfDay + ":" + minute, holder.tvTime);
+                        //final TextView Caption = (TextView) holder.tvTime;
+                        //mListusers.get(mPosition).setServiceTime(Caption.getText().toString());
                         String staffName = mListusers.get(mPosition).mListStaff.get(mListusers.get(mPosition).getSelectStaff());
-                        mBookAppointmentActivity.checkTimeBookOnline(staffName, mPosition, Caption.getText().toString());
+                        //mBookAppointmentActivity.checkTimeBookOnline(staffName, mPosition, Caption.getText().toString());
+                        mBookAppointmentActivity.checkTimeBookOnline(staffName, mPosition,  hourOfDay + ":" + minute);
                     }
                 }, mHour, mMinute, true);
         timePickerDialog.show();
