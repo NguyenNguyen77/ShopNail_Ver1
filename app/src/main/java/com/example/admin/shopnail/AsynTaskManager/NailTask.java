@@ -12,6 +12,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.CHANGE_PASSWORD;
 import static com.example.admin.shopnail.Manager.KeyManager.CREATE_ACCOUNT_CUSTOMER;
 import static com.example.admin.shopnail.Manager.KeyManager.FORGOT_PASSWORD;
 import static com.example.admin.shopnail.Manager.KeyManager.GENERATE_CHECK_BOX;
+import static com.example.admin.shopnail.Manager.KeyManager.GET_ALL_NAVIGATE_STAFF;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_CLIENT_OF_STAFF;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_SERVICE_TYPE;
@@ -35,6 +36,10 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
         String Resuilt = "";
         ResuiltObject mResuiltObject = null;
         switch (caseManagers[0].getCase()) {
+            case GET_ALL_NAVIGATE_STAFF:
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(GET_ALL_NAVIGATE_STAFF, Resuilt);
+                break;
             case GET_SERVICE_TYPE:
                 Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(GET_SERVICE_TYPE, Resuilt);

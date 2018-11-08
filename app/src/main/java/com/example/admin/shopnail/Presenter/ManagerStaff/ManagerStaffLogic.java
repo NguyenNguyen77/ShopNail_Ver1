@@ -14,6 +14,7 @@ import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
 import com.example.admin.shopnail.Model.ManageStaff.CheckBoxObject;
+import com.example.admin.shopnail.Model.ManageStaff.GsonAllNavigateStaff;
 import com.example.admin.shopnail.Model.ManageStaff.GsonGenerateCheckbox;
 import com.example.admin.shopnail.Model.ManageStaff.GsonServiceType;
 import com.example.admin.shopnail.Model.MyDetailCustomer.GsonResuiltUpdate;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import static com.example.admin.shopnail.Manager.KeyManager.ADD_OR_UPDATE_SERVICE_CHECKING;
 import static com.example.admin.shopnail.Manager.KeyManager.GENERATE_CHECK_BOX;
+import static com.example.admin.shopnail.Manager.KeyManager.GET_ALL_NAVIGATE_STAFF;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_ALL_SERVICE_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_SERVICE_TYPE;
 import static com.example.admin.shopnail.Manager.KeyManager.ORDER;
@@ -37,6 +39,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.STAFF_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.TYPE;
 import static com.example.admin.shopnail.Manager.KeyManager.VALUE;
 import static com.example.admin.shopnail.Manager.KeyManager.VALUES;
+import static com.example.admin.shopnail.Manager.KeyManager.VinhCNLog;
 
 public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, AsyncTaskCompleteListener<ResuiltObject> {
     Context mContext;
@@ -62,6 +65,11 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
     @Override
     public void getServiceType() {
         new NailTask(this).execute(new CaseManager(mContext, GET_SERVICE_TYPE, UrlManager.GET_SERVICE_TYPE_URL, getParamBuilder()));
+    }
+
+    @Override
+    public void getAllNavigateStaff() {
+        new NailTask(this).execute(new CaseManager(mContext, GET_ALL_NAVIGATE_STAFF, UrlManager.GET_ALL_NAVIGATE_STAFF_URL, getParamBuilder()));
     }
 
     private JSONObject getJsonParamUpdateService() {
@@ -101,22 +109,28 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
     public void onTaskCompleted(String s, String CaseRequest) {
         switch (CaseRequest) {
             case GENERATE_CHECK_BOX:
-                arrCheckBox = new ArrayList<>();
-                Log.d(KeyManager.VinhCNLog, s);
-                GsonGenerateCheckbox mGsonGenerateCheckbox = getGson().fromJson(s, GsonGenerateCheckbox.class);
-                int serviceNumber = Integer.parseInt(mGsonGenerateCheckbox.getSuccess().getSetting().getService_number());
-                int Bonus = Integer.parseInt(mGsonGenerateCheckbox.getSuccess().getSetting().getBonus());
-                int Wax = Integer.parseInt(mGsonGenerateCheckbox.getSuccess().getSetting().getWax());
-                for (int i = 0; i < getMaxLine(serviceNumber, Bonus, Wax); i++) {
-                    arrCheckBox.add(new CheckBoxObject(mGsonGenerateCheckbox.getSuccess().getSetting().getId(), i < serviceNumber ? true : false, i < Bonus ? true : false, i < Wax ? true : false, i + 1, 1, 3, 2, 0, 0, 0));
+                try {
+                    arrCheckBox = new ArrayList<>();
+                    Log.d(KeyManager.VinhCNLog, s);
+                    GsonGenerateCheckbox mGsonGenerateCheckbox = getGson().fromJson(s, GsonGenerateCheckbox.class);
+                    int serviceNumber = Integer.parseInt(mGsonGenerateCheckbox.getSuccess().getSetting().getService_number());
+                    int Bonus = Integer.parseInt(mGsonGenerateCheckbox.getSuccess().getSetting().getBonus());
+                    int Wax = Integer.parseInt(mGsonGenerateCheckbox.getSuccess().getSetting().getWax());
+                    for (int i = 0; i < getMaxLine(serviceNumber, Bonus, Wax); i++) {
+                        arrCheckBox.add(new CheckBoxObject(mGsonGenerateCheckbox.getSuccess().getSetting().getId(), i < serviceNumber ? true : false, i < Bonus ? true : false, i < Wax ? true : false, i + 1, 1, 3, 2, 0, 0, 0));
+                    }
+                    managerStaffView.setListCheckBox(arrCheckBox, arrServiceType);
+                    getAllNavigateStaff();
+                } catch (Exception e) {
+                    SingleToast.show(mContext, "Server error", 3000);
                 }
-                managerStaffView.setListCheckBox(arrCheckBox, arrServiceType);
                 break;
             case ADD_OR_UPDATE_SERVICE_CHECKING:
                 Log.d(KeyManager.VinhCNLog, s);
                 try {
                     GsonResuiltUpdate update = getGson().fromJson(s, GsonResuiltUpdate.class);
                     SingleToast.show(mContext, update.isStatus() ? "Update Service success" : "Update Service fail", 3000);
+
                 } catch (Exception e) {
                     SingleToast.show(mContext, "Server error", 3000);
                 }
@@ -128,6 +142,15 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
                     arrServiceType = type.getSuccess().getServiceType();
                     createCheckbox();
                 } catch (Exception e) {
+                    SingleToast.show(mContext, "Server error", 3000);
+                }
+                break;
+            case GET_ALL_NAVIGATE_STAFF:
+                Log.d(VinhCNLog, s);
+                try{
+                    GsonAllNavigateStaff navigateStaff = getGson().fromJson(s, GsonAllNavigateStaff.class);
+                    List<GsonAllNavigateStaff.SuccessBean.NavigatesBean>  arrNavigate = navigateStaff.getSuccess().getNavigates();
+                }catch (Exception e){
                     SingleToast.show(mContext, "Server error", 3000);
                 }
                 break;

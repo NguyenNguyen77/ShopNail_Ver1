@@ -7,4 +7,6 @@ public interface ManagerStaffImp {
     void updateService();
 
     void getServiceType();
+
+    void getAllNavigateStaff();
 }

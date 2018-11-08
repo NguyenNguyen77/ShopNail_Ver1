@@ -37,6 +37,7 @@ public class KeyManager {
     public static final String GET_ALL_SERVICE_ID = "GET_ALL_SERVICE";
     public static final String GENERATE_CHECK_BOX = "GENERATE_CHECK_BOX";
     public static final String GET_SERVICE_TYPE = "GET_SERVICE_TYPE";
+    public static final String GET_ALL_NAVIGATE_STAFF = "GET_ALL_NAVIGATE_STAFF";
 
 
 

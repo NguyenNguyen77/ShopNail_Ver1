@@ -38,6 +38,7 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
         initView();
         mViewManager.showInprogressDialog();
         managerStaffLogic.getServiceType();
+//        managerStaffLogic.getAllNavigateStaff();
 
 
     }
