@@ -12,4 +12,5 @@ public interface IBookAppointmentView {
     public void updateServiceList (ArrayList<String> serviceList);
     public void onReqCallback (boolean result);
     public void showErrorDialog (ViewManager.ERROR_CODE errorCode);
+    public void checkTimeBookOnline (String staffName, int pos, String timeOrder);
 }

@@ -192,6 +192,8 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                         showUnderLineText(hourOfDay + ":" + minute, holder.tvTime);
                         final TextView Caption = (TextView) holder.tvTime;
                         mListusers.get(mPosition).setServiceTime(Caption.getText().toString());
+                        String staffName = mListusers.get(mPosition).mListStaff.get(mListusers.get(mPosition).getSelectStaff());
+                        mBookAppointmentActivity.checkTimeBookOnline(staffName, mPosition, Caption.getText().toString());
                     }
                 }, mHour, mMinute, true);
         timePickerDialog.show();

@@ -245,6 +245,12 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         }
     }
 
+    @Override
+    public void checkTimeBookOnline(String staffName, int pos, String timeOrder) {
+        String date = mTvDate.getText().toString();
+        mBookAppointmentPresenter.checkTimeBookOnline(staffName, pos, date, timeOrder);
+    }
+
     public void getDefaultInfo() {
         mCalender = Calendar.getInstance();
         SimpleDateFormat dft = null;
@@ -367,7 +373,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         }
     }
 
-    private boolean validateDatTime (int year, int month, int day) {
+    private boolean validateDatTime(int year, int month, int day) {
         mCalender = Calendar.getInstance();
         SimpleDateFormat dft = null;
         dft = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());

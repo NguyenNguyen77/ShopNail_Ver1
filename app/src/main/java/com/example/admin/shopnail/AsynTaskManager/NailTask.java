@@ -9,6 +9,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.ADD_OR_UPDATE_SERVIC
 import static com.example.admin.shopnail.Manager.KeyManager.BOOK_ONLINE;
 import static com.example.admin.shopnail.Manager.KeyManager.CANCEL_SERVICE;
 import static com.example.admin.shopnail.Manager.KeyManager.CHANGE_PASSWORD;
+import static com.example.admin.shopnail.Manager.KeyManager.CHECK_TIME_BOOK_ONLINE;
 import static com.example.admin.shopnail.Manager.KeyManager.CREATE_ACCOUNT_CUSTOMER;
 import static com.example.admin.shopnail.Manager.KeyManager.FORGOT_PASSWORD;
 import static com.example.admin.shopnail.Manager.KeyManager.GENERATE_CHECK_BOX;
@@ -123,6 +124,10 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
             case BOOK_ONLINE:
                 Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(BOOK_ONLINE, Resuilt);
+                break;
+            case CHECK_TIME_BOOK_ONLINE:
+                Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(CHECK_TIME_BOOK_ONLINE, Resuilt);
                 break;
         }
         return mResuiltObject;

@@ -18,6 +18,7 @@ import com.example.admin.shopnail.Manager.ViewManager;
 import com.example.admin.shopnail.Model.BookAppointment.GsonAllService;
 import com.example.admin.shopnail.Model.BookAppointment.GsonAllStaff;
 import com.example.admin.shopnail.Model.BookAppointment.GsonResBookAppointment;
+import com.example.admin.shopnail.Model.BookAppointment.GsonResCheckBookingTime;
 import com.example.admin.shopnail.Model.StaffInfor.GsonChangePass;
 import com.example.admin.shopnail.Model.StaffInfor.GsonStaffInfor;
 import com.example.admin.shopnail.Model.ViewProductPresenter.GsonProductChoosed;
@@ -33,6 +34,8 @@ import org.json.JSONObject;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import static com.example.admin.shopnail.Manager.KeyManager.CHECK_TIME_BOOK_ONLINE;
+import static com.example.admin.shopnail.Manager.KeyManager.DATE;
 import static com.example.admin.shopnail.Manager.KeyManager.DATE_ORDER;
 import static com.example.admin.shopnail.Manager.KeyManager.EMAIL;
 import static com.example.admin.shopnail.Manager.KeyManager.EXTRA;
@@ -44,6 +47,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.PRICE;
 import static com.example.admin.shopnail.Manager.KeyManager.PRODUCT;
 import static com.example.admin.shopnail.Manager.KeyManager.PRODUC_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.STAFF_ID;
+import static com.example.admin.shopnail.Manager.KeyManager.TIMEWORK;
 import static com.example.admin.shopnail.Manager.KeyManager.TIME_ORDER;
 import static com.example.admin.shopnail.Manager.KeyManager.USER_ID_KEY;
 import static com.example.admin.shopnail.Manager.KeyManager.USER_NAME;
@@ -82,6 +86,13 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
         String json = addJsonRequest(fullName, email, phone, date, serviceAdapter).toString();
         Log.d("KhoaND14", "KhoaNguyen: Json: " + json);
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.BOOK_ONLINE, UrlManager.ADD_BOOKING_ONLINE, json));
+    }
+
+    @Override
+    public void checkTimeBookOnline(String staffName, int position, String date, String timeorder) {
+        String json = addJsonRequestCheckTimeBooking(staffName, position, date, timeorder).toString();
+        Log.d("KhoaND14", "checkTimeBookOnline: Json: " + json);
+        new NailTask(this).execute(new CaseManager(mContext, KeyManager.CHECK_TIME_BOOK_ONLINE, UrlManager.BOOKING_TIME_CHECKING_URL, json));
     }
 
 
@@ -133,8 +144,22 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
         return json;
     }
 
+    JSONObject addJsonRequestCheckTimeBooking(String staffName, int position, String date, String timeorder) {
+        JSONObject mJsonObject = new JSONObject();
+        try {
+            int staffid = getStaffID(staffName, position);
+            mJsonObject.put(STAFF_ID, staffid);
+            mJsonObject.put(DATE, date);
+            mJsonObject.put(TIMEWORK, timeorder);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return mJsonObject;
+    }
+
     @Override
     public void onTaskCompleted(String s, String CaseRequest) {
+        Log.d("KhoaND14", "result: Json: " + s);
         switch (CaseRequest) {
             case KeyManager.GET_ALL_STAFF_ID:
                 try {
@@ -173,8 +198,23 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
                         Toast.makeText(mContext, R.string.error_book_appointment, Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
-//                    Toast.makeText(mContext, R.string.error_book_appointment, Toast.LENGTH_LONG).show();
-                    Toast.makeText(mContext, "KhoaNd14. Result GSON:\n" + s, Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, R.string.error_book_appointment, Toast.LENGTH_LONG).show();
+                }
+                break;
+
+            case CHECK_TIME_BOOK_ONLINE:
+
+                try {
+                    GsonResCheckBookingTime result = getGson().fromJson(s, GsonResCheckBookingTime.class);
+                    int resultCode = result.getSuccess().getCode();
+                    if (resultCode == 200) {
+                        String message = getGson().fromJson(s, GsonResCheckBookingTime.class).getSuccess().getMessage();
+                        //Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();  //Not show
+                    } else {
+                        Toast.makeText(mContext, R.string.error_check_time_booking, Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(mContext, R.string.error_check_time_booking, Toast.LENGTH_LONG).show();
                 }
                 break;
             default:
