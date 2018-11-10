@@ -262,7 +262,6 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     @Override
     public void updateOrderTime() {
         if (currentPosition <= mBookServiceAdapter.getCount()) {
-            BookService test = mBookServiceAdapter.getItem(currentPosition);
             mBookServiceAdapter.getItem(currentPosition).setServiceTime(orderTime);
             mBookServiceAdapter.notifyDataSetChanged();
         }

@@ -3,6 +3,7 @@ package com.example.admin.shopnail.Adapter;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -105,6 +106,11 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
 
 
         holder.tvTime.setText(user.getServiceTime());
+        if (holder.tvTime.getText().equals("--:--")) {
+            holder.tvTime.setTextColor(Color.RED);
+        } else {
+            holder.tvTime.setTextColor(Color.BLUE);
+        }
         holder.tvTime.setId(position);
         holder.tvTime.setOnClickListener(new View.OnClickListener() {
             @Override

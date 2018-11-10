@@ -83,6 +83,10 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
 
     @Override
     public void reqBookOnline(String fullName, String email, String phone, String date, BookServiceAdapter serviceAdapter) {
+        if (!checkReqTimeValid(serviceAdapter)) {
+            Toast.makeText(mContext, R.string.error_check_time_booking, Toast.LENGTH_LONG).show();
+            return;
+        }
         String json = addJsonRequest(fullName, email, phone, date, serviceAdapter).toString();
         Log.d("KhoaND14", "KhoaNguyen: Json: " + json);
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.BOOK_ONLINE, UrlManager.ADD_BOOKING_ONLINE, json));
@@ -261,5 +265,15 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
             }
         }
         return false;
+    }
+
+    private boolean checkReqTimeValid(BookServiceAdapter bookServiceAdapter) {
+        int reqNum = bookServiceAdapter.getCount();
+        for (int i = 0; i < reqNum; i++) {
+            if (bookServiceAdapter.getItem(i).getServiceTime().equals("--:--")) {
+                return false;
+            }
+        }
+        return true;
     }
 }
