@@ -1,5 +1,6 @@
 package com.example.admin.shopnail.View.StaffInfo;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -9,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -205,6 +207,20 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         Picasso.get().load(success.getAvatar()).into(imgAvatar);
     }
 
+    @Override
+    public void updatePermission() {
+        final int REQUEST_EXTERNAL_STORAGE = 1;
+        String[] PERMISSIONS_STORAGE = {
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
+        ActivityCompat.requestPermissions(
+                this,
+                PERMISSIONS_STORAGE,
+                REQUEST_EXTERNAL_STORAGE
+        );
+    }
+
     private boolean checkValidPassword(String mOldPass, String newPass, String mConfirmNewPass) {
         boolean result = true;
         if (mOldPass.equals("")) {
@@ -248,8 +264,8 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-            imgAvatar.setBackgroundColor(R.drawable.background_avatar);
             imgAvatar.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            mStaffInformationPresenter.requestChangeAvatar(picturePath);
         }
     }
 

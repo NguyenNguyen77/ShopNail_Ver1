@@ -9,4 +9,5 @@ public interface IStaffInformation {
     void showError();
 
     void setStaffInfor(GsonStaffInfor.SuccessBean success);
+    void updatePermission ();
 }

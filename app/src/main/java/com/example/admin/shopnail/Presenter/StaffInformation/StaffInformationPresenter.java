@@ -1,7 +1,13 @@
 package com.example.admin.shopnail.Presenter.StaffInformation;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.util.Base64;
 import android.util.Log;
 
 import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
@@ -15,6 +21,11 @@ import com.example.admin.shopnail.Model.StaffInfor.GsonChangePass;
 import com.example.admin.shopnail.Model.StaffInfor.GsonStaffInfor;
 import com.example.admin.shopnail.View.ERROR_CODE;
 import com.example.admin.shopnail.View.StaffInfo.IStaffInformation;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 
 public class StaffInformationPresenter extends BaseMethod implements IStaffInformationPresenter, AsyncTaskCompleteListener<ResuiltObject> {
 
@@ -60,13 +71,44 @@ public class StaffInformationPresenter extends BaseMethod implements IStaffInfor
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_USER_BY_ID, UrlManager.GET_USER_BY_ID_URL + defaults, getParamBuilder()));
     }
 
+    @Override
+    public void requestChangeAvatar(String path) {
+        new NailTask(this).execute(new CaseManager(mContext, KeyManager.CHANGE_AVATAR, UrlManager.CHANGE_AVATAR_URL, addJsonRequestChangeAvatar(path).toString()));
+    }
+
     private Uri.Builder getParamBuilder() {
         return new Uri.Builder();
     }
 
+    JSONObject addJsonRequestChangeAvatar(String path) {
+        JSONObject mJsonObject = new JSONObject();
+        try {
+            mJsonObject.put(KeyManager.ID, Integer.parseInt(getDefaults(KeyManager.USER_ID, mContext)));
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 4;
+            options.inPurgeable = true;
+            Bitmap bm = BitmapFactory.decodeFile(path, options);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            int permission = ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE);
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                mIStaffInforView.updatePermission();
+            } else {
+                bm.compress(Bitmap.CompressFormat.JPEG, 40, baos);
+                byte[] byteImage_photo = baos.toByteArray();
+                String encodedImage = Base64.encodeToString(byteImage_photo, Base64.DEFAULT);
+                mJsonObject.put(KeyManager.AVATARIMAGE, encodedImage);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d("KhoaND14", "request: Json: " + mJsonObject);
+        return mJsonObject;
+    }
 
     @Override
     public void onTaskCompleted(String s, String CaseRequest) {
+        Log.d("KhoaND14", "result: Json: " + s);
         switch (CaseRequest) {
             case KeyManager.GET_USER_BY_ID:
                 try {
@@ -85,6 +127,11 @@ public class StaffInformationPresenter extends BaseMethod implements IStaffInfor
                     mIStaffInforView.onChangePasswordResult(ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_NG);
                 }
                 break;
+            case KeyManager.CHANGE_AVATAR:
+
+                break;
+                default:
+                    break;
         }
 
     }

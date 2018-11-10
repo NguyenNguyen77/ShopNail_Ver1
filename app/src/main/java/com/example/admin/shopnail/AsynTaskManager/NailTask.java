@@ -8,6 +8,7 @@ import com.example.admin.shopnail.Manager.KeyManager;
 import static com.example.admin.shopnail.Manager.KeyManager.ADD_OR_UPDATE_SERVICE_CHECKING;
 import static com.example.admin.shopnail.Manager.KeyManager.BOOK_ONLINE;
 import static com.example.admin.shopnail.Manager.KeyManager.CANCEL_SERVICE;
+import static com.example.admin.shopnail.Manager.KeyManager.CHANGE_AVATAR;
 import static com.example.admin.shopnail.Manager.KeyManager.CHANGE_PASSWORD;
 import static com.example.admin.shopnail.Manager.KeyManager.CHECK_TIME_BOOK_ONLINE;
 import static com.example.admin.shopnail.Manager.KeyManager.CREATE_ACCOUNT_CUSTOMER;
@@ -96,6 +97,10 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
             case CHANGE_PASSWORD:
                 Resuilt = caseManagers[0].makePostRequest(caseManagers[0].getUrl(), caseManagers[0].getmBuilder(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(KeyManager.CHANGE_PASSWORD, Resuilt);
+                break;
+            case CHANGE_AVATAR:
+                Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(KeyManager.CHANGE_AVATAR, Resuilt);
                 break;
             case CREATE_ACCOUNT_CUSTOMER:
                 Resuilt = caseManagers[0].makePostRequest(caseManagers[0].getUrl(), caseManagers[0].getmBuilder(), caseManagers[0].getToken());

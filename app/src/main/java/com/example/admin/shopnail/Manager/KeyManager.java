@@ -20,6 +20,7 @@ public class KeyManager {
     public static final String ID = "id";
     public static final String TOKEN = "TOKEN";
     public static final String CHANGE_PASSWORD = "CHANGE_PASSWORD";
+    public static final String CHANGE_AVATAR = "CHANGE_AVATAR";
     public static final String CREATE_ACCOUNT_CUSTOMER = "CREATE_ACCOUNT_CUSTOMER";
     public static final String LOGIN_OLD_CUSTOMER = "LOGIN_OLD_CUSTOMER";
     public static final String FORGOT_PASSWORD = "FORGOT_PASSWORD";
@@ -68,5 +69,6 @@ public class KeyManager {
     public static final String SERVICES = "services";
 
     public static final String TIMEWORK = "timeWork";
+    public static final String AVATARIMAGE = "avatarImage";
 
 }
