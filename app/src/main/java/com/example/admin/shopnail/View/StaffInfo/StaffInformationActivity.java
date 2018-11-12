@@ -47,7 +47,6 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
     private String mOldPass;
     private String mNewPass;
     private String mConfirmNewPass;
-    private ProgressDialog mProgressDialog;
     private Dialog mChangePassDialog;
     private static int RESULT_LOAD_IMAGE = 1;
 
@@ -163,9 +162,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
                 mNewPass = txtNewPass.getText().toString().trim();
                 mConfirmNewPass = txtConfirmNewPass.getText().toString().trim();
                 if (checkValidPassword(mOldPass, mNewPass, mConfirmNewPass)) {
-                    mProgressDialog = new ProgressDialog(mChangePassDialog.getContext());   // Show in-progress dialog: please wait
-                    mProgressDialog.setMessage(getString(R.string.please_wait));
-                    mProgressDialog.show();
+                    mViewManager.showInprogressDialog();
                     mStaffInformationPresenter.requestChangePassword(BaseMethod.getDefaults(PASS_WORD, StaffInformationActivity.this), mNewPass, mConfirmNewPass);
                 }
             }
@@ -188,13 +185,24 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         } else {
             Toast.makeText(StaffInformationActivity.this, R.string.change_pass_fail, Toast.LENGTH_LONG).show();
         }
-        if (mProgressDialog != null) {
-            mProgressDialog.cancel();
+       mViewManager.dismissInprogressDialog();
+    }
+
+    @Override
+    public void onChangeAvatarResult(boolean result) {
+
+        if (result) {
+            mStaffInformationPresenter.requestInfor(BaseMethod.getDefaults(KeyManager.USER_ID, this));
+            Toast.makeText(this, R.string.change_avatar_success, Toast.LENGTH_SHORT).show();
+        } else {
+            mViewManager.dismissInprogressDialog();
+            Toast.makeText(this, R.string.change_avatar_failed, Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void showError() {
+        mViewManager.dismissInprogressDialog();
         Toast.makeText(this, "Loading Staff Fail...", Toast.LENGTH_SHORT).show();
     }
 
@@ -265,6 +273,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
             imgAvatar.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            mViewManager.showInprogressDialog();
             mStaffInformationPresenter.requestChangeAvatar(picturePath);
         }
     }

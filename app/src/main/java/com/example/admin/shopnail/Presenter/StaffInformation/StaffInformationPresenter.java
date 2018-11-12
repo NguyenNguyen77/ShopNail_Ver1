@@ -17,6 +17,7 @@ import com.example.admin.shopnail.AsynTaskManager.ResuiltObject;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
+import com.example.admin.shopnail.Model.StaffInfor.GsonChangeAvatar;
 import com.example.admin.shopnail.Model.StaffInfor.GsonChangePass;
 import com.example.admin.shopnail.Model.StaffInfor.GsonStaffInfor;
 import com.example.admin.shopnail.View.ERROR_CODE;
@@ -42,17 +43,6 @@ public class StaffInformationPresenter extends BaseMethod implements IStaffInfor
 
     @Override
     public void requestChangePassword(final String oldPass, final String newPass, final String confirmNewPass) {
-//        ERROR_CODE.CHANGE_PASS_RESULT_CODE result = ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_NG;
-//        //Send request to Server
-//        result = ERROR_CODE.CHANGE_PASS_RESULT_CODE.RESULT_OK;
-//        final Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//
-//            }
-//        }, 2000);
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.CHANGE_PASSWORD, UrlManager.CHANGE_PASSWORD_URL, getParamBuilder(oldPass, newPass, confirmNewPass)));
     }
 
@@ -63,6 +53,7 @@ public class StaffInformationPresenter extends BaseMethod implements IStaffInfor
         mBuilder.appendQueryParameter(KeyManager.PASS_WORD, oldPass);
         mBuilder.appendQueryParameter(KeyManager.PASS_WORD_NEW, newPass);
         mBuilder.appendQueryParameter(KeyManager.PASS_WORD_CONFIRMATION, confirmNewPass);
+        Log.d("KhoaND14", "request: Json: " + mBuilder.build().getEncodedQuery());
         return mBuilder;
     }
 
@@ -128,7 +119,12 @@ public class StaffInformationPresenter extends BaseMethod implements IStaffInfor
                 }
                 break;
             case KeyManager.CHANGE_AVATAR:
-
+                try {
+                    GsonChangeAvatar mGsonChangeAvatar = getGson().fromJson(s, GsonChangeAvatar.class);
+                    mIStaffInforView.onChangeAvatarResult(mGsonChangeAvatar.isStatus());
+                } catch (Exception e) {
+                    mIStaffInforView.onChangeAvatarResult(false);
+                }
                 break;
                 default:
                     break;

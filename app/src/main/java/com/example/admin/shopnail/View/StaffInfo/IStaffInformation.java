@@ -10,4 +10,5 @@ public interface IStaffInformation {
 
     void setStaffInfor(GsonStaffInfor.SuccessBean success);
     void updatePermission ();
+    void onChangeAvatarResult(boolean result);
 }
