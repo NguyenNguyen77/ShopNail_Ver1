@@ -1,6 +1,7 @@
 package com.example.admin.shopnail.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Model.ManageStaff.CheckBoxObject;
 import com.example.admin.shopnail.Model.ManageStaff.GsonServiceType;
 import com.example.admin.shopnail.R;
@@ -73,19 +75,28 @@ public class ManageStaffAdapter extends BaseAdapter {
         holder.lnService.setVisibility(objects.get(position).isService() ? View.VISIBLE : View.INVISIBLE);
         holder.checkBonus.setVisibility(objects.get(position).isBonus() ? View.VISIBLE : View.INVISIBLE);
         holder.checkWax.setVisibility(objects.get(position).isWax() ? View.VISIBLE : View.INVISIBLE);
+        holder.checkBonus.setChecked(objects.get(position).getValueBonus() == 1 ? true : false);
+        holder.checkWax.setChecked(objects.get(position).getValueWax() == 1 ? true : false);
+        int valueService = objects.get(position).getValueService();
+        Log.d(KeyManager.VinhCNLog, String.valueOf(valueService));
+        holder.checkService.setChecked(valueService != 0 ? true : false);
+        if (valueService != 0 && valueService == 2){
+            holder.spnService.setSelection(valueService-1);
+        }else {
+            holder.spnService.setSelection(0);
+        }
 //        holder.checkService.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //                objects.get(position).setValueService(holder.checkService.isChecked() ? 1 : 0);
 //            }
 //        });
-
         holder.checkService.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     int positionSpn = holder.spnService.getSelectedItemPosition();
-                    int idSerivce  =  arrServiceType.get(positionSpn).getId();
+                    int idSerivce = arrServiceType.get(positionSpn).getId();
                     objects.get(position).setValueService(idSerivce);
                 } else {
                     objects.get(position).setValueService(0);
@@ -96,9 +107,9 @@ public class ManageStaffAdapter extends BaseAdapter {
         holder.spnService.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
-                if (holder.checkService.isChecked()){
+                if (holder.checkService.isChecked()) {
                     objects.get(position).setValueService(arrServiceType.get(i).getId());
-                }else {
+                } else {
                     objects.get(position).setValueService(0);
                 }
             }

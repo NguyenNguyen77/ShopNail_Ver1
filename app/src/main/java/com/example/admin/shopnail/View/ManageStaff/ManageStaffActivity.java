@@ -22,11 +22,10 @@ import com.example.admin.shopnail.Manager.ViewManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageStaffActivity extends Activity implements View.OnClickListener, ManagerStaffView,NetworkReceiver.ConnectivityReceiverListener {
+public class ManageStaffActivity extends Activity implements View.OnClickListener, ManagerStaffView, NetworkReceiver.ConnectivityReceiverListener {
     protected ViewManager mViewManager = ViewManager.getInstance();
     Button btn_back;
     ListView listManageStaff;
-    ManageStaffAdapter manageStaffAdapter = null;
     List<ManageStaff> mList = new ArrayList<ManageStaff>();
     ManagerStaffImp managerStaffLogic = new ManagerStaffLogic(this, this);
     Button btnUpdate;
@@ -130,8 +129,7 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
     }
 
     @Override
-    public void setListCheckBox(List<CheckBoxObject> arrCheckBox, List<GsonServiceType.SuccessBean.ServiceTypeBean> arrServiceType) {
-        manageStaffAdapter = new ManageStaffAdapter(ManageStaffActivity.this,arrCheckBox, arrServiceType);
+    public void setListCheckBox(List<CheckBoxObject> arrCheckBox, List<GsonServiceType.SuccessBean.ServiceTypeBean> arrServiceType, ManageStaffAdapter manageStaffAdapter) {
         listManageStaff.setAdapter(manageStaffAdapter);
     }
 

@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.admin.shopnail.Adapter.ManageStaffAdapter;
 import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
 import com.example.admin.shopnail.AsynTaskManager.CaseManager;
 import com.example.admin.shopnail.AsynTaskManager.NailTask;
@@ -18,6 +19,7 @@ import com.example.admin.shopnail.Model.ManageStaff.GsonAllNavigateStaff;
 import com.example.admin.shopnail.Model.ManageStaff.GsonGenerateCheckbox;
 import com.example.admin.shopnail.Model.ManageStaff.GsonServiceType;
 import com.example.admin.shopnail.Model.MyDetailCustomer.GsonResuiltUpdate;
+import com.example.admin.shopnail.View.ManageStaff.ManageStaffActivity;
 import com.example.admin.shopnail.View.ManageStaff.ManagerStaffView;
 import com.google.gson.JsonObject;
 
@@ -46,6 +48,7 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
     ManagerStaffView managerStaffView;
     List<CheckBoxObject> arrCheckBox;
     List<GsonServiceType.SuccessBean.ServiceTypeBean> arrServiceType;
+    ManageStaffAdapter manageStaffAdapter;
 
     public ManagerStaffLogic(Context mContext, ManagerStaffView managerStaffView) {
         this.mContext = mContext;
@@ -79,20 +82,26 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
             JSONArray services = new JSONArray();
             for (int i = 0; i < arrCheckBox.size(); i++) {
                 JSONObject objects = new JSONObject();
-                objects.put(TYPE, arrCheckBox.get(i).getTypeService());
-                objects.put(ORDER, arrCheckBox.get(i).getOrder());
-                objects.put(VALUE, arrCheckBox.get(i).getValueService());
-                services.put(objects);
-                objects = new JSONObject();
-                objects.put(TYPE, arrCheckBox.get(i).getTypeWax());
-                objects.put(ORDER, arrCheckBox.get(i).getOrder());
-                objects.put(VALUE, arrCheckBox.get(i).getValueWax());
-                services.put(objects);
-                objects = new JSONObject();
-                objects.put(TYPE, arrCheckBox.get(i).getTypeBonus());
-                objects.put(ORDER, arrCheckBox.get(i).getOrder());
-                objects.put(VALUE, arrCheckBox.get(i).getValueBonus());
-                services.put(objects);
+                if (arrCheckBox.get(i).getValueService() != 0) {
+                    objects.put(TYPE, arrCheckBox.get(i).getTypeService());
+                    objects.put(ORDER, arrCheckBox.get(i).getOrder());
+                    objects.put(VALUE, arrCheckBox.get(i).getValueService());
+                    services.put(objects);
+                }
+                if (arrCheckBox.get(i).getValueWax() == 1) {
+                    objects = new JSONObject();
+                    objects.put(TYPE, arrCheckBox.get(i).getTypeWax());
+                    objects.put(ORDER, arrCheckBox.get(i).getOrder());
+                    objects.put(VALUE, arrCheckBox.get(i).getValueWax());
+                    services.put(objects);
+                }
+                if (arrCheckBox.get(i).getValueBonus() == 1) {
+                    objects = new JSONObject();
+                    objects.put(TYPE, arrCheckBox.get(i).getTypeBonus());
+                    objects.put(ORDER, arrCheckBox.get(i).getOrder());
+                    objects.put(VALUE, arrCheckBox.get(i).getValueBonus());
+                    services.put(objects);
+                }
             }
             object.put(SERVICES, services);
         } catch (JSONException e) {
@@ -119,7 +128,8 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
                     for (int i = 0; i < getMaxLine(serviceNumber, Bonus, Wax); i++) {
                         arrCheckBox.add(new CheckBoxObject(mGsonGenerateCheckbox.getSuccess().getSetting().getId(), i < serviceNumber ? true : false, i < Bonus ? true : false, i < Wax ? true : false, i + 1, 1, 3, 2, 0, 0, 0));
                     }
-                    managerStaffView.setListCheckBox(arrCheckBox, arrServiceType);
+                    manageStaffAdapter = new ManageStaffAdapter(mContext, arrCheckBox, arrServiceType);
+                    managerStaffView.setListCheckBox(arrCheckBox, arrServiceType, manageStaffAdapter);
                     getAllNavigateStaff();
                 } catch (Exception e) {
                     SingleToast.show(mContext, "Server error", 3000);
@@ -147,10 +157,23 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
                 break;
             case GET_ALL_NAVIGATE_STAFF:
                 Log.d(VinhCNLog, s);
-                try{
+                try {
                     GsonAllNavigateStaff navigateStaff = getGson().fromJson(s, GsonAllNavigateStaff.class);
-                    List<GsonAllNavigateStaff.SuccessBean.NavigatesBean>  arrNavigate = navigateStaff.getSuccess().getNavigates();
-                }catch (Exception e){
+                    List<GsonAllNavigateStaff.SuccessBean.NavigatesBean> arrNavigate = navigateStaff.getSuccess().getNavigates();
+                    for (int i = 0; i < arrNavigate.size(); i++) {
+                        for (int j = 0; j < arrCheckBox.size(); j++) {
+                            int order_number = Integer.parseInt(arrNavigate.get(i).getOrder_number());
+                            int order = arrCheckBox.get(j).getOrder();
+                            if (order_number == order) {
+                                int ServiceID = Integer.parseInt(arrNavigate.get(i).getService_id());
+                                arrCheckBox.get(j).setValueService(ServiceID);
+                                arrCheckBox.get(j).setValueWax(Integer.parseInt(arrNavigate.get(i).getWax()));
+                                arrCheckBox.get(j).setValueBonus(Integer.parseInt(arrNavigate.get(i).getBonus()));
+                            }
+                        }
+                    }
+                    manageStaffAdapter.notifyDataSetChanged();
+                } catch (Exception e) {
                     SingleToast.show(mContext, "Server error", 3000);
                 }
                 break;
