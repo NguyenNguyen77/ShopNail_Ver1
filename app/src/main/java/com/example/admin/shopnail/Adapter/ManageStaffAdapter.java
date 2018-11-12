@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
@@ -17,6 +16,7 @@ import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Model.ManageStaff.CheckBoxObject;
 import com.example.admin.shopnail.Model.ManageStaff.GsonServiceType;
 import com.example.admin.shopnail.R;
+import com.example.admin.shopnail.View.ManageStaff.ManageStaffActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +28,14 @@ public class ManageStaffAdapter extends BaseAdapter {
     LayoutInflater layoutInflater;
     ArrayAdapter<String> adapterCategory = null;
     List<GsonServiceType.SuccessBean.ServiceTypeBean> arrServiceType;
-//    String[] paths = {"Acrylic", "Natural Nails", "Waxing & Facial"};
+    //    String[] paths = {"Acrylic", "Natural Nails", "Waxing & Facial"};
+    boolean enableSelectSpinner = false;
 
     public ManageStaffAdapter(Context context, List<CheckBoxObject> listManage, List<GsonServiceType.SuccessBean.ServiceTypeBean> arrservicetype) {
 //        this.context = context;
         this.objects = listManage;
         this.arrServiceType = arrservicetype;
+        this.context = context;
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -71,6 +73,8 @@ public class ManageStaffAdapter extends BaseAdapter {
                 android.R.layout.simple_spinner_item, getArrStringService(arrServiceType));
         adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.spnService.setAdapter(adapterCategory);
+//        holder.spnService.setSelected(false);  // must
+//        holder.spnService.setSelection(0,true);
         CheckBoxObject item = this.objects.get(position);
         holder.lnService.setVisibility(objects.get(position).isService() ? View.VISIBLE : View.INVISIBLE);
         holder.checkBonus.setVisibility(objects.get(position).isBonus() ? View.VISIBLE : View.INVISIBLE);
@@ -80,27 +84,22 @@ public class ManageStaffAdapter extends BaseAdapter {
         int valueService = objects.get(position).getValueService();
         Log.d(KeyManager.VinhCNLog, String.valueOf(valueService));
         holder.checkService.setChecked(valueService != 0 ? true : false);
-        if (valueService != 0 && valueService == 2){
-            holder.spnService.setSelection(valueService-1);
-        }else {
+        if (valueService != 0 && valueService == 2) {
+            holder.spnService.setSelection(valueService - 1);
+        } else {
             holder.spnService.setSelection(0);
         }
-//        holder.checkService.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                objects.get(position).setValueService(holder.checkService.isChecked() ? 1 : 0);
-//            }
-//        });
-        holder.checkService.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.checkService.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
+            public void onClick(View v) {
+                if (holder.checkService.isChecked()) {
                     int positionSpn = holder.spnService.getSelectedItemPosition();
                     int idSerivce = arrServiceType.get(positionSpn).getId();
                     objects.get(position).setValueService(idSerivce);
                 } else {
                     objects.get(position).setValueService(0);
                 }
+                ((ManageStaffActivity) context).AddOrRemoveItemsArray(holder.checkService.isChecked(), position, objects.get(position).getTypeService());
             }
         });
 
@@ -111,6 +110,9 @@ public class ManageStaffAdapter extends BaseAdapter {
                     objects.get(position).setValueService(arrServiceType.get(i).getId());
                 } else {
                     objects.get(position).setValueService(0);
+                }
+                if (enableSelectSpinner) {
+                    ((ManageStaffActivity) context).ChangeServiceType(holder.checkService.isChecked(), position, objects.get(position).getTypeService());
                 }
             }
 
@@ -124,6 +126,7 @@ public class ManageStaffAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 objects.get(position).setValueBonus(holder.checkBonus.isChecked() ? 1 : 0);
+                ((ManageStaffActivity) context).AddOrRemoveItemsArray(holder.checkBonus.isChecked(), position, objects.get(position).getTypeBonus());
             }
         });
 
@@ -131,6 +134,7 @@ public class ManageStaffAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 objects.get(position).setValueWax(holder.checkWax.isChecked() ? 1 : 0);
+                ((ManageStaffActivity) context).AddOrRemoveItemsArray(holder.checkBonus.isChecked(), position, objects.get(position).getTypeWax());
             }
         });
         return convertView;
@@ -143,6 +147,10 @@ public class ManageStaffAdapter extends BaseAdapter {
             arrService.add(s.getName());
         }
         return arrService;
+    }
+
+    public void setEnableSelectSpinner(boolean isEnable) {
+        this.enableSelectSpinner = isEnable;
     }
 
     class ViewHolder {

@@ -49,6 +49,8 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
     List<CheckBoxObject> arrCheckBox;
     List<GsonServiceType.SuccessBean.ServiceTypeBean> arrServiceType;
     ManageStaffAdapter manageStaffAdapter;
+    JSONArray jsonArray = new JSONArray();
+
 
     public ManagerStaffLogic(Context mContext, ManagerStaffView managerStaffView) {
         this.mContext = mContext;
@@ -75,40 +77,94 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
         new NailTask(this).execute(new CaseManager(mContext, GET_ALL_NAVIGATE_STAFF, UrlManager.GET_ALL_NAVIGATE_STAFF_URL, getParamBuilder()));
     }
 
+    @Override
+    public void putJsonArray(boolean isChecked, int position, int type) {
+        JSONObject objects;
+        try {
+            boolean isNotHave = false;
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject object = jsonArray.getJSONObject(i);
+                if (object.getInt(TYPE) == type && object.getInt(ORDER) == arrCheckBox.get(position).getOrder()) {
+                    jsonArray.remove(i);
+                    isNotHave = true;
+                }
+            }
+            if (!isNotHave) {
+                switch (type) {
+                    case 1:
+                        objects = new JSONObject();
+                        objects.put(TYPE, arrCheckBox.get(position).getTypeService());
+                        objects.put(ORDER, arrCheckBox.get(position).getOrder());
+                        objects.put(VALUE, arrCheckBox.get(position).getValueService());
+                        jsonArray.put(objects);
+                        break;
+                    case 2:
+                        objects = new JSONObject();
+                        objects.put(TYPE, arrCheckBox.get(position).getTypeWax());
+                        objects.put(ORDER, arrCheckBox.get(position).getOrder());
+                        objects.put(VALUE, arrCheckBox.get(position).getValueWax());
+                        jsonArray.put(objects);
+                        break;
+                    case 3:
+                        objects = new JSONObject();
+                        objects.put(TYPE, arrCheckBox.get(position).getTypeBonus());
+                        objects.put(ORDER, arrCheckBox.get(position).getOrder());
+                        objects.put(VALUE, arrCheckBox.get(position).getValueBonus());
+                        jsonArray.put(objects);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            Log.d(KeyManager.VinhCNLog, jsonArray.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void changeService(boolean checked, int position, int typeService) {
+        try {
+            boolean isHave = false;
+            if (checked) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    if (object.getInt(TYPE) == typeService && object.getInt(ORDER) == arrCheckBox.get(position).getOrder()) {
+                        jsonArray.remove(i);
+                        JSONObject objects = new JSONObject();
+                        objects.put(TYPE, arrCheckBox.get(position).getTypeService());
+                        objects.put(ORDER, arrCheckBox.get(position).getOrder());
+                        objects.put(VALUE, arrCheckBox.get(position).getValueService());
+                        jsonArray.put(objects);
+                        isHave = true;
+                    }
+                }
+                if (!isHave) {
+                    JSONObject objects = new JSONObject();
+                    objects.put(TYPE, arrCheckBox.get(position).getTypeService());
+                    objects.put(ORDER, arrCheckBox.get(position).getOrder());
+                    objects.put(VALUE, arrCheckBox.get(position).getValueService());
+                    jsonArray.put(objects);
+                }
+            }
+            Log.d(KeyManager.VinhCNLog, jsonArray.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private JSONObject getJsonParamUpdateService() {
         JSONObject object = new JSONObject();
         try {
             object.put(STAFF_ID, getStaffId(mContext));
-            JSONArray services = new JSONArray();
-            for (int i = 0; i < arrCheckBox.size(); i++) {
-                JSONObject objects = new JSONObject();
-                if (arrCheckBox.get(i).getValueService() != 0) {
-                    objects.put(TYPE, arrCheckBox.get(i).getTypeService());
-                    objects.put(ORDER, arrCheckBox.get(i).getOrder());
-                    objects.put(VALUE, arrCheckBox.get(i).getValueService());
-                    services.put(objects);
-                }
-                if (arrCheckBox.get(i).getValueWax() == 1) {
-                    objects = new JSONObject();
-                    objects.put(TYPE, arrCheckBox.get(i).getTypeWax());
-                    objects.put(ORDER, arrCheckBox.get(i).getOrder());
-                    objects.put(VALUE, arrCheckBox.get(i).getValueWax());
-                    services.put(objects);
-                }
-                if (arrCheckBox.get(i).getValueBonus() == 1) {
-                    objects = new JSONObject();
-                    objects.put(TYPE, arrCheckBox.get(i).getTypeBonus());
-                    objects.put(ORDER, arrCheckBox.get(i).getOrder());
-                    objects.put(VALUE, arrCheckBox.get(i).getValueBonus());
-                    services.put(objects);
-                }
-            }
-            object.put(SERVICES, services);
+            object.put(SERVICES, jsonArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return object;
     }
+
 
     private Uri.Builder getParamBuilder() {
         return new Uri.Builder();
@@ -165,10 +221,20 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
                             int order_number = Integer.parseInt(arrNavigate.get(i).getOrder_number());
                             int order = arrCheckBox.get(j).getOrder();
                             if (order_number == order) {
-                                int ServiceID = Integer.parseInt(arrNavigate.get(i).getService_id());
-                                arrCheckBox.get(j).setValueService(ServiceID);
-                                arrCheckBox.get(j).setValueWax(Integer.parseInt(arrNavigate.get(i).getWax()));
-                                arrCheckBox.get(j).setValueBonus(Integer.parseInt(arrNavigate.get(i).getBonus()));
+                                switch (Integer.parseInt(arrNavigate.get(i).getType())) {
+                                    case 1:
+                                        int ServiceID = Integer.parseInt(arrNavigate.get(i).getService_id());
+                                        arrCheckBox.get(j).setValueService(ServiceID);
+                                        break;
+                                    case 2:
+                                        arrCheckBox.get(j).setValueWax(Integer.parseInt(arrNavigate.get(i).getWax()));
+                                        break;
+                                    case 3:
+                                        arrCheckBox.get(j).setValueBonus(Integer.parseInt(arrNavigate.get(i).getBonus()));
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                         }
                     }

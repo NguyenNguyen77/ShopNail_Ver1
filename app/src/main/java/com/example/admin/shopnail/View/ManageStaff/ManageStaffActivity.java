@@ -30,6 +30,7 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
     ManagerStaffImp managerStaffLogic = new ManagerStaffLogic(this, this);
     Button btnUpdate;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +137,16 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
     @Override
     public void closeProgress() {
         mViewManager.dismissInprogressDialog();
+    }
+
+    @Override
+    public void AddOrRemoveItemsArray(boolean isChecked, int position, int type) {
+        managerStaffLogic.putJsonArray(isChecked, position, type);
+    }
+
+    @Override
+    public void ChangeServiceType(boolean checked, int position, int typeService) {
+        managerStaffLogic.changeService(checked, position, typeService);
     }
 
     // Check Internet
