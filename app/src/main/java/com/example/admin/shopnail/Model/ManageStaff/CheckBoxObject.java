@@ -13,6 +13,7 @@ public class CheckBoxObject {
     int valueBonus;
     int valueWax;
 
+
     public CheckBoxObject(int id, boolean isService, boolean isBonus, boolean isWax, int order, int typeService, int typeBonus, int typeWax, int valueService, int valueBonus, int valueWax) {
         Id = id;
         this.isService = isService;

@@ -1,5 +1,7 @@
 package com.example.admin.shopnail.View.ManageStaff;
 
+import android.widget.ListView;
+
 import com.example.admin.shopnail.Adapter.ManageStaffAdapter;
 import com.example.admin.shopnail.Model.ManageStaff.CheckBoxObject;
 import com.example.admin.shopnail.Model.ManageStaff.GsonServiceType;
@@ -14,4 +16,6 @@ public interface ManagerStaffView {
     void AddOrRemoveItemsArray(boolean isChecked, int position, int type);
 
     void ChangeServiceType(boolean checked, int position, int typeService);
+
+    ListView getListView();
 }

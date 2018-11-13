@@ -3,6 +3,7 @@ package com.example.admin.shopnail.Presenter.ManagerStaff;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.admin.shopnail.Adapter.ManageStaffAdapter;
@@ -122,35 +123,51 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
         }
     }
 
+
+    int countModify = 0;
+    boolean isAddArray = false;
+
     @Override
     public void changeService(boolean checked, int position, int typeService) {
         try {
-            boolean isHave = false;
-            if (checked) {
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject object = jsonArray.getJSONObject(i);
-                    if (object.getInt(TYPE) == typeService && object.getInt(ORDER) == arrCheckBox.get(position).getOrder()) {
-                        jsonArray.remove(i);
+            if (countModify < (arrCheckBox.size() * 2)) {
+                countModify++;
+            }
+            if (isAddArray) {
+                boolean isHave = false;
+                if (checked) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        if (object.getInt(TYPE) == typeService && object.getInt(ORDER) == arrCheckBox.get(position).getOrder()) {
+                            jsonArray.remove(i);
+                            JSONObject objects = new JSONObject();
+                            objects.put(TYPE, arrCheckBox.get(position).getTypeService());
+                            objects.put(ORDER, arrCheckBox.get(position).getOrder());
+                            objects.put(VALUE, arrCheckBox.get(position).getValueService());
+                            jsonArray.put(objects);
+                            isHave = true;
+                        }
+                    }
+                    if (!isHave) {
                         JSONObject objects = new JSONObject();
                         objects.put(TYPE, arrCheckBox.get(position).getTypeService());
                         objects.put(ORDER, arrCheckBox.get(position).getOrder());
                         objects.put(VALUE, arrCheckBox.get(position).getValueService());
                         jsonArray.put(objects);
-                        isHave = true;
                     }
                 }
-                if (!isHave) {
-                    JSONObject objects = new JSONObject();
-                    objects.put(TYPE, arrCheckBox.get(position).getTypeService());
-                    objects.put(ORDER, arrCheckBox.get(position).getOrder());
-                    objects.put(VALUE, arrCheckBox.get(position).getValueService());
-                    jsonArray.put(objects);
-                }
+                Log.d(KeyManager.VinhCNLog, jsonArray.toString());
+            } else {
+                Log.d(KeyManager.VinhCNLog, "Check");
             }
-            Log.d(KeyManager.VinhCNLog, jsonArray.toString());
+            if (countModify==(arrCheckBox.size() * 2)){
+                isAddArray = true;
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
 
     }
 
@@ -247,6 +264,7 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
                 break;
 
         }
+
         managerStaffView.closeProgress();
     }
 

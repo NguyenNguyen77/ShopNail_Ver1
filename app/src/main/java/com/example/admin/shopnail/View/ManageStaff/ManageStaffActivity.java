@@ -149,6 +149,11 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
         managerStaffLogic.changeService(checked, position, typeService);
     }
 
+    @Override
+    public ListView getListView() {
+        return listManageStaff;
+    }
+
     // Check Internet
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {

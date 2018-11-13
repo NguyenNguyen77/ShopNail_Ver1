@@ -117,9 +117,9 @@ public class CustomerServiceHistoryPresenter extends BaseMethod implements ICust
 
     @Override
     public void onTaskCompleted(String s, String CaseRequest) {
+        Log.d(KeyManager.VinhCNLog, s);
         switch (CaseRequest) {
             case KeyManager.GET_CLIENT_OF_STAFF:
-                Log.d(KeyManager.VinhCNLog, s);
                 try {
                     GsonGetClient mGsonGetClient = getGson().fromJson(s, GsonGetClient.class);
                     arrClient = mGsonGetClient.getSuccess().getClients();

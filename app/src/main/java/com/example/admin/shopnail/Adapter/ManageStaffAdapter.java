@@ -29,7 +29,7 @@ public class ManageStaffAdapter extends BaseAdapter {
     ArrayAdapter<String> adapterCategory = null;
     List<GsonServiceType.SuccessBean.ServiceTypeBean> arrServiceType;
     //    String[] paths = {"Acrylic", "Natural Nails", "Waxing & Facial"};
-    boolean enableSelectSpinner = false;
+//    boolean enableSelectSpinner = false;
 
     public ManageStaffAdapter(Context context, List<CheckBoxObject> listManage, List<GsonServiceType.SuccessBean.ServiceTypeBean> arrservicetype) {
 //        this.context = context;
@@ -56,7 +56,7 @@ public class ManageStaffAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup viewGroup) {
-        final ManageStaffAdapter.ViewHolder holder;
+        final ViewHolder holder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.item_manage_staff, null);
             holder = new ViewHolder();
@@ -111,9 +111,9 @@ public class ManageStaffAdapter extends BaseAdapter {
                 } else {
                     objects.get(position).setValueService(0);
                 }
-                if (enableSelectSpinner) {
+//                if (enableSelectSpinner) {
                     ((ManageStaffActivity) context).ChangeServiceType(holder.checkService.isChecked(), position, objects.get(position).getTypeService());
-                }
+//                }
             }
 
             @Override
@@ -149,9 +149,13 @@ public class ManageStaffAdapter extends BaseAdapter {
         return arrService;
     }
 
-    public void setEnableSelectSpinner(boolean isEnable) {
-        this.enableSelectSpinner = isEnable;
-    }
+//    public void setEnableSelectSpinner(boolean isEnable) {
+//        this.enableSelectSpinner = isEnable;
+//    }
+//
+//    public boolean isEnableSelectSpinner(){
+//        return enableSelectSpinner;
+//    }
 
     class ViewHolder {
         Spinner spnService;
