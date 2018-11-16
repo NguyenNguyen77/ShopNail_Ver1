@@ -107,6 +107,9 @@ public class AccountCustomerPresenter extends BaseMethod implements IAccountCust
                 try {
                     GsonCustomerCreate mGsonCustomerCreate = getGson().fromJson(s, GsonCustomerCreate.class);
                     iLoginForCustomerView.onLoginResult(mGsonCustomerCreate.isStatus());
+                    setDefaults(CLIENT_NAME, mGsonCustomerCreate.getSuccess().getName(), mContext);
+                    setDefaults(CLIENT_ID, String.valueOf(mGsonCustomerCreate.getSuccess().getLast_id()), mContext);
+                    setDefaults(CUSTOMER_PHONE_NUMBER, mGsonCustomerCreate.getSuccess().getPhone(), mContext);
                 } catch (Exception e) {
                     iLoginForCustomerView.onLoginResult(false);
                 }

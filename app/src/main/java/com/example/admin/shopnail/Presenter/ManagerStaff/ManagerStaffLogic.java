@@ -257,7 +257,7 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
                     }
                     manageStaffAdapter.notifyDataSetChanged();
                 } catch (Exception e) {
-                    SingleToast.show(mContext, "Server error", 3000);
+                    SingleToast.show(mContext, "Update service ready", 3000);
                 }
                 break;
             default:

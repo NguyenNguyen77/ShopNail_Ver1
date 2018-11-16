@@ -43,7 +43,7 @@ public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTa
     @Override
     public void requestCustomerOrder(String date) {
         this.Date = date;
-        new NailTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new CaseManager(mContext, KeyManager.GET_CLIENT_OF_STAFF, UrlManager.GET_CLIENT_OF_STAFF, getJsonRequest().toString()));
+        new NailTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new CaseManager(mContext, KeyManager.GET_CLIENT_OF_STAFF, UrlManager.GET_CUSTOMER_INFOR, getJsonRequest().toString()));
     }
 
 
