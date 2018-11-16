@@ -17,11 +17,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.admin.shopnail.Adapter.DetailCustomerAdapter;
 import com.example.admin.shopnail.Adapter.MyCustomerAdapter;
 import com.example.admin.shopnail.CustomViewListExpand.SingleToast;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Model.MyCustomer.GsonGetClient;
+import com.example.admin.shopnail.Model.MyDetailCustomer.GsonDetailCustomer;
 import com.example.admin.shopnail.Model.MyDetailCustomer.GsonProductCustomer;
 import com.example.admin.shopnail.Model.ServicesOfShop;
 import com.example.admin.shopnail.Presenter.MyDetailCustomer.IMyDetailCustomer;
@@ -69,9 +71,9 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
     }
 
     @Override
-    public void setListProducts(List<GsonProductCustomer.SuccessBean.ProductsBean> listProduct) {
-        MyCustomerAdapter myDetailCustomerAdapter = new MyCustomerAdapter(this, listProduct);
-        mLvMyCustomerList.setAdapter(myDetailCustomerAdapter);
+    public void setListProducts(List<GsonDetailCustomer.SuccessBean.CustomersBean.OrdersBean> listProduct) {
+        DetailCustomerAdapter adapter = new DetailCustomerAdapter(this, listProduct);
+        mLvMyCustomerList.setAdapter(adapter);
     }
 
     @Override
@@ -87,6 +89,13 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
     @Override
     public void OpenDialogUpdate(String orderId) {
         showDialogUpdateExtra(orderId);
+    }
+
+    @Override
+    public void setInfor(GsonDetailCustomer.SuccessBean.CustomersBean customersBean) {
+        tvName.setText(customersBean.getFullname());
+        tvPhone.setText(customersBean.getPhone());
+        tvDate.setText(customersBean.getDate());
     }
 
     @Override
@@ -219,7 +228,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
             public void onClick(View v) {
                 if (txtExtra.getText().toString().equals("")) {
                     SingleToast.show(MyDetailCustomerActivity.this, "Please input", 3000);
-                }else {
+                } else {
                     getViewManager().showInprogressDialog();
                     mMyDetailCustomerLogic.reuquestUpdate(orderId, txtExtra.getText().toString());
                     mChangePassDialog.dismiss();

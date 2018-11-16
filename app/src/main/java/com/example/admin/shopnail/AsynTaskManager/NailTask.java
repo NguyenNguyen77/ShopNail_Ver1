@@ -17,6 +17,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.GENERATE_CHECK_BOX;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_ALL_NAVIGATE_STAFF;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_CLIENT_OF_STAFF;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY;
+import static com.example.admin.shopnail.Manager.KeyManager.GET_MY_CUSTOMER;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_SERVICE_TYPE;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_TIME_OF_CLIENT_FROM_STAFF;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_USER_BY_ID;
@@ -39,19 +40,23 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
         ResuiltObject mResuiltObject = null;
         switch (caseManagers[0].getCase()) {
             case GET_ALL_NAVIGATE_STAFF:
-                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(GET_ALL_NAVIGATE_STAFF, Resuilt);
                 break;
             case GET_SERVICE_TYPE:
-                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(GET_SERVICE_TYPE, Resuilt);
+                break;
+            case GET_MY_CUSTOMER:
+                Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(GET_MY_CUSTOMER, Resuilt);
                 break;
             case ADD_OR_UPDATE_SERVICE_CHECKING:
                 Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(ADD_OR_UPDATE_SERVICE_CHECKING, Resuilt);
                 break;
             case GENERATE_CHECK_BOX:
-                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(GENERATE_CHECK_BOX, Resuilt);
                 break;
             case UPDATE_EXTRA:
@@ -91,7 +96,7 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
                 mResuiltObject = new ResuiltObject(LOGIN, Resuilt);
                 break;
             case GET_USER_BY_ID:
-                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(KeyManager.GET_USER_BY_ID, Resuilt);
                 break;
             case CHANGE_PASSWORD:
@@ -111,19 +116,19 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
                 mResuiltObject = new ResuiltObject(KeyManager.LOGIN_OLD_CUSTOMER, Resuilt);
                 break;
             case KeyManager.GET_CATEGORY_LIST:
-                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(KeyManager.GET_CATEGORY_LIST, Resuilt);
                 break;
             case KeyManager.GET_PRODUCTS_BY_CATEGORY:
-                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(KeyManager.GET_PRODUCTS_BY_CATEGORY, Resuilt);
                 break;
             case KeyManager.GET_ALL_STAFF_ID:
-                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(KeyManager.GET_ALL_STAFF_ID, Resuilt);
                 break;
             case KeyManager.GET_ALL_SERVICE_ID:
-                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(),  caseManagers[0].getToken());
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(KeyManager.GET_ALL_SERVICE_ID, Resuilt);
                 break;
             case BOOK_ONLINE:

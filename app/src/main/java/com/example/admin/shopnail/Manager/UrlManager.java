@@ -28,5 +28,6 @@ public class UrlManager {
     public static final String GET_TIME_OF_CLIENT_FROM_STAFF_URL = "http://142.93.29.45:8888/api/getCustomerTimeOrder";
     public static final String GET_SERVICE_TYPE_URL = "http://142.93.29.45:8888/api/getServiceType";
     public static final String GET_ALL_NAVIGATE_STAFF_URL = "http://142.93.29.45:8888/api/getAllNavigateStaff";
+    public static final String GET_MY_CUSTOMER_URL = "http://142.93.29.45:8888/api/getMyCustomer";
 
 }

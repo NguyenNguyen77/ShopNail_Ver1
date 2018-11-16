@@ -8,6 +8,7 @@ import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
 import com.example.admin.shopnail.AsynTaskManager.CaseManager;
 import com.example.admin.shopnail.AsynTaskManager.NailTask;
 import com.example.admin.shopnail.AsynTaskManager.ResuiltObject;
+import com.example.admin.shopnail.CustomViewListExpand.SingleToast;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
@@ -98,9 +99,13 @@ public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTa
                 }
                 break;
             case GET_TIME_OF_CLIENT_FROM_STAFF:
-                GsonClientTime gsonClientTime = getGson().fromJson(s, GsonClientTime.class);
-                listTime = gsonClientTime.getSuccess().getTime();
-                myCustomerView.showTimeDialog(listTime);
+                try{
+                    GsonClientTime gsonClientTime = getGson().fromJson(s, GsonClientTime.class);
+                    listTime = gsonClientTime.getSuccess().getTime();
+                    myCustomerView.showTimeDialog(listTime);
+                }catch (Exception e){
+                    SingleToast.show(mContext, "Server error", 3000);
+                }
                 break;
         }
     }

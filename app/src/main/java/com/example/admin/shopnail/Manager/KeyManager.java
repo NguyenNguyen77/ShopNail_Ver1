@@ -6,6 +6,7 @@ public class KeyManager {
     public static final String LOGIN = "LOGIN";
     public static final String GET_CLIENT_OF_STAFF = "GET_CLIENT_OF_STAFF";
     public static final String GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY = "GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY";
+    public static final String GET_MY_CUSTOMER = "GET_MY_CUSTOMER";
     public static final String UPDATE_STATUS_SERVICE = "UPDATE_STATUS_SERVICE";
     public static final String CANCEL_SERVICE = "CANCEL_SERVICE";
     public static final String UPDATE_EXTRA = "UPDATE_EXTRA";

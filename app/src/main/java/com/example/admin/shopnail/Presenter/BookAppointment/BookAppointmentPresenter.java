@@ -210,7 +210,6 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
                 break;
 
             case CHECK_TIME_BOOK_ONLINE:
-
                 try {
                     GsonResCheckBookingTime result = getGson().fromJson(s, GsonResCheckBookingTime.class);
                     int resultCode = result.getSuccess().getCode();
