@@ -91,5 +91,6 @@
     <string name="error_check_time_booking">Cannot book your services in this time.\nPlease select another time.\nAnd try again</string>
     <string name="change_avatar_success">Change Avatar Successful</string>
     <string name="change_avatar_failed">Change Avatar Failed</string>
+    <string name="get_config_time">Get Config Time Failed</string>
 
 </resources>

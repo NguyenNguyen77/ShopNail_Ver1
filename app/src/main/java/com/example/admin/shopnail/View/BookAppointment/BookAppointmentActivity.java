@@ -231,7 +231,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mAdapterService = new ArrayAdapter<String>(BookAppointmentActivity.this,
                 android.R.layout.simple_spinner_item, serviceList);
         mViewManager.dismissInprogressDialog();
-        addMoreService();//Add 1 service first
+        mBookAppointmentPresenter.getConfigTimeBookOnline();
     }
 
     @Override
@@ -405,5 +405,9 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         } else {
             return false;
         }
+    }
+
+    public void updateConfigTime (String open, String close) {
+        addMoreService();//Add 1 service first
     }
 }

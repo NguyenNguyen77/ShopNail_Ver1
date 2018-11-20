@@ -14,4 +14,5 @@ public interface IBookAppointmentView {
     public void showErrorDialog (ViewManager.ERROR_CODE errorCode);
     public void checkTimeBookOnline (String staffName, int pos, String timeOrder);
     public void updateOrderTime ();
+    public void updateConfigTime (String open, String close);
 }

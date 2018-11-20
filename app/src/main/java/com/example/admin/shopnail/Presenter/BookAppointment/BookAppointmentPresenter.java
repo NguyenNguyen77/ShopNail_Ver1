@@ -17,6 +17,7 @@ import com.example.admin.shopnail.Manager.UrlManager;
 import com.example.admin.shopnail.Manager.ViewManager;
 import com.example.admin.shopnail.Model.BookAppointment.GsonAllService;
 import com.example.admin.shopnail.Model.BookAppointment.GsonAllStaff;
+import com.example.admin.shopnail.Model.BookAppointment.GsonGetConfigTimeResult;
 import com.example.admin.shopnail.Model.BookAppointment.GsonResBookAppointment;
 import com.example.admin.shopnail.Model.BookAppointment.GsonResCheckBookingTime;
 import com.example.admin.shopnail.Model.StaffInfor.GsonChangePass;
@@ -40,6 +41,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.DATE_ORDER;
 import static com.example.admin.shopnail.Manager.KeyManager.EMAIL;
 import static com.example.admin.shopnail.Manager.KeyManager.EXTRA;
 import static com.example.admin.shopnail.Manager.KeyManager.FULL_NAME;
+import static com.example.admin.shopnail.Manager.KeyManager.GET_CONFIG_TIME;
 import static com.example.admin.shopnail.Manager.KeyManager.NOTE;
 import static com.example.admin.shopnail.Manager.KeyManager.PASS_WORD;
 import static com.example.admin.shopnail.Manager.KeyManager.PHONE;
@@ -99,6 +101,15 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.CHECK_TIME_BOOK_ONLINE, UrlManager.BOOKING_TIME_CHECKING_URL, json));
     }
 
+    @Override
+    public void getConfigTimeBookOnline() {
+        new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_CONFIG_TIME, UrlManager.GET_TIME_OPEN_CLOSE_URL, getParamBuidler()));
+    }
+
+    Uri.Builder getParamBuidler() {
+        Uri.Builder builder = new Uri.Builder();
+        return builder;
+    }
 
     JSONObject addJsonRequest(String fullName, String email, String phone, String date, BookServiceAdapter serviceAdapter) {
         JSONObject mJsonObject = new JSONObject();
@@ -222,6 +233,22 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
                     }
                 } catch (Exception e) {
                     Toast.makeText(mContext, R.string.error_check_time_booking, Toast.LENGTH_LONG).show();
+                }
+                break;
+
+            case GET_CONFIG_TIME:
+                try {
+                    GsonGetConfigTimeResult result = getGson().fromJson(s, GsonGetConfigTimeResult.class);
+                    int resultCode = result.getSuccess().getCode();
+                    if (resultCode == 200) {
+                        String openTime = result.getSuccess().getTime().get(0).getStart();
+                        String closeTime = result.getSuccess().getTime().get(0).getEnd();
+                        mBookAppointmentView.updateConfigTime(openTime, closeTime);
+                    } else {
+                        Toast.makeText(mContext, R.string.get_config_time, Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(mContext, R.string.get_config_time, Toast.LENGTH_LONG).show();
                 }
                 break;
             default:

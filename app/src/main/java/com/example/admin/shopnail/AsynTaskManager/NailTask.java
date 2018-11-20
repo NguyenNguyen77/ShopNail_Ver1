@@ -16,6 +16,7 @@ import static com.example.admin.shopnail.Manager.KeyManager.FORGOT_PASSWORD;
 import static com.example.admin.shopnail.Manager.KeyManager.GENERATE_CHECK_BOX;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_ALL_NAVIGATE_STAFF;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_CLIENT_OF_STAFF;
+import static com.example.admin.shopnail.Manager.KeyManager.GET_CONFIG_TIME;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_MY_CUSTOMER;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_SERVICE_TYPE;
@@ -138,6 +139,11 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
             case CHECK_TIME_BOOK_ONLINE:
                 Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(CHECK_TIME_BOOK_ONLINE, Resuilt);
+                break;
+
+            case GET_CONFIG_TIME:
+                Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(), caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(GET_CONFIG_TIME, Resuilt);
                 break;
         }
         return mResuiltObject;

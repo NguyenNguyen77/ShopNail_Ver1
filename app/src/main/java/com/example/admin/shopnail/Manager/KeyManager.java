@@ -72,4 +72,6 @@ public class KeyManager {
     public static final String TIMEWORK = "timeWork";
     public static final String AVATARIMAGE = "avatarImage";
 
+    public static final String GET_CONFIG_TIME = "GET_CONFIG_TIME";
+
 }
