@@ -214,7 +214,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                         //mListusers.get(mPosition).setServiceTime(Caption.getText().toString());
                         String staffName = mListusers.get(mPosition).mListStaff.get(mListusers.get(mPosition).getSelectStaff());
                         //mBookAppointmentActivity.checkTimeBookOnline(staffName, mPosition, Caption.getText().toString());
-                        String strTime = hourOfDay + ":" + minute;
+                        String strTime = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);;
                         mBookAppointmentActivity.checkTimeBookOnline(staffName, mPosition, strTime, mBookAppointmentActivity.checkInputTime(strTime));
                     }
                 }, mHour, mMinute, true);
