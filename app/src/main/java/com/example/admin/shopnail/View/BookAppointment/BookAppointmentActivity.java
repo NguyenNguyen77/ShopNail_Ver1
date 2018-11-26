@@ -31,6 +31,7 @@ import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 import com.example.admin.shopnail.Manager.ViewManager;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -65,6 +66,8 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
 
     private ArrayList<BookService> mListBookService = new ArrayList<BookService>();
 
+    private String mOpenTime = "09:00";
+    private String mCloseTime = "19:00";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -250,13 +253,15 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     }
 
     @Override
-    public void checkTimeBookOnline(String staffName, int pos, String timeOrder) {
+    public void checkTimeBookOnline(String staffName, int pos, String timeOrder, boolean isSendReqCheckTime) {
         currentTime = mBookServiceAdapter.getItem(pos).getServiceTime();
         orderTime = timeOrder;
         currentPosition = pos;
         String date = mTvDate.getText().toString();
-        int selectStaff = mBookServiceAdapter.getItem(pos).getSelectStaff();
-        mBookAppointmentPresenter.checkTimeBookOnline(staffName, selectStaff, date, timeOrder);
+        if (isSendReqCheckTime) {
+            int selectStaff = mBookServiceAdapter.getItem(pos).getSelectStaff();
+            mBookAppointmentPresenter.checkTimeBookOnline(staffName, selectStaff, date, timeOrder);
+        }
     }
 
     @Override
@@ -337,7 +342,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             listService.add(mAdapterService.getItem(i));
         }
 
-        defaultBookService = new BookService(listStaff, listService, "--:--", "", 0, 0);
+        defaultBookService = new BookService(listStaff, listService, mOpenTime, "", 0, 0);
         return defaultBookService;
     }
 
@@ -407,7 +412,35 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         }
     }
 
-    public void updateConfigTime (String open, String close) {
+    public void updateConfigTime(String open, String close) throws ParseException {
+        SimpleDateFormat inFormat = new SimpleDateFormat("hh:mmaa");
+        SimpleDateFormat outFormat = new SimpleDateFormat("HH:mm");
+        mOpenTime = outFormat.format(inFormat.parse(open));
+        mCloseTime = outFormat.format(inFormat.parse(close));
         addMoreService();//Add 1 service first
+    }
+
+    @Override
+    public boolean checkInputTime(String inputTime) {
+        String strInputTimeArrtmp[] = inputTime.split(":");
+        int inputHour = Integer.parseInt(strInputTimeArrtmp[0]);
+        int inputMinute = Integer.parseInt(strInputTimeArrtmp[1]);
+
+        String strOpenTimeArrtmp[] = mOpenTime.split(":");
+        int openHour = Integer.parseInt(strOpenTimeArrtmp[0]);
+        int openMinute = Integer.parseInt(strOpenTimeArrtmp[1]);
+
+        String strCloseTimeArrtmp[] = mCloseTime.split(":");
+        int closeHour = Integer.parseInt(strCloseTimeArrtmp[0]);
+        int closeMinute = Integer.parseInt(strCloseTimeArrtmp[1]);
+        if ((inputHour < openHour) || (inputHour > closeHour)
+                || ((inputHour == closeHour) && (inputMinute > closeMinute))) {
+            String error = String.format("The time is invalid. Open Time is: %1$s. Close Time is: %2$s\nPlease check it and try again", mOpenTime, mCloseTime);
+            Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
+
     }
 }

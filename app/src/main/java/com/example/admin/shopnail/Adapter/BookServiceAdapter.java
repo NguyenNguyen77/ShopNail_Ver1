@@ -31,7 +31,7 @@ import com.example.admin.shopnail.View.BookAppointment.BookAppointmentActivity;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class BookServiceAdapter extends ArrayAdapter<BookService> implements View.OnClickListener {
+public class BookServiceAdapter extends ArrayAdapter<BookService> implements View.OnClickListener  {
     ArrayAdapter<String> adapterCategoryStaff = null;
     ArrayAdapter<String> adapterCategoryService = null;
     ArrayList<BookService> mListusers = null;
@@ -214,7 +214,8 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                         //mListusers.get(mPosition).setServiceTime(Caption.getText().toString());
                         String staffName = mListusers.get(mPosition).mListStaff.get(mListusers.get(mPosition).getSelectStaff());
                         //mBookAppointmentActivity.checkTimeBookOnline(staffName, mPosition, Caption.getText().toString());
-                        mBookAppointmentActivity.checkTimeBookOnline(staffName, mPosition,  hourOfDay + ":" + minute);
+                        String strTime = hourOfDay + ":" + minute;
+                        mBookAppointmentActivity.checkTimeBookOnline(staffName, mPosition, strTime, mBookAppointmentActivity.checkInputTime(strTime));
                     }
                 }, mHour, mMinute, true);
         timePickerDialog.show();
