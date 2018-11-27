@@ -12,4 +12,6 @@
     <color name="list_2">#F7D358</color>
     <color name="email_ok">#1c2d73</color>
     <color name="email_failed">#d25a09</color>
+    <color name="text_grayout">#686767</color>
+    <color name="text_normal">#000000</color>
 </resources>

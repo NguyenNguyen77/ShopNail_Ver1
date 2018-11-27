@@ -245,6 +245,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                 if (mPosition < mListusers.size()) {
                     mListusers.remove(pos);
                     BookServiceAdapter.this.notifyDataSetChanged();
+                    mBookAppointmentActivity.updateStatusButtonAddMoreServices();
                 }
             }
         });

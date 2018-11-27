@@ -19,4 +19,5 @@ public interface IBookAppointmentView {
 
     public boolean checkInputTime (String inputTime);
     public void onBookingOnlineResult (boolean result, String msg);
+    public void updateStatusButtonAddMoreServices ();
 }

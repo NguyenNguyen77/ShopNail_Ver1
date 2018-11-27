@@ -322,6 +322,11 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             }
 
             mLvSelectServiceItem.setAdapter(mBookServiceAdapter);
+            if (mLvSelectServiceItem.getCount() >= 5) {
+                mTvAddMoreService.setTextColor(getResources().getColor(R.color.text_grayout));
+                mTvAddMoreService.setClickable(false);
+                mTvAddMoreService.setEnabled(false);
+            }
         }
     }
 
@@ -421,11 +426,15 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         return result;
     }
 
-    public void updateConfigTime(String open, String close) throws ParseException {
-        SimpleDateFormat inFormat = new SimpleDateFormat("hh:mmaa");
-        SimpleDateFormat outFormat = new SimpleDateFormat("HH:mm");
-        mOpenTime = outFormat.format(inFormat.parse(open));
-        mCloseTime = outFormat.format(inFormat.parse(close));
+    public void updateConfigTime(String open, String close) {
+        String openTime = convertTime12To24Format(open);
+        String closeTime = convertTime12To24Format(close);
+        if (openTime != null) {
+            mOpenTime = openTime;
+        }
+        if (closeTime != null) {
+            mCloseTime = closeTime;
+        }
         mViewManager.dismissInprogressDialog();
         addMoreService();//Add 1 service first
     }
@@ -493,5 +502,38 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             }
         });
         commonDialog.show();
+    }
+
+    private String convertTime12To24Format (String inputtime) {
+        String timeTemp = "";
+        int timePM = 0;
+
+        if (inputtime.contains("AM")) {
+            timeTemp = inputtime.replace("AM", "");
+        } else if (inputtime.contains("PM")) {
+            timeTemp = inputtime.replace("PM", "");
+            timePM = 12;
+        } else {
+            return null;
+        }
+
+        String strArrtmp[] = timeTemp.split(":");
+        int openHour = Integer.parseInt(strArrtmp[0]) + timePM;
+        int openMinute = Integer.parseInt(strArrtmp[1]);
+        String result = String.format("%02d", openHour) + ":" + String.format("%02d", openMinute);
+        return  result;
+    }
+
+    @Override
+    public void updateStatusButtonAddMoreServices (){
+        if (mLvSelectServiceItem.getCount() >= 5) {
+            mTvAddMoreService.setTextColor(getResources().getColor(R.color.text_grayout));
+            mTvAddMoreService.setClickable(false);
+            mTvAddMoreService.setEnabled(false);
+        } else {
+            mTvAddMoreService.setTextColor(getResources().getColor(R.color.text_normal));
+            mTvAddMoreService.setClickable(true);
+            mTvAddMoreService.setEnabled(true);
+        }
     }
 }
