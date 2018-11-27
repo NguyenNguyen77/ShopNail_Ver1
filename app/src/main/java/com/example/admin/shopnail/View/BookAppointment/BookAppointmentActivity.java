@@ -167,9 +167,9 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
                 break;
             case R.id.btn_submit:
                 if (validateEmail()) {
-                    reqBookAppointment();
+                    showConfirmDialog(getResources().getString(R.string.confirm), getResources().getString(R.string.confirm_submit_booking_online));
                 } else {
-                    Toast.makeText(getApplicationContext(), "The email address is not valid.\nPlease check it and try again", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_email_not_valid), Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.btn_back:
@@ -233,7 +233,6 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     public void updateServiceList(ArrayList<String> serviceList) {
         mAdapterService = new ArrayAdapter<String>(BookAppointmentActivity.this,
                 android.R.layout.simple_spinner_item, serviceList);
-        mViewManager.dismissInprogressDialog();
         mBookAppointmentPresenter.getConfigTimeBookOnline();
     }
 
@@ -417,6 +416,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         SimpleDateFormat outFormat = new SimpleDateFormat("HH:mm");
         mOpenTime = outFormat.format(inFormat.parse(open));
         mCloseTime = outFormat.format(inFormat.parse(close));
+        mViewManager.dismissInprogressDialog();
         addMoreService();//Add 1 service first
     }
 
@@ -435,12 +435,53 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         int closeMinute = Integer.parseInt(strCloseTimeArrtmp[1]);
         if ((inputHour < openHour) || (inputHour > closeHour)
                 || ((inputHour == closeHour) && (inputMinute > closeMinute))) {
-            String error = String.format("The time is invalid. Open Time is: %1$s. Close Time is: %2$s\nPlease check it and try again", mOpenTime, mCloseTime);
+            String error = String.format(getResources().getString(R.string.error_input_time), mOpenTime, mCloseTime);
             Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
             return false;
         } else {
             return true;
         }
 
+    }
+
+    @Override
+    public void onBookingOnlineResult(boolean result, String msg) {
+        mViewManager.dismissInprogressDialog();
+        if (result) {
+            Toast.makeText(mContext, msg, Toast.LENGTH_LONG).show();
+            mViewManager.handleBackScreen();
+        } else {
+            Toast.makeText(mContext, R.string.error_book_appointment, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void showConfirmDialog(final String title, String content) {
+        ContextThemeWrapper ctw = new ContextThemeWrapper(mContext, R.style.Theme_AlertDialog);
+        final Dialog commonDialog = new Dialog(ctw);
+        commonDialog.setContentView(R.layout.confirm_dialog);
+        commonDialog.setTitle(title);
+
+        TextView tvContent = (TextView) commonDialog.findViewById(R.id.tv_dialog_content);
+        tvContent.setText(content);
+
+        Button btnOK = (Button) commonDialog.findViewById(R.id.btn_ok);
+        btnOK.setVisibility(View.VISIBLE);
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commonDialog.dismiss();
+                mViewManager.showInprogressDialog();
+                reqBookAppointment();
+            }
+        });
+        Button btnCancel = (Button) commonDialog.findViewById(R.id.btn_cancel);
+        btnCancel.setVisibility(View.VISIBLE);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commonDialog.dismiss();
+            }
+        });
+        commonDialog.show();
     }
 }
