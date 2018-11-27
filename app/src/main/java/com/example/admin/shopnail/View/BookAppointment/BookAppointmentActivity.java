@@ -12,12 +12,15 @@ import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
 import android.view.ContextThemeWrapper;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -53,6 +56,8 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private Context mContext;
 
+    private LinearLayout mBookingLayout;
+
     private String currentTime;
     private String orderTime;
     private int currentPosition;
@@ -84,6 +89,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
                 NailActionBarGenerator.BarType.BOOK_APPOINTMENT);
         mViewManager.setActivity(this);
 
+        mBookingLayout = (LinearLayout) findViewById(R.id.booking_layout);
         mBtnBack = (Button) findViewById(R.id.btn_back);
         mBtnSubmit = (Button) findViewById(R.id.btn_submit);
         mEtCustomerName = (EditText) findViewById(R.id.et_customer_name);
@@ -93,6 +99,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mLvSelectServiceItem = (ListView) findViewById(R.id.lv_select_services);
         mTvAddMoreService = (TextView) findViewById(R.id.tv_add_more_services);
 
+        mBookingLayout.setOnClickListener(this);
         mBtnSubmit.setOnClickListener(this);
         mBtnBack.setOnClickListener(this);
         mTvDate.setOnClickListener(this);
@@ -101,6 +108,24 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mBtnSubmit.setClickable(false);
 
         getDefaultInfo(); //display current date
+
+        mBookingLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                return false;
+            }
+        });
+
+        mLvSelectServiceItem.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                return false;
+            }
+        });
 
         mEtCustomerPhone.addTextChangedListener(new TextWatcher() {
             @Override
