@@ -75,7 +75,6 @@ public class StaffInformationPresenter extends BaseMethod implements IStaffInfor
         JSONObject mJsonObject = new JSONObject();
         try {
             mJsonObject.put(KeyManager.ID, Integer.parseInt(getDefaults(KeyManager.USER_ID, mContext)));
-
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4;
             options.inPurgeable = true;
@@ -88,7 +87,7 @@ public class StaffInformationPresenter extends BaseMethod implements IStaffInfor
                 bm.compress(Bitmap.CompressFormat.JPEG, 40, baos);
                 byte[] byteImage_photo = baos.toByteArray();
                 String encodedImage = Base64.encodeToString(byteImage_photo, Base64.DEFAULT);
-                mJsonObject.put(KeyManager.AVATARIMAGE, encodedImage);
+                mJsonObject.put(KeyManager.BASE_64, encodedImage.trim());
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -190,7 +190,6 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
 
     @Override
     public void onChangeAvatarResult(boolean result) {
-
         if (result) {
             mStaffInformationPresenter.requestInfor(BaseMethod.getDefaults(KeyManager.USER_ID, this));
             Toast.makeText(this, R.string.change_avatar_success, Toast.LENGTH_SHORT).show();
