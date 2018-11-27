@@ -105,7 +105,7 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
                 mResuiltObject = new ResuiltObject(KeyManager.CHANGE_PASSWORD, Resuilt);
                 break;
             case CHANGE_AVATAR:
-                Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
+                Resuilt = caseManagers[0].makePostRequest(caseManagers[0].getUrl(), caseManagers[0].getmBuilder(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(KeyManager.CHANGE_AVATAR, Resuilt);
                 break;
             case CREATE_ACCOUNT_CUSTOMER:

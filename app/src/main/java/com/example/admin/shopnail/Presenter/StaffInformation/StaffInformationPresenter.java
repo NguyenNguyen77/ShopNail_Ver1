@@ -62,10 +62,35 @@ public class StaffInformationPresenter extends BaseMethod implements IStaffInfor
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_USER_BY_ID, UrlManager.GET_USER_BY_ID_URL + defaults, getParamBuilder()));
     }
 
+//    @Override
+//    public void requestChangeAvatar(String path) {
+//        new NailTask(this).execute(new CaseManager(mContext, KeyManager.CHANGE_AVATAR, UrlManager.CHANGE_AVATAR_URL, addJsonRequestChangeAvatar(path).toString()));
+//    }
+
     @Override
     public void requestChangeAvatar(String path) {
-        new NailTask(this).execute(new CaseManager(mContext, KeyManager.CHANGE_AVATAR, UrlManager.CHANGE_AVATAR_URL, addJsonRequestChangeAvatar(path).toString()));
+        new NailTask(this).execute(new CaseManager(mContext, KeyManager.CHANGE_AVATAR, UrlManager.CHANGE_AVATAR_URL, getParamBuilderAvatar(path)));
     }
+
+    private Uri.Builder getParamBuilderAvatar(String path) {
+        Uri.Builder mBuilder = new Uri.Builder();
+        mBuilder.appendQueryParameter(KeyManager.ID, getDefaults(KeyManager.USER_ID, mContext));
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 4;
+        options.inPurgeable = true;
+        Bitmap bm = BitmapFactory.decodeFile(path, options);
+        int permission = ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            mIStaffInforView.updatePermission();
+        } else {
+            String encodedImage = "data:image/jpeg;base64," +  getBase64(bm);
+            mBuilder.appendQueryParameter(KeyManager.BASE_64, encodedImage);
+        }
+        Log.d("KhoaND14", "request: Json: avatar " + mBuilder.build().getEncodedQuery());
+        return mBuilder;
+    }
+
+
 
     private Uri.Builder getParamBuilder() {
         return new Uri.Builder();
@@ -79,15 +104,15 @@ public class StaffInformationPresenter extends BaseMethod implements IStaffInfor
             options.inSampleSize = 4;
             options.inPurgeable = true;
             Bitmap bm = BitmapFactory.decodeFile(path, options);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
             int permission = ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE);
             if (permission != PackageManager.PERMISSION_GRANTED) {
                 mIStaffInforView.updatePermission();
             } else {
-                bm.compress(Bitmap.CompressFormat.JPEG, 40, baos);
-                byte[] byteImage_photo = baos.toByteArray();
-                String encodedImage = Base64.encodeToString(byteImage_photo, Base64.DEFAULT);
-                mJsonObject.put(KeyManager.BASE_64, encodedImage.trim());
+//                bm.compress(Bitmap.CompressFormat.JPEG, 40, baos);
+//                byte[] byteImage_photo = baos.toByteArray();
+                String encodedImage = getBase64(bm);
+                mJsonObject.put(KeyManager.BASE_64, encodedImage);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -95,6 +120,17 @@ public class StaffInformationPresenter extends BaseMethod implements IStaffInfor
         Log.d("KhoaND14", "request: Json: " + mJsonObject);
         return mJsonObject;
     }
+
+
+    public String getBase64(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, stream);
+        byte[] byteFormat = stream.toByteArray();
+        // get the base 64 string
+        String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
+        return imgString;
+    }
+
 
     @Override
     public void onTaskCompleted(String s, String CaseRequest) {
@@ -125,8 +161,8 @@ public class StaffInformationPresenter extends BaseMethod implements IStaffInfor
                     mIStaffInforView.onChangeAvatarResult(false);
                 }
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
 
     }
