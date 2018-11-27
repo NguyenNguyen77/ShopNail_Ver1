@@ -394,6 +394,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     }
 
     private boolean validateDatTime(int year, int month, int day) {
+        boolean result = false;
         mCalender = Calendar.getInstance();
         SimpleDateFormat dft = null;
         dft = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -404,11 +405,20 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         int curentMonth = Integer.parseInt(strArrtmp[1]) - 1;
         int curentYear = Integer.parseInt(strArrtmp[0]);
 
-        if ((year >= curentYear) && (month >= curentMonth) && (day >= curentDay)) {
-            return true;
+        if (year > curentYear) {
+            result = true;
+        } else if (year < curentYear) {
+            result = false;
+        } else if (month > curentMonth) {
+            result = true;
+        } else if (month < curentMonth) {
+            result = false;
+        } else if (day >= curentDay) {
+            result = true;
         } else {
-            return false;
+            result = false;
         }
+        return result;
     }
 
     public void updateConfigTime(String open, String close) throws ParseException {
