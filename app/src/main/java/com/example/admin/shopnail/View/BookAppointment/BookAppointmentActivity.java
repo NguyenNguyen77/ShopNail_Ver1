@@ -12,12 +12,15 @@ import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
 import android.view.ContextThemeWrapper;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -53,6 +56,8 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private Context mContext;
 
+    private LinearLayout mBookingLayout;
+
     private String currentTime;
     private String orderTime;
     private int currentPosition;
@@ -84,6 +89,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
                 NailActionBarGenerator.BarType.BOOK_APPOINTMENT);
         mViewManager.setActivity(this);
 
+        mBookingLayout = (LinearLayout) findViewById(R.id.booking_layout);
         mBtnBack = (Button) findViewById(R.id.btn_back);
         mBtnSubmit = (Button) findViewById(R.id.btn_submit);
         mEtCustomerName = (EditText) findViewById(R.id.et_customer_name);
@@ -93,6 +99,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mLvSelectServiceItem = (ListView) findViewById(R.id.lv_select_services);
         mTvAddMoreService = (TextView) findViewById(R.id.tv_add_more_services);
 
+        mBookingLayout.setOnClickListener(this);
         mBtnSubmit.setOnClickListener(this);
         mBtnBack.setOnClickListener(this);
         mTvDate.setOnClickListener(this);
@@ -101,6 +108,24 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mBtnSubmit.setClickable(false);
 
         getDefaultInfo(); //display current date
+
+        mBookingLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                return false;
+            }
+        });
+
+        mLvSelectServiceItem.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                return false;
+            }
+        });
 
         mEtCustomerPhone.addTextChangedListener(new TextWatcher() {
             @Override
@@ -167,9 +192,9 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
                 break;
             case R.id.btn_submit:
                 if (validateEmail()) {
-                    reqBookAppointment();
+                    showConfirmDialog(getResources().getString(R.string.confirm), getResources().getString(R.string.confirm_submit_booking_online));
                 } else {
-                    Toast.makeText(getApplicationContext(), "The email address is not valid.\nPlease check it and try again", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_email_not_valid), Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.btn_back:
@@ -233,7 +258,6 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     public void updateServiceList(ArrayList<String> serviceList) {
         mAdapterService = new ArrayAdapter<String>(BookAppointmentActivity.this,
                 android.R.layout.simple_spinner_item, serviceList);
-        mViewManager.dismissInprogressDialog();
         mBookAppointmentPresenter.getConfigTimeBookOnline();
     }
 
@@ -323,6 +347,11 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             }
 
             mLvSelectServiceItem.setAdapter(mBookServiceAdapter);
+            if (mLvSelectServiceItem.getCount() >= 5) {
+                mTvAddMoreService.setTextColor(getResources().getColor(R.color.text_grayout));
+                mTvAddMoreService.setClickable(false);
+                mTvAddMoreService.setEnabled(false);
+            }
         }
     }
 
@@ -395,6 +424,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     }
 
     private boolean validateDatTime(int year, int month, int day) {
+        boolean result = false;
         mCalender = Calendar.getInstance();
         SimpleDateFormat dft = null;
         dft = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -405,18 +435,32 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         int curentMonth = Integer.parseInt(strArrtmp[1]) - 1;
         int curentYear = Integer.parseInt(strArrtmp[0]);
 
-        if ((year >= curentYear) && (month >= curentMonth) && (day >= curentDay)) {
-            return true;
+        if (year > curentYear) {
+            result = true;
+        } else if (year < curentYear) {
+            result = false;
+        } else if (month > curentMonth) {
+            result = true;
+        } else if (month < curentMonth) {
+            result = false;
+        } else if (day >= curentDay) {
+            result = true;
         } else {
-            return false;
+            result = false;
         }
+        return result;
     }
 
-    public void updateConfigTime(String open, String close) throws ParseException {
-        SimpleDateFormat inFormat = new SimpleDateFormat("hh:mmaa");
-        SimpleDateFormat outFormat = new SimpleDateFormat("HH:mm");
-        mOpenTime = outFormat.format(inFormat.parse(open));
-        mCloseTime = outFormat.format(inFormat.parse(close));
+    public void updateConfigTime(String open, String close) {
+        String openTime = convertTime12To24Format(open);
+        String closeTime = convertTime12To24Format(close);
+        if (openTime != null) {
+            mOpenTime = openTime;
+        }
+        if (closeTime != null) {
+            mCloseTime = closeTime;
+        }
+        mViewManager.dismissInprogressDialog();
         addMoreService();//Add 1 service first
     }
 
@@ -435,12 +479,86 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         int closeMinute = Integer.parseInt(strCloseTimeArrtmp[1]);
         if ((inputHour < openHour) || (inputHour > closeHour)
                 || ((inputHour == closeHour) && (inputMinute > closeMinute))) {
-            String error = String.format("The time is invalid. Open Time is: %1$s. Close Time is: %2$s\nPlease check it and try again", mOpenTime, mCloseTime);
+            String error = String.format(getResources().getString(R.string.error_input_time), mOpenTime, mCloseTime);
             Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
             return false;
         } else {
             return true;
         }
 
+    }
+
+    @Override
+    public void onBookingOnlineResult(boolean result, String msg) {
+        mViewManager.dismissInprogressDialog();
+        if (result) {
+            Toast.makeText(mContext, msg, Toast.LENGTH_LONG).show();
+            mViewManager.handleBackScreen();
+        } else {
+            Toast.makeText(mContext, R.string.error_book_appointment, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void showConfirmDialog(final String title, String content) {
+        ContextThemeWrapper ctw = new ContextThemeWrapper(mContext, R.style.Theme_AlertDialog);
+        final Dialog commonDialog = new Dialog(ctw);
+        commonDialog.setContentView(R.layout.confirm_dialog);
+        commonDialog.setTitle(title);
+
+        TextView tvContent = (TextView) commonDialog.findViewById(R.id.tv_dialog_content);
+        tvContent.setText(content);
+
+        Button btnOK = (Button) commonDialog.findViewById(R.id.btn_ok);
+        btnOK.setVisibility(View.VISIBLE);
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commonDialog.dismiss();
+                mViewManager.showInprogressDialog();
+                reqBookAppointment();
+            }
+        });
+        Button btnCancel = (Button) commonDialog.findViewById(R.id.btn_cancel);
+        btnCancel.setVisibility(View.VISIBLE);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commonDialog.dismiss();
+            }
+        });
+        commonDialog.show();
+    }
+
+    private String convertTime12To24Format (String inputtime) {
+        String timeTemp = "";
+        int timePM = 0;
+
+        if (inputtime.contains("AM")) {
+            timeTemp = inputtime.replace("AM", "");
+        } else if (inputtime.contains("PM")) {
+            timeTemp = inputtime.replace("PM", "");
+            timePM = 12;
+        } else {
+            return null;
+        }
+
+        String strArrtmp[] = timeTemp.split(":");
+        int openHour = Integer.parseInt(strArrtmp[0]) + timePM;
+        int openMinute = Integer.parseInt(strArrtmp[1]);
+        String result = String.format("%02d", openHour) + ":" + String.format("%02d", openMinute);
+        return  result;
+    }
+
+    @Override
+    public void updateStatusButtonAddMoreServices (){
+        if (mLvSelectServiceItem.getCount() >= 5) {
+            mTvAddMoreService.setTextColor(getResources().getColor(R.color.text_grayout));
+            mTvAddMoreService.setClickable(false);
+            mTvAddMoreService.setEnabled(false);
+        } else {
+            mTvAddMoreService.setTextColor(getResources().getColor(R.color.text_normal));
+            mTvAddMoreService.setClickable(true);
+            mTvAddMoreService.setEnabled(true);
+        }
     }
 }

@@ -92,5 +92,8 @@
     <string name="change_avatar_success">Change Avatar Successful</string>
     <string name="change_avatar_failed">Change Avatar Failed</string>
     <string name="get_config_time">Get Config Time Failed</string>
+    <string name="confirm_submit_booking_online">Do you want to submit?\nPlease make sure the information is corrected!</string>
+    <string name="error_email_not_valid">The email address is not valid.\nPlease check it and try again</string>
+    <string name="error_input_time">The time is invalid.\nOpen Time is: %1$s and Close Time is: %2$s\nPlease check it and try again!</string>
 
 </resources>

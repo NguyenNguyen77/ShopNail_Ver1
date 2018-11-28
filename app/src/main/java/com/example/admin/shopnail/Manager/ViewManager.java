@@ -1,8 +1,11 @@
 package com.example.admin.shopnail.Manager;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
@@ -403,12 +406,14 @@ public class ViewManager {
     }
 
     public void showSnack(boolean isConnected) {
-        if (isConnected) {
-            Toast.makeText(currentActivity.getApplicationContext(), "Da ket noi internet", Toast.LENGTH_SHORT).show();
-            Log.d("NguyenNK2", "ViewManager === da ket noi internet");
-        } else {
-            Toast.makeText(currentActivity.getApplicationContext(), "Vui long kiem tra lai ket noi internet", Toast.LENGTH_SHORT).show();
-            Log.d("NguyenNK2", "ViewManager === ko ket noi internet");
+        if(!isApplicationSentToBackground(getInstance().currentActivity)){
+            if (isConnected) {
+                Toast.makeText(currentActivity.getApplicationContext(), "Da ket noi internet", Toast.LENGTH_SHORT).show();
+                Log.d("NguyenNK2", "ViewManager === da ket noi internet");
+            } else {
+                Toast.makeText(currentActivity.getApplicationContext(), "Vui long kiem tra lai ket noi internet", Toast.LENGTH_SHORT).show();
+                Log.d("NguyenNK2", "ViewManager === ko ket noi internet");
+            }
         }
     }
 
@@ -429,5 +434,19 @@ public class ViewManager {
             }
         });
         commonDialog.show();
+    }
+
+    public static boolean isApplicationSentToBackground(final Context context) {
+
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+        if (!tasks.isEmpty()) {
+            ComponentName topActivity = tasks.get(0).topActivity;
+            if (!topActivity.getPackageName().equals(context.getPackageName())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

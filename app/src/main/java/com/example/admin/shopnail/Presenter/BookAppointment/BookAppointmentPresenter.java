@@ -206,24 +206,24 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
                 }
                 break;
             case KeyManager.BOOK_ONLINE:
+                boolean result = false;
+                String msg = "";
                 try {
-                    GsonResBookAppointment result = getGson().fromJson(s, GsonResBookAppointment.class);
-                    int resultCode = result.getSuccess().getCode();
+                    GsonResBookAppointment resultGson = getGson().fromJson(s, GsonResBookAppointment.class);
+                    int resultCode = resultGson.getSuccess().getCode();
                     if (resultCode == 200) {
-                        String message = getGson().fromJson(s, GsonResBookAppointment.class).getSuccess().getMessage();
-                        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(mContext, R.string.error_book_appointment, Toast.LENGTH_LONG).show();
+                        result = true;
+                        msg = getGson().fromJson(s, GsonResBookAppointment.class).getSuccess().getMessage();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(mContext, R.string.error_book_appointment, Toast.LENGTH_LONG).show();
                 }
+                mBookAppointmentView.onBookingOnlineResult(result, msg);
                 break;
 
             case CHECK_TIME_BOOK_ONLINE:
                 try {
-                    GsonResCheckBookingTime result = getGson().fromJson(s, GsonResCheckBookingTime.class);
-                    int resultCode = result.getSuccess().getCode();
+                    GsonResCheckBookingTime resultGson = getGson().fromJson(s, GsonResCheckBookingTime.class);
+                    int resultCode = resultGson.getSuccess().getCode();
                     if (resultCode == 200) {
                         String message = getGson().fromJson(s, GsonResCheckBookingTime.class).getSuccess().getMessage();
                         mBookAppointmentView.updateOrderTime();
@@ -238,11 +238,11 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
 
             case GET_CONFIG_TIME:
                 try {
-                    GsonGetConfigTimeResult result = getGson().fromJson(s, GsonGetConfigTimeResult.class);
-                    int resultCode = result.getSuccess().getCode();
+                    GsonGetConfigTimeResult resultGson = getGson().fromJson(s, GsonGetConfigTimeResult.class);
+                    int resultCode = resultGson.getSuccess().getCode();
                     if (resultCode == 200) {
-                        String openTime = result.getSuccess().getTime().get(0).getStart();
-                        String closeTime = result.getSuccess().getTime().get(0).getEnd();
+                        String openTime = resultGson.getSuccess().getTime().get(0).getStart();
+                        String closeTime = resultGson.getSuccess().getTime().get(0).getEnd();
                         mBookAppointmentView.updateConfigTime(openTime, closeTime);
                     } else {
                         Toast.makeText(mContext, R.string.get_config_time, Toast.LENGTH_LONG).show();
