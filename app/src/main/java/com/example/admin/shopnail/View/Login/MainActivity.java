@@ -60,9 +60,6 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         }else {
             Toast.makeText(getApplicationContext(),"Vui long kiem tra lai ket noi internet",Toast.LENGTH_SHORT).show();
         }
-
-
-
         btnMakeAppointment.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         btnExit.setOnClickListener(this);

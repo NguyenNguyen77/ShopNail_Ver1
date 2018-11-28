@@ -160,7 +160,6 @@ public class ViewManager {
         switch (key) {
             case LOGIN_SCREEN:
                 return MainActivity.class;
-
             case STAFF_INFO:
                 return StaffInformationActivity.class;
             case MANAGE_STAFF:
@@ -171,13 +170,10 @@ public class ViewManager {
                 return MyDetailCustomerActivity.class;
             case MENU_FOR_STAFF:
                 return MenuForStaffActivity.class;
-
             case LOGIN_FOR_CUSTOMER:
                 return LoginForCustomerActivity.class;
-
             case SELECT_SERVICE:
                 return SelectServiceActivity.class;
-
             case CUSTOMER_SERVICE_HISTORY:
                 return CustomerServiceHistoryActivity.class;
             case VIEW_CART:
