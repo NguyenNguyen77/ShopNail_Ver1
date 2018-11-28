@@ -131,9 +131,9 @@ public class MyDetailCustomerLogic extends BaseMethod implements IMyDetailCustom
         switch (CaseRequest) {
             case GET_MY_CUSTOMER:
                 try {
-                   GsonDetailCustomer mGsonDetailCustomer = getGson().fromJson(s, GsonDetailCustomer.class);
+                    GsonDetailCustomer mGsonDetailCustomer = getGson().fromJson(s, GsonDetailCustomer.class);
                     listProduct = mGsonDetailCustomer.getSuccess().getCustomers().getOrders();
-                    GsonDetailCustomer.SuccessBean.CustomersBean customersBean  = mGsonDetailCustomer.getSuccess().getCustomers();
+                    GsonDetailCustomer.SuccessBean.CustomersBean customersBean = mGsonDetailCustomer.getSuccess().getCustomers();
                     myDetailCustomerView.setInfor(customersBean);
                     myDetailCustomerView.setListProducts(listProduct);
                 } catch (Exception e) {
@@ -199,7 +199,7 @@ public class MyDetailCustomerLogic extends BaseMethod implements IMyDetailCustom
         try {
             object.put(ORDER_ID, Integer.parseInt(s));
             object.put(TIME_ORDER, myDetailCustomerView.getTimeName());
-            object.put(USER_ID_KEY, Integer.parseInt(getClientID(mContext)));
+            object.put(USER_ID_KEY, myDetailCustomerView.getClientID());
         } catch (JSONException e) {
             e.printStackTrace();
         }

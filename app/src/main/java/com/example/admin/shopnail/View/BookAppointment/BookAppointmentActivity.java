@@ -55,6 +55,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     private String mEmailText;
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private Context mContext;
+    private LinearLayout lnDate;
 
     private LinearLayout mBookingLayout;
 
@@ -98,6 +99,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mTvDate = (TextView) findViewById(R.id.tv_date);
         mLvSelectServiceItem = (ListView) findViewById(R.id.lv_select_services);
         mTvAddMoreService = (TextView) findViewById(R.id.tv_add_more_services);
+        lnDate = findViewById(R.id.layout_date);
 
         mBookingLayout.setOnClickListener(this);
         mBtnSubmit.setOnClickListener(this);
@@ -106,6 +108,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mTvAddMoreService.setOnClickListener(this);
         mBtnSubmit.setEnabled(false);
         mBtnSubmit.setClickable(false);
+        lnDate.setOnClickListener(this);
 
         getDefaultInfo(); //display current date
 
@@ -184,7 +187,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_date:
+            case R.id.layout_date:
                 showDatePickerDialog();
                 break;
             case R.id.tv_add_more_services:

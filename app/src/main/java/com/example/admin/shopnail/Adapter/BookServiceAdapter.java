@@ -59,16 +59,15 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         final BookService user = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_book_service, parent, false);
-
             holder = new ViewHolder();
-
             holder.spinnerStaff = (Spinner) convertView.findViewById(R.id.spinnerStaff);
             holder.spinnerService = (Spinner) convertView.findViewById(R.id.spinnerService);
             holder.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
             holder.edNote = (EditText) convertView.findViewById(R.id.et_note);
             holder.imgTrash = (ImageView) convertView.findViewById(R.id.img_delete_service);
             holder.llListItem = (LinearLayout) convertView.findViewById(R.id.item_list_book);
-
+            holder.lnNote = convertView.findViewById(R.id.layout_note);
+            holder.tvTitleNote = convertView.findViewById(R.id.title_note);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -81,7 +80,6 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                         holder.spinnerStaff.setSelection(pos);
                         mListusers.get(position).setSelectStaff(pos);
                     }
-
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
                 });
@@ -126,13 +124,20 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         holder.edNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             public void onFocusChange(View v, boolean hasFocus) {
-
                 if (!hasFocus) {
                     if (position < mListusers.size()) {
                         final int position = v.getId();
                         final EditText Caption = (EditText) v;
                         mListusers.get(position).setNote(Caption.getText().toString());
                     }
+                    holder.lnNote.setBackgroundColor(Color.TRANSPARENT);
+                    holder.edNote.setTextColor(Color.BLACK);
+                    holder.tvTitleNote.setTextColor(Color.BLACK);
+                }else {
+                    holder.edNote.setTextColor(Color.WHITE);
+                    holder.lnNote.setBackgroundColor(Color.parseColor("#FF05840F"));
+                    holder.tvTitleNote.setTextColor(Color.WHITE);
+
                 }
             }
         });
@@ -184,6 +189,8 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         TextView tvTime;
         EditText edNote;
         ImageView imgTrash;
+        LinearLayout lnNote;
+        TextView tvTitleNote;
     }
 
     @Override

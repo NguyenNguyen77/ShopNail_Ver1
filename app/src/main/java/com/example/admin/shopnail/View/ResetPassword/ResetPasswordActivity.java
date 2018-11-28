@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.admin.shopnail.Manager.NetworkReceiver;
@@ -21,6 +24,7 @@ public class ResetPasswordActivity extends Activity implements View.OnClickListe
     private Button mBtnResetPass;
     private Button mBtnBack;
     private EditText mEtPhone;
+    LinearLayout lnReset;
     private int mTextSizeBefore = 0;
     private int mTextSizeAfter = 0;
     ResetPasswordPresenter resetPasswordPresenter;
@@ -39,9 +43,9 @@ public class ResetPasswordActivity extends Activity implements View.OnClickListe
         mEtPhone = (EditText) findViewById(R.id.btn_phone_num);
         mBtnResetPass = (Button) findViewById(R.id.btn_reset_password);
         mBtnBack = (Button) findViewById(R.id.btn_back);
+        lnReset = findViewById(R.id.reset_layout);
         mBtnResetPass.setOnClickListener(this);
         mBtnBack.setOnClickListener(this);
-
         mEtPhone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -63,6 +67,17 @@ public class ResetPasswordActivity extends Activity implements View.OnClickListe
                 mTextSizeBefore = mTextSizeAfter;
             }
         });
+
+        lnReset.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                return false;
+            }
+        });
+
+
     }
 
     @Override

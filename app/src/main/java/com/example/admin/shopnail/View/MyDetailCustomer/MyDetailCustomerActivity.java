@@ -99,6 +99,11 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
     }
 
     @Override
+    public int getClientID() {
+        return Integer.parseInt(getClientChoosed().getClientId());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_my_detail_customer);
@@ -146,6 +151,8 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
     private GsonGetClient.SuccessBean.ClientsBean getClientChoosed() {
         return method.getGson().fromJson(getIntent().getStringExtra(CLIENT_HISTORY_CHOOSED), GsonGetClient.SuccessBean.ClientsBean.class);
     }
+
+
 
     private String getDateChoosed() {
         return getIntent().getStringExtra(DATE);

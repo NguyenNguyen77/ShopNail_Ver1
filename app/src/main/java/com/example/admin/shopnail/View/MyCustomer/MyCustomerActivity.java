@@ -118,7 +118,7 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
         txt_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "A nên chọn ngày 19-10-2018 để có data", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "A nên chọn ngày 19-10-2018 để có data", Toast.LENGTH_LONG).show();
                 showDatePickerDialog();
             }
         });

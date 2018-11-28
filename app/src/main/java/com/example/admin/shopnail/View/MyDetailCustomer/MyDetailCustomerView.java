@@ -20,4 +20,6 @@ public interface MyDetailCustomerView {
     void OpenDialogUpdate(String orderId);
 
     void setInfor(GsonDetailCustomer.SuccessBean.CustomersBean customersBean);
+
+    int getClientID();
 }
