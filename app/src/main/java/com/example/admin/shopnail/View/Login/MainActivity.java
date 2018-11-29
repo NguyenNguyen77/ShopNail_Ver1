@@ -106,8 +106,6 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         final EditText txtUsername = (EditText) login.findViewById(R.id.txtUsername);
         final EditText txtPassword = (EditText) login.findViewById(R.id.txtPassword);
         final TextView txtForgetPassword = login.findViewById(R.id.txt_forget_password);
-
-
         txtUsername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

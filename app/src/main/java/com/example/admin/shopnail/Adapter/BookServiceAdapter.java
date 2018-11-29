@@ -68,6 +68,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
             holder.llListItem = (LinearLayout) convertView.findViewById(R.id.item_list_book);
             holder.lnNote = convertView.findViewById(R.id.layout_note);
             holder.tvTitleNote = convertView.findViewById(R.id.title_note);
+            holder.lnTime = convertView.findViewById(R.id.layout_time);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -107,17 +108,15 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         if (holder.tvTime.getText().equals("--:--")) {
             holder.tvTime.setTextColor(Color.RED);
         } else {
-            holder.tvTime.setTextColor(Color.BLUE);
+            holder.tvTime.setTextColor(Color.parseColor("#096B09"));
         }
         holder.tvTime.setId(position);
-        holder.tvTime.setOnClickListener(new View.OnClickListener() {
+        holder.lnTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog(holder, v);
             }
         });
-
-
         holder.edNote.setText(user.getNote());
         holder.edNote.setId(position);
 
@@ -135,7 +134,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                     holder.tvTitleNote.setTextColor(Color.BLACK);
                 }else {
                     holder.edNote.setTextColor(Color.WHITE);
-                    holder.lnNote.setBackgroundColor(Color.parseColor("#FF05840F"));
+                    holder.lnNote.setBackgroundColor(Color.parseColor("#096B09"));
                     holder.tvTitleNote.setTextColor(Color.WHITE);
 
                 }
@@ -191,6 +190,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         ImageView imgTrash;
         LinearLayout lnNote;
         TextView tvTitleNote;
+        LinearLayout lnTime;
     }
 
     @Override
