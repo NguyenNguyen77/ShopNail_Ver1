@@ -95,5 +95,6 @@
     <string name="confirm_submit_booking_online">Do you want to submit?\nPlease make sure the information is corrected!</string>
     <string name="error_email_not_valid">The email address is not valid.\nPlease check it and try again</string>
     <string name="error_input_time">The time is invalid.\nOpen Time is: %1$s and Close Time is: %2$s\nPlease check it and try again!</string>
+    <string name="input_time_duplicate">The hours is duplicate. Please input another hours</string>
 
 </resources>

@@ -374,7 +374,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             listService.add(mAdapterService.getItem(i));
         }
 
-        defaultBookService = new BookService(listStaff, listService, mOpenTime, "", 0, 0);
+        defaultBookService = new BookService(listStaff, listService, "--:--", "", 0, 0);
         return defaultBookService;
     }
 
@@ -468,7 +468,8 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     }
 
     @Override
-    public boolean checkInputTime(String inputTime) {
+    public boolean checkInputTime(String inputTime, int pos) {
+        boolean result = true;
         String strInputTimeArrtmp[] = inputTime.split(":");
         int inputHour = Integer.parseInt(strInputTimeArrtmp[0]);
         int inputMinute = Integer.parseInt(strInputTimeArrtmp[1]);
@@ -484,11 +485,33 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
                 || ((inputHour == closeHour) && (inputMinute > closeMinute))) {
             String error = String.format(getResources().getString(R.string.error_input_time), mOpenTime, mCloseTime);
             Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
-            return false;
+            result = false;
         } else {
-            return true;
+            if (!checkDuplicateTime(inputTime, pos)) {
+                result = false;
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.input_time_duplicate), Toast.LENGTH_LONG).show();
+            } else {
+                result = true;
+            }
         }
+        return result;
+    }
 
+
+    public boolean checkDuplicateTime(String inputTime, int pos) {
+        int size = mBookServiceAdapter.getCount();
+        String staffstaffName = mBookServiceAdapter.getItem(pos).getStaffList().get(mBookServiceAdapter.getItem(pos).getSelectStaff());
+
+        for (int i = 0; i < size; i++) {
+            if (i != pos) {
+                if ((inputTime.equals(mBookServiceAdapter.getItem(i).getServiceTime()))
+                        && staffstaffName.equals(mBookServiceAdapter.getItem(pos).getStaffList().get(mBookServiceAdapter.getItem(i).getSelectStaff())))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
@@ -532,7 +555,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         commonDialog.show();
     }
 
-    private String convertTime12To24Format (String inputtime) {
+    private String convertTime12To24Format(String inputtime) {
         String timeTemp = "";
         int timePM = 0;
 
@@ -549,11 +572,11 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         int openHour = Integer.parseInt(strArrtmp[0]) + timePM;
         int openMinute = Integer.parseInt(strArrtmp[1]);
         String result = String.format("%02d", openHour) + ":" + String.format("%02d", openMinute);
-        return  result;
+        return result;
     }
 
     @Override
-    public void updateStatusButtonAddMoreServices (){
+    public void updateStatusButtonAddMoreServices() {
         if (mLvSelectServiceItem.getCount() >= 5) {
             mTvAddMoreService.setTextColor(getResources().getColor(R.color.text_grayout));
             mTvAddMoreService.setClickable(false);
