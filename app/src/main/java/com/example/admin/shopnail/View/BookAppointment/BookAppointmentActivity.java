@@ -496,7 +496,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mViewManager.dismissInprogressDialog();
         if (result) {
             Toast.makeText(mContext, msg, Toast.LENGTH_LONG).show();
-            mViewManager.handleBackScreen();
+            //mViewManager.handleBackScreen();
         } else {
             Toast.makeText(mContext, R.string.error_book_appointment, Toast.LENGTH_LONG).show();
         }
