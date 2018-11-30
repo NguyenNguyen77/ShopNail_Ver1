@@ -85,10 +85,6 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
 
     @Override
     public void reqBookOnline(String fullName, String email, String phone, String date, BookServiceAdapter serviceAdapter) {
-        if (!checkReqTimeValid(serviceAdapter)) {
-            Toast.makeText(mContext, R.string.error_check_time_booking, Toast.LENGTH_LONG).show();
-            return;
-        }
         String json = addJsonRequest(fullName, email, phone, date, serviceAdapter).toString();
         Log.d("KhoaND14", "KhoaNguyen: Json: " + json);
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.BOOK_ONLINE, UrlManager.ADD_BOOKING_ONLINE, json));
@@ -213,7 +209,7 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
                     int resultCode = resultGson.getSuccess().getCode();
                     if (resultCode == 200) {
                         result = true;
-                        msg = getGson().fromJson(s, GsonResBookAppointment.class).getSuccess().getMessage();
+                        msg = resultGson.getSuccess().getMessage();
                     }
                 } catch (Exception e) {
                 }
@@ -225,9 +221,11 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
                     GsonResCheckBookingTime resultGson = getGson().fromJson(s, GsonResCheckBookingTime.class);
                     int resultCode = resultGson.getSuccess().getCode();
                     if (resultCode == 200) {
-                        String message = getGson().fromJson(s, GsonResCheckBookingTime.class).getSuccess().getMessage();
+                        String message = resultGson.getSuccess().getMessage();
                         mBookAppointmentView.updateOrderTime();
-                        //Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();  //Not show
+                        if (!resultGson.isStatus()) {
+                            Toast.makeText(mContext, message, Toast.LENGTH_LONG).show(); //Show message when Error
+                        }
                     } else {
                         Toast.makeText(mContext, R.string.error_check_time_booking, Toast.LENGTH_LONG).show();
                     }

@@ -224,6 +224,11 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         String dateOder = mTvDate.getText().toString();
         String email = mEtCustomerEmail.getText().toString().trim();
         mBookServiceAdapter = (BookServiceAdapter) mLvSelectServiceItem.getAdapter();
+        if (!checkReqTimeValid(mBookServiceAdapter)) {
+            mViewManager.dismissInprogressDialog();
+            Toast.makeText(mContext, R.string.error_check_time_booking, Toast.LENGTH_LONG).show();
+            return;
+        }
         mBookAppointmentPresenter.reqBookOnline(fullName, email, phone, dateOder, mBookServiceAdapter);
 
     }
@@ -505,7 +510,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         for (int i = 0; i < size; i++) {
             if (i != pos) {
                 if ((inputTime.equals(mBookServiceAdapter.getItem(i).getServiceTime()))
-                        && staffstaffName.equals(mBookServiceAdapter.getItem(pos).getStaffList().get(mBookServiceAdapter.getItem(i).getSelectStaff())))
+                        && staffstaffName.equals(mBookServiceAdapter.getItem(i).getStaffList().get(mBookServiceAdapter.getItem(i).getSelectStaff())))
                 {
                     return false;
                 }
@@ -586,5 +591,15 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             mTvAddMoreService.setClickable(true);
             mTvAddMoreService.setEnabled(true);
         }
+    }
+
+    private boolean checkReqTimeValid(BookServiceAdapter bookServiceAdapter) {
+        int reqNum = bookServiceAdapter.getCount();
+        for (int i = 0; i < reqNum; i++) {
+            if (bookServiceAdapter.getItem(i).getServiceTime().equals("--:--")) {
+                return false;
+            }
+        }
+        return true;
     }
 }

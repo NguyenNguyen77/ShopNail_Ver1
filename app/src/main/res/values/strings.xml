@@ -84,9 +84,9 @@
 
     <string name="email">Email</string>
     <string name="error_title">Error</string>
-    <string name="error_get_staff">Cannot get Staff Information.\nPlease Check Internet connection.\n And try again</string>
-    <string name="error_get_service">Cannot get Service Information.\nPlease Check Internet connection.\nAnd try again</string>
-    <string name="error_book_appointment">Cannot book your services.\nPlease Check Internet connection.\nAnd try again</string>
+    <string name="error_get_staff">Cannot get Staff Information.\nPlease try again</string>
+    <string name="error_get_service">Cannot get Service Information.\nPlease try again</string>
+    <string name="error_book_appointment">Cannot book your services.\nPlease try again</string>
     <string name="error_select_date">Do not select dates in the past.\nPlease select a date from current to future.</string>
     <string name="error_check_time_booking">Cannot book your services in this time.\nPlease select another time.\nAnd try again</string>
     <string name="change_avatar_success">Change Avatar Successful</string>

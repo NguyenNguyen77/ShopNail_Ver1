@@ -39,7 +39,6 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
     //TextView mServiceTime;
     private Context mContext = null;
     private LayoutInflater inflater;
-    private int mPosition = 0;
     public int mHour, mMinute;
     private View mView;
     protected ViewManager mViewManager = ViewManager.getInstance();
@@ -55,11 +54,11 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
-        this.mPosition = position;
         final BookService user = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_book_service, parent, false);
             holder = new ViewHolder();
+            holder.position = position;
             holder.spinnerStaff = (Spinner) convertView.findViewById(R.id.spinnerStaff);
             holder.spinnerService = (Spinner) convertView.findViewById(R.id.spinnerService);
             holder.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
@@ -99,7 +98,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         holder.imgTrash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showConfirmDialog("Confirm", "Do you want to delete?", position);
+                showConfirmDialog("Confirm", "Do you want to delete?", holder.position);
             }
         });
 
@@ -191,6 +190,8 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         LinearLayout lnNote;
         TextView tvTitleNote;
         LinearLayout lnTime;
+
+        int position;
     }
 
     @Override
@@ -219,10 +220,10 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                         //showUnderLineText(hourOfDay + ":" + minute, holder.tvTime);
                         //final TextView Caption = (TextView) holder.tvTime;
                         //mListusers.get(mPosition).setServiceTime(Caption.getText().toString());
-                        String staffName = mListusers.get(mPosition).mListStaff.get(mListusers.get(mPosition).getSelectStaff());
+                        String staffName = mListusers.get(holder.position).mListStaff.get(mListusers.get(holder.position).getSelectStaff());
                         //mBookAppointmentActivity.checkTimeBookOnline(staffName, mPosition, Caption.getText().toString());
                         String strTime = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);;
-                        mBookAppointmentActivity.checkTimeBookOnline(staffName, mPosition, strTime, mBookAppointmentActivity.checkInputTime(strTime, mPosition));
+                        mBookAppointmentActivity.checkTimeBookOnline(staffName, holder.position, strTime, mBookAppointmentActivity.checkInputTime(strTime, holder.position));
                     }
                 }, mHour, mMinute, true);
         timePickerDialog.show();
@@ -249,7 +250,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
             @Override
             public void onClick(View v) {
                 commonDialog.dismiss();
-                if (mPosition < mListusers.size()) {
+                if (pos < mListusers.size()) {
                     mListusers.remove(pos);
                     BookServiceAdapter.this.notifyDataSetChanged();
                     mBookAppointmentActivity.updateStatusButtonAddMoreServices();
