@@ -408,10 +408,10 @@ public class ViewManager {
     public void showSnack(boolean isConnected) {
         if(!isApplicationSentToBackground(getInstance().currentActivity)){
             if (isConnected) {
-                Toast.makeText(currentActivity.getApplicationContext(), "Da ket noi internet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(currentActivity.getApplicationContext(), "Da ket noi internet", Toast.LENGTH_LONG).show();
                 Log.d("NguyenNK2", "ViewManager === da ket noi internet");
             } else {
-                Toast.makeText(currentActivity.getApplicationContext(), "Vui long kiem tra lai ket noi internet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(currentActivity.getApplicationContext(), "Vui long kiem tra lai ket noi internet", Toast.LENGTH_LONG).show();
                 Log.d("NguyenNK2", "ViewManager === ko ket noi internet");
             }
         }

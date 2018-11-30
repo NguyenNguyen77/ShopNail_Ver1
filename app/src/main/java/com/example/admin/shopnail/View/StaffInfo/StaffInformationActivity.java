@@ -192,17 +192,17 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
     public void onChangeAvatarResult(boolean result) {
         if (result) {
             mStaffInformationPresenter.requestInfor(BaseMethod.getDefaults(KeyManager.USER_ID, this));
-            Toast.makeText(this, R.string.change_avatar_success, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.change_avatar_success, Toast.LENGTH_LONG).show();
         } else {
             mViewManager.dismissInprogressDialog();
-            Toast.makeText(this, R.string.change_avatar_failed, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.change_avatar_failed, Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void showError() {
         mViewManager.dismissInprogressDialog();
-        Toast.makeText(this, "Loading Staff Fail...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Loading Staff Fail...", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -243,7 +243,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
             Toast.makeText(StaffInformationActivity.this, R.string.new_pass_notmatch, Toast.LENGTH_LONG).show();
             result = false;
         } else if (!mOldPass.equals(BaseMethod.getDefaults(PASS_WORD, StaffInformationActivity.this))) {
-            Toast.makeText(this, R.string.old_pass_wrong, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.old_pass_wrong, Toast.LENGTH_LONG).show();
             result = false;
         }
         return result;

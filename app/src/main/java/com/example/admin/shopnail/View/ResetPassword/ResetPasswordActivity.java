@@ -121,7 +121,7 @@ public class ResetPasswordActivity extends Activity implements View.OnClickListe
 
     @Override
     public void showToastResuilt(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     // Check Internet

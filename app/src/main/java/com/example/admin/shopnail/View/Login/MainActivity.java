@@ -56,9 +56,9 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
 
         if(isInternetOn())
         {
-//            Toast.makeText(getApplicationContext(),"da ket noi internet",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(),"da ket noi internet",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(getApplicationContext(),"Vui long kiem tra lai ket noi internet",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Vui long kiem tra lai ket noi internet",Toast.LENGTH_LONG).show();
         }
         btnMakeAppointment.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
@@ -168,7 +168,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
     public void onLoginResult(boolean result) {
         if (result) {
             mProgressDialog.cancel();
-            Toast.makeText(MainActivity.this, R.string.login_sucessfull, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.login_sucessfull, Toast.LENGTH_LONG).show();
             mViewManager.setView(ViewManager.VIEW_KEY.MENU_FOR_STAFF);  // Change to next screen
         } else {
             dismissProgress();

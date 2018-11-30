@@ -63,7 +63,6 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
                 ShowLoginForOldCustomer();
                 break;
             case R.id.btn_go_back:
-//                Toast.makeText(this, "click go back", Toast.LENGTH_SHORT).show();
                 mViewManager.handleBackScreen();
                 mViewManager.finishActivity(this);
                 break;
