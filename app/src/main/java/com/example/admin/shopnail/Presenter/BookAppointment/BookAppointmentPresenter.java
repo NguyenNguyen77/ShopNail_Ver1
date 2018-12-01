@@ -33,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 import static com.example.admin.shopnail.Manager.KeyManager.CHECK_TIME_BOOK_ONLINE;
@@ -206,10 +207,15 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
                 String msg = "";
                 try {
                     GsonResBookAppointment resultGson = getGson().fromJson(s, GsonResBookAppointment.class);
-                    int resultCode = resultGson.getSuccess().getCode();
-                    if (resultCode == 200) {
+                    if (resultGson.isStatus()) {
+                        int resultCode = resultGson.getSuccess().getCode();
+                        if (resultCode == HttpURLConnection.HTTP_OK) {
+                            result = true;
+                            msg = resultGson.getSuccess().getMessage();
+                        }
+                    } else {
                         result = true;
-                        msg = resultGson.getSuccess().getMessage();
+                        msg = resultGson.getSuccess().getError();
                     }
                 } catch (Exception e) {
                 }

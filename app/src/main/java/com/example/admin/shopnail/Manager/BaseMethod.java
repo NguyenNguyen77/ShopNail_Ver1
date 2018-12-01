@@ -286,6 +286,16 @@ public class BaseMethod   {
                     result.append(line);
                 }
                 return result.toString();
+            } else if (response_code == HttpURLConnection.HTTP_UNAUTHORIZED) {
+
+                InputStreamReader streamReader1 = new InputStreamReader(connect.getErrorStream());
+                BufferedReader reader = new BufferedReader(streamReader1);
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+                return result.toString();
             } else {
                 return String.valueOf(response_code);
             }
