@@ -1,14 +1,18 @@
 package com.example.admin.shopnail.View.ViewCartActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -197,4 +201,23 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     public void onNetworkConnectionChanged(boolean isConnected) {
         mViewManager.showSnack(isConnected);
     }
+
+
+    // Hide soft keyboard when click outside edittext START
+    @Override
+    public boolean dispatchTouchEvent(final MotionEvent ev) {
+        final View currentFocus = getCurrentFocus();
+        if (!(currentFocus instanceof EditText) || !isTouchInsideView(ev, currentFocus)) {
+            ((InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE))
+                    .hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+    private boolean isTouchInsideView(final MotionEvent ev, final View currentFocus) {
+        final int[] loc = new int[2];
+        currentFocus.getLocationOnScreen(loc);
+        return ev.getRawX() > loc[0] && ev.getRawY() > loc[1] && ev.getRawX() < (loc[0] + currentFocus.getWidth())
+                && ev.getRawY() < (loc[1] + currentFocus.getHeight());
+    }
+    // Hide soft keyboard when click outside edittext END
 }
