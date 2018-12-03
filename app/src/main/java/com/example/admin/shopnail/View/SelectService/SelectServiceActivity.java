@@ -200,7 +200,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     @Override
     public void setProductsByCategoryAdapter(SelectServiceAdapter selectServiceAdapter) {
         gridSelectService.setAdapter(selectServiceAdapter);
-        mViewManager.dismissInprogressDialog();
+
     }
 
 
@@ -234,6 +234,11 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     @Override
     public JSONArray getArrayChecked() {
         return jsonArray;
+    }
+
+    @Override
+    public void dismissProgress() {
+        mViewManager.dismissInprogressDialog();
     }
 
     // Check Internet

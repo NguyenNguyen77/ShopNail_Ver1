@@ -127,8 +127,8 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        mViewManager.handleBackScreen();
-        mViewManager.finishActivity(this);
+//        mViewManager.handleBackScreen();
+//        mViewManager.finishActivity(this);
     }
 
     @Override
@@ -139,8 +139,9 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
                 mViewProductPresenter.sendData();
                 break;
             case R.id.btn_go_back:
-                mViewManager.handleBackScreen();
-                mViewManager.finishActivity(this);
+//                mViewManager.handleBackScreen();
+//                mViewManager.finishActivity(this);
+                onBackPressed();
                 break;
             case R.id.img_add:
                 addExtra();

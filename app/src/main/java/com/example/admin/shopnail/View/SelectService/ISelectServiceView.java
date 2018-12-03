@@ -16,4 +16,6 @@ public interface ISelectServiceView {
     void addJsonArrayService(boolean isChecked, String name, int id, String price, String format);
 
     JSONArray getArrayChecked();
+
+    void dismissProgress();
 }

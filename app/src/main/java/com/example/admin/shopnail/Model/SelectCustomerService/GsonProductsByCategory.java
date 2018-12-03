@@ -7,7 +7,7 @@ public class GsonProductsByCategory {
 
     /**
      * status : true
-     * success : {"code":200,"data":[{"id":1,"name":"Natural Full Set","image":"http://dev.nail.local:8081/uploads/default.png","parent":"5","desc":"Natural Full Set","price":"10","is_new":"1","created_at":"2018-09-06 00:19:21","updated_at":"2018-09-06 00:19:21"}]}
+     * success : {"code":200,"data":[{"id":1,"name":"Natural Full Set","image":"","parent":"5","desc":"Natural Full Set","price":"10","is_new":"1","is_hot":"0","created_at":"2018-10-16 15:10:02","updated_at":"2018-10-16 15:10:02"},{"id":2,"name":"Manicure","image":"","parent":"6","desc":"Manicure","price":"20","is_new":"1","is_hot":"0","created_at":"2018-10-16 15:10:07","updated_at":"2018-10-16 15:10:07"},{"id":3,"name":"Eye Brows","image":"","parent":"7","desc":"Eye Brows","price":"10","is_new":"0","is_hot":"1","created_at":"2018-10-16 15:10:13","updated_at":"2018-10-16 15:10:13"},{"id":4,"name":"Eye Brows Tinting","image":"","parent":"7","desc":"Eye Brows Tinting","price":"40","is_new":"0","is_hot":"1","created_at":"2018-10-16 15:10:18","updated_at":"2018-10-16 15:10:18"}]}
      */
 
     private boolean status;
@@ -32,7 +32,7 @@ public class GsonProductsByCategory {
     public static class SuccessBean {
         /**
          * code : 200
-         * data : [{"id":1,"name":"Natural Full Set","image":"http://dev.nail.local:8081/uploads/default.png","parent":"5","desc":"Natural Full Set","price":"10","is_new":"1","created_at":"2018-09-06 00:19:21","updated_at":"2018-09-06 00:19:21"}]
+         * data : [{"id":1,"name":"Natural Full Set","image":"","parent":"5","desc":"Natural Full Set","price":"10","is_new":"1","is_hot":"0","created_at":"2018-10-16 15:10:02","updated_at":"2018-10-16 15:10:02"},{"id":2,"name":"Manicure","image":"","parent":"6","desc":"Manicure","price":"20","is_new":"1","is_hot":"0","created_at":"2018-10-16 15:10:07","updated_at":"2018-10-16 15:10:07"},{"id":3,"name":"Eye Brows","image":"","parent":"7","desc":"Eye Brows","price":"10","is_new":"0","is_hot":"1","created_at":"2018-10-16 15:10:13","updated_at":"2018-10-16 15:10:13"},{"id":4,"name":"Eye Brows Tinting","image":"","parent":"7","desc":"Eye Brows Tinting","price":"40","is_new":"0","is_hot":"1","created_at":"2018-10-16 15:10:18","updated_at":"2018-10-16 15:10:18"}]
          */
 
         private int code;
@@ -58,13 +58,14 @@ public class GsonProductsByCategory {
             /**
              * id : 1
              * name : Natural Full Set
-             * image : http://dev.nail.local:8081/uploads/default.png
+             * image :
              * parent : 5
              * desc : Natural Full Set
              * price : 10
              * is_new : 1
-             * created_at : 2018-09-06 00:19:21
-             * updated_at : 2018-09-06 00:19:21
+             * is_hot : 0
+             * created_at : 2018-10-16 15:10:02
+             * updated_at : 2018-10-16 15:10:02
              */
 
             private int id;
@@ -74,7 +75,7 @@ public class GsonProductsByCategory {
             private String desc;
             private String price;
             private String is_new;
-            private String is_Hot;
+            private String is_hot;
             private String created_at;
             private String updated_at;
 
@@ -134,12 +135,12 @@ public class GsonProductsByCategory {
                 this.is_new = is_new;
             }
 
-            public String getIs_Hot() {
-                return is_Hot;
+            public String getIs_hot() {
+                return is_hot;
             }
 
-            public void setIs_Hot(String is_Hot) {
-                this.is_Hot = is_Hot;
+            public void setIs_hot(String is_hot) {
+                this.is_hot = is_hot;
             }
 
             public String getCreated_at() {

@@ -12,6 +12,7 @@ import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
 import com.example.admin.shopnail.AsynTaskManager.CaseManager;
 import com.example.admin.shopnail.AsynTaskManager.NailTask;
 import com.example.admin.shopnail.AsynTaskManager.ResuiltObject;
+import com.example.admin.shopnail.CustomViewListExpand.SingleToast;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
@@ -98,14 +99,20 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
 
     @Override
     public void requestProduct(int pos) {
-        if (pos == 0) {
-            new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_PRODUCTS_BY_CATEGORY, UrlManager.GET_PRODUCTS_BY_CATEGORY_URL, getParamBuidler()));//For item All
-        } else {
-            if (pos >= arrCategory.size()) {
-                return;
-            }
-            new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_PRODUCTS_BY_CATEGORY, UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + arrCategory.get(pos - 1).getId(), getParamBuidler()));
-        }
+//        if (pos == 0) {
+//            new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_PRODUCTS_BY_CATEGORY, UrlManager.GET_PRODUCTS_BY_CATEGORY_URL, getParamBuidler()));//For item All
+//        } else {
+//            if (pos >= arrCategory.size()) {
+//                return;
+//            }
+//            String url = UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + arrCategory.get(pos - 1).getId();
+//            new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_PRODUCTS_BY_CATEGORY, UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + arrCategory.get(pos - 1).getId(), getParamBuidler()));
+//        }
+
+        String url = UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + arrCategory.get(pos).getId();
+        new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_PRODUCTS_BY_CATEGORY, arrCategory.get(pos).getId() == 0 ? UrlManager.GET_PRODUCTS_BY_CATEGORY_URL : UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + arrCategory.get(pos).getId(), getParamBuidler()));//For item All
+
+
     }
 
     Uri.Builder getParamBuidler() {
@@ -115,7 +122,6 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
 
     @Override
     public void onTaskCompleted(String s, String CaseRequest) {
-
         switch (CaseRequest) {
             case KeyManager.GET_CATEGORY_LIST:
                 GsonCategory mGsonCategory = getGson().fromJson(s, GsonCategory.class);
@@ -137,13 +143,21 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
                 break;
             case KeyManager.GET_PRODUCTS_BY_CATEGORY:
                 Log.d(KeyManager.VinhCNLog, s);
-                GsonProductsByCategory mGsonProductsByCategory = getGson().fromJson(s, GsonProductsByCategory.class);
-                List<GsonProductsByCategory.SuccessBean.DataBean> arrProduct = mGsonProductsByCategory.getSuccess().getData();
-                mISelectServiceView.setProductsByCategoryAdapter(new SelectServiceAdapter(mContext, arrProduct, mISelectServiceView.getArrayChecked()));
+                try {
+                    GsonProductsByCategory mGsonProductsByCategory = getGson().fromJson(s, GsonProductsByCategory.class);
+                    List<GsonProductsByCategory.SuccessBean.DataBean> arrProduct = mGsonProductsByCategory.getSuccess().getData();
+                    mISelectServiceView.setProductsByCategoryAdapter(new SelectServiceAdapter(mContext, arrProduct, mISelectServiceView.getArrayChecked()));
+                } catch (Exception e) {
+                    List<GsonProductsByCategory.SuccessBean.DataBean> arrProduct = new ArrayList<>();
+                    mISelectServiceView.setProductsByCategoryAdapter(new SelectServiceAdapter(mContext, arrProduct, mISelectServiceView.getArrayChecked()));
+                }
+                mISelectServiceView.dismissProgress();
                 break;
             default:
                 break;
         }
+
+
     }
 
     @Override

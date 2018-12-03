@@ -69,7 +69,8 @@ public class SelectServiceAdapter extends BaseAdapter implements View.OnClickLis
             mHolder = new ViewHolder();
             mHolder.nameService = (TextView) convertView.findViewById(R.id.txtServiceName);
             mHolder.priceService = (TextView) convertView.findViewById(R.id.txtServicePrice);
-            mHolder.srcIconService = (ImageView) convertView.findViewById(R.id.image_hot_new);
+            mHolder.imgNew = (ImageView) convertView.findViewById(R.id.image_new);
+            mHolder.imgHot = (ImageView) convertView.findViewById(R.id.image_hot);
             mHolder.cbItems = convertView.findViewById(R.id.itemCheckBox);
             convertView.setTag(mHolder);
         } else {
@@ -81,13 +82,9 @@ public class SelectServiceAdapter extends BaseAdapter implements View.OnClickLis
         mHolder.priceService.setText(itemService.getPrice() + " $");
         mHolder.priceService.setTag(position);
         if (itemService.getIs_new()!=null)
-        mHolder.srcIconService.setVisibility(itemService.getIs_new().equals("1") ? View.VISIBLE : View.GONE);
-        if (itemService.getIs_new()!=null)
-        mHolder.srcIconService.setBackgroundResource(itemService.getIs_new().equals("1") ? R.drawable.ic_new : 0);
-        if (itemService.getIs_Hot()!=null)
-        mHolder.srcIconService.setVisibility(itemService.getIs_Hot().equals("1") ? View.VISIBLE : View.GONE);
-        if (itemService.getIs_Hot()!=null)
-        mHolder.srcIconService.setBackgroundResource(itemService.getIs_Hot().equals("1") ? R.drawable.ic_hot : 0);
+        mHolder.imgNew.setVisibility(itemService.getIs_new().equals("1") ? View.VISIBLE : View.GONE);
+        if (itemService.getIs_hot()!=null)
+        mHolder.imgHot.setVisibility(itemService.getIs_hot().equals("1") ? View.VISIBLE : View.GONE);
         mHolder.cbItems.setTag(position);
         beforeCheck(mJSONArray, mHolder.cbItems, itemService);
         mHolder.cbItems.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +128,8 @@ public class SelectServiceAdapter extends BaseAdapter implements View.OnClickLis
     }
 
     class ViewHolder {
-        ImageView srcIconService;
+        ImageView imgNew;
+        ImageView imgHot;
         TextView nameService;
         TextView priceService;
         CheckBox cbItems;
