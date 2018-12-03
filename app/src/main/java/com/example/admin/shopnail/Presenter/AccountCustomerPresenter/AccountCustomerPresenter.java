@@ -13,6 +13,7 @@ import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.UrlManager;
 import com.example.admin.shopnail.Model.LoginForCustomer.GsonCMOldLogin;
 import com.example.admin.shopnail.Model.LoginForCustomer.GsonCustomerCreate;
+import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.LoginCustomer.ILoginForCustomerView;
 
 import static com.example.admin.shopnail.Manager.KeyManager.CLIENT_ID;
@@ -106,23 +107,34 @@ public class AccountCustomerPresenter extends BaseMethod implements IAccountCust
             case CREATE_ACCOUNT_CUSTOMER:
                 try {
                     GsonCustomerCreate mGsonCustomerCreate = getGson().fromJson(s, GsonCustomerCreate.class);
-                    iLoginForCustomerView.onLoginResult(mGsonCustomerCreate.isStatus());
-                    setDefaults(CLIENT_NAME, mGsonCustomerCreate.getSuccess().getName(), mContext);
-                    setDefaults(CLIENT_ID, String.valueOf(mGsonCustomerCreate.getSuccess().getLast_id()), mContext);
-                    setDefaults(CUSTOMER_PHONE_NUMBER, mGsonCustomerCreate.getSuccess().getPhone(), mContext);
+                    String msg = "";
+                    if (mGsonCustomerCreate.isStatus()) {
+                        msg = mGsonCustomerCreate.getSuccess().getMessage();
+                        setDefaults(CLIENT_NAME, mGsonCustomerCreate.getSuccess().getName(), mContext);
+                        setDefaults(CLIENT_ID, String.valueOf(mGsonCustomerCreate.getSuccess().getLast_id()), mContext);
+                        setDefaults(CUSTOMER_PHONE_NUMBER, mGsonCustomerCreate.getSuccess().getPhone(), mContext);
+                        iLoginForCustomerView.onLoginResult(mGsonCustomerCreate.isStatus(), msg);
+                    } else {
+                        msg = mGsonCustomerCreate.getSuccess().getPhone();
+                        iLoginForCustomerView.onLoginResult(false, msg);
+                    }
                 } catch (Exception e) {
-                    iLoginForCustomerView.onLoginResult(false);
+                    iLoginForCustomerView.onLoginResult(false, "");
                 }
                 break;
             case KeyManager.LOGIN_OLD_CUSTOMER:
                 try {
                     GsonCMOldLogin mGsonCMOldLogin = getGson().fromJson(s, GsonCMOldLogin.class);
-                    setDefaults(CLIENT_NAME, mGsonCMOldLogin.getSuccess().getFullname(), mContext);
-                    setDefaults(CLIENT_ID, String.valueOf(mGsonCMOldLogin.getSuccess().getUser_id()), mContext);
-                    setDefaults(CUSTOMER_PHONE_NUMBER, phoneNumber, mContext);
-                    iLoginForCustomerView.onLoginResult(mGsonCMOldLogin.isStatus());
+                    if (mGsonCMOldLogin.isStatus()) {
+                        setDefaults(CLIENT_NAME, mGsonCMOldLogin.getSuccess().getFullname(), mContext);
+                        setDefaults(CLIENT_ID, String.valueOf(mGsonCMOldLogin.getSuccess().getUser_id()), mContext);
+                        setDefaults(CUSTOMER_PHONE_NUMBER, phoneNumber, mContext);
+                        iLoginForCustomerView.onLoginResult(mGsonCMOldLogin.isStatus(), "");
+                    } else {
+                        iLoginForCustomerView.onLoginResult(false, mGsonCMOldLogin.getSuccess().getPhone());
+                    }
                 } catch (Exception e) {
-                    iLoginForCustomerView.onLoginResult(false);
+                    iLoginForCustomerView.onLoginResult(false, "");
                 }
                 break;
         }

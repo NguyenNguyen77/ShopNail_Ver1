@@ -158,6 +158,9 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
                     }
                 }
                 mTextSizeBefore = mTextSizeAfter;
+                if (mTextSizeBefore == 12) {
+                    txtPhoneCustomer.setTextColor(getResources().getColor(R.color.email_ok));
+                }
             }
         });
 
@@ -206,47 +209,59 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                boolean isInvalid = false;
 //                if(txtNameCustomer.getText().toString() != null){
                 mNameCustomer = txtNameCustomer.getText().toString().trim();
                 mPhoneCustomer = txtPhoneCustomer.getText().toString();
                 mEmailCustomer = txtEmailCustomer.getText().toString();
 
                 // ================ Check vailidate username and password START
-                if(mNameCustomer.isEmpty() && mPhoneCustomer.isEmpty() && mEmailCustomer.isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Please insert name and phone customer ",Toast.LENGTH_LONG).show();
+//                if (mNameCustomer.isEmpty() && mPhoneCustomer.isEmpty() && mEmailCustomer.isEmpty()) {
+//                    Toast.makeText(getApplicationContext(), "Please insert name and phone customer ", Toast.LENGTH_LONG).show();
+//                    txtNameCustomer.setBackgroundResource(R.drawable.bordertextview);
+//                    txtPhoneCustomer.setBackgroundResource(R.drawable.bordertextview);
+//                    txtEmailCustomer.setBackgroundResource(R.drawable.bordertextview);
+//                    return;
+//                }
+                if (mNameCustomer.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please insert user name customer ", Toast.LENGTH_LONG).show();
                     txtNameCustomer.setBackgroundResource(R.drawable.bordertextview);
+                    isInvalid = true;
+                }
+                if (mPhoneCustomer.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please insert phone number customer", Toast.LENGTH_LONG).show();
                     txtPhoneCustomer.setBackgroundResource(R.drawable.bordertextview);
+                    isInvalid = true;
+                }
+                if (mEmailCustomer.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please insert email customer", Toast.LENGTH_LONG).show();
                     txtEmailCustomer.setBackgroundResource(R.drawable.bordertextview);
-                    return;
-                }
-                if(mNameCustomer.isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Please insert user name customer ",Toast.LENGTH_LONG).show();
-                    txtNameCustomer.setBackgroundResource(R.drawable.bordertextview);
-                    return;
-                }
-                if(mPhoneCustomer.isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Please insert phone number customer",Toast.LENGTH_LONG).show();
-                    txtPhoneCustomer.setBackgroundResource(R.drawable.bordertextview);
-                    return;
-                }
-                if(mEmailCustomer.isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Please insert email customer",Toast.LENGTH_LONG).show();
-                    txtEmailCustomer.setBackgroundResource(R.drawable.bordertextview);
-                    return;
+                    isInvalid = true;
                 }
                 // ================ Check vailidate username and password END
 
-                if (mLoginPersenter.checkLoginForCustomer(mPhoneCustomer) && mNameCustomer != null) { //Need to check more condition for Username&PWD
+                int phoneSize = txtPhoneCustomer.getText().toString().trim().length();
+
+                if (phoneSize != 12) {
+                    txtPhoneCustomer.setTextColor(getResources().getColor(R.color.email_failed));
+                    isInvalid = true;
+                }
+                String emailText = txtEmailCustomer.getEditableText().toString().trim();
+                if (!(emailText.matches(emailPattern) && emailText.length() > 0)) {
+                    txtEmailCustomer.setTextColor(getResources().getColor(R.color.email_failed));
+                    isInvalid = true;
+                }
+
+                if (!isInvalid) { //Need to check more condition for Username&PWD
                     login.dismiss();
                     mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
                     mProgressDialog.setMessage(getString(R.string.please_wait));
                     mProgressDialog.show();
                     mLoginPersenter.createAccountForCustomer(mNameCustomer, mPhoneCustomer);  // Send Username & PWD to persenter: save.
-                } else {
-                    Toast.makeText(getApplicationContext(), R.string.enter_username_pwd, Toast.LENGTH_LONG).show();
                 }
-//                }else {
-//                    return;
+//                else {
+//                    Toast.makeText(getApplicationContext(), R.string.enter_username_pwd, Toast.LENGTH_LONG).show();
 //                }
             }
         });
@@ -298,8 +313,8 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
             public void onClick(View v) {
                 mPhoneCustomer = txtPhoneCustomer.getText().toString();
                 // ================ Check vailidate username and password START
-                if(mPhoneCustomer.isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Please insert phone customer",Toast.LENGTH_LONG).show();
+                if (mPhoneCustomer.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please insert phone customer", Toast.LENGTH_LONG).show();
                     txtPhoneCustomer.setBackgroundResource(R.drawable.bordertextview);
                     return;
                 }
@@ -326,12 +341,19 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
 
 
     @Override
-    public void onLoginResult(boolean result) {
+    public void onLoginResult(boolean result, String msg) {
         mProgressDialog.cancel();
         if (result) {
             mViewManager.setView(ViewManager.VIEW_KEY.SELECT_SERVICE);  // Change to next screen
+            if (!msg.equals("")) {
+                Toast.makeText(LoginForCustomerActivity.this, msg, Toast.LENGTH_LONG).show();
+            }
         } else {
-            Toast.makeText(LoginForCustomerActivity.this, R.string.login_failed, Toast.LENGTH_LONG).show();
+            if (!msg.equals("")) {
+                Toast.makeText(LoginForCustomerActivity.this, msg, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(LoginForCustomerActivity.this, getResources().getString(R.string.login_customer_fail), Toast.LENGTH_LONG).show();
+            }
         }
     }
 

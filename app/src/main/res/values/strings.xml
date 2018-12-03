@@ -97,4 +97,7 @@
     <string name="error_input_time">The time is invalid.\nOpen Time is: %1$s and Close Time is: %2$s\nPlease check it and try again!</string>
     <string name="input_time_duplicate">The hours is duplicate. Please input another hours</string>
 
+    <string name="phone_input_fail">The phone number is not corrected.\nPlease check again!</string>
+    <string name="login_customer_fail">Cannot login for current customer</string>
+
 </resources>
