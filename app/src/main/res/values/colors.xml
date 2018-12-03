@@ -10,8 +10,8 @@
     <color name="text_color_load_data">#065e28</color>
     <color name="list_1">#F2F5A9</color>
     <color name="list_2">#F7D358</color>
-    <color name="email_ok">#1c2d73</color>
-    <color name="email_failed">#d25a09</color>
+    <color name="email_ok">#000000</color>
+    <color name="email_failed">#FF0000</color>
     <color name="text_grayout">#686767</color>
     <color name="text_normal">#000000</color>
 </resources>

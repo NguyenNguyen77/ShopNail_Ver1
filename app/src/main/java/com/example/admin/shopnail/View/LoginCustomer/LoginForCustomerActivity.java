@@ -3,6 +3,7 @@ package com.example.admin.shopnail.View.LoginCustomer;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.Editable;
@@ -29,6 +30,8 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
     AccountCustomerPresenter mLoginPersenter = new AccountCustomerPresenter(this, this);
     private String mNameCustomer = "";
     private String mPhoneCustomer = "";
+    private String mEmailCustomer = "";
+    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private ProgressDialog mProgressDialog;
 
     private int mTextSizeBefore = 0;
@@ -130,6 +133,11 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
 
         final EditText txtNameCustomer = (EditText) login.findViewById(R.id.txtNameCustomer);
         final EditText txtPhoneCustomer = (EditText) login.findViewById(R.id.txtPhoneCustomer);
+        final EditText txtEmailCustomer = (EditText) login.findViewById(R.id.txtEmailCustomer);
+
+        final Drawable mBackgroundColor = txtNameCustomer.getBackground();
+        final Drawable mBackgroundColorpass = txtPhoneCustomer.getBackground();
+        final Drawable mBackgroundColorEmail = txtEmailCustomer.getBackground();
 
         txtPhoneCustomer.addTextChangedListener(new TextWatcher() {
             @Override
@@ -138,6 +146,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                txtPhoneCustomer.setBackground(mBackgroundColor);
             }
 
             @Override
@@ -152,6 +161,47 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
             }
         });
 
+        txtNameCustomer.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                txtNameCustomer.setBackground(mBackgroundColorpass);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        txtEmailCustomer.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                txtEmailCustomer.setBackground(mBackgroundColorEmail);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // Check validate email START
+                mEmailCustomer = txtEmailCustomer.getEditableText().toString().trim();
+                if (mEmailCustomer.matches(emailPattern) && mEmailCustomer.length() > 0) {
+                    txtEmailCustomer.setTextColor(getResources().getColor(R.color.email_ok));
+                } else {
+                    txtEmailCustomer.setTextColor(getResources().getColor(R.color.email_failed));
+                }
+                // Check validate email END
+            }
+        });
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +209,33 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
 //                if(txtNameCustomer.getText().toString() != null){
                 mNameCustomer = txtNameCustomer.getText().toString().trim();
                 mPhoneCustomer = txtPhoneCustomer.getText().toString();
+                mEmailCustomer = txtEmailCustomer.getText().toString();
+
+                // ================ Check vailidate username and password START
+                if(mNameCustomer.isEmpty() && mPhoneCustomer.isEmpty() && mEmailCustomer.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please insert name and phone customer ",Toast.LENGTH_LONG).show();
+                    txtNameCustomer.setBackgroundResource(R.drawable.bordertextview);
+                    txtPhoneCustomer.setBackgroundResource(R.drawable.bordertextview);
+                    txtEmailCustomer.setBackgroundResource(R.drawable.bordertextview);
+                    return;
+                }
+                if(mNameCustomer.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please insert user name customer ",Toast.LENGTH_LONG).show();
+                    txtNameCustomer.setBackgroundResource(R.drawable.bordertextview);
+                    return;
+                }
+                if(mPhoneCustomer.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please insert phone number customer",Toast.LENGTH_LONG).show();
+                    txtPhoneCustomer.setBackgroundResource(R.drawable.bordertextview);
+                    return;
+                }
+                if(mEmailCustomer.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please insert email customer",Toast.LENGTH_LONG).show();
+                    txtEmailCustomer.setBackgroundResource(R.drawable.bordertextview);
+                    return;
+                }
+                // ================ Check vailidate username and password END
+
                 if (mLoginPersenter.checkLoginForCustomer(mPhoneCustomer) && mNameCustomer != null) { //Need to check more condition for Username&PWD
                     login.dismiss();
                     mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
@@ -193,12 +270,40 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         Button btnCancel = (Button) login.findViewById(R.id.btnCancel);
 
         final EditText txtPhoneCustomer = (EditText) login.findViewById(R.id.txtPhoneCustomer);
+        final Drawable mBackgroundColor = txtPhoneCustomer.getBackground();
 
+        txtPhoneCustomer.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                txtPhoneCustomer.setBackground(mBackgroundColor);
+            }
+
+            @Override
+            public void afterTextChanged(Editable text) {
+                mTextSizeAfter = text.length();
+                if (mTextSizeAfter > mTextSizeBefore) {
+                    if ((text.length() == 3) || (text.length() == 7)) {
+                        text.append('-');
+                    }
+                }
+                mTextSizeBefore = mTextSizeAfter;
+            }
+        });
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPhoneCustomer = txtPhoneCustomer.getText().toString();
+                // ================ Check vailidate username and password START
+                if(mPhoneCustomer.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please insert phone customer",Toast.LENGTH_LONG).show();
+                    txtPhoneCustomer.setBackgroundResource(R.drawable.bordertextview);
+                    return;
+                }
+                // ================ Check vailidate username and password END
                 if (mLoginPersenter.checkLoginForCustomer(mPhoneCustomer)) { //Need to check more condition for Username&PWD
                     login.dismiss();
                     mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
@@ -219,6 +324,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         login.show();
     }
 
+
     @Override
     public void onLoginResult(boolean result) {
         mProgressDialog.cancel();
@@ -234,4 +340,5 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
     public void onNetworkConnectionChanged(boolean isConnected) {
         mViewManager.showSnack(isConnected);
     }
+
 }

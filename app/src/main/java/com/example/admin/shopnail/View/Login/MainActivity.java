@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
@@ -27,6 +29,7 @@ import com.example.admin.shopnail.Manager.ViewManager;
 import static com.example.admin.shopnail.Manager.KeyManager.PASS_WORD;
 import static com.example.admin.shopnail.Manager.KeyManager.USER_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.USER_NAME;
+import static com.example.admin.shopnail.R.drawable.bordertextview;
 
 
 public class MainActivity extends Activity implements View.OnClickListener, ILoginView, NetworkReceiver.ConnectivityReceiverListener {
@@ -106,6 +109,10 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         final EditText txtUsername = (EditText) login.findViewById(R.id.txtUsername);
         final EditText txtPassword = (EditText) login.findViewById(R.id.txtPassword);
         final TextView txtForgetPassword = login.findViewById(R.id.txt_forget_password);
+
+        final Drawable mBackgroundColor = txtUsername.getBackground();
+        final Drawable mBackgroundColorpass = txtPassword.getBackground();
+
         txtUsername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -113,6 +120,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                txtUsername.setBackground(mBackgroundColor);
             }
 
             @Override
@@ -127,11 +135,46 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
             }
         });
 
+        txtPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                txtPassword.setBackground(mBackgroundColorpass);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mUserName = txtUsername.getText().toString().trim();
                 mPassword = txtPassword.getText().toString().trim();
+                // ================ Check vailidate username and password START
+                if(mUserName.isEmpty() && mPassword.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please insert user name and password ",Toast.LENGTH_LONG).show();
+                    txtUsername.setBackgroundResource(R.drawable.bordertextview);
+                    txtPassword.setBackgroundResource(R.drawable.bordertextview);
+                    return;
+                }
+                if(mUserName.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please insert user name ",Toast.LENGTH_LONG).show();
+                    txtUsername.setBackgroundResource(R.drawable.bordertextview);
+                    return;
+                }
+                if(mPassword.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please insert password",Toast.LENGTH_LONG).show();
+                    txtPassword.setBackgroundResource(R.drawable.bordertextview);
+                    return;
+                }
+                // ================ Check vailidate username and password END
                 if (mLoginPersenter.checkLogin(mUserName, mPassword)) { //Need to check more condition for Username&PWD
                     login.dismiss();
                     mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
