@@ -229,14 +229,20 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
                     txtNameCustomer.setBackgroundResource(R.drawable.bordertextview);
                     isInvalid = true;
                 }
-                if (mPhoneCustomer.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Please insert phone number customer", Toast.LENGTH_LONG).show();
-                    txtPhoneCustomer.setBackgroundResource(R.drawable.bordertextview);
+
+                if (mEmailCustomer.isEmpty()) {
+                    if (!isInvalid) {
+                        Toast.makeText(getApplicationContext(), "Please insert email customer", Toast.LENGTH_LONG).show();
+                    }
+                    txtEmailCustomer.setBackgroundResource(R.drawable.bordertextview);
                     isInvalid = true;
                 }
-                if (mEmailCustomer.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Please insert email customer", Toast.LENGTH_LONG).show();
-                    txtEmailCustomer.setBackgroundResource(R.drawable.bordertextview);
+
+                if (mPhoneCustomer.isEmpty()) {
+                    if (!isInvalid) {
+                        Toast.makeText(getApplicationContext(), "Please insert phone number customer", Toast.LENGTH_LONG).show();
+                    }
+                    txtPhoneCustomer.setBackgroundResource(R.drawable.bordertextview);
                     isInvalid = true;
                 }
                 // ================ Check vailidate username and password END
