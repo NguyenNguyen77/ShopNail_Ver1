@@ -156,14 +156,14 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:gravity="center_vertical"
-                                        android:text="09:00"
+                                        android:text="--:--"
                                         android:textColor="@color/text_color"
                                         android:textStyle="italic" />
 
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginLeft="15dp"
                                         android:src="@drawable/baseline_alarm_black_24" />
                                 </LinearLayout>
 
