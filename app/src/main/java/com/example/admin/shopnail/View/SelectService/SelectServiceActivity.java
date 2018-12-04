@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.admin.shopnail.Adapter.CategoryAdapter;
 import com.example.admin.shopnail.Adapter.SelectServiceAdapter;
@@ -80,6 +81,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
         spinnerCategory.setOnItemSelectedListener(this);
 
         mViewManager.setActivity(this);
+        checkEnableViewCartButton();
     }
 
     @Override
@@ -224,6 +226,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
 
                 }
             }
+            checkEnableViewCartButton();
             Log.d(KeyManager.VinhCNLog, jsonArray.toString());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -245,6 +248,17 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
         mViewManager.showSnack(isConnected);
+    }
+
+    private void checkEnableViewCartButton() {
+        if (jsonArray.length() > 0) {
+            btnViewcart.setEnabled(true);
+            btnViewcart.setClickable(true);
+        } else {
+            btnViewcart.setEnabled(false);
+            btnViewcart.setClickable(false);
+
+        }
     }
 }
 
