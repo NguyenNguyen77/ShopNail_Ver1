@@ -3,6 +3,9 @@ package com.example.admin.shopnail.View.ViewCartActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Selection;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -67,8 +70,11 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
                 edtExtra.setCursorVisible(true);
             }
         });
+
         mViewManager.setActivity(this);
     }
+    private int mTextSizeBefore = 0;
+    private int mTextSizeAfter = 0;
 
     private void initView() {
         edtExtra = findViewById(R.id.edt_Extra);
@@ -86,6 +92,36 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
         mBtnConfirm.setOnClickListener(this);
         mBtnBack.setOnClickListener(this);
         tvDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
+
+        edtExtra.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable text) {
+//                editable.append("$");
+//                edtExtra.setText(editable.insert(editable.length()-1,"$"));
+//                mTextSizeAfter = text.length();
+//                if (mTextSizeAfter > mTextSizeBefore) {
+//                    if ((text.length() == 3) || (text.length() == 7)) {
+//                        text.append('-');
+//                    }
+//                }
+//                mTextSizeBefore = mTextSizeAfter;
+                if(!text.toString().contains("$")){
+                    edtExtra.setText("$");
+                    Selection.setSelection(edtExtra.getText(), edtExtra.getText().length());
+
+                }
+            }
+        });
     }
 
     @Override
@@ -131,8 +167,8 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        mViewManager.handleBackScreen();
-//        mViewManager.finishActivity(this);
+        mViewManager.handleBackScreen();
+        mViewManager.finishActivity(this);
     }
 
     @Override

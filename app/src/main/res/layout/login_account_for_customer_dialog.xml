@@ -9,10 +9,11 @@
     android:paddingTop="10dp">
 
     <EditText
-        android:text="222-333-6666"
         android:id="@+id/txtPhoneCustomer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLength="12"
+        android:inputType="phone"
         android:hint="@string/customer_phonenumber">
     </EditText>
 

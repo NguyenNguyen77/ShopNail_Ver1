@@ -124,6 +124,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:textStyle="bold"
                     android:id="@+id/txt_extra"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
