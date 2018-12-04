@@ -160,6 +160,8 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
                 mTextSizeBefore = mTextSizeAfter;
                 if (mTextSizeBefore == 12) {
                     txtPhoneCustomer.setTextColor(getResources().getColor(R.color.email_ok));
+                } else {
+                    txtPhoneCustomer.setTextColor(getResources().getColor(R.color.email_failed));
                 }
             }
         });
@@ -312,27 +314,37 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
                     }
                 }
                 mTextSizeBefore = mTextSizeAfter;
+                if (mTextSizeBefore == 12) {
+                    txtPhoneCustomer.setTextColor(getResources().getColor(R.color.email_ok));
+                } else {
+                    txtPhoneCustomer.setTextColor(getResources().getColor(R.color.email_failed));
+                }
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPhoneCustomer = txtPhoneCustomer.getText().toString();
+                boolean isInvalid = false;
                 // ================ Check vailidate username and password START
                 if (mPhoneCustomer.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Please insert phone customer", Toast.LENGTH_LONG).show();
                     txtPhoneCustomer.setBackgroundResource(R.drawable.bordertextview);
-                    return;
+                    isInvalid = true;
                 }
                 // ================ Check vailidate username and password END
-                if (mLoginPersenter.checkLoginForCustomer(mPhoneCustomer)) { //Need to check more condition for Username&PWD
+                int phoneSize = txtPhoneCustomer.getText().toString().trim().length();
+                if (phoneSize != 12) {
+                    txtPhoneCustomer.setTextColor(getResources().getColor(R.color.email_failed));
+                    isInvalid = true;
+                }
+                // ================ Check vailidate username and password END
+                if (!isInvalid) { //Need to check more condition for Username&PWD
                     login.dismiss();
                     mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
                     mProgressDialog.setMessage(getString(R.string.please_wait));
                     mProgressDialog.show();
                     mLoginPersenter.sendRequestLoginForCustomer(mPhoneCustomer);  // Send Username & PWD to persenter: save.
-                } else {
-                    Toast.makeText(getApplicationContext(), R.string.enter_username_pwd, Toast.LENGTH_LONG).show();
                 }
             }
         });
