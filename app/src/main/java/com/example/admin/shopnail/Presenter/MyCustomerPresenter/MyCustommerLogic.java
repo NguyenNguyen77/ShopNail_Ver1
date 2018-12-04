@@ -3,6 +3,7 @@ package com.example.admin.shopnail.Presenter.MyCustomerPresenter;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.admin.shopnail.AsynTaskManager.AsyncTaskCompleteListener;
 import com.example.admin.shopnail.AsynTaskManager.CaseManager;
@@ -15,6 +16,7 @@ import com.example.admin.shopnail.Manager.UrlManager;
 import com.example.admin.shopnail.Model.MyCustomer.GsonClientTime;
 import com.example.admin.shopnail.Model.MyCustomer.GsonGetClient;
 import com.example.admin.shopnail.Model.MyCustomer.TimeSelect;
+import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.MyCustomer.MyCustomerView;
 import com.example.admin.shopnail.Manager.ViewManager;
 
@@ -85,6 +87,7 @@ public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTa
 
     @Override
     public void onTaskCompleted(String s, String CaseRequest) {
+        Log.d("KhoaND14", "result: Json: " + s);
         switch (CaseRequest) {
             case KeyManager.GET_CLIENT_OF_STAFF:
                 Log.d(KeyManager.VinhCNLog, s);
@@ -99,11 +102,17 @@ public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTa
                 }
                 break;
             case GET_TIME_OF_CLIENT_FROM_STAFF:
-                try{
+                try {
                     GsonClientTime gsonClientTime = getGson().fromJson(s, GsonClientTime.class);
-                    listTime = gsonClientTime.getSuccess().getTime();
-                    myCustomerView.showTimeDialog(listTime);
-                }catch (Exception e){
+                    if (gsonClientTime.isStatus()) {
+                        listTime = gsonClientTime.getSuccess().getTime();
+                        myCustomerView.showTimeDialog(listTime);
+                    } else {
+                        if (gsonClientTime.getSuccess().getError() != null) {
+                            Toast.makeText(mContext, gsonClientTime.getSuccess().getError(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                } catch (Exception e) {
                     SingleToast.show(mContext, "Server error", 3000);
                 }
                 break;
