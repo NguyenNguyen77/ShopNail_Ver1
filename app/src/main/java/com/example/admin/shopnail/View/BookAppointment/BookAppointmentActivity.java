@@ -74,6 +74,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
 
     private String mOpenTime = "09:00";
     private String mCloseTime = "19:00";
+    private boolean isSubmitSuccess = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -234,13 +235,18 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     }
 
     private void checkEnableSubmitButton() {
-        int phoneSize = mEtCustomerPhone.getText().toString().trim().length();
-        int nameSize = mEtCustomerName.getText().toString().trim().length();
-        int emailSize = mEtCustomerEmail.getText().toString().trim().length();
+        if (!isSubmitSuccess) {
+            int phoneSize = mEtCustomerPhone.getText().toString().trim().length();
+            int nameSize = mEtCustomerName.getText().toString().trim().length();
+            int emailSize = mEtCustomerEmail.getText().toString().trim().length();
 
-        if ((phoneSize == 12) & (nameSize > 0) && (emailSize > 0)) {
-            mBtnSubmit.setEnabled(true);
-            mBtnSubmit.setClickable(true);
+            if ((phoneSize == 12) & (nameSize > 0) && (emailSize > 0)) {
+                mBtnSubmit.setEnabled(true);
+                mBtnSubmit.setClickable(true);
+            } else {
+                mBtnSubmit.setEnabled(false);
+                mBtnSubmit.setClickable(false);
+            }
         } else {
             mBtnSubmit.setEnabled(false);
             mBtnSubmit.setClickable(false);
@@ -524,9 +530,14 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         mViewManager.dismissInprogressDialog();
         if (result) {
             Toast.makeText(mContext, msg, Toast.LENGTH_LONG).show();
-            //mViewManager.handleBackScreen();
+            isSubmitSuccess = true;
+            checkEnableSubmitButton();
         } else {
-            Toast.makeText(mContext, R.string.error_book_appointment, Toast.LENGTH_LONG).show();
+            if (!msg.equals("")) {
+                Toast.makeText(mContext, msg, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(mContext, R.string.error_book_appointment, Toast.LENGTH_LONG).show();
+            }
         }
     }
 

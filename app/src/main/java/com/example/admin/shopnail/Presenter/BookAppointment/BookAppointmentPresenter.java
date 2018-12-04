@@ -214,7 +214,7 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
                             msg = resultGson.getSuccess().getMessage();
                         }
                     } else {
-                        result = true;
+                        result = false;
                         msg = resultGson.getSuccess().getError();
                     }
                 } catch (Exception e) {
