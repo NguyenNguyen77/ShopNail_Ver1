@@ -7,11 +7,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.view.ContextThemeWrapper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -155,13 +158,91 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         final EditText txtNewPass = (EditText) mChangePassDialog.findViewById(R.id.txtNewPassword);
         final EditText txtConfirmNewPass = (EditText) mChangePassDialog.findViewById(R.id.txtConfirmNewPassword);
 
+        final Drawable mBackgroundColorOldPass = txtOldPass.getBackground();
+        final Drawable mBackgroundColorNewpass = txtOldPass.getBackground();
+        final Drawable mBackgroundColorConfirmPass = txtOldPass.getBackground();
+        // Check validate input value START
+        txtOldPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                txtOldPass.setBackground(mBackgroundColorOldPass);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        txtNewPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                txtNewPass.setBackground(mBackgroundColorNewpass);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        txtConfirmNewPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                txtConfirmNewPass.setBackground(mBackgroundColorConfirmPass);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        // Check validate input value END
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean isInvalid = false;
                 mOldPass = txtOldPass.getText().toString().trim();
                 mNewPass = txtNewPass.getText().toString().trim();
                 mConfirmNewPass = txtConfirmNewPass.getText().toString().trim();
-                if (checkValidPassword(mOldPass, mNewPass, mConfirmNewPass)) {
+
+                if(mOldPass.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Please insert old password ", Toast.LENGTH_LONG).show();
+                    txtOldPass.setBackgroundResource(R.drawable.bordertextview);
+                    isInvalid = true;
+                }
+                if(mNewPass.isEmpty()){
+                    if (!isInvalid) {
+                        Toast.makeText(getApplicationContext(), "Please insert new password", Toast.LENGTH_LONG).show();
+                    }
+                    txtNewPass.setBackgroundResource(R.drawable.bordertextview);
+                    isInvalid = true;
+                }
+                if(mConfirmNewPass.isEmpty()){
+                    if (!isInvalid) {
+                        Toast.makeText(getApplicationContext(), "Please insert confirm new password", Toast.LENGTH_LONG).show();
+                    }
+                    txtConfirmNewPass.setBackgroundResource(R.drawable.bordertextview);
+                    isInvalid = true;
+                }
+
+                if (!isInvalid && checkValidPassword(mOldPass, mNewPass, mConfirmNewPass)) {
                     mViewManager.showInprogressDialog();
                     mStaffInformationPresenter.requestChangePassword(BaseMethod.getDefaults(PASS_WORD, StaffInformationActivity.this), mNewPass, mConfirmNewPass);
                 }

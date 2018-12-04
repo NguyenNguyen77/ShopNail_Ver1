@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/old_pass"
             android:layout_weight="1"
+            android:layout_marginBottom="3dp"
             android:inputType="textPassword">
             <requestFocus></requestFocus>
         </EditText>
@@ -29,6 +30,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/new_pass"
             android:layout_weight="1"
+            android:layout_marginBottom="3dp"
             android:inputType="textPassword">
         </EditText>
 
@@ -38,6 +40,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/confirm_new_pas"
             android:layout_weight="1"
+            android:layout_marginBottom="3dp"
             android:inputType="textPassword">
         </EditText>
     </LinearLayout>
