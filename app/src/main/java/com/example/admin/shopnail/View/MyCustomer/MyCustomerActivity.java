@@ -200,7 +200,11 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
             public void onDateSet(DatePicker view, int year,
                                   int monthOfYear,
                                   int dayOfMonth) {
-                String strDate = year + "-" + (monthOfYear + 1) + "-" + (dayOfMonth);
+                String dayOfMonthText=""+dayOfMonth;
+                if(dayOfMonth<10){
+                    dayOfMonthText = "0"+dayOfMonth;
+                }
+                String strDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonthText;
                 SpannableString strSpanned = new SpannableString(strDate);
                 strSpanned.setSpan(new StyleSpan(Typeface.ITALIC), 0, strSpanned.length(), 0);
                 strSpanned.setSpan(new UnderlineSpan(), 0, strSpanned.length(), 0);
