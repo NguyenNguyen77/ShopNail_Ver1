@@ -16,7 +16,28 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.01"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp">
 
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_id"
+                    android:textColor="@color/text_color"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_order_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_load_data" />
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -198,15 +219,15 @@
                 android:text="@string/update_service"
                 android:textColor="@drawable/button_text" />
 
-        <Button
-                android:id="@+id/btn_cancel_service"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/button_nail"
-                android:text="@string/cancel_service"
-                android:textColor="@drawable/button_text" />
+        <!--<Button-->
+                <!--android:id="@+id/btn_cancel_service"-->
+                <!--android:layout_width="150dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:background="@drawable/button_nail"-->
+                <!--android:text="@string/cancel_service"-->
+                <!--android:textColor="@drawable/button_text" />-->
 
         <Button
             android:id="@+id/btn_go_back"

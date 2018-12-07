@@ -56,6 +56,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
     private Button btnUpdateService;
     //    private TextView tvExtra;
     private TextView tvTime;
+    private TextView tvOrderId;
     List<ServicesOfShop> listService;
 
     @Override
@@ -121,8 +122,9 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
                 NailActionBarGenerator.BarType.MY_CUSTOMER);
         mBtnBack = (Button) findViewById(R.id.btn_go_back);
         mBtnUpdateService = (Button) findViewById(R.id.btn_update_service);
-        mBtnCancelService = (Button) findViewById(R.id.btn_cancel_service);
+//        mBtnCancelService = (Button) findViewById(R.id.btn_cancel_service);
         mLvMyCustomerList = (ListView) findViewById(R.id.list_my_customer);
+        tvOrderId = (TextView) findViewById(R.id.tv_order_id);
         tvTime = findViewById(R.id.tv_time);
         tvName = findViewById(R.id.tv_customer_name);
         tvDate = findViewById(R.id.tv_date);
@@ -130,12 +132,13 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
 //        tvExtra = findViewById(R.id.txt_extra);
         mBtnBack.setOnClickListener(this);
         mBtnUpdateService.setOnClickListener(this);
-        mBtnCancelService.setOnClickListener(this);
+//        mBtnCancelService.setOnClickListener(this);
         mViewManager.setActivity(this);
         tvDate.setText(getDateChoosed());
         tvName.setText(getClientChoosed().getClientName());
         tvPhone.setText(getClientChoosed().getClientPhone());
         tvTime.setText(getTimeName());
+        tvOrderId.setText(Integer.toString(getClientID()));
 //        tvExtra.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -194,10 +197,10 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
             case R.id.btn_update_service:
                 requestUpdate();
                 break;
-            case R.id.btn_cancel_service:
-                reuquetCancel();
-
-                break;
+//            case R.id.btn_cancel_service:
+//                reuquetCancel();
+//
+//                break;
             default:
                 break;
         }
