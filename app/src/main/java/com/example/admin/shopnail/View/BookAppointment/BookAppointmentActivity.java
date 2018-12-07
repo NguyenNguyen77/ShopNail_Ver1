@@ -332,7 +332,8 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
                                   int monthOfYear,
                                   int dayOfMonth) {
                 if (validateDatTime(year, monthOfYear, dayOfMonth)) {
-                    showUnderLineText(year + "-" + (monthOfYear + 1) + "-" + (dayOfMonth), mTvDate);
+                    String strDate = year + "-" + String.format("%02d", (monthOfYear + 1)) + "-" + String.format("%02d", (dayOfMonth));
+                    showUnderLineText(strDate, mTvDate);
                 } else {
                     Toast.makeText(mContext, R.string.error_select_date, Toast.LENGTH_LONG).show();
                     getDefaultInfo();
