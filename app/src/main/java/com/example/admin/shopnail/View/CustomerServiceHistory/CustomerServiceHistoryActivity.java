@@ -269,21 +269,14 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
         final Dialog detailService = new Dialog(ctw);
         detailService.setContentView(R.layout.service_history_dialog);
         detailService.setTitle(R.string.customer_info);
-        Button btnLogin = (Button) detailService.findViewById(R.id.btnOK);
-        Button btnCancel = (Button) detailService.findViewById(R.id.btnCancel);
+        Button btnClose = (Button) detailService.findViewById(R.id.btnClose);
         TextView tvDateDetail = (TextView) detailService.findViewById(R.id.tv_date_select);
         ListView lvServiceHistory = (ListView) detailService.findViewById(R.id.lv_customer_service_history);
         HistoriesDetailsAdapter myDetailCustomerAdapter = new HistoriesDetailsAdapter(this, listServiceHistory);
         lvServiceHistory.setAdapter(myDetailCustomerAdapter);
         lvServiceHistory.setVisibility(View.VISIBLE);
         tvDateDetail.setText(mTvDate.getText());
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detailService.dismiss();
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
+        btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 detailService.dismiss();

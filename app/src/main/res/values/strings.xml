@@ -99,5 +99,6 @@
 
     <string name="phone_input_fail">The phone number is not corrected.\nPlease check again!</string>
     <string name="login_customer_fail">Cannot login for current customer</string>
+    <string name="close_lb">Close</string>
 
 </resources>
