@@ -109,6 +109,7 @@ public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTa
                         myCustomerView.showTimeDialog(listTime);
                     } else {
                         if (gsonClientTime.getSuccess().getError() != null) {
+                            mViewManager.dismissInprogressDialog();
                             Toast.makeText(mContext, gsonClientTime.getSuccess().getError(), Toast.LENGTH_LONG).show();
                         }
                     }

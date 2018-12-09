@@ -362,6 +362,8 @@ public class ViewManager {
             case VIEW_CART:
                 setView(VIEW_KEY.SELECT_SERVICE);
                 break;
+            case MY_DETAIL_CUSTOMER:
+                setView(VIEW_KEY.MY_CUSTOMER);
             default:
                 break;
         }
@@ -386,12 +388,12 @@ public class ViewManager {
     }
 
     public void showInprogressDialog() {
-        if (mProgressDialog != null) {
-            mProgressDialog.cancel();
-        }
-        mProgressDialog = new ProgressDialog(currentActivity);
-        mProgressDialog.setMessage("Please wait...");
-        mProgressDialog.show();
+            if (mProgressDialog != null) {
+                mProgressDialog.cancel();
+            }
+            mProgressDialog = new ProgressDialog(currentActivity);
+            mProgressDialog.setMessage("Please wait...");
+            mProgressDialog.show();
     }
 
     public void dismissInprogressDialog() {

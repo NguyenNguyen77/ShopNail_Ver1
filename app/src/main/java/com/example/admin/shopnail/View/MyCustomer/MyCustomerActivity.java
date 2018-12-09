@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
@@ -102,8 +104,8 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
         listCustomer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mViewManager.showInprogressDialog();
                 myCustommerLogic.tranfertoDetailCustomer(i);
-
             }
         });
 
@@ -259,6 +261,7 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
     }
 
     public void showDialogSelectTimer(List<TimeSelect> arr) {
+        mViewManager.dismissInprogressDialog();
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Select time booked");
