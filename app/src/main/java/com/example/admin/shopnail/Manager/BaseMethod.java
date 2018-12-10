@@ -232,6 +232,22 @@ public class BaseMethod   {
     }
 
 
+    public String getOnlyNumerics(String str) {
+        if (str == null) {
+            return null;
+        }
+        StringBuffer strBuff = new StringBuffer();
+        char c;
+        for (int i = 0; i < str.length(); i++) {
+            c = str.charAt(i);
+            if (Character.isDigit(c) || c == '.') {
+                strBuff.append(c);
+            }
+        }
+        return strBuff.toString();
+    }
+
+
 
     public String makePostRequestJson(String link, String jsonParam, String Token) {
         Log.d(KeyManager.VinhCNLog, link);

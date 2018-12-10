@@ -73,8 +73,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
 
     @Override
     public void setListProducts(List<GsonDetailCustomer.SuccessBean.CustomersBean.OrdersBean> listProduct) {
-        DetailCustomerAdapter adapter = new DetailCustomerAdapter(this, listProduct);
-        mLvMyCustomerList.setAdapter(adapter);
+        mLvMyCustomerList.setAdapter(new DetailCustomerAdapter(this, listProduct));
     }
 
     @Override

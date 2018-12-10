@@ -51,6 +51,7 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     private TextView tvDate;
     private  TextView tvTotalPrice;
     private ImageView imgAdd;
+    BaseMethod method = new BaseMethod();
 
 
     @Override
@@ -116,10 +117,12 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
 //                }
 //                mTextSizeBefore = mTextSizeAfter;
                 if(!text.toString().contains("$")){
-                    edtExtra.setText("$");
+                    edtExtra.setText("$" + edtExtra.getText().toString());
                     Selection.setSelection(edtExtra.getText(), edtExtra.getText().length());
-
                 }
+
+
+
             }
         });
     }
@@ -212,7 +215,7 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
 
     @Override
     public int getExtraPrice() {
-        return !edtExtra.getText().toString().equals("") ? Integer.parseInt(edtExtra.getText().toString()) : 0;
+        return !edtExtra.getText().toString().equals("") ? Integer.parseInt(edtExtra.getText().toString().replace("$","")) : 0;
     }
 
     @Override
