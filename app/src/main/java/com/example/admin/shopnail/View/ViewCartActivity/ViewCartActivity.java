@@ -100,9 +100,11 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
         edtExtra.setSelection(edtExtra.length() - 1);
 
         edtExtra.addTextChangedListener(new TextWatcher() {
+            String txtExtra = "";
 
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                txtExtra = edtExtra.getText().toString().trim();
             }
 
             @Override
@@ -113,11 +115,21 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
             @Override
             public void afterTextChanged(Editable text) {
                 String textTemp = edtExtra.getText().toString().trim();
-                if (textTemp.charAt(textTemp.length()-1) != '$') {
+
+                if (textTemp.charAt(textTemp.length() - 1) != '$') {
                     textTemp = textTemp.replace("$", "");
                     textTemp = textTemp + "$";
-                    edtExtra.setText(textTemp);
+                    if (textTemp.length() > 5) {
+                        edtExtra.setText(txtExtra);
+                    } else {
+                        edtExtra.setText(textTemp);
+                    }
                     edtExtra.setSelection(edtExtra.length() - 1);
+                } else {
+                    if (textTemp.length() > 5) {
+                        edtExtra.setText(txtExtra);
+                        edtExtra.setSelection(edtExtra.length() - 1);
+                    }
                 }
             }
         });
