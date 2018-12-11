@@ -49,8 +49,9 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     private TextView tvName;
     private TextView tvPhone;
     private TextView tvDate;
-    private  TextView tvTotalPrice;
+    private TextView tvTotalPrice;
     private ImageView imgAdd;
+
     BaseMethod method = new BaseMethod();
 
 
@@ -74,6 +75,7 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
 
         mViewManager.setActivity(this);
     }
+
     private int mTextSizeBefore = 0;
     private int mTextSizeAfter = 0;
 
@@ -94,10 +96,13 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
         mBtnBack.setOnClickListener(this);
         tvDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
 
+        edtExtra.setText("$");
+        edtExtra.setSelection(edtExtra.length() - 1);
+
         edtExtra.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -107,22 +112,13 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
 
             @Override
             public void afterTextChanged(Editable text) {
-//                editable.append("$");
-//                edtExtra.setText(editable.insert(editable.length()-1,"$"));
-//                mTextSizeAfter = text.length();
-//                if (mTextSizeAfter > mTextSizeBefore) {
-//                    if ((text.length() == 3) || (text.length() == 7)) {
-//                        text.append('-');
-//                    }
-//                }
-//                mTextSizeBefore = mTextSizeAfter;
-                if(!text.toString().contains("$")){
-                    edtExtra.setText("$" + edtExtra.getText().toString());
-                    Selection.setSelection(edtExtra.getText(), edtExtra.getText().length());
+                String textTemp = edtExtra.getText().toString().trim();
+                if (textTemp.charAt(textTemp.length()-1) != '$') {
+                    textTemp = textTemp.replace("$", "");
+                    textTemp = textTemp + "$";
+                    edtExtra.setText(textTemp);
+                    edtExtra.setSelection(edtExtra.length() - 1);
                 }
-
-
-
             }
         });
     }
@@ -215,7 +211,7 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
 
     @Override
     public int getExtraPrice() {
-        return !edtExtra.getText().toString().equals("") ? Integer.parseInt(edtExtra.getText().toString().replace("$","")) : 0;
+        return !edtExtra.getText().toString().equals("") ? Integer.parseInt(edtExtra.getText().toString().replace("$", "")) : 0;
     }
 
     @Override
@@ -226,13 +222,13 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     @Override
     public void updateUIAfterOrder() {
         mViewManager.dismissInprogressDialog();
-        Toast.makeText(getApplicationContext(),"Order successfully",Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Order successfully", Toast.LENGTH_LONG).show();
         mViewManager.setView(ViewManager.VIEW_KEY.MENU_FOR_STAFF);
     }
 
     @Override
     public void showErrorDialog(ViewManager.ERROR_CODE errorCode) {
-        Toast.makeText(getApplicationContext(),"Order failed",Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Order failed", Toast.LENGTH_LONG).show();
     }
 
     // Check Internet
@@ -252,6 +248,7 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
         }
         return super.dispatchTouchEvent(ev);
     }
+
     private boolean isTouchInsideView(final MotionEvent ev, final View currentFocus) {
         final int[] loc = new int[2];
         currentFocus.getLocationOnScreen(loc);
