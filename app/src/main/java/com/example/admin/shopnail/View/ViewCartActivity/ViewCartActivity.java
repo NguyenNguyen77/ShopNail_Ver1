@@ -239,6 +239,9 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
 
     @Override
     public int getExtraPrice() {
+        if(edtExtra.getText().toString().replace("$", "")==""){
+            return 0;
+        }
         return !edtExtra.getText().toString().equals("") ? Integer.parseInt(edtExtra.getText().toString().replace("$", "")) : 0;
     }
 
