@@ -133,6 +133,10 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_view_cart:
+                if(jsonArray.length() <= 0){
+                    Toast.makeText(getApplicationContext(),"Please choose service before view cart",Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 mViewManager.setView(ViewManager.VIEW_KEY.VIEW_CART, jsonArray);
                 break;
             case R.id.btn_go_back:
@@ -249,14 +253,13 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     }
 
     private void checkEnableViewCartButton() {
-        if (jsonArray.length() > 0) {
-            btnViewcart.setEnabled(true);
-            btnViewcart.setClickable(true);
-        } else {
-            btnViewcart.setEnabled(false);
-            btnViewcart.setClickable(false);
-
-        }
+//        if (jsonArray.length() > 0) {
+//            btnViewcart.setEnabled(true);
+//            btnViewcart.setClickable(true);
+//        } else {
+//            btnViewcart.setEnabled(false);
+//            btnViewcart.setClickable(false);
+//        }
     }
 }
 

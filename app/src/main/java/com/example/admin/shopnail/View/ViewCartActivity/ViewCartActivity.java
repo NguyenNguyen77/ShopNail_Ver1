@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -134,6 +136,20 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
                 }
             }
         });
+
+
+        edtExtra.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId== EditorInfo.IME_ACTION_DONE){
+                    //do something
+//                    Toast.makeText(getApplicationContext(),"click done",Toast.LENGTH_LONG).show();
+                    addExtra();
+                    imgAdd.setEnabled(false);
+    }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -222,7 +238,10 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
 
     @Override
     public int getExtraPrice() {
-        return !edtExtra.getText().toString().equals("$") ? Integer.parseInt(edtExtra.getText().toString().replace("$", "")) : 0;
+        if(edtExtra.getText().toString().replace("$", "")==""){
+            return 0;
+        }
+        return !edtExtra.getText().toString().equals("") ? Integer.parseInt(edtExtra.getText().toString().replace("$", "")) : 0;
     }
 
     @Override

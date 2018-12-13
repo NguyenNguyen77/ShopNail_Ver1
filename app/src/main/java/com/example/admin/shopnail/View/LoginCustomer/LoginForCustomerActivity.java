@@ -199,8 +199,10 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
                 mEmailCustomer = txtEmailCustomer.getEditableText().toString().trim();
                 if (mEmailCustomer.matches(emailPattern) && mEmailCustomer.length() > 0) {
                     txtEmailCustomer.setTextColor(getResources().getColor(R.color.email_ok));
+                    txtEmailCustomer.setBackground(mBackgroundColorEmail);
                 } else {
                     txtEmailCustomer.setTextColor(getResources().getColor(R.color.email_failed));
+                    txtEmailCustomer.setBackgroundResource(R.drawable.bordertextview);
                 }
                 // Check validate email END
             }

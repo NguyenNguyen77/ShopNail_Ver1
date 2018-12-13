@@ -95,6 +95,7 @@ public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTa
                     GsonGetClient mGsonGetClient = getGson().fromJson(s, GsonGetClient.class);
                     arrClient = mGsonGetClient.getSuccess().getClients();
                     myCustomerView.setAdapterClients(arrClient);
+                    mViewManager.dismissInprogressDialog();
                 } catch (Exception e) {
                     Log.d(KeyManager.VinhCNLog, s);
                     arrClient = new ArrayList<>();

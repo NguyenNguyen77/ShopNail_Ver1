@@ -62,6 +62,7 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_my_customer);
         mViewManager.setActivity(this);
+        mViewManager.showInprogressDialog();
         initView();
         myCustommerLogic.requestCustomerOrder(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
 //        listService = getListDataAcrylic();
