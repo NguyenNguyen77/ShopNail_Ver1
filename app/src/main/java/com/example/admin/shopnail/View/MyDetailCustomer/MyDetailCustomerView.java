@@ -13,8 +13,6 @@ public interface MyDetailCustomerView {
 
     void setListProducts(List<GsonDetailCustomer.SuccessBean.CustomersBean.OrdersBean> listProduct);
 
-    ViewManager getViewManager();
-
     void closeProgress();
 
     void OpenDialogUpdate(String orderId);

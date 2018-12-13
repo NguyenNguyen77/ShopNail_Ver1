@@ -85,19 +85,6 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
         btn_back = findViewById(R.id.btn_go_back);
         txt_date = findViewById(R.id.tv_date);
 
-        //Stub data
-//        ArrayList<Customer> users = new ArrayList<>();
-//        Customer a = new Customer("Nguyen Van B", "0123456789");
-//        Customer b = new Customer("Nguyen B", "0123456789");
-//        Customer c = new Customer("Nguyen Thi C", "0123456789");
-//        Customer d = new Customer("Nguyen Cong D", "0123456789");
-//
-//        users.add(a);
-//        users.add(b);
-//        users.add(c);
-//        users.add(d);
-        //Stub data
-
         getDefaultInfo();
 
 
@@ -109,18 +96,11 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
             }
         });
 
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mViewManager.handleBackScreen();
-                mViewManager.finishActivity(MyCustomerActivity.this);
-            }
-        });
+        btn_back.setOnClickListener(this);
 
         txt_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(getApplicationContext(), "A nên chọn ngày 19-10-2018 để có data", Toast.LENGTH_LONG).show();
                 showDatePickerDialog();
             }
         });
@@ -143,7 +123,7 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_back:
+            case R.id.btn_go_back:
                 mViewManager.handleBackScreen();
                 mViewManager.finishActivity(this);
                 break;

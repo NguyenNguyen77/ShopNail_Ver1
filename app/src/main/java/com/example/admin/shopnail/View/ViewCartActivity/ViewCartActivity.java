@@ -59,6 +59,7 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_for_view_product);
+        mViewManager.setActivity(this);
         new NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.VIEW_CART);
         initView();
@@ -73,7 +74,7 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
             }
         });
 
-        mViewManager.setActivity(this);
+
     }
 
     private int mTextSizeBefore = 0;
@@ -177,7 +178,6 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         mViewManager.handleBackScreen();
         mViewManager.finishActivity(this);
     }
@@ -190,9 +190,8 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
                 mViewProductPresenter.sendData();
                 break;
             case R.id.btn_go_back:
-//                mViewManager.handleBackScreen();
-//                mViewManager.finishActivity(this);
-                onBackPressed();
+                mViewManager.handleBackScreen();
+                mViewManager.finishActivity(this);
                 break;
             case R.id.img_add:
                 addExtra();
@@ -223,7 +222,7 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
 
     @Override
     public int getExtraPrice() {
-        return !edtExtra.getText().toString().equals("") ? Integer.parseInt(edtExtra.getText().toString().replace("$", "")) : 0;
+        return !edtExtra.getText().toString().equals("$") ? Integer.parseInt(edtExtra.getText().toString().replace("$", "")) : 0;
     }
 
     @Override

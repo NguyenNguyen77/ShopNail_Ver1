@@ -57,7 +57,7 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
     private CustomerServiceHistoryPresenter mCustomerServiceHistoryPresenter;
 
     private CustomerServiceHistoryPresenter getPresenter(){
-        if (mCustomerServiceHistoryPresenter==null){
+        if (mCustomerServiceHistoryPresenter == null){
             mCustomerServiceHistoryPresenter = new CustomerServiceHistoryPresenter(this, this);
         }
         return mCustomerServiceHistoryPresenter;
@@ -84,13 +84,12 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
         mTvEmpty = (TextView) findViewById(R.id.txt_not_found_history);
         mLayoutList = (LinearLayout) findViewById(R.id.layout_list);
         mListCustomerServiceHistoryByDate = (ListView) findViewById(R.id.lv_service_history);
-
         mImgSubmit.setOnClickListener(this);
         mBtBack.setOnClickListener(this);
         mTvDate.setOnClickListener(this);
 
         getDefaultInfo();
-
+        getPresenter();
         mListCustomerServiceHistoryByDate.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -341,6 +341,7 @@ public class ViewManager {
     }
 
     public void handleBackScreen() {
+        Log.d("KhoaND14", "handleBackScreen. mViewKey: " + mViewKey);
         switch (mViewKey) {
             case SELECT_SERVICE:
                 setView(VIEW_KEY.LOGIN_FOR_CUSTOMER);
@@ -379,7 +380,10 @@ public class ViewManager {
     }
 
     public void finishActivity(Activity activity) {
+        Log.d("KhoaND14", "finishActivity. activity: " + activity);
+        Log.d("KhoaND14", "finishActivity. mListActivity.size: " + mListActivity.size());
         for (Activity stack : mListActivity) {
+            Log.d("KhoaND14", "finishActivity. stack: " + stack);
             if (stack == activity) {
                 stack.finish();
                 mListActivity.remove(stack);

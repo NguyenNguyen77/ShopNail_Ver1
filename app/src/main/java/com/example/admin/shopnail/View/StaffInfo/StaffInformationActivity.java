@@ -59,7 +59,7 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_staff_information);
-
+        mViewManager.setActivity(this);
         new com.example.admin.shopnail.View.NailActionBarGenerator().generate(this,
                 com.example.admin.shopnail.View.NailActionBarGenerator.BarType.STAFF_INFO);
 
@@ -75,7 +75,6 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         btnChangePassword.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         imgAvatar.setOnClickListener(this);
-        mViewManager.setActivity(this);
 
         mViewManager.showInprogressDialog();
         mStaffInformationPresenter.requestInfor(BaseMethod.getDefaults(KeyManager.USER_ID, this));
@@ -102,7 +101,6 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         mViewManager.handleBackScreen();
         mViewManager.finishActivity(this);
     }

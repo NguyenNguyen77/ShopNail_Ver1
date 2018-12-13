@@ -77,13 +77,8 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
     }
 
     @Override
-    public ViewManager getViewManager() {
-        return mViewManager;
-    }
-
-    @Override
     public void closeProgress() {
-        getViewManager().dismissInprogressDialog();
+        mViewManager.dismissInprogressDialog();
     }
 
     @Override
@@ -108,7 +103,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_my_detail_customer);
         initView();
-        getViewManager().showInprogressDialog();
+        mViewManager.showInprogressDialog();
         mMyDetailCustomerLogic.requestCustomerProducts(getOrderID());
 //        listService = getListDataAcrylic();
 //        MyCustomerAdapter myDetailCustomerAdapter = new MyCustomerAdapter(getApplicationContext(), listService);
@@ -178,7 +173,6 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         mViewManager.handleBackScreen();
         mViewManager.finishActivity(this);
     }
@@ -215,7 +209,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
 
     private void requestUpdate() {
         if (mMyDetailCustomerLogic.isCheckedSomething()) {
-            getViewManager().showInprogressDialog();
+            mViewManager.showInprogressDialog();
             mMyDetailCustomerLogic.updateServiceRequest();
         } else {
             SingleToast.show(this, "Please check service want to change", 3000);
@@ -238,7 +232,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
                 if (txtExtra.getText().toString().equals("")) {
                     SingleToast.show(MyDetailCustomerActivity.this, "Please input", 3000);
                 } else {
-                    getViewManager().showInprogressDialog();
+                    mViewManager.showInprogressDialog();
                     mMyDetailCustomerLogic.reuquestUpdate(orderId, txtExtra.getText().toString());
                     mChangePassDialog.dismiss();
                 }
@@ -303,7 +297,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
         alertDialog.setButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE, "YES",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        getViewManager().showInprogressDialog();
+                        mViewManager.showInprogressDialog();
                         mMyDetailCustomerLogic.cancelService();
                         dialog.dismiss();
                     }

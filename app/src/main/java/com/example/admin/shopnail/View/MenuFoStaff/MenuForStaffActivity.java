@@ -80,7 +80,6 @@ public class MenuForStaffActivity extends Activity implements View.OnClickListen
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         mViewManager.finishListActivity();
     }
 

@@ -124,7 +124,6 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         mViewManager.handleBackScreen();
         mViewManager.finishActivity(this);
     }

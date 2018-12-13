@@ -76,7 +76,6 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         mViewManager.handleBackScreen();
         mViewManager.finishActivity(this);
     }

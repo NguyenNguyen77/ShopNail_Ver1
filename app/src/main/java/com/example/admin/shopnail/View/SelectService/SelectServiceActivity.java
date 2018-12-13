@@ -49,7 +49,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_for_select_service);
-
+        mViewManager.setActivity(this);
         new NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.SELECT_CUSTOMER_SERVICE);
 
@@ -80,7 +80,6 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
 
         spinnerCategory.setOnItemSelectedListener(this);
 
-        mViewManager.setActivity(this);
         checkEnableViewCartButton();
     }
 
@@ -126,7 +125,6 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         mViewManager.handleBackScreen();
         mViewManager.finishActivity(this);
     }
