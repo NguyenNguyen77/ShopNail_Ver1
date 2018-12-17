@@ -73,7 +73,7 @@ public class ViewProductPresenter extends BaseMethod implements IViewProductPres
         GsonProductChoosed[] arrChoosed = getGson().fromJson(jsonArrayProductChoose, GsonProductChoosed[].class);
         arrProductChoosed = new ArrayList(Arrays.asList(arrChoosed));
         Log.d(KeyManager.VinhCNLog, jsonArrayProductChoose);
-        mCartView.setAdapterProductChoosed(new ViewProductAdapter(mContext, arrProductChoosed));
+        mCartView.setAdapterProductChoosed(new ViewProductAdapter(mContext, arrProductChoosed, this));
         setSumPrice(arrProductChoosed);
     }
 
@@ -143,5 +143,9 @@ public class ViewProductPresenter extends BaseMethod implements IViewProductPres
     @Override
     public void onTaskError(String s, String CaseRequest) {
 
+    }
+
+    public void minusTotalPrice (int minus) {
+        mCartView.minusTotalPrice(minus);
     }
 }

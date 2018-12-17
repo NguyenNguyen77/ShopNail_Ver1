@@ -14,7 +14,9 @@ import android.widget.TextView;
 
 import com.example.admin.shopnail.Model.ServicesOfShop;
 import com.example.admin.shopnail.Model.ViewProductPresenter.GsonProductChoosed;
+import com.example.admin.shopnail.Presenter.ViewProductPresenter.ViewProductPresenter;
 import com.example.admin.shopnail.R;
+import com.example.admin.shopnail.View.ViewCartActivity.ViewCartActivity;
 
 import java.util.List;
 
@@ -22,10 +24,12 @@ public class ViewProductAdapter extends BaseAdapter {
 
     List<GsonProductChoosed> listService;
     LayoutInflater layoutInflater;
+    private ViewProductPresenter mViewProductPresenter;
 
-    public ViewProductAdapter(Context context,  List<GsonProductChoosed> listService) {
+    public ViewProductAdapter(Context context,  List<GsonProductChoosed> listService, ViewProductPresenter persenter) {
         this.listService = listService;
         layoutInflater = LayoutInflater.from(context);
+        mViewProductPresenter = persenter;
     }
 
     @Override
@@ -64,6 +68,7 @@ public class ViewProductAdapter extends BaseAdapter {
         holder.imgTrash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mViewProductPresenter.minusTotalPrice(Integer.valueOf(listService.get(position).getPrice()));
                 listService.remove(position);
                 Log.d("NguyenNK2", "remove item: " + position);
                 ViewProductAdapter.this.notifyDataSetChanged();

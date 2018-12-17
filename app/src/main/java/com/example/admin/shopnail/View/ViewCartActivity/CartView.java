@@ -16,4 +16,6 @@ public interface CartView {
 
     void updateUIAfterOrder();
     public void showErrorDialog (ViewManager.ERROR_CODE errorCode);
+
+    void minusTotalPrice (int minus);
 }

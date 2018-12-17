@@ -286,4 +286,12 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
                 && ev.getRawY() < (loc[1] + currentFocus.getHeight());
     }
     // Hide soft keyboard when click outside edittext END
+
+
+    @Override
+    public void minusTotalPrice (int minus) {
+        if (getTotal() >= minus) {
+            setTotalExpectExtra(getTotal() - minus);
+        }
+    }
 }
