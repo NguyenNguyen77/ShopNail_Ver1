@@ -202,8 +202,12 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_confirm:
-                mViewManager.showInprogressDialog();
-                mViewProductPresenter.sendData();
+                if (listCart.getCount() > 0) {
+                    mViewManager.showInprogressDialog();
+                    mViewProductPresenter.sendData();
+                } else {
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.confirm_service_empty), Toast.LENGTH_LONG).show();
+                }
                 break;
             case R.id.btn_go_back:
                 mViewManager.handleBackScreen();

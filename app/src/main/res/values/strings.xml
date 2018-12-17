@@ -101,5 +101,6 @@
     <string name="login_customer_fail">Cannot login for current customer</string>
     <string name="close_lb">Close</string>
     <string name="order_id">Order</string>
+    <string name="confirm_service_empty">The list of service is empty</string>
 
 </resources>
