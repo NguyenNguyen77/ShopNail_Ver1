@@ -211,7 +211,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
     public void onLoginResult(boolean result) {
         if (result) {
             mProgressDialog.cancel();
-            Toast.makeText(MainActivity.this, R.string.login_sucessfull, Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, R.string.login_sucessfull, Toast.LENGTH_SHORT).show();
             mViewManager.setView(ViewManager.VIEW_KEY.MENU_FOR_STAFF);  // Change to next screen
         } else {
             dismissProgress();

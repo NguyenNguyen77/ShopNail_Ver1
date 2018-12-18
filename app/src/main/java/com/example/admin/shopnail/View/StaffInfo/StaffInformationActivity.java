@@ -220,6 +220,10 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
                 mNewPass = txtNewPass.getText().toString().trim();
                 mConfirmNewPass = txtConfirmNewPass.getText().toString().trim();
 
+                if(txtNewPass.length()<6 || txtConfirmNewPass.length()<6){
+                    Toast.makeText(getApplicationContext(), "Passwords must be at least 6 characters long", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if(mOldPass.isEmpty()){
                     Toast.makeText(getApplicationContext(), "Please insert old password ", Toast.LENGTH_LONG).show();
                     txtOldPass.setBackgroundResource(R.drawable.bordertextview);
