@@ -66,18 +66,25 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
                 ShowLoginForOldCustomer();
                 break;
             case R.id.btn_go_back:
-                mViewManager.handleBackScreen();
+//                mViewManager.handleBackScreen();
                 mViewManager.finishActivity(this);
+                onBackPressed();
                 break;
             default:
                 break;
         }
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        mViewManager.handleBackScreen();
+//        mViewManager.finishActivity(this);
+//    }
+
+
     @Override
     public void onBackPressed() {
-        mViewManager.handleBackScreen();
-        mViewManager.finishActivity(this);
+        super.onBackPressed();
     }
 
     @Override

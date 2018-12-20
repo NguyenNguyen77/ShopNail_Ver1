@@ -61,7 +61,7 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_for_view_product);
-        mViewManager.setActivity(this);
+//        mViewManager.setActivity(this);
         new NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.VIEW_CART);
         initView();
@@ -118,7 +118,6 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
             @Override
             public void afterTextChanged(Editable text) {
                 String textTemp = edtExtra.getText().toString().trim();
-
                 if (textTemp.charAt(textTemp.length() - 1) != '$') {
                     textTemp = textTemp.replace("$", "");
                     textTemp = textTemp + "$";
@@ -192,10 +191,18 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
         }
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        mViewManager.handleBackScreen();
+//        mViewManager.finishActivity(this);
+
+//    }
+
+
     @Override
     public void onBackPressed() {
-        mViewManager.handleBackScreen();
         mViewManager.finishActivity(this);
+        super.onBackPressed();
     }
 
     @Override
@@ -210,7 +217,8 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
                 }
                 break;
             case R.id.btn_go_back:
-                mViewManager.handleBackScreen();
+//                mViewManager.handleBackScreen();
+                onBackPressed();
                 mViewManager.finishActivity(this);
                 break;
             case R.id.img_add:
