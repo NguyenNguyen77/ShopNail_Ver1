@@ -68,6 +68,9 @@ public class ViewProductAdapter extends BaseAdapter {
         holder.imgTrash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(listService.size()==1){
+                    return;
+                }
                 mViewProductPresenter.minusTotalPrice(Integer.valueOf(listService.get(position).getPrice()));
                 listService.remove(position);
                 Log.d("NguyenNK2", "remove item: " + position);

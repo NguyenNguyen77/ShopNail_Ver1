@@ -414,10 +414,10 @@ public class ViewManager {
     public void showSnack(boolean isConnected) {
         if(!isApplicationSentToBackground(getInstance().currentActivity)){
             if (isConnected) {
-                Toast.makeText(currentActivity.getApplicationContext(), "Da ket noi internet", Toast.LENGTH_LONG).show();
+                Toast.makeText(currentActivity.getApplicationContext(), "Internet connection successful ", Toast.LENGTH_LONG).show();
                 Log.d("NguyenNK2", "ViewManager === da ket noi internet");
             } else {
-                Toast.makeText(currentActivity.getApplicationContext(), "Vui long kiem tra lai ket noi internet", Toast.LENGTH_LONG).show();
+                Toast.makeText(currentActivity.getApplicationContext(), "Please check internet connection and try again", Toast.LENGTH_LONG).show();
                 Log.d("NguyenNK2", "ViewManager === ko ket noi internet");
             }
         }

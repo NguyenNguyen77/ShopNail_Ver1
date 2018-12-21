@@ -61,7 +61,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         {
 //            Toast.makeText(getApplicationContext(),"da ket noi internet",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(getApplicationContext(),"Vui long kiem tra lai ket noi internet",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Please check internet connection and try again",Toast.LENGTH_LONG).show();
         }
         btnMakeAppointment.setOnClickListener(this);
         btnLogin.setOnClickListener(this);

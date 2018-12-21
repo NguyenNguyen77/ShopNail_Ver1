@@ -107,6 +107,7 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
 
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                imgAdd.setEnabled(true);
                 txtExtra = edtExtra.getText().toString().trim();
             }
 
@@ -118,6 +119,9 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
             @Override
             public void afterTextChanged(Editable text) {
                 String textTemp = edtExtra.getText().toString().trim();
+                if(textTemp.isEmpty()){
+                    return;
+                }
                 if (textTemp.charAt(textTemp.length() - 1) != '$') {
                     textTemp = textTemp.replace("$", "");
                     textTemp = textTemp + "$";
@@ -137,12 +141,12 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
         });
 
 
+        // Click done on soft keyboard
         edtExtra.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId== EditorInfo.IME_ACTION_DONE){
                     //do something
-//                    Toast.makeText(getApplicationContext(),"click done",Toast.LENGTH_LONG).show();
                     addExtra();
                     imgAdd.setEnabled(false);
     }
@@ -231,6 +235,7 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
 
     private void addExtra() {
         tvTotalPrice.setText(String.valueOf(getTotal() + getExtraPrice()));
+        edtExtra.setText("");
     }
 
     @Override
