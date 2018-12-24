@@ -53,7 +53,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         btnOldCustomer.setOnClickListener(this);
         btnBack.setOnClickListener(this);
 
-        mViewManager.setActivity(this);
+
     }
 
     @Override
@@ -66,8 +66,6 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
                 ShowLoginForOldCustomer();
                 break;
             case R.id.btn_go_back:
-                mViewManager.handleBackScreen();
-                mViewManager.finishActivity(this);
                 onBackPressed();
                 break;
             default:
@@ -75,17 +73,22 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         }
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        mViewManager.handleBackScreen();
-//        mViewManager.finishActivity(this);
-//    }
-
+    @Override
+    protected void onResume() {
+        mViewManager.setActivity(this);
+        super.onResume();
+    }
 
     @Override
     public void onBackPressed() {
+//        mViewManager.handleBackScreen();
+        mViewManager.setViewKey(ViewManager.VIEW_KEY.MENU_FOR_STAFF);
+        mViewManager.finishActivity(this);
         super.onBackPressed();
     }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

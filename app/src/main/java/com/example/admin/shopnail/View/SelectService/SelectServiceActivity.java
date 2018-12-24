@@ -49,7 +49,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_for_select_service);
-        mViewManager.setActivity(this);
+
         new NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.SELECT_CUSTOMER_SERVICE);
 
@@ -131,10 +131,17 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
 
 
     @Override
+    protected void onResume() {
+        mViewManager.setActivity(this);
+        super.onResume();
+    }
+
+    @Override
     public void onBackPressed() {
-        mViewManager.handleBackScreen();
+//        mViewManager.handleBackScreen();
+        mViewManager.setViewKey(ViewManager.VIEW_KEY.LOGIN_FOR_CUSTOMER);
         mViewManager.finishActivity(this);
-//        super.onBackPressed();
+        super.onBackPressed();
     }
 
     @Override
@@ -148,9 +155,9 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
                 mViewManager.setView(ViewManager.VIEW_KEY.VIEW_CART, jsonArray);
                 break;
             case R.id.btn_go_back:
-                mViewManager.handleBackScreen();
-                mViewManager.finishActivity(this);
-//                onBackPressed();
+//                mViewManager.handleBackScreen();
+//                mViewManager.finishActivity(this);
+                onBackPressed();
                 break;
             case R.id.img_spiner:
                 spinnerCategory.performClick();

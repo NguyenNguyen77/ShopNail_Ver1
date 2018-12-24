@@ -61,7 +61,6 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_for_view_product);
-        mViewManager.setActivity(this);
         new NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.VIEW_CART);
         initView();
@@ -77,6 +76,12 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
         });
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        mViewManager.setActivity(this);
+        super.onResume();
     }
 
     private int mTextSizeBefore = 0;
@@ -208,6 +213,7 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
     @Override
     public void onBackPressed() {
         mViewManager.setViewKey(ViewManager.VIEW_KEY.SELECT_SERVICE);
+        mViewManager.finishActivity(this);
         super.onBackPressed();
     }
 
