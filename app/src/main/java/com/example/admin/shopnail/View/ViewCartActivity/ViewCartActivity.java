@@ -195,18 +195,20 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
         }
     }
 
+
 //    @Override
 //    public void onBackPressed() {
 //        mViewManager.handleBackScreen();
 //        mViewManager.finishActivity(this);
+//
+//        super.onBackPressed();
 //    }
 
 
     @Override
     public void onBackPressed() {
-        mViewManager.handleBackScreen();
-        mViewManager.finishActivity(this);
-//        super.onBackPressed();
+        mViewManager.setViewKey(ViewManager.VIEW_KEY.SELECT_SERVICE);
+        super.onBackPressed();
     }
 
     @Override
@@ -221,9 +223,9 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
                 }
                 break;
             case R.id.btn_go_back:
-                mViewManager.handleBackScreen();
-//                onBackPressed();
-                mViewManager.finishActivity(this);
+//                mViewManager.handleBackScreen();
+                onBackPressed();
+//                mViewManager.finishActivity(this);
                 break;
             case R.id.img_add:
                 addExtra();
