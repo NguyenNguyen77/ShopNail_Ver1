@@ -243,7 +243,7 @@ public class ViewCartActivity extends Activity implements CartView, View.OnClick
 
     private void addExtra() {
         tvTotalPrice.setText(String.valueOf(getTotal() + getExtraPrice()));
-        edtExtra.setText("");
+        edtExtra.setText("$");
     }
 
     @Override
