@@ -40,6 +40,15 @@ public class GsonCustomerCreate {
         private String phone;
         private int last_id;
         private String message;
+        private String email;
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
 
         public int getCode() {
             return code;

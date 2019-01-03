@@ -147,7 +147,6 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         final Drawable mBackgroundColor = txtNameCustomer.getBackground();
         final Drawable mBackgroundColorpass = txtPhoneCustomer.getBackground();
         final Drawable mBackgroundColorEmail = txtEmailCustomer.getBackground();
-
         txtPhoneCustomer.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -259,9 +258,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
                     isInvalid = true;
                 }
                 // ================ Check vailidate username and password END
-
                 int phoneSize = txtPhoneCustomer.getText().toString().trim().length();
-
                 if (phoneSize != 12) {
                     txtPhoneCustomer.setTextColor(getResources().getColor(R.color.email_failed));
                     isInvalid = true;
@@ -277,7 +274,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
                     mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
                     mProgressDialog.setMessage(getString(R.string.please_wait));
                     mProgressDialog.show();
-                    mLoginPersenter.createAccountForCustomer(mNameCustomer, mPhoneCustomer);  // Send Username & PWD to persenter: save.
+                    mLoginPersenter.createAccountForCustomer(mNameCustomer, mPhoneCustomer, mEmailCustomer);  // Send Username & PWD to persenter: save.
                 }
 //                else {
 //                    Toast.makeText(getApplicationContext(), R.string.enter_username_pwd, Toast.LENGTH_LONG).show();

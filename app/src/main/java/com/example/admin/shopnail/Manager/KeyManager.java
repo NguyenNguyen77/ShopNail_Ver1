@@ -66,6 +66,7 @@ public class KeyManager {
     public static final String NOTE = "note";
     public static final String PRODUCT = "product";
     public static final String TYPE = "type";
+    public static final String SUCCESS = "success";
     public static final String ORDER = "order";
     public static final String SERVICES = "services";
 

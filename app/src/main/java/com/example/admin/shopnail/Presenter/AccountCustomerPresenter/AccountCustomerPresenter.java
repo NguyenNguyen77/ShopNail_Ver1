@@ -16,10 +16,15 @@ import com.example.admin.shopnail.Model.LoginForCustomer.GsonCustomerCreate;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.LoginCustomer.ILoginForCustomerView;
 
+import org.json.JSONObject;
+
 import static com.example.admin.shopnail.Manager.KeyManager.CLIENT_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.CLIENT_NAME;
 import static com.example.admin.shopnail.Manager.KeyManager.CREATE_ACCOUNT_CUSTOMER;
 import static com.example.admin.shopnail.Manager.KeyManager.CUSTOMER_PHONE_NUMBER;
+import static com.example.admin.shopnail.Manager.KeyManager.EMAIL;
+import static com.example.admin.shopnail.Manager.KeyManager.PHONE;
+import static com.example.admin.shopnail.Manager.KeyManager.SUCCESS;
 
 public class AccountCustomerPresenter extends BaseMethod implements IAccountCustomer, AsyncTaskCompleteListener<ResuiltObject> {
 
@@ -39,8 +44,8 @@ public class AccountCustomerPresenter extends BaseMethod implements IAccountCust
     }
 
     @Override
-    public void createAccountForCustomer(String nameCustomer, String phoneCustomer) {
-        createAccount(nameCustomer, phoneCustomer);
+    public void createAccountForCustomer(String nameCustomer, String phoneCustomer, String email) {
+        createAccount(nameCustomer, phoneCustomer, email);
     }
 
 
@@ -80,7 +85,7 @@ public class AccountCustomerPresenter extends BaseMethod implements IAccountCust
 //    }
 
 
-    private void createAccount(String fullname, String phone) {
+    private void createAccount(String fullname, String phone, String email) {
 //        final Handler handler = new Handler();
 //        handler.postDelayed(new Runnable() {
 //            @Override
@@ -89,14 +94,15 @@ public class AccountCustomerPresenter extends BaseMethod implements IAccountCust
 //                iLoginForCustomerView.onLoginResult(mResult);
 //            }
 //        }, 2000);
-        new NailTask(this).execute(new CaseManager(mContext, CREATE_ACCOUNT_CUSTOMER, UrlManager.CREATE_ACCOUNT_CUSTOMER_URL, getParamBuilder(fullname, phone)));
+        new NailTask(this).execute(new CaseManager(mContext, CREATE_ACCOUNT_CUSTOMER, UrlManager.CREATE_ACCOUNT_CUSTOMER_URL, getParamBuilder(fullname, phone, email)));
     }
 
 
-    Uri.Builder getParamBuilder(String fullname, String phone) {
+    Uri.Builder getParamBuilder(String fullname, String phone, String email) {
         Uri.Builder builder = new Uri.Builder();
         builder.appendQueryParameter(KeyManager.FULL_NAME, fullname);
         builder.appendQueryParameter(KeyManager.PHONE, phone);
+        builder.appendQueryParameter(KeyManager.EMAIL, email);
         return builder;
     }
 
@@ -115,7 +121,10 @@ public class AccountCustomerPresenter extends BaseMethod implements IAccountCust
                         setDefaults(CUSTOMER_PHONE_NUMBER, mGsonCustomerCreate.getSuccess().getPhone(), mContext);
                         iLoginForCustomerView.onLoginResult(mGsonCustomerCreate.isStatus(), msg);
                     } else {
-                        msg = mGsonCustomerCreate.getSuccess().getPhone();
+                        if (!new JSONObject(s).getJSONObject(SUCCESS).isNull(EMAIL))
+                            msg = mGsonCustomerCreate.getSuccess().getEmail();
+                        if (!new JSONObject(s).getJSONObject(SUCCESS).isNull(PHONE))
+                            msg = mGsonCustomerCreate.getSuccess().getPhone();
                         iLoginForCustomerView.onLoginResult(false, msg);
                     }
                 } catch (Exception e) {
