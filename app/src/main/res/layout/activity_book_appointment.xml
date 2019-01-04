@@ -131,7 +131,7 @@
                         android:textStyle="italic" />
 
                     <ImageView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/baseline_date_range_black_24" />

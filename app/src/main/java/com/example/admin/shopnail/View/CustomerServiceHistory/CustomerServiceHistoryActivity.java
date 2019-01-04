@@ -10,9 +10,12 @@ import android.support.v7.view.ContextThemeWrapper;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -266,8 +269,11 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
     private void showDetailServiceDialog(List<GsonProductCustomer.SuccessBean.ProductsBean> listServiceHistory) {
         ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);
         final Dialog detailService = new Dialog(ctw);
+        detailService.requestWindowFeature(Window.FEATURE_NO_TITLE);
         detailService.setContentView(R.layout.service_history_dialog);
-        detailService.setTitle(R.string.customer_info);
+
+//        detailService.setTitle(R.string.customer_info);
+
         Button btnClose = (Button) detailService.findViewById(R.id.btnClose);
         TextView tvDateDetail = (TextView) detailService.findViewById(R.id.tv_date_select);
         ListView lvServiceHistory = (ListView) detailService.findViewById(R.id.lv_customer_service_history);
@@ -282,6 +288,11 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
             }
         });
         detailService.show();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        detailService.getWindow().setLayout((width / 6) * 5, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 
     // Check Internet

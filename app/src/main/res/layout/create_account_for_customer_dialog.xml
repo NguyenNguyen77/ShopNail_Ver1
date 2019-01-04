@@ -16,8 +16,9 @@
         android:hint="@string/name_customer"
         android:layout_marginBottom="3dp"
         android:paddingLeft="10dp"
-        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
-        android:inputType="text">
+        android:inputType="text"
+        android:maxLines="1">
+     <!--   android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"-->
     </EditText>
 
     <EditText

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -11,8 +10,8 @@
         android:orientation="vertical">
 
         <com.example.admin.shopnail.CustomViewListExpand.NonScrollListView
-            android:layout_width="match_parent"
             android:id="@+id/list_products"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         </com.example.admin.shopnail.CustomViewListExpand.NonScrollListView>
@@ -22,32 +21,63 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingTop="5dp">
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/txt_extra"
-                android:layout_width="wrap_content"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingRight="5dp"
-                android:text="Extra: 0$"
+                android:text="Extra:"
+                android:textStyle="italic|bold" />
+
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:id="@+id/txt_extra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0$"
                 android:textStyle="italic|bold" />
 
         </LinearLayout>
 
-        <TextView
-            android:background="@android:color/white"
-            android:id="@+id/tv_total_price"
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:textStyle="italic|bold"
-            android:text="Total Price: 0$" />
-        <TextView
+            android:orientation="horizontal">
+
+            <TextView
+                android:gravity="right"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="Total Price:"
+                android:textStyle="italic|bold" />
+
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:id="@+id/tv_total_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0$"
+                android:textStyle="italic|bold" />
+
+        </LinearLayout>
+
+
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#9c9a9a"
-            android:layout_marginBottom="5dp"/>
+            android:layout_height="1dp"
+            android:background="#9c9a9a" />
 
     </LinearLayout>
 

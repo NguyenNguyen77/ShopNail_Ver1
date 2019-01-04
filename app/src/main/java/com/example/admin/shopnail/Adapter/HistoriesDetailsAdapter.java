@@ -46,7 +46,7 @@ public class HistoriesDetailsAdapter extends BaseAdapter implements View.OnClick
 
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
-       ViewHolder holder;
+        ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = layoutInflater.inflate(R.layout.item_service_details_history, null);
@@ -58,20 +58,20 @@ public class HistoriesDetailsAdapter extends BaseAdapter implements View.OnClick
             holder = (ViewHolder) convertView.getTag();
         }
         GsonProductCustomer.SuccessBean.ProductsBean mProductsBean = object.get(i);
-        holder.tvExtra.setText("Extra: "+ String.valueOf(mProductsBean.getExtraMoney()) + "$");
+        holder.tvExtra.setText(String.valueOf(mProductsBean.getExtraMoney()) + " $");
         holder.tvExtra.setTag(i);
         holder.tvExtra.setOnClickListener(this);
         List<GsonProductCustomer.SuccessBean.ProductsBean.ProductBean> arrProduct = object.get(i).getProduct();
         ProductsCustomerAdapter adapter = new ProductsCustomerAdapter(arrProduct, mContext, mProductsBean.getOrderId(), mProductsBean.getExtraMoney(), true);
         holder.lv.setAdapter(adapter);
-        holder.tvTotalPrice.setText("Total Price: " + String.valueOf(getTotal(object.get(i).getProduct())) + "$");
+        holder.tvTotalPrice.setText(String.valueOf(getTotal(object.get(i).getProduct())) + " $");
         return convertView;
     }
 
     @Override
     public void onClick(View v) {
         int position = (int) v.getTag();
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.txt_extra:
 //                ((MyDetailCustomerActivity) mContext).OpenDialogUpdate(object.get(position).getOrderId());
                 break;
@@ -80,7 +80,7 @@ public class HistoriesDetailsAdapter extends BaseAdapter implements View.OnClick
 
     public int getTotal(List<GsonProductCustomer.SuccessBean.ProductsBean.ProductBean> product) {
         int total = 0;
-        for (GsonProductCustomer.SuccessBean.ProductsBean.ProductBean bean : product){
+        for (GsonProductCustomer.SuccessBean.ProductsBean.ProductBean bean : product) {
             total = total + Integer.parseInt(bean.getProductPrice());
         }
         return total;

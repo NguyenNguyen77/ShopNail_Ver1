@@ -57,11 +57,10 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         btnLogin = (Button) findViewById(R.id.btn_login_for_staff);
         btnMakeAppointment = (Button) findViewById(R.id.btn_make_appointment_online);
 
-        if(isInternetOn())
-        {
+        if (isInternetOn()) {
 //            Toast.makeText(getApplicationContext(),"da ket noi internet",Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(getApplicationContext(),"Please check internet connection and try again",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Please check internet connection and try again", Toast.LENGTH_LONG).show();
         }
         btnMakeAppointment.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
@@ -99,9 +98,11 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         }
     }
 
+    Dialog login;
+
     private void showLoginDialog() {
         ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);
-        final Dialog login = new Dialog(ctw);
+        login = new Dialog(ctw);
         login.setContentView(R.layout.login_dialog);
         login.setTitle(R.string.login);
         Button btnLogin = (Button) login.findViewById(R.id.btnLogin);
@@ -158,25 +159,25 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
                 mUserName = txtUsername.getText().toString().trim();
                 mPassword = txtPassword.getText().toString().trim();
                 // ================ Check vailidate username and password START
-                if(mUserName.isEmpty() && mPassword.isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Please insert user name and password ",Toast.LENGTH_LONG).show();
+                if (mUserName.isEmpty() && mPassword.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please insert user name and password ", Toast.LENGTH_LONG).show();
                     txtUsername.setBackgroundResource(R.drawable.bordertextview);
                     txtPassword.setBackgroundResource(R.drawable.bordertextview);
                     return;
                 }
-                if(mUserName.isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Please insert user name ",Toast.LENGTH_LONG).show();
+                if (mUserName.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please insert user name ", Toast.LENGTH_LONG).show();
                     txtUsername.setBackgroundResource(R.drawable.bordertextview);
                     return;
                 }
-                if(mPassword.isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Please insert password",Toast.LENGTH_LONG).show();
+                if (mPassword.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please insert password", Toast.LENGTH_LONG).show();
                     txtPassword.setBackgroundResource(R.drawable.bordertextview);
                     return;
                 }
                 // ================ Check vailidate username and password END
                 if (mLoginPersenter.checkLogin(mUserName, mPassword)) { //Need to check more condition for Username&PWD
-                    login.dismiss();
+//                    login.dismiss();
                     mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
                     mProgressDialog.setMessage(getString(R.string.please_wait));
                     mProgressDialog.show();
@@ -184,7 +185,6 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
                     BaseMethod.setDefaults(PASS_WORD, mPassword, MainActivity.this);
                     BaseMethod.setDefaults(USER_ID, String.valueOf(-1), MainActivity.this);
                     mLoginPersenter.sendRequestLogin(mUserName, mPassword);  // Send Username & PWD to persenter: save.
-
                 } else {
                     Toast.makeText(MainActivity.this, R.string.enter_username_pwd, Toast.LENGTH_LONG).show();
                 }
@@ -204,13 +204,16 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         });
         login.show();
     }
+
     private void tranferToLResetPassword() {
         mViewManager.setView(ViewManager.VIEW_KEY.RESET_PASSWORD);
     }
+
     @Override
     public void onLoginResult(boolean result) {
         if (result) {
             mProgressDialog.cancel();
+            login.dismiss();
             Toast.makeText(MainActivity.this, R.string.login_sucessfull, Toast.LENGTH_SHORT).show();
             mViewManager.setView(ViewManager.VIEW_KEY.MENU_FOR_STAFF);  // Change to next screen
         } else {

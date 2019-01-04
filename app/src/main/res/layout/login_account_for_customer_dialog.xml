@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:maxLength="12"
         android:inputType="phone"
-        android:hint="@string/customer_phonenumber">
+        android:hint="@string/phone">
     </EditText>
 
     <LinearLayout

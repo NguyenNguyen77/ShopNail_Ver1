@@ -88,8 +88,6 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
     }
 
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -133,7 +131,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
 
     private void ShowCreateNewCutomer() {
         ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);
-        final Dialog login = new Dialog(ctw);
+        login = new Dialog(ctw);
         login.setContentView(R.layout.create_account_for_customer_dialog);
         login.setTitle(R.string.new_customer);
 
@@ -270,7 +268,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
                 }
 
                 if (!isInvalid) { //Need to check more condition for Username&PWD
-                    login.dismiss();
+//                    login.dismiss();
                     mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
                     mProgressDialog.setMessage(getString(R.string.please_wait));
                     mProgressDialog.show();
@@ -291,9 +289,11 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
         login.show();
     }
 
+    Dialog login;
+
     private void ShowLoginForOldCustomer() {
         ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);
-        final Dialog login = new Dialog(ctw);
+        login = new Dialog(ctw);
         login.setContentView(R.layout.login_account_for_customer_dialog);
         login.setTitle(R.string.old_customer);
 
@@ -370,6 +370,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
     public void onLoginResult(boolean result, String msg) {
         mProgressDialog.cancel();
         if (result) {
+            login.dismiss();
             mViewManager.setView(ViewManager.VIEW_KEY.SELECT_SERVICE);  // Change to next screen
             if (!msg.equals("")) {
                 Toast.makeText(LoginForCustomerActivity.this, msg, Toast.LENGTH_LONG).show();
