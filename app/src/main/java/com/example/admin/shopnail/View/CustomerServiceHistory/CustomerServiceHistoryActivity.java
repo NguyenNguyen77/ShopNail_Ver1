@@ -218,12 +218,16 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
     @Override
     public void updateListCustomerServiceHistoryByDate(ArrayList<Customer> listCustomerServiceHistory) {
         mViewManager.dismissInprogressDialog();
-        if (listCustomerServiceHistory.size() > 0) {
+        if (listCustomerServiceHistory.size() == 0) {
+            mLayoutList.setVisibility(View.GONE);
+            mListCustomerServiceHistoryByDate.setVisibility(View.GONE);
+            mTvEmpty.setVisibility(View.VISIBLE);
+//            CustomerAdapter adapter = new CustomerAdapter(this, listCustomerServiceHistory);
+//            mListCustomerServiceHistoryByDate.setAdapter(adapter);
+        }else {
             mLayoutList.setVisibility(View.VISIBLE);
             mListCustomerServiceHistoryByDate.setVisibility(View.VISIBLE);
             mTvEmpty.setVisibility(View.GONE);
-//            CustomerAdapter adapter = new CustomerAdapter(this, listCustomerServiceHistory);
-//            mListCustomerServiceHistoryByDate.setAdapter(adapter);
         }
     }
 
@@ -244,7 +248,11 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
     public void setAdapterClients(List<GsonGetClient.SuccessBean.ClientsBean> arrClient) {
         CustomerAdapter mCustomerAdapter = new CustomerAdapter(this, arrClient);
         mListCustomerServiceHistoryByDate.setAdapter(mCustomerAdapter);
-        if (arrClient.size() > 0) {
+        if (arrClient.size() == 0) {
+            mLayoutList.setVisibility(View.GONE);
+            mListCustomerServiceHistoryByDate.setVisibility(View.GONE);
+            mTvEmpty.setVisibility(View.VISIBLE);
+        }else {
             mLayoutList.setVisibility(View.VISIBLE);
             mListCustomerServiceHistoryByDate.setVisibility(View.VISIBLE);
             mTvEmpty.setVisibility(View.GONE);

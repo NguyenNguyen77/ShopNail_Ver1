@@ -64,7 +64,9 @@ public class HistoriesDetailsAdapter extends BaseAdapter implements View.OnClick
         List<GsonProductCustomer.SuccessBean.ProductsBean.ProductBean> arrProduct = object.get(i).getProduct();
         ProductsCustomerAdapter adapter = new ProductsCustomerAdapter(arrProduct, mContext, mProductsBean.getOrderId(), mProductsBean.getExtraMoney(), true);
         holder.lv.setAdapter(adapter);
-        holder.tvTotalPrice.setText(String.valueOf(getTotal(object.get(i).getProduct())) + " $");
+        int total;
+        total = Integer.parseInt( mProductsBean.getExtraMoney())+ getTotal(object.get(i).getProduct());
+        holder.tvTotalPrice.setText(total + " $");
         return convertView;
     }
 

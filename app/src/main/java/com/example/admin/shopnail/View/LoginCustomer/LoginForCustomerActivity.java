@@ -348,7 +348,7 @@ public class LoginForCustomerActivity extends Activity implements View.OnClickLi
                 }
                 // ================ Check vailidate username and password END
                 if (!isInvalid) { //Need to check more condition for Username&PWD
-                    login.dismiss();
+//                    login.dismiss();
                     mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
                     mProgressDialog.setMessage(getString(R.string.please_wait));
                     mProgressDialog.show();

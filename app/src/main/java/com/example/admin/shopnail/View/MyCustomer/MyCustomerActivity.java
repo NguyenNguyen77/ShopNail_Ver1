@@ -51,7 +51,7 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
     List<ServicesOfShop> listService;
     ListView listCustomer;
     Button btn_back;
-    TextView txt_date;
+    TextView txt_date, mTvEmpty;
     private Date mDateSelected;
     private Calendar mCalender;
 
@@ -86,8 +86,11 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
         btn_back = findViewById(R.id.btn_go_back);
         txt_date = findViewById(R.id.tv_date);
 
-        getDefaultInfo();
+        mTvEmpty = (TextView) findViewById(R.id.txt_not_found_history);
 
+        getDefaultInfo();
+        mTvEmpty.setVisibility(View.VISIBLE);
+        listCustomer.setVisibility(View.GONE);
 
         listCustomer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -184,10 +187,15 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
                                   int monthOfYear,
                                   int dayOfMonth) {
                 String dayOfMonthText=""+dayOfMonth;
+                monthOfYear=monthOfYear+1;
+                String MonthText=""+monthOfYear;
                 if(dayOfMonth<10){
                     dayOfMonthText = "0"+dayOfMonth;
                 }
-                String strDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonthText;
+                if(monthOfYear<10){
+                    MonthText = "0"+MonthText;
+                }
+                String strDate = year + "-" + MonthText + "-" + dayOfMonthText;
                 SpannableString strSpanned = new SpannableString(strDate);
                 strSpanned.setSpan(new StyleSpan(Typeface.ITALIC), 0, strSpanned.length(), 0);
                 strSpanned.setSpan(new UnderlineSpan(), 0, strSpanned.length(), 0);
@@ -211,6 +219,13 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
     @Override
     public void setAdapterClients(List<GsonGetClient.SuccessBean.ClientsBean> arrClient) {
         CustomerAdapter mCustomerAdapter = new CustomerAdapter(this, arrClient);
+        if(arrClient.size()== 0) {
+            mTvEmpty.setVisibility(View.VISIBLE);
+            listCustomer.setVisibility(View.GONE);
+        }else {
+            mTvEmpty.setVisibility(View.GONE);
+            listCustomer.setVisibility(View.VISIBLE);
+        }
         listCustomer.setAdapter(mCustomerAdapter);
         mViewManager.dismissInprogressDialog();
     }

@@ -62,11 +62,11 @@
                 android:textStyle="italic|bold" />
 
             <TextView
-                android:layout_marginLeft="15dp"
-                android:layout_weight="1"
                 android:id="@+id/tv_total_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
                 android:text="0$"
                 android:textStyle="italic|bold" />
 
