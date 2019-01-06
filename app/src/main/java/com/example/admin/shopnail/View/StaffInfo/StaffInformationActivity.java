@@ -5,13 +5,16 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -85,7 +88,9 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.btn_change_avatar:
             case R.id.img_avatar:
-                changeAvatar();
+                if(requestPermissions()){
+                    changeAvatar();
+                }
                 break;
             case R.id.btn_change_password:
                 showChangePasswordDialog();
@@ -364,5 +369,37 @@ public class StaffInformationActivity extends Activity implements View.OnClickLi
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
         mViewManager.showSnack(isConnected);
+    }
+
+    public boolean requestPermissions() {
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+            return true;
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    1);
+            return false;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+
+            case 1: {
+
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    Toast.makeText(getApplicationContext(), "Permission granted", Toast.LENGTH_SHORT).show();
+                    changeAvatar();
+                } else {
+                    Toast.makeText(getApplicationContext(), "You must grant permission to use your image", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+
+        }
     }
 }
