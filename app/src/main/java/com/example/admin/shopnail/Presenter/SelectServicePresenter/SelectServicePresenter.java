@@ -27,6 +27,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import static com.example.admin.shopnail.Manager.KeyManager.LIMIT_PRODUCT;
+
 public class SelectServicePresenter extends BaseMethod implements ISelectServicePresenter, AsyncTaskCompleteListener<ResuiltObject> {
 
     ISelectServiceView mISelectServiceView;
@@ -36,6 +38,9 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
     List<GsonCategory.SuccessBean.DataBean> arrCategory;
     List<GsonCategory.SuccessBean.DataBean> arrCategoryJson;
     GsonCategory.SuccessBean.DataBean categoryAll;
+    int categoryID;
+    List<GsonProductsByCategory.SuccessBean.DataBean> arrProduct = new ArrayList<>();
+    SelectServiceAdapter adapter;
 
     public SelectServicePresenter(ISelectServiceView mISelectServiceView, Context mContext) {
         this.mISelectServiceView = mISelectServiceView;
@@ -92,10 +97,14 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
         return listService;
     }
 
+
     @Override
     public void RequestCategory() {
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_CATEGORY_LIST, UrlManager.GET_CATEGORY_LIST_URL, getParamBuidler()));
     }
+
+
+
 
     @Override
     public void requestProduct(int pos) {
@@ -108,17 +117,29 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
 //            String url = UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + arrCategory.get(pos - 1).getId();
 //            new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_PRODUCTS_BY_CATEGORY, UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + arrCategory.get(pos - 1).getId(), getParamBuidler()));
 //        }
+//        String url = arrCategory.get(pos).getId() == 0 ? UrlManager.GET_PRODUCTS_BY_CATEGORY_URL : UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + arrCategory.get(pos).getId();
+        setPositionPage(1);
+        categoryID = arrCategory.get(pos).getId();
+        String url = arrCategory.get(pos).getId() == 0 ? (UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + LIMIT_PRODUCT + "/" + getPositionPage()) : ((UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + LIMIT_PRODUCT + "/" + getPositionPage()) + "/" + arrCategory.get(pos).getId());
+        new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_PRODUCTS_BY_CATEGORY, url, getParamBuidler()));//For item All
 
-        String url = UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + arrCategory.get(pos).getId();
-        new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_PRODUCTS_BY_CATEGORY, arrCategory.get(pos).getId() == 0 ? UrlManager.GET_PRODUCTS_BY_CATEGORY_URL : UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + arrCategory.get(pos).getId(), getParamBuidler()));//For item All
 
+    }
 
+    @Override
+    public void startScroll() {
+        setPositionPage(getPositionPage() + 1);
+        String url = categoryID == 0 ? (UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + LIMIT_PRODUCT + "/" + getPositionPage()) : ((UrlManager.GET_PRODUCTS_BY_CATEGORY_URL + "/" + LIMIT_PRODUCT + "/" + getPositionPage()) + "/" + categoryID);
+        new NailTask(this).execute(new CaseManager(mContext, KeyManager.GET_PRODUCTS_BY_CATEGORY, url, getParamBuidler()));//For item All
     }
 
     Uri.Builder getParamBuidler() {
         Uri.Builder builder = new Uri.Builder();
         return builder;
     }
+
+
+
 
     @Override
     public void onTaskCompleted(String s, String CaseRequest) {
@@ -129,10 +150,8 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
                 categoryAll.setId(0);
                 categoryAll.setName("All");
                 arrCategoryJson = mGsonCategory.getSuccess().getData();
-
                 arrCategory = new ArrayList<GsonCategory.SuccessBean.DataBean>();
                 arrCategory.add(categoryAll);
-
                 for (int i = 0; i < arrCategoryJson.size(); i++) {
                     arrCategory.add(arrCategoryJson.get(i));
                 }
@@ -145,8 +164,20 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
                 Log.d(KeyManager.VinhCNLog, s);
                 try {
                     GsonProductsByCategory mGsonProductsByCategory = getGson().fromJson(s, GsonProductsByCategory.class);
-                    List<GsonProductsByCategory.SuccessBean.DataBean> arrProduct = mGsonProductsByCategory.getSuccess().getData();
-                    mISelectServiceView.setProductsByCategoryAdapter(new SelectServiceAdapter(mContext, arrProduct, mISelectServiceView.getArrayChecked()));
+                    if (adapter==null){
+                        if (getPositionPage()==1){
+                            arrProduct.clear();
+                        }
+                        arrProduct.addAll(mGsonProductsByCategory.getSuccess().getData());
+                        adapter = new SelectServiceAdapter(mContext, arrProduct, mISelectServiceView.getArrayChecked());
+                        mISelectServiceView.setProductsByCategoryAdapter(adapter);
+                    }else {
+                        arrProduct.addAll(mGsonProductsByCategory.getSuccess().getData());
+                        adapter.notifyDataSetChanged();
+                    }
+
+
+
                 } catch (Exception e) {
                     List<GsonProductsByCategory.SuccessBean.DataBean> arrProduct = new ArrayList<>();
                     mISelectServiceView.setProductsByCategoryAdapter(new SelectServiceAdapter(mContext, arrProduct, mISelectServiceView.getArrayChecked()));

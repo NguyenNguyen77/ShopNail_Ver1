@@ -1,11 +1,14 @@
 package com.example.admin.shopnail.View.SelectService;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -68,7 +71,21 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
         // request server category add end vinhcn 25/09/2018
 //        loadListDataAcrylic();
         gridSelectService.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
+        gridSelectService.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (!view.canScrollList(View.SCROLL_AXIS_VERTICAL) && scrollState == SCROLL_STATE_IDLE) {
+                    mSerlectServicePresenter.startScroll();
+                }
 
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                Log.d(KeyManager.VinhCNLog, firstVisibleItem + " " + visibleItemCount + totalItemCount);
+            }
+        });
 
         // comment out here 25/09/2018
 //        adapterCategory = new ArrayAdapter<String>(SelectServiceActivity.this,

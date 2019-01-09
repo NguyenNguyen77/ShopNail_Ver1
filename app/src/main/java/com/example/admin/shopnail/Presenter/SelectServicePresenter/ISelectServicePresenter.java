@@ -12,4 +12,6 @@ public interface ISelectServicePresenter {
     void RequestCategory();
 
     void requestProduct(int i);
+
+    void startScroll();
 }

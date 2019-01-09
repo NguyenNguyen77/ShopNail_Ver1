@@ -52,6 +52,16 @@ public class BaseMethod   {
     String clientID;
     String staffId;
 
+    int positionPage = 1;
+
+    public int getPositionPage() {
+        return positionPage;
+    }
+
+    public void setPositionPage(int positionPage) {
+        this.positionPage = positionPage;
+    }
+
     public String getClientID(Context context) {
         return BaseMethod.getDefaults(CLIENT_ID, context);
     }
