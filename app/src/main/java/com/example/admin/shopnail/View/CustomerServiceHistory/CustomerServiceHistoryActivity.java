@@ -5,23 +5,28 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.admin.shopnail.Adapter.CustomerAdapter;
@@ -29,6 +34,7 @@ import com.example.admin.shopnail.Adapter.HistoriesDetailsAdapter;
 import com.example.admin.shopnail.Adapter.MyCustomerAdapter;
 import com.example.admin.shopnail.Adapter.ServiceHistoryAdapter;
 import com.example.admin.shopnail.CustomViewListExpand.SingleToast;
+import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Model.CustomerInfo.Customer;
 import com.example.admin.shopnail.Model.MyCustomer.GsonGetClient;
@@ -58,9 +64,10 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
     private LinearLayout mLayoutList;
     private ListView mListCustomerServiceHistoryByDate;
     private CustomerServiceHistoryPresenter mCustomerServiceHistoryPresenter;
+    private ProgressBar mProgressBar;
 
-    private CustomerServiceHistoryPresenter getPresenter(){
-        if (mCustomerServiceHistoryPresenter == null){
+    private CustomerServiceHistoryPresenter getPresenter() {
+        if (mCustomerServiceHistoryPresenter == null) {
             mCustomerServiceHistoryPresenter = new CustomerServiceHistoryPresenter(this, this);
         }
         return mCustomerServiceHistoryPresenter;
@@ -87,6 +94,7 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
         mTvEmpty = (TextView) findViewById(R.id.txt_not_found_history);
         mLayoutList = (LinearLayout) findViewById(R.id.layout_list);
         mListCustomerServiceHistoryByDate = (ListView) findViewById(R.id.lv_service_history);
+        mProgressBar = findViewById(R.id.progress);
         mImgSubmit.setOnClickListener(this);
         mBtBack.setOnClickListener(this);
         mTvDate.setOnClickListener(this);
@@ -104,7 +112,22 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
             }
         });
 
-//        loadCustomerServiceHistoryByDate(mDateSelected);
+        mListCustomerServiceHistoryByDate.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (!view.canScrollList(View.SCROLL_AXIS_VERTICAL) && scrollState == SCROLL_STATE_IDLE) {
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    getPresenter().startScroll();
+                }
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                Log.d(KeyManager.VinhCNLog, firstVisibleItem + " " + visibleItemCount + totalItemCount);
+            }
+        });
     }
 
     @Override
@@ -224,7 +247,7 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
             mTvEmpty.setVisibility(View.VISIBLE);
 //            CustomerAdapter adapter = new CustomerAdapter(this, listCustomerServiceHistory);
 //            mListCustomerServiceHistoryByDate.setAdapter(adapter);
-        }else {
+        } else {
             mLayoutList.setVisibility(View.VISIBLE);
             mListCustomerServiceHistoryByDate.setVisibility(View.VISIBLE);
             mTvEmpty.setVisibility(View.GONE);
@@ -244,15 +267,19 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
 ////        }
 //    }
 
+
+
+
+    CustomerAdapter mCustomerAdapter;
     @Override
     public void setAdapterClients(List<GsonGetClient.SuccessBean.ClientsBean> arrClient) {
-        CustomerAdapter mCustomerAdapter = new CustomerAdapter(this, arrClient);
+        mCustomerAdapter = new CustomerAdapter(this, arrClient);
         mListCustomerServiceHistoryByDate.setAdapter(mCustomerAdapter);
         if (arrClient.size() == 0) {
             mLayoutList.setVisibility(View.GONE);
             mListCustomerServiceHistoryByDate.setVisibility(View.GONE);
             mTvEmpty.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             mLayoutList.setVisibility(View.VISIBLE);
             mListCustomerServiceHistoryByDate.setVisibility(View.VISIBLE);
             mTvEmpty.setVisibility(View.GONE);
@@ -272,6 +299,12 @@ public class CustomerServiceHistoryActivity extends Activity implements View.OnC
     @Override
     public void closeProgress() {
         mViewManager.dismissInprogressDialog();
+    }
+
+    @Override
+    public void notifyList() {
+        mCustomerAdapter.notifyDataSetChanged();
+        mProgressBar.setVisibility(View.GONE);
     }
 
     private void showDetailServiceDialog(List<GsonProductCustomer.SuccessBean.ProductsBean> listServiceHistory) {

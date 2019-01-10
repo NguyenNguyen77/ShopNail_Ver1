@@ -9,34 +9,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:ignore="MissingConstraints">
+        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_weight="5"
             android:layout_height="0dp"
+            android:layout_weight="5"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="#e9d7a8"
-                android:orientation="horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="0.7"
-                >
+                android:background="#e9d7a8"
+                android:orientation="horizontal">
 
                 <Spinner
                     android:id="@+id/spinnerCategory"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="4"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
+                    android:layout_weight="4"
                     android:background="@android:color/transparent"
                     android:gravity="bottom|clip_vertical"
                     android:spinnerMode="dropdown"
@@ -45,12 +44,12 @@
                 <ImageView
                     android:id="@+id/img_spiner"
                     android:layout_width="0dp"
-                    android:layout_marginRight="10dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:src="@drawable/drop" />
             </LinearLayout>
 
@@ -59,15 +58,38 @@
                 android:layout_height="1dp"
                 android:background="#9c9a9a" />
 
-            <GridView
-                android:id="@+id/gridSelectService"
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_margin="5dp"
                 android:layout_height="0dp"
-                android:layout_weight="5"
-                android:numColumns="auto_fit"
-                android:layout_gravity="center"
-                android:listSelector="@drawable/list_selecter"/>
+                android:layout_margin="5dp"
+                android:layout_weight="5">
+
+                <GridView
+                    android:layout_weight="1"
+                    android:id="@+id/gridSelectService"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:listSelector="@drawable/list_selecter"
+                    android:numColumns="auto_fit" />
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:visibility="gone"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_centerInParent="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:indeterminateDrawable="@drawable/progress_style"
+                    android:indeterminate="true" />
+
+            </LinearLayout>
+
+
         </LinearLayout>
 
         <TextView
@@ -78,9 +100,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.2"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:layout_weight="1.2"
             android:gravity="bottom"
             android:orientation="vertical">
 
@@ -88,18 +110,19 @@
                 android:id="@+id/btn_view_cart"
                 android:layout_width="200dp"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:background="@drawable/button_nail"
                 android:text="@string/view_cart"
                 android:textColor="@drawable/button_text" />
+
             <Button
                 android:id="@+id/btn_go_back"
                 android:layout_width="200dp"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
+                android:layout_weight="1"
                 android:background="@drawable/button_nail"
                 android:text="@string/back"
                 android:textColor="@drawable/button_text" />

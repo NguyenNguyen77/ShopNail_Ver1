@@ -18,4 +18,6 @@ public interface ISelectServiceView {
     JSONArray getArrayChecked();
 
     void dismissProgress();
+
+    void disibleProgressbar();
 }

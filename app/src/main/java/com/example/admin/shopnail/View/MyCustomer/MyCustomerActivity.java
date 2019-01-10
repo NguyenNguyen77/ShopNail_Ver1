@@ -6,23 +6,30 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Model.MyCustomer.GsonClientTime;
 import com.example.admin.shopnail.Model.MyCustomer.GsonGetClient;
@@ -54,6 +61,9 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
     TextView txt_date, mTvEmpty;
     private Date mDateSelected;
     private Calendar mCalender;
+    private ProgressBar mProgressBar;
+    private LinearLayout lnCustomer;
+
 
     Context context;
 
@@ -70,6 +80,25 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
 //        mLvMyCustomerList.setAdapter(myCustomerAdapter);
         context = this;
 
+
+        listCustomer.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (!view.canScrollList(View.SCROLL_AXIS_VERTICAL) && scrollState == SCROLL_STATE_IDLE) {
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    myCustommerLogic.startScroll();
+                }
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                Log.d(KeyManager.VinhCNLog, firstVisibleItem + " " + visibleItemCount + totalItemCount);
+            }
+        });
+
+
     }
 
     private void initView() {
@@ -85,8 +114,10 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
         listCustomer = findViewById(R.id.list_my_customer);
         btn_back = findViewById(R.id.btn_go_back);
         txt_date = findViewById(R.id.tv_date);
-
+        lnCustomer = findViewById(R.id.layout_list_customer);
         mTvEmpty = (TextView) findViewById(R.id.txt_not_found_history);
+        mProgressBar = findViewById(R.id.progress);
+
 
         getDefaultInfo();
         mTvEmpty.setVisibility(View.VISIBLE);
@@ -186,14 +217,14 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
             public void onDateSet(DatePicker view, int year,
                                   int monthOfYear,
                                   int dayOfMonth) {
-                String dayOfMonthText=""+dayOfMonth;
-                monthOfYear=monthOfYear+1;
-                String MonthText=""+monthOfYear;
-                if(dayOfMonth<10){
-                    dayOfMonthText = "0"+dayOfMonth;
+                String dayOfMonthText = "" + dayOfMonth;
+                monthOfYear = monthOfYear + 1;
+                String MonthText = "" + monthOfYear;
+                if (dayOfMonth < 10) {
+                    dayOfMonthText = "0" + dayOfMonth;
                 }
-                if(monthOfYear<10){
-                    MonthText = "0"+MonthText;
+                if (monthOfYear < 10) {
+                    MonthText = "0" + MonthText;
                 }
                 String strDate = year + "-" + MonthText + "-" + dayOfMonthText;
                 SpannableString strSpanned = new SpannableString(strDate);
@@ -216,13 +247,15 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
         pic.show();
     }
 
+    CustomerAdapter mCustomerAdapter;
+
     @Override
     public void setAdapterClients(List<GsonGetClient.SuccessBean.ClientsBean> arrClient) {
-        CustomerAdapter mCustomerAdapter = new CustomerAdapter(this, arrClient);
-        if(arrClient.size()== 0) {
+        mCustomerAdapter = new CustomerAdapter(this, arrClient);
+        if (mCustomerAdapter.getCount() == 0) {
             mTvEmpty.setVisibility(View.VISIBLE);
             listCustomer.setVisibility(View.GONE);
-        }else {
+        } else {
             mTvEmpty.setVisibility(View.GONE);
             listCustomer.setVisibility(View.VISIBLE);
         }
@@ -254,6 +287,12 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
     @Override
     public String getDateChoosed() {
         return txt_date.getText().toString();
+    }
+
+    @Override
+    public void notifyChange() {
+        mProgressBar.setVisibility(View.GONE);
+        mCustomerAdapter.notifyDataSetChanged();
     }
 
     public void showDialogSelectTimer(List<TimeSelect> arr) {

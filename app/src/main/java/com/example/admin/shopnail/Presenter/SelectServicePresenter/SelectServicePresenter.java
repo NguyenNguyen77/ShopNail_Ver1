@@ -104,8 +104,6 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
     }
 
 
-
-
     @Override
     public void requestProduct(int pos) {
 //        if (pos == 0) {
@@ -139,8 +137,6 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
     }
 
 
-
-
     @Override
     public void onTaskCompleted(String s, String CaseRequest) {
         switch (CaseRequest) {
@@ -164,23 +160,22 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
                 Log.d(KeyManager.VinhCNLog, s);
                 try {
                     GsonProductsByCategory mGsonProductsByCategory = getGson().fromJson(s, GsonProductsByCategory.class);
-                    if (adapter==null){
-                        if (getPositionPage()==1){
-                            arrProduct.clear();
-                        }
+                    if (getPositionPage() == 1) {
+                        arrProduct.clear();
                         arrProduct.addAll(mGsonProductsByCategory.getSuccess().getData());
                         adapter = new SelectServiceAdapter(mContext, arrProduct, mISelectServiceView.getArrayChecked());
                         mISelectServiceView.setProductsByCategoryAdapter(adapter);
-                    }else {
+                    } else {
                         arrProduct.addAll(mGsonProductsByCategory.getSuccess().getData());
                         adapter.notifyDataSetChanged();
+                        mISelectServiceView.disibleProgressbar();
                     }
-
-
-
                 } catch (Exception e) {
-                    List<GsonProductsByCategory.SuccessBean.DataBean> arrProduct = new ArrayList<>();
-                    mISelectServiceView.setProductsByCategoryAdapter(new SelectServiceAdapter(mContext, arrProduct, mISelectServiceView.getArrayChecked()));
+                    Log.d(KeyManager.VinhCNLog, e.toString());
+                    if (getPositionPage()==1){
+                        List<GsonProductsByCategory.SuccessBean.DataBean> arrProduct = new ArrayList<>();
+                        mISelectServiceView.setProductsByCategoryAdapter(new SelectServiceAdapter(mContext, arrProduct, mISelectServiceView.getArrayChecked()));
+                    }
                 }
                 mISelectServiceView.dismissProgress();
                 break;

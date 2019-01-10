@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     Spinner spinnerCategory;
     GridView gridSelectService;
     private ImageView mImgSpiner;
+    ProgressBar mProgressBar;
     //    ArrayAdapter<String> adapterCategory;
     SelectServiceAdapter selectServiceAdapter = null;
     List<GsonProductsByCategory.SuccessBean.DataBean> mList = null;
@@ -60,6 +62,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
         gridSelectService = findViewById(R.id.gridSelectService);
         btnBack = findViewById(R.id.btn_go_back);
         btnViewcart = findViewById(R.id.btn_view_cart);
+        mProgressBar = findViewById(R.id.progress);
 
         mImgSpiner = (ImageView) findViewById(R.id.img_spiner);
 
@@ -71,11 +74,14 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
         // request server category add end vinhcn 25/09/2018
 //        loadListDataAcrylic();
         gridSelectService.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
+
+
         gridSelectService.setOnScrollListener(new AbsListView.OnScrollListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (!view.canScrollList(View.SCROLL_AXIS_VERTICAL) && scrollState == SCROLL_STATE_IDLE) {
+                    mProgressBar.setVisibility(View.VISIBLE);
                     mSerlectServicePresenter.startScroll();
                 }
 
@@ -277,6 +283,11 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     @Override
     public void dismissProgress() {
         mViewManager.dismissInprogressDialog();
+    }
+
+    @Override
+    public void disibleProgressbar() {
+        mProgressBar.setVisibility(View.GONE);
     }
 
     // Check Internet

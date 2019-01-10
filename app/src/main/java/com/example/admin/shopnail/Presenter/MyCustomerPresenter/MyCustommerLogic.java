@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.admin.shopnail.Manager.KeyManager.GET_TIME_OF_CLIENT_FROM_STAFF;
+import static com.example.admin.shopnail.Manager.KeyManager.LIMIT_CUSTOMER;
 
 public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTaskCompleteListener<ResuiltObject> {
 
@@ -45,6 +46,7 @@ public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTa
 
     @Override
     public void requestCustomerOrder(String date) {
+        setPositionPage(1);
         this.Date = date;
         new NailTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new CaseManager(mContext, KeyManager.GET_CLIENT_OF_STAFF, UrlManager.GET_CUSTOMER_INFOR, getJsonRequest().toString()));
     }
@@ -62,7 +64,7 @@ public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTa
 
     @Override
     public void openDetailCustomer(int which, List<TimeSelect> arrTimeSelect) {
-        mViewManager.setView(ViewManager.VIEW_KEY.MY_DETAIL_CUSTOMER, arrTimeSelect.get(which).getOrderID(), arrTimeSelect.get(which).getTimeName(),  getGson().toJson(clientChoosed), myCustomerView.getDateChoosed());
+        mViewManager.setView(ViewManager.VIEW_KEY.MY_DETAIL_CUSTOMER, arrTimeSelect.get(which).getOrderID(), arrTimeSelect.get(which).getTimeName(), getGson().toJson(clientChoosed), myCustomerView.getDateChoosed());
     }
 
     private JSONArray getArrayClientOrderID(GsonGetClient.SuccessBean.ClientsBean clientsBean) {
@@ -79,6 +81,8 @@ public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTa
         try {
             mJsonObject.put(KeyManager.DATE, Date);
             mJsonObject.put(KeyManager.STAFF_ID, getStaffId(mContext));
+            mJsonObject.put(KeyManager.LIMIT, LIMIT_CUSTOMER);
+            mJsonObject.put(KeyManager.PAGE, getPositionPage());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -93,13 +97,21 @@ public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTa
                 Log.d(KeyManager.VinhCNLog, s);
                 try {
                     GsonGetClient mGsonGetClient = getGson().fromJson(s, GsonGetClient.class);
-                    arrClient = mGsonGetClient.getSuccess().getClients();
-                    myCustomerView.setAdapterClients(arrClient);
+                    if (getPositionPage()==1){
+                        arrClient = mGsonGetClient.getSuccess().getClients();
+                        myCustomerView.setAdapterClients(arrClient);
+                    }else {
+                        arrClient.addAll( mGsonGetClient.getSuccess().getClients());
+                        myCustomerView.notifyChange();
+                    }
+
                     mViewManager.dismissInprogressDialog();
                 } catch (Exception e) {
                     Log.d(KeyManager.VinhCNLog, s);
-                    arrClient = new ArrayList<>();
-                    myCustomerView.setAdapterClients(arrClient);
+                    if (getPositionPage() == 1) {
+                        arrClient = new ArrayList<>();
+                        myCustomerView.setAdapterClients(arrClient);
+                    }
                 }
                 break;
             case GET_TIME_OF_CLIENT_FROM_STAFF:
@@ -123,6 +135,12 @@ public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTa
 
     @Override
     public void onTaskError(String s, String CaseRequest) {
+
+    }
+
+    public void startScroll() {
+        setPositionPage(getPositionPage() + 1);
+        new NailTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new CaseManager(mContext, KeyManager.GET_CLIENT_OF_STAFF, UrlManager.GET_CUSTOMER_INFOR, getJsonRequest().toString()));
 
     }
 }

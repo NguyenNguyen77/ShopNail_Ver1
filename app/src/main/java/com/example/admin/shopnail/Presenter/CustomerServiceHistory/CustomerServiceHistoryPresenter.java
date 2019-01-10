@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.example.admin.shopnail.Manager.KeyManager.GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY;
+import static com.example.admin.shopnail.Manager.KeyManager.LIMIT_CUSTOMER;
 
 public class CustomerServiceHistoryPresenter extends BaseMethod implements ICustomerServiceHistoryPresenter, AsyncTaskCompleteListener<ResuiltObject> {
 
@@ -83,6 +84,7 @@ public class CustomerServiceHistoryPresenter extends BaseMethod implements ICust
 
     @Override
     public void requestCustomerOrder(String date) {
+        setPositionPage(1);
         this.Date = date;
         new NailTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new CaseManager(mContext, KeyManager.GET_CLIENT_OF_STAFF, UrlManager.GET_CUSTOMER_INFOR, getJsonRequest().toString()));
     }
@@ -109,6 +111,8 @@ public class CustomerServiceHistoryPresenter extends BaseMethod implements ICust
         try {
             mJsonObject.put(KeyManager.DATE, Date);
             mJsonObject.put(KeyManager.STAFF_ID, getStaffId(mContext));
+            mJsonObject.put(KeyManager.LIMIT, LIMIT_CUSTOMER);
+            mJsonObject.put(KeyManager.PAGE, getPositionPage());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -122,12 +126,19 @@ public class CustomerServiceHistoryPresenter extends BaseMethod implements ICust
             case KeyManager.GET_CLIENT_OF_STAFF:
                 try {
                     GsonGetClient mGsonGetClient = getGson().fromJson(s, GsonGetClient.class);
-                    arrClient = mGsonGetClient.getSuccess().getClients();
-                    mCustomerServiceHistoryView.setAdapterClients(arrClient);
+                    if (getPositionPage() == 1){
+                        arrClient = mGsonGetClient.getSuccess().getClients();
+                        mCustomerServiceHistoryView.setAdapterClients(arrClient);
+                    }else {
+                        arrClient.addAll(mGsonGetClient.getSuccess().getClients());
+                        mCustomerServiceHistoryView.notifyList();
+                    }
                 } catch (Exception e) {
                     Log.d(KeyManager.VinhCNLog, s);
-                    arrClient = new ArrayList<>();
-                    mCustomerServiceHistoryView.setAdapterClients(arrClient);
+                    if (getPositionPage()==1){
+                        arrClient = new ArrayList<>();
+                        mCustomerServiceHistoryView.setAdapterClients(arrClient);
+                    }
                 }
                 break;
             case GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY:
@@ -148,5 +159,11 @@ public class CustomerServiceHistoryPresenter extends BaseMethod implements ICust
     @Override
     public void onTaskError(String s, String CaseRequest) {
 
+    }
+
+    public void startScroll() {
+        setPositionPage(getPositionPage() + 1);
+//        requestCustomerOrder(Date);
+        new NailTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new CaseManager(mContext, KeyManager.GET_CLIENT_OF_STAFF, UrlManager.GET_CUSTOMER_INFOR, getJsonRequest().toString()));
     }
 }

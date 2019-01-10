@@ -20,4 +20,6 @@ public interface ICustomerServiceHistoryView {
     void OpenDialogHistories(List<GsonProductCustomer.SuccessBean.ProductsBean> listProduct);
 
     void closeProgress();
+
+    void notifyList();
 }
