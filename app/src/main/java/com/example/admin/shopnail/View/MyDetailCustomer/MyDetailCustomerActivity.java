@@ -181,6 +181,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_go_back:
+                mViewManager.dateTemp = tvDate.getText().toString();
                 mViewManager.handleBackScreen();
                 mViewManager.finishActivity(this);
                 break;

@@ -74,7 +74,8 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
         mViewManager.setActivity(this);
         mViewManager.showInprogressDialog();
         initView();
-        myCustommerLogic.requestCustomerOrder(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
+//        myCustommerLogic.requestCustomerOrder(new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime()));
+        myCustommerLogic.requestCustomerOrder(txt_date.getText().toString());
 //        listService = getListDataAcrylic();
 //        MyCustomerAdapter myCustomerAdapter = new MyCustomerAdapter(getApplicationContext(), listService);
 //        mLvMyCustomerList.setAdapter(myCustomerAdapter);
@@ -209,7 +210,12 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
         SpannableString strSpanned = new SpannableString(strDate);
         strSpanned.setSpan(new StyleSpan(Typeface.ITALIC), 0, 10, 0);
         strSpanned.setSpan(new UnderlineSpan(), 0, 10, 0);
-        txt_date.setText(strSpanned);
+        if(mViewManager.dateTemp.equals("")){
+            txt_date.setText(strSpanned);
+        }else {
+            txt_date.setText(mViewManager.dateTemp);
+            mViewManager.dateTemp="";
+        }
     }
 
     public void showDatePickerDialog() {
@@ -234,7 +240,6 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
                 mDateSelected = mCalender.getTime();
                 mViewManager.showInprogressDialog();
                 myCustommerLogic.requestCustomerOrder(txt_date.getText().toString());
-
             }
         };
         String s = txt_date.getText() + "";

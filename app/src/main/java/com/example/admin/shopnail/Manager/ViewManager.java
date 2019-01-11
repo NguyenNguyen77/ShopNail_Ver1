@@ -47,6 +47,8 @@ public class ViewManager {
     private static ViewManager instance;
     public ProgressDialog mProgressDialog;
 
+    public String dateTemp="";
+
     public enum VIEW_KEY {
         LOGIN_SCREEN,
         MENU_FOR_STAFF,
