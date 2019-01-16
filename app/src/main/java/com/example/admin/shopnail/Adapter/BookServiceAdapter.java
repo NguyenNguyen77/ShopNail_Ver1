@@ -22,16 +22,20 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.admin.shopnail.Model.BookAppointment.BookService;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.Manager.ViewManager;
 import com.example.admin.shopnail.View.BookAppointment.BookAppointmentActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
-public class BookServiceAdapter extends ArrayAdapter<BookService> implements View.OnClickListener  {
+public class BookServiceAdapter extends ArrayAdapter<BookService> implements View.OnClickListener {
     ArrayAdapter<String> adapterCategoryStaff = null;
     ArrayAdapter<String> adapterCategoryService = null;
     ArrayList<BookService> mListusers = null;
@@ -113,7 +117,11 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         holder.lnTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(holder, v);
+                try {
+                    showTimePickerDialog(holder, v);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
         holder.edNote.setText(user.getNote());
@@ -131,7 +139,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                     holder.lnNote.setBackgroundColor(Color.TRANSPARENT);
                     holder.edNote.setTextColor(Color.BLACK);
                     holder.tvTitleNote.setTextColor(Color.BLACK);
-                }else {
+                } else {
                     holder.edNote.setTextColor(Color.WHITE);
                     holder.lnNote.setBackgroundColor(Color.parseColor("#096B09"));
                     holder.tvTitleNote.setTextColor(Color.WHITE);
@@ -200,15 +208,18 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         }
     }
 
-    private void showTimePickerDialog(final ViewHolder holder, View v) {
+    private void showTimePickerDialog(final ViewHolder holder, View v) throws ParseException {
         if (holder.tvTime.getText().toString().equals("--:--")) {
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
             mMinute = c.get(Calendar.MINUTE);
         } else {
-            String strArrtmp[] = holder.tvTime.getText().toString().split(":");
-            mHour = Integer.parseInt(strArrtmp[0]);
-            mMinute = Integer.parseInt(strArrtmp[1]);
+            SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
+            Date date = parseFormat.parse(holder.tvTime.getText().toString());
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            mHour = cal.get(Calendar.HOUR_OF_DAY);
+            mMinute = cal.get(Calendar.MINUTE);
         }
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(mView.getContext(),
@@ -225,7 +236,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                         String strTime = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);;
                         mBookAppointmentActivity.checkTimeBookOnline(staffName, holder.position, strTime, mBookAppointmentActivity.checkInputTime(strTime, holder.position));
                     }
-                }, mHour, mMinute, true);
+                }, mHour, mMinute, false);
         timePickerDialog.show();
     }
 

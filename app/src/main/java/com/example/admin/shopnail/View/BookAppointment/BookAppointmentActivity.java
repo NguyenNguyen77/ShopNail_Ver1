@@ -303,9 +303,9 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     }
 
     @Override
-    public void updateOrderTime() {
+    public void updateOrderTime() throws ParseException {
         if (currentPosition <= mBookServiceAdapter.getCount()) {
-            mBookServiceAdapter.getItem(currentPosition).setServiceTime(orderTime);
+            mBookServiceAdapter.getItem(currentPosition).setServiceTime(convert24to12(orderTime));
             mBookServiceAdapter.notifyDataSetChanged();
         }
     }
@@ -613,5 +613,12 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
             }
         }
         return true;
+    }
+
+    public String convert24to12 (String orderTime ) throws ParseException {
+        SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
+        Date date = displayFormat.parse(orderTime);
+        return parseFormat.format(date);
     }
 }

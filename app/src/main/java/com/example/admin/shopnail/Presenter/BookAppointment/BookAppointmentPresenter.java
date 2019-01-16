@@ -34,7 +34,10 @@ import org.json.JSONObject;
 
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.example.admin.shopnail.Manager.KeyManager.CHECK_TIME_BOOK_ONLINE;
 import static com.example.admin.shopnail.Manager.KeyManager.DATE;
@@ -149,8 +152,10 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
             Boolean result = getProductInfo(productName);
             json.put(PRODUC_ID, mProductID);
             json.put(PRICE, mProductPrice);
-            json.put(TIME_ORDER, serviceAdapter.getItem(pos).getServiceTime());
+            json.put(TIME_ORDER, convert12to24(serviceAdapter.getItem(pos).getServiceTime()));
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return json;
@@ -305,5 +310,12 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
             }
         }
         return true;
+    }
+
+    public String convert12to24 (String time ) throws ParseException {
+        SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
+        Date date = parseFormat.parse(time);
+        return displayFormat.format(date);
     }
 }

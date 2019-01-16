@@ -14,7 +14,7 @@ public interface IBookAppointmentView {
     public void onReqCallback (boolean result);
     public void showErrorDialog (ViewManager.ERROR_CODE errorCode);
     public void checkTimeBookOnline (String staffName, int pos, String timeOrder, boolean isSendReqCheckTime);
-    public void updateOrderTime ();
+    public void updateOrderTime () throws ParseException;
     public void updateConfigTime (String open, String close) throws ParseException;
 
     public boolean checkInputTime (String inputTime, int pos);
