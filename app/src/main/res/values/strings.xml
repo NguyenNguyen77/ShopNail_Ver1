@@ -78,7 +78,7 @@
     <string name="update_service">Update Service</string>
     <string name="cancel_service">Cancel Service</string>
     <string name="enter_your_phone">Enter your phone</string>
-    
+
 
     <string name="email_customer">Customer Email</string>
 
@@ -102,5 +102,7 @@
     <string name="close_lb">Close</string>
     <string name="order_id">Order</string>
     <string name="confirm_service_empty">The list of service is empty</string>
+
+    <string name="cancel_appointment">Cancel Appointment</string>
 
 </resources>

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.BookAppointment.BookAppointmentActivity;
+import com.example.admin.shopnail.View.CancelAppointmentOnline.CancelAppointmentOnlineActivity;
 import com.example.admin.shopnail.View.Login.MainActivity;
 import com.example.admin.shopnail.View.CustomerServiceHistory.CustomerServiceHistoryActivity;
 import com.example.admin.shopnail.View.ResetPassword.ResetPasswordActivity;
@@ -61,7 +62,8 @@ public class ViewManager {
         RESET_PASSWORD,
         MANAGE_STAFF,
         MY_CUSTOMER,
-        MY_DETAIL_CUSTOMER
+        MY_DETAIL_CUSTOMER,
+        CANCEL_APPOINTMENT
     }
     public enum ERROR_CODE {
         LOGIN_FAIL,
@@ -108,12 +110,14 @@ public class ViewManager {
             case MY_DETAIL_CUSTOMER:
                 viewMyDetailCustomerActivity();
                 break;
+            case CANCEL_APPOINTMENT:
+                viewCancelAppointmentActivity();
+                break;
             default:
                 break;
         }
 
     }
-
 
     public void setView(VIEW_KEY key, JSONArray array) {
         switch (key) {
@@ -185,6 +189,8 @@ public class ViewManager {
                 return ViewCartActivity.class;
             case RESET_PASSWORD:
                 return ResetPasswordActivity.class;
+            case CANCEL_APPOINTMENT:
+                return CancelAppointmentOnlineActivity.class;
             default:
                 break;
         }
@@ -327,7 +333,15 @@ public class ViewManager {
         activity.startActivity(intent);
         setViewKey(VIEW_KEY.MY_DETAIL_CUSTOMER);
     }
-
+    private void viewCancelAppointmentActivity() {
+        Activity activity = currentActivity;
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity.getApplicationContext(), CancelAppointmentOnlineActivity.class);
+        activity.startActivity(intent);
+        setViewKey(VIEW_KEY.CANCEL_APPOINTMENT);
+    }
     private void viewMyDetailCustomerActivity(String orderID, String Time, String JsonInfor, String date) {
         Activity activity = currentActivity;
         if (activity == null) {
@@ -359,6 +373,7 @@ public class ViewManager {
             case MENU_FOR_STAFF:
                 setView(VIEW_KEY.LOGIN_SCREEN);
                 break;
+            case CANCEL_APPOINTMENT:
             case BOOK_APPOINTMENT:
                 setView(VIEW_KEY.LOGIN_SCREEN);
                 break;

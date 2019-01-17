@@ -36,6 +36,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
     private Button btnExit;
     private Button btnLogin;
     private Button btnMakeAppointment;
+    private Button btnCancelAppointment;
     private LoginPresenter mLoginPersenter = new LoginPresenter(this, this);
     private String mUserName = "";
     private String mPassword = "";
@@ -56,7 +57,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         btnExit = (Button) findViewById(R.id.btn_exit);
         btnLogin = (Button) findViewById(R.id.btn_login_for_staff);
         btnMakeAppointment = (Button) findViewById(R.id.btn_make_appointment_online);
-
+        btnCancelAppointment = (Button) findViewById(R.id.btn_cancel_appointment_online);
         if (isInternetOn()) {
 //            Toast.makeText(getApplicationContext(),"da ket noi internet",Toast.LENGTH_LONG).show();
         } else {
@@ -65,6 +66,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         btnMakeAppointment.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         btnExit.setOnClickListener(this);
+        btnCancelAppointment.setOnClickListener(this);
         mViewManager.setActivity(this);
 //        mViewManager.checkConnection();
     }
@@ -89,6 +91,10 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
                 break;
             case R.id.btn_make_appointment_online:
                 mViewManager.setView(ViewManager.VIEW_KEY.BOOK_APPOINTMENT);
+                break;
+            case R.id.btn_cancel_appointment_online:
+//                showLoginDialog();
+                mViewManager.setView(ViewManager.VIEW_KEY.CANCEL_APPOINTMENT);
                 break;
             case R.id.btn_exit:
                 mViewManager.finishListActivity();

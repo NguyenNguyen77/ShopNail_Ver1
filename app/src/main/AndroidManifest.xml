@@ -6,8 +6,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
-
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -48,52 +46,52 @@
         <activity
             android:name=".View.MenuFoStaff.MenuForStaffActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/nailBarTheme"></activity>
+            android:theme="@style/nailBarTheme" />
         <activity
             android:name=".View.SelectService.SelectServiceActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/nailBarTheme"></activity>
+            android:theme="@style/nailBarTheme" />
         <activity
             android:name=".View.LoginCustomer.LoginForCustomerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/nailBarTheme"></activity>
+            android:theme="@style/nailBarTheme" />
         <activity
             android:name=".View.StaffInfo.StaffInformationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/nailBarTheme"></activity>
+            android:theme="@style/nailBarTheme" />
         <activity
             android:name=".View.CustomerServiceHistory.CustomerServiceHistoryActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/nailBarTheme"></activity>
+            android:theme="@style/nailBarTheme" />
         <activity
             android:name=".View.ViewCartActivity.ViewCartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/nailBarTheme"
-            android:windowSoftInputMode="adjustPan"></activity>
-
-
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".View.ResetPassword.ResetPasswordActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/nailBarTheme"></activity>
+            android:theme="@style/nailBarTheme" />
         <activity
             android:name=".View.BookAppointment.BookAppointmentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/nailBarTheme"
-            android:windowSoftInputMode="adjustPan"></activity>
-
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".View.ManageStaff.ManageStaffActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/nailBarTheme"></activity>
+            android:theme="@style/nailBarTheme" />
         <activity
             android:name=".View.MyDetailCustomer.MyDetailCustomerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/nailBarTheme"></activity>
+            android:theme="@style/nailBarTheme" />
         <activity
             android:name=".View.MyCustomer.MyCustomerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/nailBarTheme"></activity>
+            android:theme="@style/nailBarTheme" />
+        <activity android:name=".View.CancelAppointmentOnline.CancelAppointmentOnlineActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/nailBarTheme"/>
 
     </application>
 
