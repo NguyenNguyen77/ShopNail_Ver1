@@ -4,10 +4,14 @@ public class KeyManager {
 
     public static final String VinhCNLog = "VinhCNLog";
     public static final String LOGIN = "LOGIN";
+    public static final String DATA = "DATA";
+    public static final String LOGIN_OUT_SIDE = "LOGIN_OUT_SIDE";
     public static final int LIMIT_PRODUCT = 20;
     public static final String LIMIT = "limit";
     public static final String PAGE = "page";
     public static final int LIMIT_CUSTOMER = 20;
+    public static final int LIMIT_CANCEL_APPOINTMENT = 20;
+
     public static final String GET_CLIENT_OF_STAFF = "GET_CLIENT_OF_STAFF";
     public static final String GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY = "GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY";
     public static final String GET_MY_CUSTOMER = "GET_MY_CUSTOMER";
@@ -77,5 +81,6 @@ public class KeyManager {
     public static final String BASE_64 = "base64";
 
     public static final String GET_CONFIG_TIME = "GET_CONFIG_TIME";
+    public static final String GET_ORDER_BOOKING_ONLINE = "GET_ORDER_BOOKING_ONLINE";
 
 }

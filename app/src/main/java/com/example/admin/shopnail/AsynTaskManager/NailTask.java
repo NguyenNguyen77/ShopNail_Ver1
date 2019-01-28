@@ -19,10 +19,12 @@ import static com.example.admin.shopnail.Manager.KeyManager.GET_CLIENT_OF_STAFF;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_CONFIG_TIME;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_HISTORY_OF_STAFF_BY_ORDER_ID_ARRAY;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_MY_CUSTOMER;
+import static com.example.admin.shopnail.Manager.KeyManager.GET_ORDER_BOOKING_ONLINE;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_SERVICE_TYPE;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_TIME_OF_CLIENT_FROM_STAFF;
 import static com.example.admin.shopnail.Manager.KeyManager.GET_USER_BY_ID;
 import static com.example.admin.shopnail.Manager.KeyManager.LOGIN;
+import static com.example.admin.shopnail.Manager.KeyManager.LOGIN_OUT_SIDE;
 import static com.example.admin.shopnail.Manager.KeyManager.ORDER_SERVICE_BY_STAFF;
 import static com.example.admin.shopnail.Manager.KeyManager.UPDATE_EXTRA;
 import static com.example.admin.shopnail.Manager.KeyManager.UPDATE_STATUS_SERVICE;
@@ -92,6 +94,10 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
                 Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(GET_CLIENT_OF_STAFF, Resuilt);
                 break;
+            case GET_ORDER_BOOKING_ONLINE:
+                Resuilt = caseManagers[0].makePostRequestJson(caseManagers[0].getUrl(), caseManagers[0].getParamJson(), caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(GET_ORDER_BOOKING_ONLINE, Resuilt);
+                break;
             case LOGIN:
                 Resuilt = caseManagers[0].makePostRequest(caseManagers[0].getUrl(), caseManagers[0].getmBuilder(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(LOGIN, Resuilt);
@@ -115,6 +121,10 @@ public class NailTask extends AsyncTask<CaseManager, Integer, ResuiltObject> {
             case KeyManager.LOGIN_OLD_CUSTOMER:
                 Resuilt = caseManagers[0].makePostRequest(caseManagers[0].getUrl(), caseManagers[0].getmBuilder(), caseManagers[0].getToken());
                 mResuiltObject = new ResuiltObject(KeyManager.LOGIN_OLD_CUSTOMER, Resuilt);
+            break;
+            case LOGIN_OUT_SIDE:
+                Resuilt = caseManagers[0].makePostRequest(caseManagers[0].getUrl(), caseManagers[0].getmBuilder(), caseManagers[0].getToken());
+                mResuiltObject = new ResuiltObject(KeyManager.LOGIN_OUT_SIDE, Resuilt);
                 break;
             case KeyManager.GET_CATEGORY_LIST:
                 Resuilt = caseManagers[0].makeGetRequest(caseManagers[0].getUrl(), caseManagers[0].getToken());

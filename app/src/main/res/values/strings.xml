@@ -13,6 +13,7 @@
     <string name="login_sucessfull">Login Sucessfull</string>
     <string name="enter_username_pwd">Please enter Username and Password</string>
     <string name="login_failed">Username or password is not correct.</string>
+    <string name="login_outside_failed">Username is not correct.</string>
     <string name="please_wait">Please Wait...</string>
     <string name="phone_number">Phone Number</string>
     <string name="phone">Phone</string>

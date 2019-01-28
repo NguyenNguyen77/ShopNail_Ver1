@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_weight="5"
+            android:layout_weight="3"
             android:gravity="center">
 
             <ImageView
@@ -37,9 +37,9 @@
             <Button
                 android:id="@+id/btn_login_for_staff"
                 android:layout_width="250dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
+
                 android:background="@drawable/button_nail"
                 android:text="@string/login_for_staff"
                 android:textColor="@drawable/button_text" />
@@ -47,20 +47,18 @@
             <Button
                 android:id="@+id/btn_make_appointment_online"
                 android:layout_width="250dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:layout_weight="1"
                 android:background="@drawable/button_nail"
                 android:text="@string/make_appointment_online"
                 android:textColor="@drawable/button_text" />
             <Button
                 android:id="@+id/btn_cancel_appointment_online"
                 android:layout_width="250dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:layout_weight="1"
                 android:background="@drawable/button_nail"
                 android:text="@string/cancel_appointment"
                 android:textColor="@drawable/button_text" />
@@ -68,10 +66,9 @@
             <Button
                 android:id="@+id/btn_exit"
                 android:layout_width="250dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:layout_weight="1"
                 android:background="@drawable/button_nail"
                 android:text="@string/exit"
                 android:textColor="@drawable/button_text" />

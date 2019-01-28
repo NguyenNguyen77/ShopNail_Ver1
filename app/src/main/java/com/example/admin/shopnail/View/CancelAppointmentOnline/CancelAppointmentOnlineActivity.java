@@ -20,7 +20,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.admin.shopnail.Adapter.CancelAppointmentAdapter;
+import com.example.admin.shopnail.Manager.BaseMethod;
+import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.ViewManager;
+import com.example.admin.shopnail.Model.Login.GsonLoginOutSide;
+import com.example.admin.shopnail.Presenter.CancelAppointmentOnline.CancelAppointmentOnlineImp;
+import com.example.admin.shopnail.Presenter.CancelAppointmentOnline.CancelAppointmentOnlineLogic;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
 
@@ -30,10 +35,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class CancelAppointmentOnlineActivity extends Activity implements View.OnClickListener {
+public class CancelAppointmentOnlineActivity extends Activity implements View.OnClickListener, CancelAppointmentOnlineView {
 
     private ViewManager mViewManager = ViewManager.getInstance();
-    private TextView mTvDate,mTvEmpty;
+    private TextView mTvDate, mTvEmpty;
     private ListView mListAppointmentByDate;
     private ProgressBar mProgressBar;
     private Button btnBack;
@@ -42,18 +47,39 @@ public class CancelAppointmentOnlineActivity extends Activity implements View.On
     private LinearLayout mLayoutList;
     private CancelAppointmentAdapter cancelAppointmentAdapter;
     ArrayList<String> listService = new ArrayList<>();
+    BaseMethod method = new BaseMethod();
+    CancelAppointmentOnlineImp cancelAppointmentOnlineImp;
+
+
+    private CancelAppointmentOnlineImp getPresenter() {
+        if (cancelAppointmentOnlineImp == null) {
+            cancelAppointmentOnlineImp = new CancelAppointmentOnlineLogic(this, this);
+        }
+        return cancelAppointmentOnlineImp;
+    }
+
+    GsonLoginOutSide mGsonLoginOutSide;
+
+    public GsonLoginOutSide getDataLogin() {
+        if (mGsonLoginOutSide == null) {
+            mGsonLoginOutSide = method.getGson().fromJson(getIntent().getStringExtra(KeyManager.DATA), GsonLoginOutSide.class);
+        }
+        return mGsonLoginOutSide;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_cancel_appointment);
-
         initView();
+
+        getPresenter().getListBookOnline(mTvDate.getText().toString());
+
 
         listService.add("Nhuom Toc");
         listService.add("Goi Dau");
         listService.add("Duoi Toc");
-        cancelAppointmentAdapter = new CancelAppointmentAdapter(this,listService);
+        cancelAppointmentAdapter = new CancelAppointmentAdapter(this, listService);
         mListAppointmentByDate.setAdapter(cancelAppointmentAdapter);
 
         mLayoutList.setVisibility(View.VISIBLE);
@@ -98,6 +124,7 @@ public class CancelAppointmentOnlineActivity extends Activity implements View.On
                 break;
         }
     }
+
     public void getDefaultInfo() {
         mCalender = Calendar.getInstance();
         SimpleDateFormat dft = null;
@@ -109,6 +136,7 @@ public class CancelAppointmentOnlineActivity extends Activity implements View.On
         strSpanned.setSpan(new UnderlineSpan(), 0, 10, 0);
         mTvDate.setText(strSpanned);
     }
+
     @Override
     public void onBackPressed() {
         mViewManager.handleBackScreen();

@@ -6,4 +6,6 @@ public interface ILoginPresenter {
     boolean checkLogin(String idEmployee, String passWord);
 
     void sendRequestLogin(String userName, String passWord);
+
+    void requestLoginOutSide(String mUserName);
 }

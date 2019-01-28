@@ -52,6 +52,13 @@ public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTa
     }
 
 
+    public void startScroll() {
+        setPositionPage(getPositionPage() + 1);
+        new NailTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new CaseManager(mContext, KeyManager.GET_CLIENT_OF_STAFF, UrlManager.GET_CUSTOMER_INFOR, getJsonRequest().toString()));
+
+    }
+
+
     GsonGetClient.SuccessBean.ClientsBean clientChoosed;
 
     @Override
@@ -88,6 +95,8 @@ public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTa
         }
         return mJsonObject;
     }
+
+
 
     @Override
     public void onTaskCompleted(String s, String CaseRequest) {
@@ -138,9 +147,4 @@ public class MyCustommerLogic extends BaseMethod implements IMyCustomer, AsyncTa
 
     }
 
-    public void startScroll() {
-        setPositionPage(getPositionPage() + 1);
-        new NailTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new CaseManager(mContext, KeyManager.GET_CLIENT_OF_STAFF, UrlManager.GET_CUSTOMER_INFOR, getJsonRequest().toString()));
-
-    }
 }

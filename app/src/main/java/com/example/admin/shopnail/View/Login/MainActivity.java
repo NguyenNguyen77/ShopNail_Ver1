@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.MyApplication;
 import com.example.admin.shopnail.Manager.NetworkReceiver;
+import com.example.admin.shopnail.Model.Login.GsonLoginOutSide;
 import com.example.admin.shopnail.Presenter.LoginPresenter;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.NailActionBarGenerator;
@@ -41,6 +42,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
     private String mUserName = "";
     private String mPassword = "";
     private ProgressDialog mProgressDialog;
+    BaseMethod method = new BaseMethod();
     protected ViewManager mViewManager = ViewManager.getInstance();
 
     private int mTextSizeBefore = 0;
@@ -93,8 +95,8 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
                 mViewManager.setView(ViewManager.VIEW_KEY.BOOK_APPOINTMENT);
                 break;
             case R.id.btn_cancel_appointment_online:
-//                showLoginDialog();
-                mViewManager.setView(ViewManager.VIEW_KEY.CANCEL_APPOINTMENT);
+                showLoginDialogOutSide();
+//                mViewManager.setView(ViewManager.VIEW_KEY.CANCEL_APPOINTMENT);
                 break;
             case R.id.btn_exit:
                 mViewManager.finishListActivity();
@@ -105,6 +107,74 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
     }
 
     Dialog login;
+
+
+    private void showLoginDialogOutSide() {
+        ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);
+        login = new Dialog(ctw);
+        login.setContentView(R.layout.login_out_side);
+        login.setTitle(R.string.login);
+        Button btnLogin = (Button) login.findViewById(R.id.btnLogin);
+        Button btnCancel = (Button) login.findViewById(R.id.btnCancel);
+        final EditText txtUsername = (EditText) login.findViewById(R.id.txtUsername);
+        final Drawable mBackgroundColor = txtUsername.getBackground();
+
+        txtUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                txtUsername.setBackground(mBackgroundColor);
+            }
+
+            @Override
+            public void afterTextChanged(Editable text) {
+                mTextSizeAfter = text.length();
+                if (mTextSizeAfter > mTextSizeBefore) {
+                    if ((text.length() == 3) || (text.length() == 7)) {
+                        text.append('-');
+                    }
+                }
+                mTextSizeBefore = mTextSizeAfter;
+            }
+        });
+
+
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mUserName = txtUsername.getText().toString().trim();
+                // ================ Check vailidate username and password START
+                if (mUserName.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please insert user name", Toast.LENGTH_LONG).show();
+                    txtUsername.setBackgroundResource(R.drawable.bordertextview);
+                    return;
+                }
+                // ================ Check vailidate username and password END
+                if (mUserName!=null) { //Need to check more condition for Username&PWD
+                    mProgressDialog = new ProgressDialog(login.getContext());   // Show inprogress dialog: please wait
+                    mProgressDialog.setMessage(getString(R.string.please_wait));
+                    mProgressDialog.show();
+                    mLoginPersenter.requestLoginOutSide(mUserName);
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.enter_username_pwd, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login.dismiss();
+            }
+        });
+        login.show();
+    }
+
 
     private void showLoginDialog() {
         ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.Theme_AlertDialog);
@@ -196,6 +266,8 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
                 }
             }
         });
+
+
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -231,6 +303,19 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
     @Override
     public void dismissProgress() {
         mProgressDialog.cancel();
+    }
+
+    @Override
+    public void onLoginOutSideSuccess(GsonLoginOutSide mGsonLoginOutSide) {
+        mProgressDialog.cancel();
+        Toast.makeText(MainActivity.this, R.string.login_sucessfull, Toast.LENGTH_SHORT).show();
+        mViewManager.setView(ViewManager.VIEW_KEY.CANCEL_APPOINTMENT, method.getGson().toJson(mGsonLoginOutSide));
+    }
+
+    @Override
+    public void onLoginOutSideFail(String login_fail) {
+        dismissProgress();
+        Toast.makeText(MainActivity.this, R.string.login_outside_failed, Toast.LENGTH_SHORT).show();
     }
 
     @Override

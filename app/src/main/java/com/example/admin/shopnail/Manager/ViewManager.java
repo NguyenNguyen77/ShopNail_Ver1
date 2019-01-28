@@ -128,6 +128,15 @@ public class ViewManager {
 
     }
 
+    public void setView(VIEW_KEY key, String data) {
+        switch (key) {
+            case CANCEL_APPOINTMENT:
+                viewCancelAppointmentActivity(data);
+                break;
+        }
+
+    }
+
     public void setView(VIEW_KEY key, String orderID, String Time, String JsonInfor, String date) {
         switch (key) {
             case MY_DETAIL_CUSTOMER:
@@ -333,12 +342,25 @@ public class ViewManager {
         activity.startActivity(intent);
         setViewKey(VIEW_KEY.MY_DETAIL_CUSTOMER);
     }
+
     private void viewCancelAppointmentActivity() {
         Activity activity = currentActivity;
         if (activity == null) {
             return;
         }
         Intent intent = new Intent(activity.getApplicationContext(), CancelAppointmentOnlineActivity.class);
+        activity.startActivity(intent);
+        setViewKey(VIEW_KEY.CANCEL_APPOINTMENT);
+    }
+
+
+    private void viewCancelAppointmentActivity(String data) {
+        Activity activity = currentActivity;
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity.getApplicationContext(), CancelAppointmentOnlineActivity.class);
+        intent.putExtra(KeyManager.DATA, data);
         activity.startActivity(intent);
         setViewKey(VIEW_KEY.CANCEL_APPOINTMENT);
     }
