@@ -298,7 +298,10 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         String date = mTvDate.getText().toString();
         if (isSendReqCheckTime) {
             int selectStaff = mBookServiceAdapter.getItem(pos).getSelectStaff();
-            mBookAppointmentPresenter.checkTimeBookOnline(staffName, selectStaff, date, timeOrder);
+
+            String productName = mBookServiceAdapter.getItem(pos).getServiceList().get(mBookServiceAdapter.getItem(pos).getSelectService());
+            mBookAppointmentPresenter.getProductInfo(productName);
+            mBookAppointmentPresenter.checkTimeBookOnline(staffName, selectStaff, date, timeOrder, mBookAppointmentPresenter.getProductId());
         }
     }
 

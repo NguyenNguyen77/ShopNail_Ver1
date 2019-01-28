@@ -95,8 +95,8 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
     }
 
     @Override
-    public void checkTimeBookOnline(String staffName, int selectStaff, String date, String timeorder) {
-        String json = addJsonRequestCheckTimeBooking(staffName, selectStaff, date, timeorder).toString();
+    public void checkTimeBookOnline(String staffName, int selectStaff, String date, String timeorder, int productId) {
+        String json = addJsonRequestCheckTimeBooking(staffName, selectStaff, date, timeorder, productId).toString();
         Log.d("KhoaND14", "checkTimeBookOnline: Json: " + json);
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.CHECK_TIME_BOOK_ONLINE, UrlManager.BOOKING_TIME_CHECKING_URL, json));
     }
@@ -161,13 +161,14 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
         return json;
     }
 
-    JSONObject addJsonRequestCheckTimeBooking(String staffName, int selectStaff, String date, String timeorder) {
+    JSONObject addJsonRequestCheckTimeBooking(String staffName, int selectStaff, String date, String timeorder, int prouctId) {
         JSONObject mJsonObject = new JSONObject();
         try {
             int staffid = getStaffID(staffName, selectStaff);
             mJsonObject.put(STAFF_ID, staffid);
             mJsonObject.put(DATE, date);
             mJsonObject.put(TIMEWORK, timeorder);
+            mJsonObject.put(PRODUC_ID, prouctId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -284,7 +285,7 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
         return staffID;
     }
 
-    private boolean getProductInfo(String productname) {
+    public boolean getProductInfo(String productname) {
         mProductID = 0;
         mProductPrice = "";
 
@@ -317,5 +318,9 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
         SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
         Date date = parseFormat.parse(time);
         return displayFormat.format(date);
+    }
+
+    public int getProductId () {
+        return mProductID;
     }
 }
