@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
@@ -23,6 +22,7 @@ import com.example.admin.shopnail.Adapter.CancelAppointmentAdapter;
 import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.ViewManager;
+import com.example.admin.shopnail.Model.CancelAppointmentOnline.GsonOppointment;
 import com.example.admin.shopnail.Model.Login.GsonLoginOutSide;
 import com.example.admin.shopnail.Presenter.CancelAppointmentOnline.CancelAppointmentOnlineImp;
 import com.example.admin.shopnail.Presenter.CancelAppointmentOnline.CancelAppointmentOnlineLogic;
@@ -45,7 +45,6 @@ public class CancelAppointmentOnlineActivity extends Activity implements View.On
     private Calendar mCalender;
     private Date mDateSelected;
     private LinearLayout mLayoutList;
-    private CancelAppointmentAdapter cancelAppointmentAdapter;
     ArrayList<String> listService = new ArrayList<>();
     BaseMethod method = new BaseMethod();
     CancelAppointmentOnlineImp cancelAppointmentOnlineImp;
@@ -68,6 +67,34 @@ public class CancelAppointmentOnlineActivity extends Activity implements View.On
     }
 
     @Override
+    public void setAdapterList(CancelAppointmentAdapter appointmentAdapter) {
+        mListAppointmentByDate.setAdapter(appointmentAdapter);
+        mLayoutList.setVisibility(View.VISIBLE);
+        mListAppointmentByDate.setVisibility(View.VISIBLE);
+        mTvEmpty.setVisibility(View.GONE);
+        if (appointmentAdapter.getCount()==0){
+            mLayoutList.setVisibility(View.GONE);
+            mListAppointmentByDate.setVisibility(View.GONE);
+            mTvEmpty.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void showProgress() {
+        mViewManager.showInprogressDialog();
+    }
+
+    @Override
+    public void disibleProgressbar() {
+        mViewManager.dismissInprogressDialog();
+    }
+
+    @Override
+    public void showDialogConfirmCancel(GsonOppointment.SuccessBean.ServiceTypeBean.OrdersBean ordersBean) {
+        // TODO: 1/30/2019  
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_cancel_appointment);
@@ -76,15 +103,13 @@ public class CancelAppointmentOnlineActivity extends Activity implements View.On
         getPresenter().getListBookOnline(mTvDate.getText().toString());
 
 
-        listService.add("Nhuom Toc");
-        listService.add("Goi Dau");
-        listService.add("Duoi Toc");
-        cancelAppointmentAdapter = new CancelAppointmentAdapter(this, listService);
-        mListAppointmentByDate.setAdapter(cancelAppointmentAdapter);
+//        listService.add("Nhuom Toc");
+//        listService.add("Goi Dau");
+//        listService.add("Duoi Toc");
+//        cancelAppointmentAdapter = new CancelAppointmentAdapter(this, listService);
+//        mListAppointmentByDate.setAdapter(cancelAppointmentAdapter);
 
-        mLayoutList.setVisibility(View.VISIBLE);
-        mListAppointmentByDate.setVisibility(View.VISIBLE);
-        mTvEmpty.setVisibility(View.GONE);
+
 
 //        mViewManager.showInprogressDialog();
     }
@@ -194,6 +219,7 @@ public class CancelAppointmentOnlineActivity extends Activity implements View.On
                 strSpanned.setSpan(new StyleSpan(Typeface.ITALIC), 0, strSpanned.length(), 0);
                 strSpanned.setSpan(new UnderlineSpan(), 0, strSpanned.length(), 0);
                 mTvDate.setText(strSpanned);
+                getPresenter().getListBookOnline(mTvDate.getText().toString());
                 mDateSelected = mCalender.getTime();
                 mViewManager.showInprogressDialog();
 //                getPresenter().requestCustomerOrder(mTvDate.getText().toString());

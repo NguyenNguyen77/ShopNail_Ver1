@@ -98,6 +98,7 @@ public class LoginPresenter extends BaseMethod implements ILoginPresenter, Async
                 }catch (Exception e){
                     loginView.onLoginResult(false);
                 }
+                break;
             case KeyManager.LOGIN_OUT_SIDE:
                 Log.d(VinhCNLog, s);
                 try{

@@ -6,34 +6,40 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.admin.shopnail.Model.CancelAppointmentOnline.GsonOppointment;
 import com.example.admin.shopnail.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CancelAppointmentAdapter extends BaseAdapter {
 
-    public ArrayList<String> mListService;
+    List<GsonOppointment.SuccessBean.ServiceTypeBean> objects;
     LayoutInflater layoutInflater;
-   public CancelAppointmentAdapter(Context context, ArrayList<String> listService) {
-       this.mListService = listService;
-       layoutInflater = LayoutInflater.from(context);
-   }
+    Context context;
+
+    public CancelAppointmentAdapter(Context context, List<GsonOppointment.SuccessBean.ServiceTypeBean> listService) {
+        this.objects = listService;
+        this.context = context;
+        layoutInflater = LayoutInflater.from(context);
+    }
 
     @Override
     public int getCount() {
-        return mListService.size();
+        return objects.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return i;
+        return objects.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return Long.parseLong(mListService.get(i));
+        return i;
     }
 
     @Override
@@ -42,19 +48,21 @@ public class CancelAppointmentAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.item_cancel_appointment, null);
             holder = new ViewHolder();
-            holder.txtService = (TextView) convertView.findViewById(R.id.txt_service);
-            holder.btnCancel = (Button) convertView.findViewById(R.id.btn_cancel);
+            holder.tvDate = convertView.findViewById(R.id.date);
+            holder.lvService = convertView.findViewById(R.id.list_service);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-        holder.txtService.setText(mListService.get(i));
+        holder.tvDate.setText(objects.get(i).getDateOrder());
+        List<GsonOppointment.SuccessBean.ServiceTypeBean.OrdersBean> arrService = objects.get(i).getOrders();
+        CancelServiceInCanAppointmentAdapter adapter  = new CancelServiceInCanAppointmentAdapter(context, arrService);
+        holder.lvService.setAdapter(adapter);
         return convertView;
     }
 
     class ViewHolder {
-        TextView txtService;
-        Button btnCancel;
+        TextView tvDate;
+        ListView lvService;
     }
 }
