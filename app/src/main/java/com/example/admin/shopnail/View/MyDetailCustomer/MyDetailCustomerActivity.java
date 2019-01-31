@@ -59,6 +59,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
     private TextView tvOrderId;
     List<ServicesOfShop> listService;
 
+
     @Override
     public String getOrderID() {
         String orderId = getIntent().getStringExtra(ORDER_ID);
@@ -131,7 +132,7 @@ public class MyDetailCustomerActivity extends Activity implements View.OnClickLi
         tvDate.setText(getDateChoosed());
         tvName.setText(getClientChoosed().getClientName());
         tvPhone.setText(getClientChoosed().getClientPhone());
-        tvTime.setText(getTimeName());
+        tvTime.setText(method.cover24To12(getTimeName()));
         tvOrderId.setText(Integer.toString(getClientID()));
 //        tvExtra.setOnClickListener(new View.OnClickListener() {
 //            @Override

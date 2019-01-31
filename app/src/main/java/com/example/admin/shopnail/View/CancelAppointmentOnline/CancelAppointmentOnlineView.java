@@ -15,4 +15,6 @@ public interface CancelAppointmentOnlineView {
     void disibleProgressbar();
 
     void showDialogConfirmCancel(GsonOppointment.SuccessBean.ServiceTypeBean.OrdersBean ordersBean);
+
+    void hideProgress(int gone);
 }

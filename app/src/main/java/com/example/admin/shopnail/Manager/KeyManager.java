@@ -82,5 +82,6 @@ public class KeyManager {
 
     public static final String GET_CONFIG_TIME = "GET_CONFIG_TIME";
     public static final String GET_ORDER_BOOKING_ONLINE = "GET_ORDER_BOOKING_ONLINE";
+    public static final String DELETE_ORDER_APPOINTMENT_ONLINE = "DELETE_ORDER_APPOINTMENT_ONLINE";
 
 }

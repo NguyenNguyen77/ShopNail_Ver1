@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/item"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
@@ -35,12 +36,20 @@
     </LinearLayout>
 
 
-    <Button
-        android:id="@+id/btn_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_nail"
-        android:text="@string/cancel"
-        android:textColor="@drawable/button_text" />
+
+    <ImageView
+        android:id="@+id/img_trash"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_trash" />
+
+    <!--<Button-->
+        <!--android:id="@+id/btn_cancel"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/button_nail"-->
+        <!--android:text="@string/cancel"-->
+        <!--android:textColor="@drawable/button_text" />-->
 
 </LinearLayout>

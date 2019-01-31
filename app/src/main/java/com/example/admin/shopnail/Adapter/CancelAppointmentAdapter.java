@@ -1,6 +1,8 @@
 package com.example.admin.shopnail.Adapter;
 
 import android.content.Context;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,11 +56,17 @@ public class CancelAppointmentAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.tvDate.setText(objects.get(i).getDateOrder());
+        showUnderLineText(objects.get(i).getDateOrder(), holder.tvDate);
         List<GsonOppointment.SuccessBean.ServiceTypeBean.OrdersBean> arrService = objects.get(i).getOrders();
         CancelServiceInCanAppointmentAdapter adapter  = new CancelServiceInCanAppointmentAdapter(context, arrService);
         holder.lvService.setAdapter(adapter);
         return convertView;
+    }
+
+    private void showUnderLineText(String text, TextView id) {
+        SpannableString contentSpanned = new SpannableString(text);
+        contentSpanned.setSpan(new UnderlineSpan(), 0, text.length(), 0);
+        id.setText(contentSpanned);
     }
 
     class ViewHolder {

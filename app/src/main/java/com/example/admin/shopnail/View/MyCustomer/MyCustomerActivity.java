@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.admin.shopnail.Manager.BaseMethod;
 import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Manager.NetworkReceiver;
 import com.example.admin.shopnail.Model.MyCustomer.GsonClientTime;
@@ -63,6 +64,7 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
     private Calendar mCalender;
     private ProgressBar mProgressBar;
     private LinearLayout lnCustomer;
+    BaseMethod method = new BaseMethod();
 
 
     Context context;
@@ -309,7 +311,8 @@ public class MyCustomerActivity extends Activity implements MyCustomerView, View
 //        String[] animals = {"12:30", "15:30", "18:30"};
         String[] animals = new String[arr.size()];
         for (int i = 0; i < arr.size(); i++) {
-            animals[i] = arr.get(i).getTimeName();
+            animals[i] = method.cover24To12(arr.get(i).getTimeName());
+
         }
 //        String[] animals = new String[]{};
 //        for (int i = 0; i < arrTimeSet.size(); i++){

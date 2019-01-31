@@ -105,5 +105,8 @@
     <string name="confirm_service_empty">The list of service is empty</string>
 
     <string name="cancel_appointment">Cancel Appointment</string>
+    <string name="confirm_delete_appointment">Are you sure you want to cancel this service?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>
