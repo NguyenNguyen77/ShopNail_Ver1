@@ -224,31 +224,15 @@ public class CancelAppointmentOnlineActivity extends Activity implements View.On
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.action_menu_for_staff).setVisible(true);
-        menu.findItem(R.id.action_select_service).setVisible(true);
-        menu.findItem(R.id.action_my_customer).setVisible(true);
-        menu.findItem(R.id.action_manage_staff).setVisible(true);
-        menu.findItem(R.id.action_staff_info).setVisible(true);
+        menu.findItem(R.id.action_make_book_appointment_online).setVisible(true);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_menu_for_staff:
-                mViewManager.setView(ViewManager.VIEW_KEY.MENU_FOR_STAFF);
-                return true;
-            case R.id.action_select_service:
-                mViewManager.setView(ViewManager.VIEW_KEY.SELECT_SERVICE);
-                return true;
-            case R.id.action_my_customer:
-                mViewManager.setView(ViewManager.VIEW_KEY.MY_CUSTOMER);
-                return true;
-            case R.id.action_manage_staff:
-                mViewManager.setView(ViewManager.VIEW_KEY.MANAGE_STAFF);
-                return true;
-            case R.id.action_staff_info:
-                mViewManager.setView(ViewManager.VIEW_KEY.STAFF_INFO);
+            case R.id.action_make_book_appointment_online:
+                mViewManager.setView(ViewManager.VIEW_KEY.BOOK_APPOINTMENT);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

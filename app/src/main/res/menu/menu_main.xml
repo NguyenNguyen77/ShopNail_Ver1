@@ -34,6 +34,12 @@
                 android:showAsAction="never"
                 android:title="@string/staff_info"
                 android:visible="false" />
+
+            <item
+                android:id="@+id/action_make_book_appointment_online"
+                android:showAsAction="never"
+                android:title="@string/make_appointment_online"
+                android:visible="false" />
         </menu>
     </item>
 </menu>
