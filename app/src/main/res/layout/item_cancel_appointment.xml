@@ -5,17 +5,19 @@
     android:orientation="horizontal">
 
     <LinearLayout
-        android:gravity="center_horizontal"
+
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:textColor="#227b12"
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingEnd="5dp"
+            android:paddingStart="30dp"
             android:text="2019-01-30"
+            android:textColor="#227b12"
             android:textStyle="italic" />
 
         <com.example.admin.shopnail.CustomViewListExpand.NonScrollListView

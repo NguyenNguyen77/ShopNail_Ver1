@@ -65,7 +65,7 @@ public class CancelServiceInCanAppointmentAdapter extends BaseAdapter {
         }
         holder.tvName.setText(objects.get(i).getName());
         holder.tvPrice.setText("Price: " + objects.get(i).getPrice() + " $");
-        holder.tvTime.setText("Time: " + method.cover24To12(objects.get(i).getTimeOrder()));
+        holder.tvTime.setText("Order Time: " + method.cover24To12(objects.get(i).getTimeOrder()));
         holder.imgTrash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
