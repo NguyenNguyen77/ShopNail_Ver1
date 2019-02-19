@@ -245,7 +245,6 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
                     Toast.makeText(mContext, R.string.error_check_time_booking, Toast.LENGTH_LONG).show();
                 }
                 break;
-
             case GET_CONFIG_TIME:
                 try {
                     GsonGetConfigTimeResult resultGson = getGson().fromJson(s, GsonGetConfigTimeResult.class);
