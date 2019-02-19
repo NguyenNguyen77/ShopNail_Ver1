@@ -231,12 +231,17 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
             case CHECK_TIME_BOOK_ONLINE:
                 try {
                     GsonResCheckBookingTime resultGson = getGson().fromJson(s, GsonResCheckBookingTime.class);
+                    boolean status = resultGson.isStatus();
                     int resultCode = resultGson.getSuccess().getCode();
-                    if (resultCode == 200) {
+                    if (status == true && resultCode == 200) {
                         String message = resultGson.getSuccess().getMessage();
-                        mBookAppointmentView.updateOrderTime();
-                        if (!resultGson.isStatus()) {
-                            Toast.makeText(mContext, message, Toast.LENGTH_LONG).show(); //Show message when Error
+                        if (!message.equals("The time have already in system !")) {
+                            mBookAppointmentView.updateOrderTime();
+                            if (!resultGson.isStatus()) {
+                                Toast.makeText(mContext, message, Toast.LENGTH_LONG).show(); //Show message when Error
+                            }
+                        } else {
+                            Toast.makeText(mContext, R.string.error_check_time_booking, Toast.LENGTH_LONG).show();
                         }
                     } else {
                         Toast.makeText(mContext, R.string.error_check_time_booking, Toast.LENGTH_LONG).show();
