@@ -125,7 +125,6 @@
                         android:id="@+id/tv_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingRight="7dp"
                         android:text="01-03-2013"
                         android:textColor="@color/text_color"
                         android:textStyle="italic" />
@@ -133,7 +132,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="5dp"
                         android:src="@drawable/baseline_date_range_black_24" />
                 </LinearLayout>
 

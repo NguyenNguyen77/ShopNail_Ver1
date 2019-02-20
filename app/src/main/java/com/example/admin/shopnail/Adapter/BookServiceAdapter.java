@@ -107,8 +107,8 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
         });
 
 
-        holder.tvTime.setText(user.getServiceTime());
-        if (holder.tvTime.getText().equals("--:--")) {
+        holder.tvTime.setText(user.getServiceTime() + " ");
+        if (holder.tvTime.getText().equals("--:-- ")) {
             holder.tvTime.setTextColor(Color.RED);
         } else {
             holder.tvTime.setTextColor(Color.parseColor("#096B09"));
@@ -209,7 +209,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
     }
 
     private void showTimePickerDialog(final ViewHolder holder, View v) throws ParseException {
-        if (holder.tvTime.getText().toString().equals("--:--")) {
+        if (holder.tvTime.getText().toString().replace(" ", "").equals("--:--")) {
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
             mMinute = c.get(Calendar.MINUTE);
@@ -234,7 +234,11 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                         String staffName = mListusers.get(holder.position).mListStaff.get(mListusers.get(holder.position).getSelectStaff());
                         //mBookAppointmentActivity.checkTimeBookOnline(staffName, mPosition, Caption.getText().toString());
                         String strTime = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);;
-                        mBookAppointmentActivity.checkTimeBookOnline(staffName, holder.position, strTime, mBookAppointmentActivity.checkInputTime(strTime, holder.position));
+                        try {
+                            mBookAppointmentActivity.checkTimeBookOnline(staffName, holder.position, strTime, mBookAppointmentActivity.checkInputTime(strTime, holder.position));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
@@ -243,7 +247,7 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
     private void showUnderLineText(String text, TextView id) {
         SpannableString contentSpanned = new SpannableString(text);
         contentSpanned.setSpan(new UnderlineSpan(), 0, text.length(), 0);
-        id.setText(contentSpanned);
+        id.setText(contentSpanned + " ");
     }
 
     public void showConfirmDialog(final String title, String content, final int pos) {

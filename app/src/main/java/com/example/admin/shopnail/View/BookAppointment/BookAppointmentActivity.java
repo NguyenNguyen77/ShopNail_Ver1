@@ -222,7 +222,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     private void reqBookAppointment() {
         String fullName = mEtCustomerName.getText().toString().trim();
         String phone = mEtCustomerPhone.getText().toString().trim();
-        String dateOder = mTvDate.getText().toString();
+        String dateOder = mTvDate.getText().toString().replace(" ", "");
         String email = mEtCustomerEmail.getText().toString().trim();
         mBookServiceAdapter = (BookServiceAdapter) mLvSelectServiceItem.getAdapter();
         if (!checkReqTimeValid(mBookServiceAdapter)) {
@@ -295,7 +295,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         currentTime = mBookServiceAdapter.getItem(pos).getServiceTime();
         orderTime = timeOrder;
         currentPosition = pos;
-        String date = mTvDate.getText().toString();
+        String date = mTvDate.getText().toString().replace(" ", "");
         if (isSendReqCheckTime) {
             int selectStaff = mBookServiceAdapter.getItem(pos).getSelectStaff();
 
@@ -343,7 +343,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
                 }
             }
         };
-        String s = mTvDate.getText() + "";
+        String s = mTvDate.getText().toString().replace(" ", "") + "";
         String strArrtmp[] = s.split("-");
         int date = Integer.parseInt(strArrtmp[2]);
         int month = Integer.parseInt(strArrtmp[1]) - 1;
@@ -401,7 +401,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     private void showUnderLineText(String text, TextView id) {
         SpannableString contentSpanned = new SpannableString(text);
         contentSpanned.setSpan(new UnderlineSpan(), 0, text.length(), 0);
-        id.setText(contentSpanned);
+        id.setText(contentSpanned + " ");
     }
 
     public void showErrorDialog(String title, String content) {
@@ -483,7 +483,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
     }
 
     @Override
-    public boolean checkInputTime(String inputTime, int pos) {
+    public boolean checkInputTime(String inputTime, int pos) throws ParseException {
         boolean result = true;
         String strInputTimeArrtmp[] = inputTime.split(":");
         int inputHour = Integer.parseInt(strInputTimeArrtmp[0]);
@@ -498,7 +498,7 @@ public class BookAppointmentActivity extends Activity implements View.OnClickLis
         int closeMinute = Integer.parseInt(strCloseTimeArrtmp[1]);
         if ((inputHour < openHour) || (inputHour > closeHour)
                 || ((inputHour == closeHour) && (inputMinute > closeMinute))) {
-            String error = String.format(getResources().getString(R.string.error_input_time), mOpenTime, mCloseTime);
+            String error = String.format(getResources().getString(R.string.error_input_time), convert24to12(mOpenTime), convert24to12(mCloseTime));
             Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
             result = false;
         } else {

@@ -17,7 +17,7 @@ public interface IBookAppointmentView {
     public void updateOrderTime () throws ParseException;
     public void updateConfigTime (String open, String close) throws ParseException;
 
-    public boolean checkInputTime (String inputTime, int pos);
+    public boolean checkInputTime (String inputTime, int pos) throws ParseException;
     public void onBookingOnlineResult (boolean result, String msg);
     public void updateStatusButtonAddMoreServices ();
 }
