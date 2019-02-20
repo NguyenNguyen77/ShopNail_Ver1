@@ -3,6 +3,7 @@ package com.example.admin.shopnail.Adapter;
 import android.content.Context;
 import android.media.Image;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +65,9 @@ public class CancelServiceInCanAppointmentAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.tvName.setText(objects.get(i).getName());
-        holder.tvPrice.setText("Price: " + objects.get(i).getPrice() + " $");
-        holder.tvTime.setText("Order Time: " + method.cover24To12(objects.get(i).getTimeOrder()));
+//        holder.tvPrice.setText("Price: " + objects.get(i).getPrice() + " $");
+        holder.tvPrice.setText(Html.fromHtml("Price: " +"<font color=#227b12>"+ objects.get(i).getPrice() + " $"+ "</font>"));
+        holder.tvTime.setText(Html.fromHtml("Order Time: " +"<font color=#227b12>"+ method.cover24To12(objects.get(i).getTimeOrder())+ "</font>"));
         holder.imgTrash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

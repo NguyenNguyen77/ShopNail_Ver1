@@ -14,8 +14,9 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingEnd="5dp"
-            android:paddingStart="30dp"
+            android:layout_marginTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="15dp"
             android:text="2019-01-30"
             android:textColor="#227b12"
             android:textStyle="italic" />

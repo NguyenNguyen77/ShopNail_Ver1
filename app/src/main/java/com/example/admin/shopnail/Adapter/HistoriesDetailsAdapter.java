@@ -14,7 +14,9 @@ import com.example.admin.shopnail.View.MyDetailCustomer.MyDetailCustomerActivity
 
 import org.w3c.dom.Text;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class HistoriesDetailsAdapter extends BaseAdapter implements View.OnClickListener {
 
@@ -58,7 +60,7 @@ public class HistoriesDetailsAdapter extends BaseAdapter implements View.OnClick
             holder = (ViewHolder) convertView.getTag();
         }
         GsonProductCustomer.SuccessBean.ProductsBean mProductsBean = object.get(i);
-        holder.tvExtra.setText(String.valueOf(mProductsBean.getExtraMoney()) + " $");
+        holder.tvExtra.setText(NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(mProductsBean.getExtraMoney())) + " $");
         holder.tvExtra.setTag(i);
         holder.tvExtra.setOnClickListener(this);
         List<GsonProductCustomer.SuccessBean.ProductsBean.ProductBean> arrProduct = object.get(i).getProduct();
@@ -66,7 +68,7 @@ public class HistoriesDetailsAdapter extends BaseAdapter implements View.OnClick
         holder.lv.setAdapter(adapter);
         int total;
         total = Integer.parseInt( mProductsBean.getExtraMoney())+ getTotal(object.get(i).getProduct());
-        holder.tvTotalPrice.setText(total + " $");
+        holder.tvTotalPrice.setText(NumberFormat.getNumberInstance(Locale.US).format(total)+ " $");
         return convertView;
     }
 
