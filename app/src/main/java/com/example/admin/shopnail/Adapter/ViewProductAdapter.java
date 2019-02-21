@@ -16,13 +16,15 @@ import com.example.admin.shopnail.Model.ServicesOfShop;
 import com.example.admin.shopnail.Model.ViewProductPresenter.GsonProductChoosed;
 import com.example.admin.shopnail.Presenter.ViewProductPresenter.ViewProductPresenter;
 import com.example.admin.shopnail.R;
+import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
 import com.example.admin.shopnail.View.ViewCartActivity.ViewCartActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ViewProductAdapter extends BaseAdapter {
 
-    List<GsonProductChoosed> listService;
+    public static List<GsonProductChoosed> listService = new ArrayList<>();
     LayoutInflater layoutInflater;
     private ViewProductPresenter mViewProductPresenter;
 
@@ -68,11 +70,12 @@ public class ViewProductAdapter extends BaseAdapter {
         holder.imgTrash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(listService.size()==1){
-                    return;
-                }
+//                if(listService.size()==1){
+//                    return;
+//                }
                 mViewProductPresenter.minusTotalPrice(Integer.valueOf(listService.get(position).getPrice()));
                 listService.remove(position);
+                SelectServiceActivity.jsonArray.remove(position);
                 Log.d("NguyenNK2", "remove item: " + position);
                 ViewProductAdapter.this.notifyDataSetChanged();
             }
