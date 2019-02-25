@@ -136,17 +136,25 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
             if (isAddArray) {
                 boolean isHave = false;
                 if (checked) {
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        if (object.getInt(TYPE) == typeService && object.getInt(ORDER) == arrCheckBox.get(position).getOrder()) {
-                            jsonArray.remove(i);
-                            JSONObject objects = new JSONObject();
-                            objects.put(TYPE, arrCheckBox.get(position).getTypeService());
-                            objects.put(ORDER, arrCheckBox.get(position).getOrder());
-                            objects.put(VALUE, arrCheckBox.get(position).getValueService());
-                            jsonArray.put(objects);
-                            isHave = true;
+                    if (jsonArray.length() > 0){
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            if (object.getInt(TYPE) == typeService && object.getInt(ORDER) == arrCheckBox.get(position).getOrder()) {
+                                jsonArray.remove(i);
+                                JSONObject objects = new JSONObject();
+                                objects.put(TYPE, arrCheckBox.get(position).getTypeService());
+                                objects.put(ORDER, arrCheckBox.get(position).getOrder());
+                                objects.put(VALUE, arrCheckBox.get(position).getValueService());
+                                jsonArray.put(objects);
+                                isHave = true;
+                            }
                         }
+                    }else {
+                        JSONObject objects = new JSONObject();
+                        objects.put(TYPE, arrCheckBox.get(position).getTypeService());
+                        objects.put(ORDER, arrCheckBox.get(position).getOrder());
+                        objects.put(VALUE, arrCheckBox.get(position).getValueService());
+                        jsonArray.put(objects);
                     }
                     if (!isHave) {
                         JSONObject objects = new JSONObject();

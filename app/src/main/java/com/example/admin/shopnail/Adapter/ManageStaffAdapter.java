@@ -107,7 +107,8 @@ public class ManageStaffAdapter extends BaseAdapter {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
                 if (holder.checkService.isChecked()) {
-                    objects.get(position).setValueService(arrServiceType.get(i).getId());
+                    int IdServiceType = arrServiceType.get(i).getId();
+                    objects.get(position).setValueService(IdServiceType);
                 } else {
                     objects.get(position).setValueService(0);
                 }

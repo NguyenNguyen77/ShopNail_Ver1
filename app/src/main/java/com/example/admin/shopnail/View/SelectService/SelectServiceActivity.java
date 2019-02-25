@@ -46,7 +46,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     //    ArrayAdapter<String> adapterCategory;
     SelectServiceAdapter selectServiceAdapter = null;
     List<GsonProductsByCategory.SuccessBean.DataBean> mList = null;
-    JSONArray jsonArray = new JSONArray();
+    public static JSONArray jsonArray = new JSONArray();
 //    String[] paths = {"Acrylic", "Natural Nails", "Waxing & Facial"};
 
 
@@ -171,8 +171,8 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_view_cart:
-                if(jsonArray.length() <= 0){
-                    Toast.makeText(getApplicationContext(),"Please choose service before view cart",Toast.LENGTH_SHORT).show();
+                if (jsonArray.length() <= 0) {
+                    Toast.makeText(getApplicationContext(), "Please choose service before view cart", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 mViewManager.setView(ViewManager.VIEW_KEY.VIEW_CART, jsonArray);
