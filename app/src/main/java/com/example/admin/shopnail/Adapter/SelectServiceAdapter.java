@@ -86,6 +86,7 @@ public class SelectServiceAdapter extends BaseAdapter implements View.OnClickLis
         if (itemService.getIs_hot()!=null)
         mHolder.imgHot.setVisibility(itemService.getIs_hot().equals("1") ? View.VISIBLE : View.GONE);
         mHolder.cbItems.setTag(position);
+        mHolder.cbItems.setChecked(false);
         beforeCheck(mJSONArray, mHolder.cbItems, itemService);
         mHolder.cbItems.setOnClickListener(new View.OnClickListener() {
             @Override

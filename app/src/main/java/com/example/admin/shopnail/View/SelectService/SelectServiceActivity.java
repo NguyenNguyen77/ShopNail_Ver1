@@ -46,15 +46,17 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     //    ArrayAdapter<String> adapterCategory;
     SelectServiceAdapter selectServiceAdapter = null;
     List<GsonProductsByCategory.SuccessBean.DataBean> mList = null;
-    public static JSONArray jsonArray = new JSONArray();
+    public static JSONArray jsonArray;
 //    String[] paths = {"Acrylic", "Natural Nails", "Waxing & Facial"};
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_for_select_service);
-
+        jsonArray = new JSONArray();
         new NailActionBarGenerator().generate(this,
                 NailActionBarGenerator.BarType.SELECT_CUSTOMER_SERVICE);
 
@@ -156,6 +158,9 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
     @Override
     protected void onResume() {
         mViewManager.setActivity(this);
+        if (selectServiceAdapter!=null){
+            selectServiceAdapter.notifyDataSetChanged();
+        }
         super.onResume();
     }
 
@@ -242,6 +247,7 @@ public class SelectServiceActivity extends Activity implements ISelectServiceVie
 
     @Override
     public void setProductsByCategoryAdapter(SelectServiceAdapter selectServiceAdapter) {
+        this.selectServiceAdapter = selectServiceAdapter;
         gridSelectService.setAdapter(selectServiceAdapter);
 
     }

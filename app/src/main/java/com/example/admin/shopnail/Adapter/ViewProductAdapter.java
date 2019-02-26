@@ -12,12 +12,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.admin.shopnail.Manager.KeyManager;
 import com.example.admin.shopnail.Model.ServicesOfShop;
 import com.example.admin.shopnail.Model.ViewProductPresenter.GsonProductChoosed;
 import com.example.admin.shopnail.Presenter.ViewProductPresenter.ViewProductPresenter;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.SelectService.SelectServiceActivity;
 import com.example.admin.shopnail.View.ViewCartActivity.ViewCartActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +32,7 @@ public class ViewProductAdapter extends BaseAdapter {
     LayoutInflater layoutInflater;
     private ViewProductPresenter mViewProductPresenter;
 
-    public ViewProductAdapter(Context context,  List<GsonProductChoosed> listService, ViewProductPresenter persenter) {
+    public ViewProductAdapter(Context context, List<GsonProductChoosed> listService, ViewProductPresenter persenter) {
         this.listService = listService;
         layoutInflater = LayoutInflater.from(context);
         mViewProductPresenter = persenter;
@@ -73,9 +77,22 @@ public class ViewProductAdapter extends BaseAdapter {
 //                if(listService.size()==1){
 //                    return;
 //                }
+
+
+                for (int i = 0; i < SelectServiceActivity.jsonArray.length(); i++) {
+                    try {
+                        JSONObject object = SelectServiceActivity.jsonArray.getJSONObject(i);
+                        if (object.getInt(KeyManager.PRODUC_ID) == listService.get(position).getProductId()) {
+                            SelectServiceActivity.jsonArray.remove(i);
+                            break;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 mViewProductPresenter.minusTotalPrice(Integer.valueOf(listService.get(position).getPrice()));
                 listService.remove(position);
-                SelectServiceActivity.jsonArray.remove(position);
                 Log.d("NguyenNK2", "remove item: " + position);
                 ViewProductAdapter.this.notifyDataSetChanged();
             }

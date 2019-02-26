@@ -88,7 +88,6 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
         ServicesOfShop Gel_Manicure_French_Tip = new ServicesOfShop("zzzzzzzzzzzzz", 35, "http//...");
         ServicesOfShop Spa_Pedicure = new ServicesOfShop("ooooooooooooooooooo", 22, "http//...");
         ServicesOfShop Spa_Pedicure_Gel_Polish = new ServicesOfShop("llllllllllllllll", 10, "http//...");
-
         listService.add(Manicure);
         listService.add(Gel_Manicure);
         listService.add(Gel_Manicure_French_Tip);
@@ -135,6 +134,8 @@ public class SelectServicePresenter extends BaseMethod implements ISelectService
         Uri.Builder builder = new Uri.Builder();
         return builder;
     }
+
+
 
 
     @Override
