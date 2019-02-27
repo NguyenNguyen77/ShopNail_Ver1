@@ -83,38 +83,37 @@ public class ManageStaffAdapter extends BaseAdapter {
         holder.checkWax.setChecked(objects.get(position).getValueWax() == 1 ? true : false);
         int valueService = objects.get(position).getValueService();
         Log.d(KeyManager.VinhCNLog, String.valueOf(valueService));
-        holder.checkService.setChecked(valueService != 0 ? true : false);
+
+//        holder.checkService.setChecked(valueService != 0 ? true : false);
+
         if (valueService != 0 && valueService == 2) {
             holder.spnService.setSelection(valueService - 1);
         } else {
             holder.spnService.setSelection(0);
         }
-        holder.checkService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (holder.checkService.isChecked()) {
-                    int positionSpn = holder.spnService.getSelectedItemPosition();
-                    int idSerivce = arrServiceType.get(positionSpn).getId();
-                    objects.get(position).setValueService(idSerivce);
-                } else {
-                    objects.get(position).setValueService(0);
-                }
-                ((ManageStaffActivity) context).AddOrRemoveItemsArray(holder.checkService.isChecked(), position, objects.get(position).getTypeService());
-            }
-        });
+//        holder.checkService.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (holder.checkService.isChecked()) {
+//                    int positionSpn = holder.spnService.getSelectedItemPosition();
+//                    int idSerivce = arrServiceType.get(positionSpn).getId();
+//                    objects.get(position).setValueService(idSerivce);
+//                } else {
+//                    objects.get(position).setValueService(0);
+//                }
+//                ((ManageStaffActivity) context).AddOrRemoveItemsArray(holder.checkService.isChecked(), position, objects.get(position).getTypeService());
+//            }
+//        });
 
         holder.spnService.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
-                if (holder.checkService.isChecked()) {
-                    int IdServiceType = arrServiceType.get(i).getId();
-                    objects.get(position).setValueService(IdServiceType);
-                } else {
-                    objects.get(position).setValueService(0);
-                }
-//                if (enableSelectSpinner) {
-                    ((ManageStaffActivity) context).ChangeServiceType(holder.checkService.isChecked(), position, objects.get(position).getTypeService());
+//                if (holder.checkService.isChecked()) {
+                    objects.get(position).setValueService(arrServiceType.get(i).getId());
+//                } else {
+//                    objects.get(position).setValueService(0);
 //                }
+                    ((ManageStaffActivity) context).ChangeServiceType(position, objects.get(position).getTypeService());
             }
 
             @Override

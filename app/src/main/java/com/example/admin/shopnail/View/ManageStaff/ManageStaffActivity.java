@@ -144,8 +144,8 @@ public class ManageStaffActivity extends Activity implements View.OnClickListene
     }
 
     @Override
-    public void ChangeServiceType(boolean checked, int position, int typeService) {
-        managerStaffLogic.changeService(checked, position, typeService);
+    public void ChangeServiceType( int position, int typeService) {
+        managerStaffLogic.changeService(position, typeService);
     }
 
     @Override

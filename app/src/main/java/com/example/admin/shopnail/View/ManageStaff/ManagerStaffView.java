@@ -15,7 +15,7 @@ public interface ManagerStaffView {
 
     void AddOrRemoveItemsArray(boolean isChecked, int position, int type);
 
-    void ChangeServiceType(boolean checked, int position, int typeService);
+    void ChangeServiceType(int position, int typeService);
 
     ListView getListView();
 }

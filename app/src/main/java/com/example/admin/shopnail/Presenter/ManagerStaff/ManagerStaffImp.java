@@ -12,6 +12,6 @@ public interface ManagerStaffImp {
 
     void putJsonArray(boolean isChecked, int position, int type);
 
-    void changeService(boolean checked, int position, int typeService);
+    void changeService(int position, int typeService);
 
 }

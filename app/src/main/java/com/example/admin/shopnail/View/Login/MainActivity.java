@@ -131,13 +131,13 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
 
             @Override
             public void afterTextChanged(Editable text) {
-                mTextSizeAfter = text.length();
-                if (mTextSizeAfter > mTextSizeBefore) {
-                    if ((text.length() == 3) || (text.length() == 7)) {
-                        text.append('-');
-                    }
-                }
-                mTextSizeBefore = mTextSizeAfter;
+//                mTextSizeAfter = text.length();
+//                if (mTextSizeAfter > mTextSizeBefore) {
+//                    if ((text.length() == 3) || (text.length() == 7)) {
+//                        text.append('-');
+//                    }
+//                }
+//                mTextSizeBefore = mTextSizeAfter;
             }
         });
 

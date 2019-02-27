@@ -128,47 +128,46 @@ public class ManagerStaffLogic extends BaseMethod implements ManagerStaffImp, As
     boolean isAddArray = false;
 
     @Override
-    public void changeService(boolean checked, int position, int typeService) {
+    public void changeService(int position, int typeService) {
         try {
             if (countModify < (arrCheckBox.size() * 2)) {
                 countModify++;
             }
             if (isAddArray) {
                 boolean isHave = false;
-                if (checked) {
-                    if (jsonArray.length() > 0){
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(i);
-                            if (object.getInt(TYPE) == typeService && object.getInt(ORDER) == arrCheckBox.get(position).getOrder()) {
-                                jsonArray.remove(i);
-                                JSONObject objects = new JSONObject();
-                                objects.put(TYPE, arrCheckBox.get(position).getTypeService());
-                                objects.put(ORDER, arrCheckBox.get(position).getOrder());
-                                objects.put(VALUE, arrCheckBox.get(position).getValueService());
-                                jsonArray.put(objects);
-                                isHave = true;
-                            }
+                if (jsonArray.length() > 0) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        if (object.getInt(TYPE) == typeService && object.getInt(ORDER) == arrCheckBox.get(position).getOrder()) {
+                            jsonArray.remove(i);
+                            JSONObject objects = new JSONObject();
+                            objects.put(TYPE, arrCheckBox.get(position).getTypeService());
+                            objects.put(ORDER, arrCheckBox.get(position).getOrder());
+                            objects.put(VALUE, arrCheckBox.get(position).getValueService());
+                            jsonArray.put(objects);
+                            isHave = true;
                         }
-                    }else {
-                        JSONObject objects = new JSONObject();
-                        objects.put(TYPE, arrCheckBox.get(position).getTypeService());
-                        objects.put(ORDER, arrCheckBox.get(position).getOrder());
-                        objects.put(VALUE, arrCheckBox.get(position).getValueService());
-                        jsonArray.put(objects);
                     }
-                    if (!isHave) {
-                        JSONObject objects = new JSONObject();
-                        objects.put(TYPE, arrCheckBox.get(position).getTypeService());
-                        objects.put(ORDER, arrCheckBox.get(position).getOrder());
-                        objects.put(VALUE, arrCheckBox.get(position).getValueService());
-                        jsonArray.put(objects);
-                    }
+                } else {
+                    isHave = true;
+                    JSONObject objects = new JSONObject();
+                    objects.put(TYPE, arrCheckBox.get(position).getTypeService());
+                    objects.put(ORDER, arrCheckBox.get(position).getOrder());
+                    objects.put(VALUE, arrCheckBox.get(position).getValueService());
+                    jsonArray.put(objects);
+                }
+                if (!isHave) {
+                    JSONObject objects = new JSONObject();
+                    objects.put(TYPE, arrCheckBox.get(position).getTypeService());
+                    objects.put(ORDER, arrCheckBox.get(position).getOrder());
+                    objects.put(VALUE, arrCheckBox.get(position).getValueService());
+                    jsonArray.put(objects);
                 }
                 Log.d(KeyManager.VinhCNLog, jsonArray.toString());
             } else {
                 Log.d(KeyManager.VinhCNLog, "Check");
             }
-            if (countModify==(arrCheckBox.size() * 2)){
+            if (countModify == (arrCheckBox.size() * 2)) {
                 isAddArray = true;
             }
 
