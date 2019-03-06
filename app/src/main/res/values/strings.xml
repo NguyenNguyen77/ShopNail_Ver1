@@ -16,6 +16,7 @@
     <string name="login_outside_failed">Username is not correct.</string>
     <string name="please_wait">Please Wait...</string>
     <string name="phone_number">Phone Number</string>
+    <string name="phone_or_email">Phone or email</string>
     <string name="phone">Phone</string>
     <string name="menu_for_staff">Menu</string>
     <string name="select_service">Services</string>

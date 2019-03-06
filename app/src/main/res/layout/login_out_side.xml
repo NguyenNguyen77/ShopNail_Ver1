@@ -11,12 +11,11 @@
 <!--    android:inputType="phone"
     android:maxLength="12"-->
     <EditText
-        android:text="222-333-6666"
         android:id="@+id/txtUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
-        android:hint="@string/phone_number">
+        android:hint="@string/phone_or_email">
         <requestFocus></requestFocus>
     </EditText>
 
