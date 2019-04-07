@@ -71,6 +71,7 @@ public class SelectServiceAdapter extends BaseAdapter implements View.OnClickLis
             mHolder.priceService = (TextView) convertView.findViewById(R.id.txtServicePrice);
             mHolder.imgNew = (ImageView) convertView.findViewById(R.id.image_new);
             mHolder.imgHot = (ImageView) convertView.findViewById(R.id.image_hot);
+            mHolder.up_to = (TextView) convertView.findViewById(R.id.txtServicePriceUpto);
             mHolder.cbItems = convertView.findViewById(R.id.itemCheckBox);
             convertView.setTag(mHolder);
         } else {
@@ -79,8 +80,14 @@ public class SelectServiceAdapter extends BaseAdapter implements View.OnClickLis
         final GsonProductsByCategory.SuccessBean.DataBean itemService = this.listService.get(position);
         mHolder.nameService.setText(itemService.getName());
         mHolder.nameService.setTag(position);
-        mHolder.priceService.setText(itemService.getPrice() + " $");
+        mHolder.priceService.setText(itemService.getPrice() + "$");
         mHolder.priceService.setTag(position);
+        if(itemService.getUp_to()!= null){
+            mHolder.up_to.setVisibility(View.VISIBLE);
+        }else {
+            mHolder.up_to.setVisibility(View.GONE);
+        }
+
         if (itemService.getIs_new()!=null)
         mHolder.imgNew.setVisibility(itemService.getIs_new().equals("1") ? View.VISIBLE : View.GONE);
         if (itemService.getIs_hot()!=null)
@@ -134,5 +141,6 @@ public class SelectServiceAdapter extends BaseAdapter implements View.OnClickLis
         TextView nameService;
         TextView priceService;
         CheckBox cbItems;
+        TextView up_to;
     }
 }

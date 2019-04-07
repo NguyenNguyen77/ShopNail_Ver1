@@ -78,6 +78,15 @@ public class GsonProductsByCategory {
             private String is_hot;
             private String created_at;
             private String updated_at;
+            private String up_to;
+
+            public void setUp_to(String up_to) {
+                this.up_to = up_to;
+            }
+
+            public String getUp_to() {
+                return up_to;
+            }
 
             public int getId() {
                 return id;

@@ -106,8 +106,11 @@
     <string name="confirm_service_empty">The list of service is empty</string>
 
     <string name="cancel_appointment">Cancel appointment online</string>
+    <string name="order_management_online">Order Management Online</string>
     <string name="confirm_delete_appointment">Are you sure you want to cancel this service?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+
+    <string name="management_point">Management Point</string>
 
 </resources>

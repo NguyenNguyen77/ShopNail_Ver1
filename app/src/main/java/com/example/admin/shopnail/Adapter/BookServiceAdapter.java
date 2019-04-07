@@ -77,7 +77,6 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
             holder = (ViewHolder) convertView.getTag();
         }
 
-
         holder.spinnerStaff.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -148,10 +147,17 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
             }
         });
 
+        final ArrayList<String> mListStaff = new ArrayList<>();
+        mListStaff.add("Select Staff");
+        mListStaff.addAll(user.mListStaff);
+
         adapterCategoryStaff = new ArrayAdapter<String>(convertView.getContext(),
-                android.R.layout.simple_spinner_item, user.mListStaff);
+                android.R.layout.simple_spinner_item, mListStaff);
         adapterCategoryStaff.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.spinnerStaff.setAdapter(adapterCategoryStaff);
+//        if(user.mListStaff.get(0).equals("Select Staff")){
+//            mListStaff.remove("Select Staff");
+//        }
         if (user.getSelectStaff() <= adapterCategoryStaff.getCount()) {
             holder.spinnerStaff.setSelection(user.getSelectStaff());
         }
