@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
         btnExit = (Button) findViewById(R.id.btn_exit);
         btnLogin = (Button) findViewById(R.id.btn_login_for_staff);
         btnMakeAppointment = (Button) findViewById(R.id.btn_make_appointment_online);
-        btnCancelAppointment = (Button) findViewById(R.id.btn_cancel_appointment_online);
+        btnCancelAppointment = (Button) findViewById(R.id.btn_manager_order);
         if (isInternetOn()) {
 //            Toast.makeText(getApplicationContext(),"da ket noi internet",Toast.LENGTH_LONG).show();
         } else {
@@ -94,9 +94,9 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
             case R.id.btn_make_appointment_online:
                 mViewManager.setView(ViewManager.VIEW_KEY.BOOK_APPOINTMENT);
                 break;
-            case R.id.btn_cancel_appointment_online:
-                showLoginDialogOutSide();
-//                mViewManager.setView(ViewManager.VIEW_KEY.CANCEL_APPOINTMENT);
+            case R.id.btn_manager_order:
+//                showLoginDialogOutSide();
+                mViewManager.setView(ViewManager.VIEW_KEY.ORDER_MANAGEMENT_ONLINE);
                 break;
             case R.id.btn_exit:
                 mViewManager.finishListActivity();
@@ -309,7 +309,8 @@ public class MainActivity extends Activity implements View.OnClickListener, ILog
     public void onLoginOutSideSuccess(GsonLoginOutSide mGsonLoginOutSide) {
         mProgressDialog.cancel();
         Toast.makeText(MainActivity.this, R.string.login_sucessfull, Toast.LENGTH_SHORT).show();
-        mViewManager.setView(ViewManager.VIEW_KEY.CANCEL_APPOINTMENT, method.getGson().toJson(mGsonLoginOutSide));
+        mViewManager.setView(ViewManager.VIEW_KEY.ORDER_MANAGEMENT_ONLINE, method.getGson().toJson(mGsonLoginOutSide));
+        mViewManager.setView(ViewManager.VIEW_KEY.ORDER_MANAGEMENT_ONLINE);
     }
 
     @Override

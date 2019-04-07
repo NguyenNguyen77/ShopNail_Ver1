@@ -19,6 +19,7 @@ import com.example.admin.shopnail.View.BookAppointment.BookAppointmentActivity;
 import com.example.admin.shopnail.View.CancelAppointmentOnline.CancelAppointmentOnlineActivity;
 import com.example.admin.shopnail.View.Login.MainActivity;
 import com.example.admin.shopnail.View.CustomerServiceHistory.CustomerServiceHistoryActivity;
+import com.example.admin.shopnail.View.OrderManagermentOnline.OrderManagementOnlineActivity;
 import com.example.admin.shopnail.View.ResetPassword.ResetPasswordActivity;
 import com.example.admin.shopnail.View.ManageStaff.ManageStaffActivity;
 import com.example.admin.shopnail.View.MenuFoStaff.MenuForStaffActivity;
@@ -63,7 +64,8 @@ public class ViewManager {
         MANAGE_STAFF,
         MY_CUSTOMER,
         MY_DETAIL_CUSTOMER,
-        CANCEL_APPOINTMENT
+        CANCEL_APPOINTMENT,
+        ORDER_MANAGEMENT_ONLINE
     }
     public enum ERROR_CODE {
         LOGIN_FAIL,
@@ -113,6 +115,9 @@ public class ViewManager {
             case CANCEL_APPOINTMENT:
                 viewCancelAppointmentActivity();
                 break;
+            case ORDER_MANAGEMENT_ONLINE:
+                viewOrderManagementActivity();
+                break;
             default:
                 break;
         }
@@ -132,6 +137,9 @@ public class ViewManager {
         switch (key) {
             case CANCEL_APPOINTMENT:
                 viewCancelAppointmentActivity(data);
+                break;
+            case ORDER_MANAGEMENT_ONLINE:
+                viewOrderManagementActivity();
                 break;
         }
 
@@ -353,6 +361,15 @@ public class ViewManager {
         setViewKey(VIEW_KEY.CANCEL_APPOINTMENT);
     }
 
+    private void viewOrderManagementActivity() {
+        Activity activity = currentActivity;
+        if (activity == null) {
+            return;
+        }
+        Intent intent = new Intent(activity.getApplicationContext(), OrderManagementOnlineActivity.class);
+        activity.startActivity(intent);
+        setViewKey(VIEW_KEY.ORDER_MANAGEMENT_ONLINE);
+    }
 
     private void viewCancelAppointmentActivity(String data) {
         Activity activity = currentActivity;

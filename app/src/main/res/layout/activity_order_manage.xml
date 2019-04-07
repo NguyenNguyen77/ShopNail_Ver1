@@ -35,43 +35,34 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btn_login_for_staff"
+                android:id="@+id/btn_cancel_booking"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
 
                 android:background="@drawable/button_nail"
-                android:text="@string/login_for_staff"
+                android:text="@string/cancel_appointment"
                 android:textColor="@drawable/button_text" />
 
             <Button
-                android:id="@+id/btn_make_appointment_online"
+                android:id="@+id/btn_manager_point"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/button_nail"
-                android:text="@string/make_appointment_online"
+                android:text="@string/management_point"
                 android:textColor="@drawable/button_text" />
 
+
             <Button
-                android:id="@+id/btn_manager_order"
+                android:id="@+id/btn_back"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/button_nail"
-                android:text="@string/order_management_online"
-                android:textColor="@drawable/button_text" />
-
-            <Button
-                android:id="@+id/btn_exit"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/button_nail"
-                android:text="@string/exit"
+                android:text="@string/back"
                 android:textColor="@drawable/button_text" />
         </LinearLayout>
     </LinearLayout>

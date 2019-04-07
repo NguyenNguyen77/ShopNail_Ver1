@@ -92,7 +92,9 @@
         <activity android:name=".View.CancelAppointmentOnline.CancelAppointmentOnlineActivity"
             android:screenOrientation="portrait"
             android:theme="@style/nailBarTheme"/>
-
+        <activity android:name=".View.OrderManagermentOnline.OrderManagementOnlineActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/nailBarTheme"/>
     </application>
 
 </manifest>
