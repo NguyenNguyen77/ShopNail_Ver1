@@ -149,8 +149,9 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
 
         final ArrayList<String> mListStaff = new ArrayList<>();
         mListStaff.add("Select Staff");
-        mListStaff.addAll(user.mListStaff);
 
+//        user.mListStaff.add("Select Staff");
+        mListStaff.addAll(user.mListStaff);
         adapterCategoryStaff = new ArrayAdapter<String>(convertView.getContext(),
                 android.R.layout.simple_spinner_item, mListStaff);
         adapterCategoryStaff.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -237,9 +238,10 @@ public class BookServiceAdapter extends ArrayAdapter<BookService> implements Vie
                         //showUnderLineText(hourOfDay + ":" + minute, holder.tvTime);
                         //final TextView Caption = (TextView) holder.tvTime;
                         //mListusers.get(mPosition).setServiceTime(Caption.getText().toString());
+                        mListusers.get(holder.position).mListStaff.add(0,"Select Staff");
                         String staffName = mListusers.get(holder.position).mListStaff.get(mListusers.get(holder.position).getSelectStaff());
                         //mBookAppointmentActivity.checkTimeBookOnline(staffName, mPosition, Caption.getText().toString());
-                        String strTime = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);;
+                        String strTime = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);
                         try {
                             mBookAppointmentActivity.checkTimeBookOnline(staffName, holder.position, strTime, mBookAppointmentActivity.checkInputTime(strTime, holder.position));
                         } catch (ParseException e) {

@@ -412,7 +412,6 @@ public class ViewManager {
             case MENU_FOR_STAFF:
                 setView(VIEW_KEY.LOGIN_SCREEN);
                 break;
-            case CANCEL_APPOINTMENT:
             case BOOK_APPOINTMENT:
                 setView(VIEW_KEY.LOGIN_SCREEN);
                 break;
@@ -421,6 +420,13 @@ public class ViewManager {
                 break;
             case MY_DETAIL_CUSTOMER:
                 setView(VIEW_KEY.MY_CUSTOMER);
+                break;
+            case ORDER_MANAGEMENT_ONLINE:
+                setView(VIEW_KEY.LOGIN_SCREEN);
+                break;
+            case CANCEL_APPOINTMENT:
+                setView(VIEW_KEY.ORDER_MANAGEMENT_ONLINE);
+                break;
             default:
                 break;
         }

@@ -28,6 +28,7 @@ public class NailActionBarGenerator {
             case BOOK_APPOINTMENT:
             case CANCEL_APPOINTMENT:
             case MY_CUSTOMER:
+            case ORDER_MANAGEMENT_ONLINE:
                 actionBarBuilder = new NailBuilder(activity, type);
                 break;
             default:
@@ -54,5 +55,6 @@ public class NailActionBarGenerator {
         MY_CUSTOMER,
         BOOK_APPOINTMENT,
         CANCEL_APPOINTMENT,
+        ORDER_MANAGEMENT_ONLINE,
     }
 }

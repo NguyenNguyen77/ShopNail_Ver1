@@ -22,6 +22,7 @@ import com.example.admin.shopnail.Presenter.LoginPresenter;
 import com.example.admin.shopnail.R;
 import com.example.admin.shopnail.View.Login.ILoginView;
 import com.example.admin.shopnail.View.Login.MainActivity;
+import com.example.admin.shopnail.View.NailActionBarGenerator;
 
 public class OrderManagementOnlineActivity extends Activity implements View.OnClickListener,ILoginView, NetworkReceiver.ConnectivityReceiverListener {
 
@@ -38,16 +39,22 @@ public class OrderManagementOnlineActivity extends Activity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_manage);
 
+        initView();
+        mViewManager.setActivity(this);
+        //Toast.makeText(getApplicationContext(), "activity_order_manage", Toast.LENGTH_LONG).show();
+    }
+    private void initView() {
+        new NailActionBarGenerator().generate(this,
+                NailActionBarGenerator.BarType.ORDER_MANAGEMENT_ONLINE);
+
         btn_cancel_booking = findViewById(R.id.btn_cancel_booking);
         btn_manager_point = findViewById(R.id.btn_manager_point);
         btn_back = findViewById(R.id.btn_back);
 
         btn_cancel_booking.setOnClickListener(this);
         btn_manager_point.setOnClickListener(this);
-
-        //Toast.makeText(getApplicationContext(), "activity_order_manage", Toast.LENGTH_LONG).show();
+        btn_back.setOnClickListener(this);
     }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -56,8 +63,11 @@ public class OrderManagementOnlineActivity extends Activity implements View.OnCl
                 break;
             case R.id.btn_manager_point:
 //                showLoginDialog();
+                Toast.makeText(this,"Update later",Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.btn_back:
+                mViewManager.handleBackScreen();
                 mViewManager.finishListActivity();
                 break;
             default:
@@ -66,6 +76,12 @@ public class OrderManagementOnlineActivity extends Activity implements View.OnCl
 
     }
 
+
+    @Override
+    public void onBackPressed() {
+        mViewManager.handleBackScreen();
+        mViewManager.finishListActivity();
+    }
     Dialog login;
 
     private void showLoginDialogOutSide () {
@@ -163,17 +179,6 @@ public class OrderManagementOnlineActivity extends Activity implements View.OnCl
     public void onLoginOutSideFail(String login_fail) {
         dismissProgress();
         Toast.makeText(OrderManagementOnlineActivity.this, R.string.login_outside_failed, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                mViewManager.finishListActivity();
-                return false;
-            default:
-                return false;
-        }
     }
 
     // Check Internet

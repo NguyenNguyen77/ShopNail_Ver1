@@ -96,6 +96,14 @@ public class BookAppointmentPresenter extends BaseMethod implements IBookAppoint
 
     @Override
     public void checkTimeBookOnline(String staffName, int selectStaff, String date, String timeorder, int productId) {
+        if(staffName=="Select Staff"){
+            try {
+                mBookAppointmentView.updateOrderTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return;
+        }
         String json = addJsonRequestCheckTimeBooking(staffName, selectStaff, date, timeorder, productId).toString();
         Log.d("KhoaND14", "checkTimeBookOnline: Json: " + json);
         new NailTask(this).execute(new CaseManager(mContext, KeyManager.CHECK_TIME_BOOK_ONLINE, UrlManager.BOOKING_TIME_CHECKING_URL, json));
